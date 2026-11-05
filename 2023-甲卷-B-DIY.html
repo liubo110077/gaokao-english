@@ -266,6 +266,10 @@ body.compare-mode .translation-inline { display: block; }
 .question-analysis.open { display: block; }
 .question-analysis .answer-line { font-weight: 700; color: #16a34a; margin-bottom: 6px; font-size: 15px; }
 .question-analysis .locate { background: #fef9c3; padding: 6px 10px; border-radius: 4px; margin: 6px 0; font-family: Georgia, serif; font-style: italic; font-size: 14px; color: var(--text); }
+.option-list { margin-top: 10px; display: flex; flex-direction: column; gap: 4px; }
+.option-item { padding: 5px 10px; border-radius: 4px; font-size: 13.5px; line-height: 1.5; }
+.option-item.correct { background: #dcfce7; color: #15803d; font-weight: 600; }
+.option-item.wrong { background: #fef2f2; color: #71717a; }
 
 /* ── Review ── */
 .review-section { padding: 20px 24px; }
@@ -577,10 +581,12 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
         <div class="answer-line">答案：C</div>
         <div class="locate">"Terri Bolton is a dab hand when it comes to DIY. Skilled at putting up shelves and piecing together furniture..."</div>
         <p style="margin-top:8px"><b>解题思路：</b>dab hand 不认识没关系——后面紧跟 "when it comes to DIY"，下句 "Skilled at putting up shelves and piecing together furniture"，三句连读可推断：dab hand = 在某方面很拿手的人。</p>
-        <p>A. An artist ✗ artist=艺术家，和"拿手"不是一回事<br>
-        B. A winner ✗ winner=赢家，原文没提竞争<br>
-        C. A specialist ✓ specialist=专家/行家，和 dab hand 意思一致<br>
-        D. A pioneer ✗ pioneer=先驱/开拓者，不等于专家</p>
+        <div class="option-list">
+          <div class="option-item wrong">A. An artist ✗ artist=艺术家，和"拿手"不是一回事</div>
+          <div class="option-item wrong">B. A winner ✗ winner=赢家，原文没提竞争</div>
+          <div class="option-item correct">C. A specialist ✓ specialist=专家/行家，和 dab hand 意思一致</div>
+          <div class="option-item wrong">D. A pioneer ✗ pioneer=先驱/开拓者，不等于专家</div>
+        </div>
       </div>
     </div>
     <div class="question-item" data-answer="B">
@@ -596,10 +602,12 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
         <div class="answer-line">答案：B</div>
         <div class="locate">"A day's work was rewarded with £5 in pocket money."</div>
         <p style="margin-top:8px"><b>解题思路：</b>原文 "A day's work was rewarded with £5 in pocket money"——rewarded=奖励，pocket money=零花钱。</p>
-        <p>A. For a birthday gift ✗ 原文没提生日<br>
-        B. As a treat for her work ✓ treat=奖赏，和 rewarded 意思一样<br>
-        C. To support her DIY projects ✗ 她是帮爷爷干活，不是搞自己的项目<br>
-        D. To encourage her to take up a hobby ✗ 原文没提"培养爱好"</p>
+        <div class="option-list">
+          <div class="option-item wrong">A. For a birthday gift ✗ 原文没提生日</div>
+          <div class="option-item correct">B. As a treat for her work ✓ treat=奖赏，和 rewarded 意思一样</div>
+          <div class="option-item wrong">C. To support her DIY projects ✗ 她是帮爷爷干活，不是搞自己的项目</div>
+          <div class="option-item wrong">D. To encourage her to take up a hobby ✗ 原文没提"培养爱好"</div>
+        </div>
       </div>
     </div>
     <div class="question-item" data-answer="A">
@@ -615,10 +623,12 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
         <div class="answer-line">答案：A</div>
         <div class="locate">"cover up holes and repaint a room to avoid any charges when I've moved out"</div>
         <p style="margin-top:8px"><b>解题思路：</b>原文 "cover up holes and repaint a room to avoid any charges when I've moved out"——cover up holes=补墙洞，repaint=重新粉刷，目的是退租时不被扣押金。</p>
-        <p>A. By making it look like before ✓ 补洞+粉刷=恢复原状<br>
-        B. By furnishing it herself ✗ furnish=装家具，但原文说的是修洞+涂漆，不是装家具<br>
-        C. By splitting the rent with a roommate ✗ 原文没提室友或分租<br>
-        D. By cancelling the rental agreement ✗ 原文没提取消租约</p>
+        <div class="option-list">
+          <div class="option-item correct">A. By making it look like before ✓ 补洞+粉刷=恢复原状</div>
+          <div class="option-item wrong">B. By furnishing it herself ✗ furnish=装家具，但原文说的是修洞+涂漆</div>
+          <div class="option-item wrong">C. By splitting the rent with a roommate ✗ 原文没提室友或分租</div>
+          <div class="option-item wrong">D. By cancelling the rental agreement ✗ 原文没提取消租约</div>
+        </div>
       </div>
     </div>
     <div class="question-item" data-answer="D">
@@ -634,10 +644,12 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
         <div class="answer-line">答案：D</div>
         <div class="locate">"it is women now leading the charge"</div>
         <p style="margin-top:8px"><b>解题思路：</b>原文 "it is women now leading the charge"——leading the charge=带头冲锋/引领潮流，主语是 women。</p>
-        <p>A. It is becoming more costly ✗ 提到每项目花£823，但没说费用在增加<br>
-        B. It is getting more time-consuming ✗ 原文完全没提费时<br>
-        C. It is turning into a seasonal industry ✗ 原文提到"夏天干活"只是描述现象，不等于变成季节性行业<br>
-        D. It is gaining popularity among females ✓ gaining popularity=越来越流行，和 leading the charge 意思对应</p>
+        <div class="option-list">
+          <div class="option-item wrong">A. It is becoming more costly ✗ 提到每项目花£823，但没说费用在增加</div>
+          <div class="option-item wrong">B. It is getting more time-consuming ✗ 原文完全没提费时</div>
+          <div class="option-item wrong">C. It is turning into a seasonal industry ✗ "夏天干活"只是描述现象，不等于季节性行业</div>
+          <div class="option-item correct">D. It is gaining popularity among females ✓ gaining popularity=越来越流行，和 leading the charge 意思对应</div>
+        </div>
       </div>
     </div>
     <div class="quiz-score" id="quizScore"></div>
