@@ -717,13 +717,13 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
 
 <script>
 // ── Theme toggle ──
-const THEMES = ['default', 'yellow', 'green'];
-const THEME_LABELS = { default: '⬜ 默认白', yellow: '📄 书本黄', green: '🌿 护眼绿' };
+const THEMES = ['yellow', 'green'];
+const THEME_LABELS = { yellow: '📄 书本黄', green: '🌿 护眼绿' };
 let themeIdx = parseInt(localStorage.getItem('theme') || '0');
 function applyTheme() {
   document.body.classList.remove('theme-yellow', 'theme-green');
-  const t = THEMES[themeIdx];
-  if (t !== 'default') document.body.classList.add('theme-' + t);
+  const t = THEMES[themeIdx % THEMES.length];
+  document.body.classList.add('theme-' + t);
   const btn = document.getElementById('theme-btn');
   if (btn) btn.textContent = THEME_LABELS[t];
 }
