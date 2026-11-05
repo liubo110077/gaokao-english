@@ -960,12 +960,20 @@ document.addEventListener('click', function(e) {
 });
 
 // ── Other UI ──
+let enPlayer = null;
 function speakWord(word) {
-  const utter = new SpeechSynthesisUtterance(word);
-  const voices = speechSynthesis.getVoices();
-  utter.voice = voices.find(v => v.lang === 'en-GB') || voices.find(v => v.lang.startsWith('en')) || voices[0];
-  utter.rate = 0.8;
-  speechSynthesis.speak(utter);
+  if (enPlayer) { enPlayer.pause(); enPlayer = null; }
+  const slug = 'en-word-' + word.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const src = 'audio/2023-甲卷-B/' + slug + '.mp3';
+  enPlayer = new Audio(src);
+  enPlayer.onerror = function() {
+    const utter = new SpeechSynthesisUtterance(word);
+    const voices = speechSynthesis.getVoices();
+    utter.voice = voices.find(v => v.lang === 'en-GB') || voices.find(v => v.lang.startsWith('en')) || voices[0];
+    utter.rate = 0.8;
+    speechSynthesis.speak(utter);
+  };
+  enPlayer.play();
 }
 
 function toggleAnalysis(idx) {
