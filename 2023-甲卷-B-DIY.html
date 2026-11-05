@@ -269,9 +269,10 @@ body.compare-mode .translation-inline { display: block; }
 .option-list { margin-top: 10px; display: flex; flex-direction: column; gap: 2px; }
 .option-item { padding: 3px 0; font-size: 13.5px; line-height: 1.5; }
 .option-item .opt-letter { font-weight: 700; }
+.option-item .opt-mark { font-weight: 700; }
+.option-item.correct .opt-mark { color: #15803d; }
+.option-item.wrong .opt-mark { color: #b91c1c; }
 .option-item .opt-why { color: #888; font-size: 12.5px; margin-left: 4px; }
-.option-item.correct .opt-letter { color: #15803d; }
-.option-item.wrong .opt-letter { color: #b91c1c; }
 
 /* ── Review ── */
 .review-section { padding: 20px 24px; }
@@ -584,10 +585,10 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
         <div class="locate">"Terri Bolton is a dab hand when it comes to DIY. Skilled at putting up shelves and piecing together furniture..."</div>
         <p style="margin-top:8px"><b>解题思路：</b>dab hand 不认识没关系，往下读——"Skilled at putting up shelves and piecing together furniture"，skilled=熟练，说明她动手能力很强，所以 dab hand = <b>在某方面很拿手的人</b>。</p>
         <div class="option-list">
-          <div class="option-item wrong"><span class="opt-letter">A.</span> An artist ✗<span class="opt-why">artist=艺术家，和"拿手"不是一回事</span></div>
-          <div class="option-item wrong"><span class="opt-letter">B.</span> A winner ✗<span class="opt-why">winner=赢家，原文没提竞争</span></div>
-          <div class="option-item correct"><span class="opt-letter">C.</span> A specialist ✓<span class="opt-why">specialist=专家/行家，和 dab hand 意思一致</span></div>
-          <div class="option-item wrong"><span class="opt-letter">D.</span> A pioneer ✗<span class="opt-why">pioneer=先驱/开拓者，不等于专家</span></div>
+          <div class="option-item wrong"><span class="opt-letter">A.</span> An artist <span class="opt-mark">✗</span><span class="opt-why">artist=艺术家，和"拿手"不是一回事</span></div>
+          <div class="option-item wrong"><span class="opt-letter">B.</span> A winner <span class="opt-mark">✗</span><span class="opt-why">winner=赢家，原文没提竞争</span></div>
+          <div class="option-item correct"><span class="opt-letter">C.</span> A specialist <span class="opt-mark">✓</span><span class="opt-why">specialist=专家/行家，和 dab hand 意思一致</span></div>
+          <div class="option-item wrong"><span class="opt-letter">D.</span> A pioneer <span class="opt-mark">✗</span><span class="opt-why">pioneer=先驱/开拓者，不等于专家</span></div>
         </div>
       </div>
     </div>
@@ -605,10 +606,10 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
         <div class="locate">"A day's work was rewarded with £5 in pocket money."</div>
         <p style="margin-top:8px"><b>解题思路：</b>rewarded=奖励，pocket money=零花钱。干了一天活，爷爷给£5零花钱作为<b>奖励</b>。</p>
         <div class="option-list">
-          <div class="option-item wrong"><span class="opt-letter">A.</span> For a birthday gift ✗<span class="opt-why">原文没提生日</span></div>
-          <div class="option-item correct"><span class="opt-letter">B.</span> As a treat for her work ✓<span class="opt-why">treat=奖赏，和 rewarded 意思一样</span></div>
-          <div class="option-item wrong"><span class="opt-letter">C.</span> To support her DIY projects ✗<span class="opt-why">她是帮爷爷干活，不是搞自己的项目</span></div>
-          <div class="option-item wrong"><span class="opt-letter">D.</span> To encourage her to take up a hobby ✗<span class="opt-why">原文没提"培养爱好"</span></div>
+          <div class="option-item wrong"><span class="opt-letter">A.</span> For a birthday gift <span class="opt-mark">✗</span><span class="opt-why">原文没提生日</span></div>
+          <div class="option-item correct"><span class="opt-letter">B.</span> As a treat for her work <span class="opt-mark">✓</span><span class="opt-why">treat=奖赏，和 rewarded 意思一样</span></div>
+          <div class="option-item wrong"><span class="opt-letter">C.</span> To support her DIY projects <span class="opt-mark">✗</span><span class="opt-why">她是帮爷爷干活，不是搞自己的项目</span></div>
+          <div class="option-item wrong"><span class="opt-letter">D.</span> To encourage her to take up a hobby <span class="opt-mark">✗</span><span class="opt-why">原文没提"培养爱好"</span></div>
         </div>
       </div>
     </div>
@@ -626,10 +627,10 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
         <div class="locate">"cover up holes and repaint a room to avoid any charges when I've moved out"</div>
         <p style="margin-top:8px"><b>解题思路：</b>cover up holes=补墙洞，repaint=重新粉刷，avoid any charges=不被扣钱。退租前补洞+粉刷，就是把房子<b>恢复原状</b>。</p>
         <div class="option-list">
-          <div class="option-item correct"><span class="opt-letter">A.</span> By making it look like before ✓<span class="opt-why">补洞+粉刷=恢复原状</span></div>
-          <div class="option-item wrong"><span class="opt-letter">B.</span> By furnishing it herself ✗<span class="opt-why">furnish=装家具，但原文说的是修洞+涂漆</span></div>
-          <div class="option-item wrong"><span class="opt-letter">C.</span> By splitting the rent with a roommate ✗<span class="opt-why">原文没提室友或分租</span></div>
-          <div class="option-item wrong"><span class="opt-letter">D.</span> By cancelling the rental agreement ✗<span class="opt-why">原文没提取消租约</span></div>
+          <div class="option-item correct"><span class="opt-letter">A.</span> By making it look like before <span class="opt-mark">✓</span><span class="opt-why">补洞+粉刷=恢复原状</span></div>
+          <div class="option-item wrong"><span class="opt-letter">B.</span> By furnishing it herself <span class="opt-mark">✗</span><span class="opt-why">furnish=装家具，但原文说的是修洞+涂漆</span></div>
+          <div class="option-item wrong"><span class="opt-letter">C.</span> By splitting the rent with a roommate <span class="opt-mark">✗</span><span class="opt-why">原文没提室友或分租</span></div>
+          <div class="option-item wrong"><span class="opt-letter">D.</span> By cancelling the rental agreement <span class="opt-mark">✗</span><span class="opt-why">原文没提取消租约</span></div>
         </div>
       </div>
     </div>
@@ -647,10 +648,10 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
         <div class="locate">"it is women now leading the charge"</div>
         <p style="margin-top:8px"><b>解题思路：</b>leading the charge=带头冲锋/引领潮流，主语是 women。DIY 领域现在是<b>女性在带头</b>。</p>
         <div class="option-list">
-          <div class="option-item wrong"><span class="opt-letter">A.</span> It is becoming more costly ✗<span class="opt-why">提到每项目花£823，但没说费用在增加</span></div>
-          <div class="option-item wrong"><span class="opt-letter">B.</span> It is getting more time-consuming ✗<span class="opt-why">原文完全没提费时</span></div>
-          <div class="option-item wrong"><span class="opt-letter">C.</span> It is turning into a seasonal industry ✗<span class="opt-why">"夏天干活"只是描述现象，不等于季节性行业</span></div>
-          <div class="option-item correct"><span class="opt-letter">D.</span> It is gaining popularity among females ✓<span class="opt-why">gaining popularity=越来越流行，和 leading the charge 意思对应</span></div>
+          <div class="option-item wrong"><span class="opt-letter">A.</span> It is becoming more costly <span class="opt-mark">✗</span><span class="opt-why">提到每项目花£823，但没说费用在增加</span></div>
+          <div class="option-item wrong"><span class="opt-letter">B.</span> It is getting more time-consuming <span class="opt-mark">✗</span><span class="opt-why">原文完全没提费时</span></div>
+          <div class="option-item wrong"><span class="opt-letter">C.</span> It is turning into a seasonal industry <span class="opt-mark">✗</span><span class="opt-why">"夏天干活"只是描述现象，不等于季节性行业</span></div>
+          <div class="option-item correct"><span class="opt-letter">D.</span> It is gaining popularity among females <span class="opt-mark">✓</span><span class="opt-why">gaining popularity=越来越流行，和 leading the charge 意思对应</span></div>
         </div>
       </div>
     </div>
