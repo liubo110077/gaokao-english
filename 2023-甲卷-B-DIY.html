@@ -266,14 +266,12 @@ body.compare-mode .translation-inline { display: block; }
 .question-analysis.open { display: block; }
 .question-analysis .answer-line { font-weight: 700; color: #16a34a; margin-bottom: 6px; font-size: 15px; }
 .question-analysis .locate { background: #fef9c3; padding: 6px 10px; border-radius: 4px; margin: 6px 0; font-family: Georgia, serif; font-style: italic; font-size: 14px; color: var(--text); }
-.option-list { margin-top: 10px; display: flex; flex-direction: column; gap: 4px; }
-.option-item { padding: 5px 10px; border-radius: 4px; font-size: 13.5px; line-height: 1.5; }
-.option-item .opt-key { font-weight: 700; }
+.option-list { margin-top: 10px; display: flex; flex-direction: column; gap: 2px; }
+.option-item { padding: 3px 0; font-size: 13.5px; line-height: 1.5; }
+.option-item .opt-letter { font-weight: 700; }
 .option-item .opt-why { color: #888; font-size: 12.5px; margin-left: 4px; }
-.option-item.correct { background: #dcfce7; }
-.option-item.correct .opt-key { color: #15803d; }
-.option-item.wrong { background: #fef2f2; }
-.option-item.wrong .opt-key { color: #b91c1c; }
+.option-item.correct .opt-letter { color: #15803d; }
+.option-item.wrong .opt-letter { color: #b91c1c; }
 
 /* ── Review ── */
 .review-section { padding: 20px 24px; }
@@ -584,16 +582,12 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       <div class="question-analysis">
         <div class="answer-line">答案：C</div>
         <div class="locate">"Terri Bolton is a dab hand when it comes to DIY. Skilled at putting up shelves and piecing together furniture..."</div>
-        <p style="margin-top:8px"><b>解题思路：</b>dab hand 是生词，不认识没关系，往下读找线索：</p>
-        <p style="margin:4px 0 4px 16px">线索① "when it comes to DIY" → 她跟 DIY 有关<br>
-        线索② "Skilled at putting up shelves" → skilled=熟练，她很擅长装架子<br>
-        线索③ "piecing together furniture" → 拼装家具，还是动手能力强</p>
-        <p style="margin:4px 0">三条线索拼起来 → dab hand = <b>在某方面很拿手的人</b></p>
+        <p style="margin-top:8px"><b>解题思路：</b>dab hand 不认识没关系，往下读——"Skilled at putting up shelves and piecing together furniture"，skilled=熟练，说明她动手能力很强，所以 dab hand = <b>在某方面很拿手的人</b>。</p>
         <div class="option-list">
-          <div class="option-item wrong"><span class="opt-key">A. An artist ✗</span><span class="opt-why">artist=艺术家，和"拿手"不是一回事</span></div>
-          <div class="option-item wrong"><span class="opt-key">B. A winner ✗</span><span class="opt-why">winner=赢家，原文没提竞争</span></div>
-          <div class="option-item correct"><span class="opt-key">C. A specialist ✓</span><span class="opt-why">specialist=专家/行家，和 dab hand 意思一致</span></div>
-          <div class="option-item wrong"><span class="opt-key">D. A pioneer ✗</span><span class="opt-why">pioneer=先驱/开拓者，不等于专家</span></div>
+          <div class="option-item wrong"><span class="opt-letter">A.</span> An artist ✗<span class="opt-why">artist=艺术家，和"拿手"不是一回事</span></div>
+          <div class="option-item wrong"><span class="opt-letter">B.</span> A winner ✗<span class="opt-why">winner=赢家，原文没提竞争</span></div>
+          <div class="option-item correct"><span class="opt-letter">C.</span> A specialist ✓<span class="opt-why">specialist=专家/行家，和 dab hand 意思一致</span></div>
+          <div class="option-item wrong"><span class="opt-letter">D.</span> A pioneer ✗<span class="opt-why">pioneer=先驱/开拓者，不等于专家</span></div>
         </div>
       </div>
     </div>
@@ -609,16 +603,12 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       <div class="question-analysis">
         <div class="answer-line">答案：B</div>
         <div class="locate">"A day's work was rewarded with £5 in pocket money."</div>
-        <p style="margin-top:8px"><b>解题思路：</b>关键词拆解：</p>
-        <p style="margin:4px 0 4px 16px">a day's work = 一天的活<br>
-        rewarded = 奖励<br>
-        pocket money = 零花钱</p>
-        <p style="margin:4px 0">连起来 → 干了一天活，爷爷给£5零花钱作为<b>奖励</b></p>
+        <p style="margin-top:8px"><b>解题思路：</b>rewarded=奖励，pocket money=零花钱。干了一天活，爷爷给£5零花钱作为<b>奖励</b>。</p>
         <div class="option-list">
-          <div class="option-item wrong"><span class="opt-key">A. For a birthday gift ✗</span><span class="opt-why">原文没提生日</span></div>
-          <div class="option-item correct"><span class="opt-key">B. As a treat for her work ✓</span><span class="opt-why">treat=奖赏，和 rewarded 意思一样</span></div>
-          <div class="option-item wrong"><span class="opt-key">C. To support her DIY projects ✗</span><span class="opt-why">她是帮爷爷干活，不是搞自己的项目</span></div>
-          <div class="option-item wrong"><span class="opt-key">D. To encourage her to take up a hobby ✗</span><span class="opt-why">原文没提"培养爱好"</span></div>
+          <div class="option-item wrong"><span class="opt-letter">A.</span> For a birthday gift ✗<span class="opt-why">原文没提生日</span></div>
+          <div class="option-item correct"><span class="opt-letter">B.</span> As a treat for her work ✓<span class="opt-why">treat=奖赏，和 rewarded 意思一样</span></div>
+          <div class="option-item wrong"><span class="opt-letter">C.</span> To support her DIY projects ✗<span class="opt-why">她是帮爷爷干活，不是搞自己的项目</span></div>
+          <div class="option-item wrong"><span class="opt-letter">D.</span> To encourage her to take up a hobby ✗<span class="opt-why">原文没提"培养爱好"</span></div>
         </div>
       </div>
     </div>
@@ -634,17 +624,12 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       <div class="question-analysis">
         <div class="answer-line">答案：A</div>
         <div class="locate">"cover up holes and repaint a room to avoid any charges when I've moved out"</div>
-        <p style="margin-top:8px"><b>解题思路：</b>关键词拆解：</p>
-        <p style="margin:4px 0 4px 16px">cover up holes = 补墙洞<br>
-        repaint a room = 重新粉刷房间<br>
-        to avoid any charges = 为了不被扣钱<br>
-        when I've moved out = 搬走的时候</p>
-        <p style="margin:4px 0">连起来 → 退租前补洞+粉刷，就是把房子<b>恢复原状</b></p>
+        <p style="margin-top:8px"><b>解题思路：</b>cover up holes=补墙洞，repaint=重新粉刷，avoid any charges=不被扣钱。退租前补洞+粉刷，就是把房子<b>恢复原状</b>。</p>
         <div class="option-list">
-          <div class="option-item correct"><span class="opt-key">A. By making it look like before ✓</span><span class="opt-why">补洞+粉刷=恢复原状</span></div>
-          <div class="option-item wrong"><span class="opt-key">B. By furnishing it herself ✗</span><span class="opt-why">furnish=装家具，但原文说的是修洞+涂漆</span></div>
-          <div class="option-item wrong"><span class="opt-key">C. By splitting the rent with a roommate ✗</span><span class="opt-why">原文没提室友或分租</span></div>
-          <div class="option-item wrong"><span class="opt-key">D. By cancelling the rental agreement ✗</span><span class="opt-why">原文没提取消租约</span></div>
+          <div class="option-item correct"><span class="opt-letter">A.</span> By making it look like before ✓<span class="opt-why">补洞+粉刷=恢复原状</span></div>
+          <div class="option-item wrong"><span class="opt-letter">B.</span> By furnishing it herself ✗<span class="opt-why">furnish=装家具，但原文说的是修洞+涂漆</span></div>
+          <div class="option-item wrong"><span class="opt-letter">C.</span> By splitting the rent with a roommate ✗<span class="opt-why">原文没提室友或分租</span></div>
+          <div class="option-item wrong"><span class="opt-letter">D.</span> By cancelling the rental agreement ✗<span class="opt-why">原文没提取消租约</span></div>
         </div>
       </div>
     </div>
@@ -660,15 +645,12 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       <div class="question-analysis">
         <div class="answer-line">答案：D</div>
         <div class="locate">"it is women now leading the charge"</div>
-        <p style="margin-top:8px"><b>解题思路：</b>关键词拆解：</p>
-        <p style="margin:4px 0 4px 16px">it is women = 主语是女性<br>
-        leading the charge = 带头冲锋/引领潮流</p>
-        <p style="margin:4px 0">连起来 → DIY 领域现在是<b>女性在带头</b></p>
+        <p style="margin-top:8px"><b>解题思路：</b>leading the charge=带头冲锋/引领潮流，主语是 women。DIY 领域现在是<b>女性在带头</b>。</p>
         <div class="option-list">
-          <div class="option-item wrong"><span class="opt-key">A. It is becoming more costly ✗</span><span class="opt-why">提到每项目花£823，但没说费用在增加</span></div>
-          <div class="option-item wrong"><span class="opt-key">B. It is getting more time-consuming ✗</span><span class="opt-why">原文完全没提费时</span></div>
-          <div class="option-item wrong"><span class="opt-key">C. It is turning into a seasonal industry ✗</span><span class="opt-why">"夏天干活"只是描述现象，不等于季节性行业</span></div>
-          <div class="option-item correct"><span class="opt-key">D. It is gaining popularity among females ✓</span><span class="opt-why">gaining popularity=越来越流行，和 leading the charge 意思对应</span></div>
+          <div class="option-item wrong"><span class="opt-letter">A.</span> It is becoming more costly ✗<span class="opt-why">提到每项目花£823，但没说费用在增加</span></div>
+          <div class="option-item wrong"><span class="opt-letter">B.</span> It is getting more time-consuming ✗<span class="opt-why">原文完全没提费时</span></div>
+          <div class="option-item wrong"><span class="opt-letter">C.</span> It is turning into a seasonal industry ✗<span class="opt-why">"夏天干活"只是描述现象，不等于季节性行业</span></div>
+          <div class="option-item correct"><span class="opt-letter">D.</span> It is gaining popularity among females ✓<span class="opt-why">gaining popularity=越来越流行，和 leading the charge 意思对应</span></div>
         </div>
       </div>
     </div>
