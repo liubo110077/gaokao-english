@@ -28,12 +28,12 @@
   --accent-light: #fde8b8;
 }
 .theme-green {
-  --bg: #f0f5f0;
-  --card-bg: #f6faf6;
-  --border: #c8d8c8;
-  --complex-bg: #e4f0e4;
-  --hover-bg: #e6efe6;
-  --accent-light: #d4ead4;
+  --bg: #f2f5ed;
+  --card-bg: #f7f9f3;
+  --border: #d5d8c8;
+  --complex-bg: #eaeddf;
+  --hover-bg: #eceee4;
+  --accent-light: #e2e8d0;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -283,7 +283,7 @@ body.compare-mode .translation-inline { display: block; }
 .review-checks input { accent-color: var(--accent); }
 
 /* ── Raw mode ── */
-body.mode-raw .tip { border-bottom: none; cursor: default; }
+body.mode-raw .tip { border-bottom: none; cursor: default; pointer-events: none; }
 body.mode-raw .tip:hover { background: none; }
 body.mode-raw .analysis,
 body.mode-raw .translation-inline,
@@ -293,7 +293,7 @@ body.mode-raw .sentence { cursor: default; }
 body.mode-raw .sentence:hover { background: none; }
 
 /* ── Quiz mode ── */
-body.mode-quiz .tip { border-bottom: none; cursor: default; }
+body.mode-quiz .tip { border-bottom: none; cursor: default; pointer-events: none; }
 body.mode-quiz .tip:hover { background: none; }
 body.mode-quiz .analysis,
 body.mode-quiz .translation-inline,
@@ -843,7 +843,6 @@ function hideTooltip() {
 document.addEventListener('click', function(e) {
   const tipEl = e.target.closest('.tip');
   if (tipEl) {
-    if (document.body.classList.contains('mode-raw') || document.body.classList.contains('mode-quiz')) return;
     e.stopPropagation();
     if (activeTooltip && activeTooltip._source === tipEl) {
       hideTooltip();
