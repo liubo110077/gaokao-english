@@ -960,7 +960,6 @@ document.addEventListener('click', function(e) {
 });
 
 // ── Other UI ──
-let enPlayer = null;
 function speakWord(word) {
   if (enPlayer) { enPlayer.pause(); enPlayer = null; }
   const slug = 'en-word-' + word.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
