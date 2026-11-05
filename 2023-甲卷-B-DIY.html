@@ -843,6 +843,7 @@ function hideTooltip() {
 document.addEventListener('click', function(e) {
   const tipEl = e.target.closest('.tip');
   if (tipEl) {
+    if (document.body.classList.contains('mode-raw') || document.body.classList.contains('mode-quiz')) return;
     e.stopPropagation();
     if (activeTooltip && activeTooltip._source === tipEl) {
       hideTooltip();
