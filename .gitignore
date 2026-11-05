@@ -1,0 +1,8 @@
+# Python scripts (contain API keys)
+*.py
+__pycache__/
+
+# Local files not for web
+*.txt
+*.png
+.DS_Store

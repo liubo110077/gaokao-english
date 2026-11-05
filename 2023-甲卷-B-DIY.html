@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2023甲卷·B篇精读 · DIY — Terri Bolton</title>
+<style>
+:root {
+  --bg: #fafaf8;
+  --text: #1a1a1a;
+  --text-secondary: #555;
+  --text-muted: #888;
+  --accent: #2563eb;
+  --accent-light: #dbeafe;
+  --complex-bg: #f0f6fc;
+  --border: #e2e2e0;
+  --card-bg: #fff;
+  --hover-bg: #f5f5f4;
+  --shadow: 0 1px 3px rgba(0,0,0,.08);
+  --radius: 6px;
+}
+.theme-yellow {
+  --bg: #f5f0e8;
+  --card-bg: #faf6ee;
+  --border: #ddd5bf;
+  --complex-bg: #ece4d4;
+  --hover-bg: #ede7d8;
+  --accent-light: #fde8b8;
+}
+.theme-green {
+  --bg: #f0f5f0;
+  --card-bg: #f6faf6;
+  --border: #c8d8c8;
+  --complex-bg: #e4f0e4;
+  --hover-bg: #e6efe6;
+  --accent-light: #d4ead4;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  padding-bottom: 60px;
+}
+.container { max-width: 780px; margin: 0 auto; padding: 0 20px; }
+
+/* ── Header ── */
+.header {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header .container { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.header h1 { font-size: 16px; font-weight: 600; flex: 1; min-width: 200px; }
+.header-sub { font-size: 12px; color: var(--accent); font-weight: 500; background: var(--accent-light); padding: 2px 8px; border-radius: 10px; }
+.header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 6px 14px; border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--card-bg); color: var(--text); font-size: 13px;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ── Mode steps ── */
+.mode-steps { display: flex; gap: 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.mode-step {
+  padding: 6px 12px; border: none; background: var(--card-bg); color: var(--text-secondary);
+  font-size: 13px; cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.mode-step + .mode-step { border-left: 1px solid var(--border); }
+.mode-step.active { background: var(--accent); color: #fff; }
+.mode-step:hover:not(.active) { background: var(--accent-light); }
+
+/* ── Passage ── */
+.passage {
+  background: var(--card-bg); border-radius: var(--radius);
+  box-shadow: var(--shadow); margin-top: 20px; padding: 28px 32px;
+}
+.passage-title {
+  text-align: center; font-family: Georgia, "Times New Roman", serif;
+  font-size: 15px; font-weight: 700; letter-spacing: .5px;
+  margin-bottom: 20px; color: var(--text-secondary);
+}
+.paragraph { margin-bottom: 4px; text-indent: 2em; }
+.sentence {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px; line-height: 1.75;
+  position: relative; transition: background .2s; border-radius: 3px;
+  cursor: pointer;
+}
+.sentence:hover { background: var(--hover-bg); }
+.sentence.playing { background: var(--complex-bg); border-radius: 3px; }
+.sentence.complex { border-bottom: 1.5px dashed #93c5fd; }
+.sentence.complex.playing { background: var(--complex-bg); }
+
+/* ── Phrase tips ── */
+.tip {
+  border-bottom: 1.5px dashed var(--accent);
+  cursor: pointer;
+  position: relative;
+  transition: background .15s;
+}
+.tip:hover { background: var(--accent-light); }
+
+/* Tooltip bubble */
+.tooltip {
+  position: absolute;
+  z-index: 200;
+  background: var(--text);
+  color: #fff;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 8px 14px;
+  border-radius: 8px;
+  max-width: 520px;
+  width: max-content;
+  box-shadow: 0 4px 20px rgba(0,0,0,.25);
+  pointer-events: auto;
+  animation: tipIn .15s ease-out;
+}
+.tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: var(--arrow-left, 50%);
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid var(--text);
+}
+.tooltip.below::after {
+  bottom: auto; top: -6px;
+  border-top: none;
+  border-bottom: 6px solid var(--text);
+}
+.tooltip .tip-phrase {
+  font-family: Georgia, serif;
+  font-weight: 600;
+  color: #93c5fd;
+  margin-bottom: 2px;
+}
+.tooltip .tip-speak {
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 6px;
+  font-size: 12px;
+  opacity: .7;
+  vertical-align: middle;
+}
+.tooltip .tip-speak:hover { opacity: 1; }
+.tooltip .tip-zh-play {
+  display: block;
+  margin-top: 6px;
+  padding: 4px 10px;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 4px;
+  color: #93c5fd;
+  font-size: 12px;
+  cursor: pointer;
+  text-align: center;
+}
+.tooltip .tip-zh-play:hover { background: rgba(255,255,255,.25); }
+@keyframes tipIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Expandable analysis ── */
+.analysis {
+  display: none; margin: 8px 0 12px 0; padding: 12px 16px;
+  background: #f8f9fa; border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 14px; color: var(--text-secondary); line-height: 1.7; text-indent: 0;
+}
+.analysis.open { display: block; }
+.analysis p { margin-bottom: 4px; }
+.analysis b { color: var(--text); font-size: 13px; }
+.analysis-play {
+  float: right; margin-left: 8px;
+  background: none; border: 1px solid var(--border); border-radius: 4px;
+  font-size: 12px; padding: 2px 8px; cursor: pointer; color: var(--accent);
+  transition: all .15s;
+}
+.analysis-play:hover { background: var(--accent-light); border-color: var(--accent); }
+.analysis-play.playing { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ── Translation ── */
+.translation-inline {
+  display: none;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 14px; color: var(--text-muted);
+  margin: 2px 0 6px 0; text-indent: 0;
+}
+body.compare-mode .translation-inline { display: block; }
+
+/* ── Panels ── */
+.panel {
+  background: var(--card-bg); border-radius: var(--radius);
+  box-shadow: var(--shadow); margin-top: 16px; overflow: hidden;
+}
+.panel-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px; cursor: pointer; user-select: none;
+  font-weight: 600; font-size: 15px;
+  border-bottom: 1px solid transparent; transition: border-color .2s;
+}
+.panel-header:hover { color: var(--accent); }
+.panel-header .arrow { transition: transform .2s; font-size: 12px; color: var(--text-muted); }
+.panel.open .panel-header { border-bottom-color: var(--border); }
+.panel.open .panel-header .arrow { transform: rotate(180deg); }
+.panel-body { display: none; padding: 16px 24px; }
+.panel.open .panel-body { display: block; }
+
+/* Vocab cards */
+.vocab-card { border-bottom: 1px solid #f0f0f0; padding: 12px 0; }
+.vocab-card:last-child { border-bottom: none; }
+.vocab-card-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 12px; }
+.vocab-word { font-family: Georgia, serif; font-weight: 600; color: var(--accent); cursor: pointer; font-size: 15px; }
+.vocab-word:hover { text-decoration: underline; }
+.vocab-meaning { font-size: 14px; color: var(--text); }
+.vocab-extra { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+.vocab-tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 3px; background: #fef3c7; color: #92400e; vertical-align: middle; }
+.vocab-tag.tag-core { background: #dcfce7; color: #166534; }
+.vocab-tag.tag-exam { background: #dbeafe; color: #1e40af; }
+.vocab-tag.tag-beyond { background: #fef3c7; color: #92400e; }
+.vocab-detail { display: none; margin-top: 8px; padding: 10px 14px; background: #f8f9fa; border-radius: var(--radius); font-size: 13.5px; line-height: 1.7; }
+.vocab-detail.open { display: block; }
+.vocab-detail .vd-section { margin-bottom: 6px; }
+.vocab-detail .vd-label { font-weight: 600; color: var(--accent); margin-right: 4px; }
+.vocab-detail .vd-example { color: var(--text-secondary); padding-left: 16px; }
+.vocab-detail .vd-example em { color: var(--text); font-style: normal; font-weight: 600; }
+.vocab-expand { font-size: 12px; color: var(--accent); cursor: pointer; border: none; background: none; padding: 0; margin-left: 8px; }
+.vocab-expand:hover { text-decoration: underline; }
+
+/* ── Questions ── */
+.question-item { padding: 16px 24px; border-bottom: 1px solid #f0f0f0; }
+.question-item:last-child { border-bottom: none; }
+.question-stem { font-weight: 600; font-size: 15px; margin-bottom: 8px; }
+.question-options { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 24px; font-size: 14px; margin-bottom: 8px; }
+.question-option { padding: 2px 0; }
+.show-answer-btn { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; color: var(--accent); cursor: pointer; background: none; border: none; padding: 4px 0; }
+.show-answer-btn:hover { text-decoration: underline; }
+.question-analysis { display: none; margin-top: 10px; padding: 12px 16px; background: #f8f9fa; border-radius: var(--radius); font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+.question-analysis.open { display: block; }
+.question-analysis .answer-line { font-weight: 700; color: #16a34a; margin-bottom: 6px; font-size: 15px; }
+.question-analysis .locate { background: #fef9c3; padding: 6px 10px; border-radius: 4px; margin: 6px 0; font-family: Georgia, serif; font-style: italic; font-size: 14px; color: var(--text); }
+.trap-tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 3px; margin-left: 4px; vertical-align: middle; }
+.trap-tag.wrong { background: #fee2e2; color: #991b1b; }
+.trap-tag.correct { background: #dcfce7; color: #166534; }
+
+/* ── Review ── */
+.review-section { padding: 20px 24px; }
+.review-section h3 { font-size: 15px; margin-bottom: 12px; }
+.review-checks { display: flex; flex-wrap: wrap; gap: 12px; font-size: 14px; }
+.review-checks label { display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 6px 12px; border: 1px solid var(--border); border-radius: var(--radius); transition: all .15s; }
+.review-checks label:has(input:checked) { background: var(--accent-light); border-color: var(--accent); }
+.review-checks input { accent-color: var(--accent); }
+
+/* ── Raw mode ── */
+body.mode-raw .tip { border-bottom: none; cursor: default; }
+body.mode-raw .tip:hover { background: none; }
+body.mode-raw .analysis,
+body.mode-raw .translation-inline,
+body.mode-raw .panel { display: none !important; }
+body.mode-raw .sentence.complex { border-bottom: none; }
+body.mode-raw .sentence { cursor: default; }
+body.mode-raw .sentence:hover { background: none; }
+
+/* ── Quiz mode ── */
+body.mode-quiz .tip { border-bottom: none; cursor: default; }
+body.mode-quiz .tip:hover { background: none; }
+body.mode-quiz .analysis,
+body.mode-quiz .translation-inline,
+body.mode-quiz #vocabPanel,
+body.mode-quiz #reviewPanel,
+body.mode-quiz #tipPanel,
+body.mode-quiz #playbar { display: none !important; }
+body.mode-quiz .sentence.complex { border-bottom: none; cursor: default; }
+body.mode-quiz .sentence { cursor: default; }
+body.mode-quiz .sentence:hover { background: none; }
+body.mode-quiz #questionsPanel { display: block; }
+body.mode-quiz #questionsPanel .panel-body { display: block; }
+body.mode-quiz .question-analysis { display: none !important; }
+body.mode-quiz .show-answer-btn { display: none; }
+body.mode-quiz .question-option { cursor: pointer; padding: 6px 10px; border-radius: var(--radius); border: 1.5px solid transparent; transition: all .15s; }
+body.mode-quiz .question-option:hover { background: var(--accent-light); }
+body.mode-quiz .question-option.selected { border-color: var(--accent); background: var(--accent-light); }
+body.mode-quiz .question-option.correct { border-color: #16a34a; background: #dcfce7; }
+body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2e2; }
+.quiz-score { text-align: center; padding: 16px; font-size: 16px; font-weight: 600; color: var(--accent); display: none; }
+.quiz-score.show { display: block; }
+
+/* ── Bottom Playbar ── */
+#playbar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+  background: #1a1a1a; color: #fff;
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  padding: 10px 20px; height: 52px;
+  font-size: 14px;
+  box-shadow: 0 -2px 12px rgba(0,0,0,.2);
+}
+#playbar button {
+  background: none; border: none; color: #fff; font-size: 18px;
+  cursor: pointer; padding: 4px 8px; border-radius: 4px; line-height: 1;
+  transition: background .15s;
+}
+#playbar button:hover { background: rgba(255,255,255,.15); }
+#pb-play { font-size: 22px; }
+#pb-counter { font-size: 13px; color: #aaa; min-width: 52px; text-align: center; }
+#pb-speed {
+  background: #333; border: none; color: #fff; font-size: 13px;
+  padding: 3px 6px; border-radius: 4px; cursor: pointer;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .passage { padding: 20px 16px; }
+  .sentence { font-size: 16px; }
+  .question-options { grid-template-columns: 1fr; }
+  .panel-header, .question-item, .review-section { padding-left: 16px; padding-right: 16px; }
+  .panel-body { padding: 12px 16px; }
+  .tooltip { max-width: 92vw; }
+}
+</style>
+</head>
+<body class="mode-raw">
+
+<!-- ══════ Header ══════ -->
+<div class="header">
+  <div class="container">
+    <h1>B篇精读 · DIY — Terri Bolton</h1>
+    <div class="header-controls">
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="raw" onclick="setMode('raw')">① 原文</button>
+        <button class="mode-step" data-mode="study" onclick="setMode('study')">② 精读</button>
+        <button class="mode-step" data-mode="quiz" onclick="setMode('quiz')">③ 做题</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()" title="切换护眼色">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Passage ══════ -->
+<div class="container">
+<div class="passage" id="passage">
+  <div class="passage-title">B</div>
+
+  <!-- ── Paragraph 1 ── -->
+  <div class="paragraph" id="para-1">
+    <span class="sentence" data-idx="0">Terri Bolton is <span class="tip" data-tip="a dab hand|能手，行家｜这个词不用拆开记。a dab hand 就是一个固定说法，= 某方面特别拿手的人。后面紧跟 when it comes to 告诉你拿手的是什么">a dab hand</span> <span class="tip" data-tip="when it comes to|一说到…，一提到…｜come 就是「来」，to 就是「到」。想象聊天的时候话题东扯西扯，突然话题来到了 DIY 这件事上——when it comes to DIY。所以就是「一说到、一提到」">when it comes to</span> DIY(do-it-yourself).</span>
+    <span class="sentence complex" data-idx="1"><span class="tip" data-tip="Skilled at|擅长…｜skill 你肯定认识，名词，技能、技巧。加了 -ed 变成形容词——有技能的、熟练的。skilled at = 在…方面很熟练。她在装架子、拼家具方面是老手">Skilled at</span> <span class="tip" data-tip="putting up|安装，搭建｜put up 你可能见过 put up your hand（举手）——往上放。这里 put up shelves 就是把架子装到墙上去。put up 还能指贴海报、搭帐篷，都是「弄上去、立起来」的感觉">putting up</span> shelves and <span class="tip" data-tip="piecing together|拼装，组装｜piece 你肯定认识：a piece of cake 小菜一碟，a piece of paper 一张纸——piece 就是「一块、一片」。这里 piece 变成动词了，把一堆零件一块一块拼到一起，together，就是拼装家具">piecing together</span> furniture, she never pays someone else to do a job she can do herself.</span>
+    <div class="analysis" id="analysis-1"><button class="analysis-play" onclick="playAnalysis('analysis-1', this)" title="听讲解">🔊 听讲解</button>
+      <p>这句先说原因再说结果：她擅长装架子、拼家具 → 所以从不花钱请人。逗号前面是原因，后面是结果。</p>
+      <p>最后 a job she can do herself，中间其实省了个 that — a job <u>that</u> she can do herself，"她自己能搞定的活儿"。高考阅读里 that 经常省掉，别在这卡住。</p>
+    </div>
+    <div class="translation-inline">Terri Bolton 说到 DIY 可是一把好手。她擅长安装架子和拼装家具，从不花钱请别人做自己能做的事。</div>
+  </div>
+
+  <!-- ── Paragraph 2 ── -->
+  <div class="paragraph" id="para-2">
+    <span class="sentence" data-idx="2">She <span class="tip" data-tip="credits...to...|把…归功于｜credit card 信用卡你知道吧？credit 本来是「信用、功劳」。这里变动词了——她把这些技能的功劳记在(to)祖父头上，就是「归功于」">credits</span> these skills to her <span class="tip" data-tip="late|已故的｜late 你肯定知道是「迟到的、晚的」对吧？但 her late grandfather 不是说「她迟到的祖父」——放在人前面的 late 是「已经去世的」。这个义项高考爱考">late</span> grandfather and builder Derek Lloyd.</span>
+    <span class="sentence complex" data-idx="3"><span class="tip" data-tip="From the age of|从…岁起｜from 就是「从」，age 就是「年龄」。from the age of six = 从6岁这个年龄开始。说明她特别小就跟着祖父干活了">From the age of</span> six, Terri, now 26, <span class="tip" data-tip="accompanied|陪着一起去｜company 是「公司、陪伴」对吧？ac-company 就是「陪伴」，加了 -ed 变过去时。Terri 小时候跟着祖父一起去工地">accompanied</span> Derek to work during her school holidays.</span>
+    <div class="analysis" id="analysis-3"><button class="analysis-play" onclick="playAnalysis('analysis-3', this)" title="听讲解">🔊 听讲解</button>
+      <p>别被中间那堆信息吓到。这句核心就一件事：Terri 跟着 Derek 去干活。From the age of six 和 during her school holidays 是说什么时候去的，now 26 是顺便补一句她现在多大了——两个逗号夹住的部分，先跳过也完全不影响理解。</p>
+    </div>
+    <span class="sentence" data-idx="4">A day's work was <span class="tip" data-tip="rewarded with|用…作为奖励｜reward 是「奖励」，你可能在游戏里见过——完成任务拿 reward。这里 was rewarded with £5 = 被奖励了5英镑，就是干完活给她5块钱零花钱">rewarded with</span> £5 in <span class="tip" data-tip="pocket money|零花钱｜pocket 就是口袋，pocket money 就是「揣兜里的钱」——零花钱。干一天活给5英镑零花钱当奖励">pocket money</span>.</span>
+    <span class="sentence complex" data-idx="5">She says: "I'm sure I wasn't <span class="tip" data-tip="much of a|算得上…的｜much 是「很多」对吧？much of a help 就是「很像样的帮手」。前面加了 not——not much of a help = 算不上什么帮手、帮不了什么忙">much of a</span> help <span class="tip" data-tip="to start with|起初，一开始｜start 就是「开始」。to start with = 在刚开始的时候。她说一开始帮不了什么忙——言下之意是后来越来越能干了">to start with</span>, painting the rooms and <span class="tip" data-tip="putting down|铺设（地板）｜put 是放，down 是往下。put down the flooring = 把地板往下放、铺到地面上。put down 还可以指「放下东西」「记下来」，核心都是「往下放」">putting down</span> the flooring <span class="tip" data-tip="throughout|到处，整个｜through 是「穿过」对吧？throughout 就是 through 加强版——不光穿过，是彻彻底底每个角落都到了。throughout the house = 整个房子到处都铺了">throughout</span> the house.</span>
+    <div class="analysis" id="analysis-5"><button class="analysis-play" onclick="playAnalysis('analysis-5', this)" title="听讲解">🔊 听讲解</button>
+      <p>她说自己一开始"not much of a help"——算不上什么帮手。后面 painting... putting down... 是在具体说帮了什么忙：刷漆、铺地板。言下之意是：当时就干这些，没什么大用，但后来越来越能干了。</p>
+    </div>
+    <span class="sentence" data-idx="6">It took weeks and was <span class="tip" data-tip="backbreaking|累死人的｜back 是背，breaking 是断裂——背都干断了，多累啊。就是说这活儿特别辛苦，纯体力活">backbreaking</span> work, but I know he was <span class="tip" data-tip="proud of|为…感到骄傲｜I'm proud of you 你肯定听过。祖父为她的手艺感到骄傲">proud of</span> my skills."</span>
+    <div class="translation-inline">她把这些技能归功于已故的祖父——建筑工人 Derek Lloyd。从六岁起，现年26岁的 Terri 就在学校放假时跟着 Derek 去工地干活。一天的劳动能换来5英镑零花钱。她说："我确信一开始我帮不了什么大忙，就是给房间刷刷漆，在房子各处铺铺地板。这些活儿干了好几周，累得要命，但我知道他为我的手艺感到骄傲。"</div>
+  </div>
+
+  <!-- ── Paragraph 3 ── -->
+  <div class="paragraph" id="para-3">
+    <span class="sentence complex" data-idx="7">Terri, who now rents a house with friends in Wandsworth, South West London, says DIY also <span class="tip" data-tip="saves her from|帮她免于…｜save 你知道是「救、省」对吧？save her from = 把她从…里「救」出来。save her from losing deposit = 让她不用丢押金，把她从「丢钱」这个坑里救出来">saves her from</span> losing any <span class="tip" data-tip="deposit|押金｜deposit 你可能知道是「存款」，银行 deposit 存钱。但租房也要 deposit——押金，搬走时如果房子没弄坏就退给你。这里就是租房押金">deposit</span> when a <span class="tip" data-tip="tenancy|租期｜tenant 是租户（租房子的人），tenancy 就是租的这段时间。a tenancy comes to an end = 租期到了">tenancy</span> <span class="tip" data-tip="comes to an end|结束，到期｜come to 就是「走到」，an end 就是「终点」——走到头了，结束了。租期到了的意思">comes to an end</span>.</span>
+    <div class="analysis" id="analysis-7"><button class="analysis-play" onclick="playAnalysis('analysis-7', this)" title="听讲解">🔊 听讲解</button>
+      <p>这句看着长，其实中间 who now rents... South West London 一大段只是在交代她现在住哪，跟主句没关系。跳过这段，句子就短了：Terri says DIY saves her from losing deposit。以后碰到 who/which 引出一大堆的，先跳过找后面的主句动词就好。</p>
+    </div>
+    <span class="sentence" data-idx="8">She adds: "I've <span class="tip" data-tip="moved house|搬家｜move 是移动，house 是房子——但 move house 不是「搬一座房子」，是「搬家、换地方住」。英式说法，直接说 I've moved house many times = 我搬过很多次家">moved house</span> many times and I always like to <span class="tip" data-tip="personalise|按自己喜好装饰｜personal 是「个人的」对吧？加 -ise 变动词，就是让房间变得有自己的风格——挂照片、换窗帘之类的">personalise</span> my room and <span class="tip" data-tip="put up|挂上｜又是 put up！第1段是 put up shelves 装架子，这里是 put up pictures 挂照片。都是往墙上弄东西，同一个意思">put up</span> pictures.</span>
+    <span class="sentence complex" data-idx="9">So, it's been useful to know how to <span class="tip" data-tip="cover up|遮盖，填补｜cover 是盖住，up 加强语气。cover up holes = 把墙上的洞给补上、盖住，让人看不出来">cover up</span> holes and <span class="tip" data-tip="repaint|重新刷漆｜paint 是刷漆、画画，re- 就是「再来一次」。repaint a room = 把房间重新刷一遍，让它看起来跟新的一样">repaint</span> a room to <span class="tip" data-tip="avoid any charges|避免被扣钱｜charge 你可能知道 charge your phone 充电。但 charge 还有「收费」的意思。avoid any charges = 不被收任何费用，搬走时不被扣钱">avoid any charges</span> when I've moved out."</span>
+    <div class="analysis" id="analysis-9"><button class="analysis-play" onclick="playAnalysis('analysis-9', this)" title="听讲解">🔊 听讲解</button>
+      <p>这句是一条因果链：会填墙洞、会刷漆 → 搬走的时候房间恢复原样 → 不被房东扣钱。开头 it's been useful to know... 先说结论"这技能有用"，后面再说有用在哪。</p>
+    </div>
+    <div class="translation-inline">现在和朋友在伦敦西南部合租房子的 Terri 说，DIY 还能帮她在租期结束时不损失押金。她补充道："我搬过很多次家，我总是喜欢给房间加上个人风格、挂些照片。所以，知道怎么填补墙洞、重新粉刷房间来避免搬出时被扣钱，一直很有用。"</div>
+  </div>
+
+  <!-- ── Paragraph 4 ── -->
+  <div class="paragraph" id="para-4">
+    <span class="sentence complex" data-idx="10">With millions of people likely to <span class="tip" data-tip="take on|承担，开始做｜take 拿起，on 上身——take on a project 就是「接下一个项目来做」。注意 take on 有好几个意思：接任务、呈现新面貌(take on a new look)、雇人、挑战">take on</span> DIY projects over the coming weeks, new research shows that more than half of people are planning to <span class="tip" data-tip="make the most of|充分利用｜most 是最多，make the most of = 把…利用到最大。趁夏天天好，能干多少干多少">make the most of</span> the long, warm summer days to <span class="tip" data-tip="get jobs done|把活儿干完｜get something done = 把事情搞定。你说 get my homework done 就是「把作业做完」，这里是把 DIY 的活儿干完">get jobs done</span>.</span>
+    <div class="analysis" id="analysis-10"><button class="analysis-play" onclick="playAnalysis('analysis-10', this)" title="听讲解">🔊 听讲解</button>
+      <p>With millions of people... 开头这一段是大背景："既然有几百万人要搞 DIY"。真正的重点从 new research shows 开始——研究发现超一半人打算趁夏天干活。碰到 With... 开头的长句，直接往后找主语就行，前面只是铺垫。</p>
+    </div>
+    <span class="sentence" data-idx="11">The <span class="tip" data-tip="average spend|平均花费｜average 是平均，spend 你肯定知道是「花钱」，这里 spend 变名词了——花出去的钱。平均每个项目花823英镑">average spend</span> per project will be around £823.</span>
+    <span class="sentence" data-idx="12"><span class="tip" data-tip="Two thirds of|三分之二的｜2/3，英语分数这样读：two(2) thirds(三分之)。类似的：one third = 1/3，three quarters = 3/4">Two thirds of</span> people <span class="tip" data-tip="aim to|目标是｜aim 就是「瞄准」，打游戏说 aim 对吧？aim to improve = 瞄着改善这个目标去的">aim to</span> improve their comfort while at home.</span>
+    <span class="sentence" data-idx="13"><span class="tip" data-tip="A fifth|五分之一｜上一句说了 two thirds（三分之二），这里 a fifth = 五分之一，大约20%的人">A fifth</span> wish to increase the value of their house.</span>
+    <span class="sentence complex" data-idx="14"><span class="tip" data-tip="Though|尽管｜though 就是「虽然、尽管」。看到 though 开头，心里马上准备好：前面说的和后面说的是反着来的。这句：虽然是男性爱好→但现在女的带头了">Though</span> DIY has <span class="tip" data-tip="traditionally|传统上，一直以来｜tradition 是「传统」对吧？traditional 传统的，traditionally 就是「按照传统来说、一直以来」。一直以来大家觉得 DIY 是男人干的——但后面马上转折了">traditionally</span> been <span class="tip" data-tip="seen as|被看成…｜see 是看，seen as = 被人们看成。大家一直把 DIY 看成男人的爱好">seen as</span> a male hobby, the research shows it is women now <span class="tip" data-tip="leading the charge|带头冲在前面｜lead 是带领，charge 本来是打仗时冲锋。leading the charge = 冲在最前面，这里比喻女性现在是 DIY 潮流的带头人">leading the charge</span>.</span>
+    <div class="analysis" id="analysis-14"><button class="analysis-play" onclick="playAnalysis('analysis-14', this)" title="听讲解">🔊 听讲解</button>
+      <p>Though 开头就是要转折：前面说"一直以来大家觉得是男人干的活儿"，后面马上反转——现在反而是女性带头了。看到 Though/Although 开头，心里就准备好，逗号后面要说反话。</p>
+      <p>it is women now leading the charge — 故意把 women 提前强调：不是别人，就是女性。这句也是全段的核心结论，第27题答案就从这来。</p>
+    </div>
+    <div class="translation-inline">随着数百万人可能在未来几周开展 DIY 项目，新研究表明超过一半的人正计划充分利用漫长温暖的夏日来完成工作。每个项目平均花费约823英镑。三分之二的人希望改善居家舒适度，五分之一的人希望提升房屋价值。尽管 DIY 传统上被视为男性爱好，但研究表明，现在引领这一潮流的是女性。</div>
+  </div>
+</div>
+
+<!-- ══════ Vocabulary ══════ -->
+<div class="panel" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')">
+    生词与短语（15个）
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="vocab-list">
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('dab hand')">dab hand</span>
+          <span class="vocab-meaning">能手，行家</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('put up')">put up</span>
+          <span class="vocab-meaning">安装，搭建（架子）</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">核心画面：</span>put（放）+ up（往上）→ 往上弄、立起来。</div>
+          <div class="vd-example">① 安装/搭建：<em>put up</em> shelves 装架子 · <em>put up</em> a tent 搭帐篷</div>
+          <div class="vd-example">② 张贴：<em>put up</em> a notice on the wall 在墙上贴告示</div>
+          <div class="vd-example">③ 忍受（put up with）：I can't <em>put up with</em> the noise.</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('piece together')">piece together</span>
+          <span class="vocab-meaning">拼装，组装（家具）</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">piece 从名词"一块"变动词"拼"，together 强调拼到一起。也可用于抽象义：piece together the truth 拼凑出真相。</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('credit')">credit ... to ...</span>
+          <span class="vocab-meaning">把…归功于</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-example">④ <b>归功于（本文）：</b>She <em>credits</em> these skills <em>to</em> her grandfather.</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('late')">late</span>
+          <span class="vocab-tag">熟词僻义</span>
+          <span class="vocab-meaning">已故的（her late grandfather）</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">her <b>late</b> grandfather = 她已故的祖父。late 的核心是"晚"，人生走到最晚的阶段就是去世了。</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('accompany')">accompany</span>
+          <span class="vocab-meaning">陪伴，陪同</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('treat')">treat</span>
+          <span class="vocab-tag">题目选项词</span>
+          <span class="vocab-meaning">奖赏，款待；对待；治疗</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('backbreaking')">backbreaking</span>
+          <span class="vocab-meaning">极其辛苦的，累人的</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('deposit')">deposit</span>
+          <span class="vocab-tag">熟词僻义</span>
+          <span class="vocab-meaning">押金，保证金</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('tenancy')">tenancy</span>
+          <span class="vocab-meaning">租期，租约</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('personalise')">personalise</span>
+          <span class="vocab-meaning">使个性化，自定义装饰</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('cover up')">cover up</span>
+          <span class="vocab-meaning">遮盖，填补（墙洞）</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('take on')">take on</span>
+          <span class="vocab-tag">一词多义</span>
+          <span class="vocab-meaning">承担，从事（项目）</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('make the most of')">make the most of</span>
+          <span class="vocab-meaning">充分利用</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('lead the charge')">lead the charge</span>
+          <span class="vocab-meaning">引领潮流，带头冲锋</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Questions ══════ -->
+<div class="panel" id="questionsPanel">
+  <div class="panel-header" onclick="togglePanel('questionsPanel')">
+    题目与解析（4题）
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="question-item" data-answer="C">
+      <div class="question-stem">24. Which is closest in meaning to "a dab hand" in paragraph 1?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. An artist.</div>
+        <div class="question-option" data-key="B">B. A winner.</div>
+        <div class="question-option" data-key="C">C. A specialist.</div>
+        <div class="question-option" data-key="D">D. A pioneer.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：C</div>
+        <div class="locate">"Terri Bolton is a dab hand when it comes to DIY. Skilled at putting up shelves and piecing together furniture..."</div>
+        <p style="margin-top:8px"><b>解题思路：</b>上下文说明 dab hand = 在某方面很拿手的人 = specialist。</p>
+        <p>A. An artist <span class="trap-tag wrong">偷换概念</span> B. A winner <span class="trap-tag wrong">无中生有</span> C. A specialist <span class="trap-tag correct">正确</span> D. A pioneer <span class="trap-tag wrong">偷换概念</span></p>
+      </div>
+    </div>
+    <div class="question-item" data-answer="B">
+      <div class="question-stem">25. Why did Terri's grandfather give her £5 a day?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. For a birthday gift.</div>
+        <div class="question-option" data-key="B">B. As a treat for her work.</div>
+        <div class="question-option" data-key="C">C. To support her DIY projects.</div>
+        <div class="question-option" data-key="D">D. To encourage her to take up a hobby.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：B</div>
+        <div class="locate">"A day's work was rewarded with £5 in pocket money."</div>
+        <p style="margin-top:8px">rewarded = treat，同义替换。</p>
+      </div>
+    </div>
+    <div class="question-item" data-answer="A">
+      <div class="question-stem">26. How did Terri avoid losing the deposit on the house she rented?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. By making it look like before.</div>
+        <div class="question-option" data-key="B">B. By furnishing it herself.</div>
+        <div class="question-option" data-key="C">C. By splitting the rent with a roommate.</div>
+        <div class="question-option" data-key="D">D. By cancelling the rental agreement.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：A</div>
+        <div class="locate">"cover up holes and repaint a room to avoid any charges when I've moved out"</div>
+        <p style="margin-top:8px">cover up + repaint = 恢复原貌 = making it look like before。</p>
+      </div>
+    </div>
+    <div class="question-item" data-answer="D">
+      <div class="question-stem">27. What trend in DIY does the research show?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. It is becoming more costly.</div>
+        <div class="question-option" data-key="B">B. It is getting more time-consuming.</div>
+        <div class="question-option" data-key="C">C. It is turning into a seasonal industry.</div>
+        <div class="question-option" data-key="D">D. It is gaining popularity among females.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：D</div>
+        <div class="locate">"it is women now leading the charge"</div>
+        <p style="margin-top:8px">women leading the charge = gaining popularity among females。</p>
+      </div>
+    </div>
+    <div class="quiz-score" id="quizScore"></div>
+  </div>
+</div>
+
+<!-- ══════ Review ══════ -->
+<div class="panel" id="reviewPanel">
+  <div class="panel-header" onclick="togglePanel('reviewPanel')">
+    本篇复盘
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="review-section">
+      <h3>我这篇的卡点：</h3>
+      <div class="review-checks">
+        <label><input type="checkbox" id="rev1"> 长难句看不懂</label>
+        <label><input type="checkbox" id="rev2"> 找不到原文证据</label>
+        <label><input type="checkbox" id="rev3"> 脑补推理</label>
+        <label><input type="checkbox" id="rev4"> 生词太多</label>
+      </div>
+      <h3 style="margin-top:16px">标记：</h3>
+      <div class="review-checks">
+        <label><input type="checkbox" id="rev5"> 待复习</label>
+        <label><input type="checkbox" id="rev6"> 已掌握</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ 阅读技巧 ══════ -->
+<div class="panel" id="tipPanel">
+  <div class="panel-header" onclick="togglePanel('tipPanel')">
+    阅读技巧：遇到生词怎么办
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body" style="font-size:15px; line-height:1.8;">
+    <p style="margin-bottom:10px;">高考故意放超纲词——考的是你能不能<strong>不慌、往下读、从上下文猜</strong>。</p>
+    <p style="margin-bottom:14px; padding-left:16px;"><strong>例：</strong>第一句 <em>a dab hand</em>，dab 不用认识。后面跟 <em>when it comes to DIY</em>，下句 <em>Skilled at putting up shelves</em>，再下句 <em>never pays someone else to do a job she can do herself</em>——三句一串，a dab hand = <strong>某方面特别拿手的人</strong>。</p>
+    <ol style="padding-left:32px; margin-bottom:0;">
+      <li style="margin-bottom:6px;"><strong>别停。</strong>先往后读一两句，后文八成有同义解释或举例。</li>
+      <li style="margin-bottom:6px;"><strong>够用就行。</strong>猜出「大概啥意思」就能做对题，不必精确翻译。</li>
+      <li style="margin-bottom:0;"><strong>别被吓住。</strong>出题人放生词是故意的——遇到说明你进了拉分区，稳住就是赚到。</li>
+    </ol>
+  </div>
+</div>
+
+</div><!-- .container -->
+
+<!-- ══════ Bottom Playbar ══════ -->
+<div id="playbar">
+  <button id="pb-prev" onclick="pbPrev()" title="上一句">⏮</button>
+  <button id="pb-play" onclick="pbToggle()" title="播放/暂停">▶</button>
+  <button id="pb-next" onclick="pbNext()" title="下一句">⏭</button>
+  <span id="pb-counter">— / 15</span>
+  <select id="pb-speed" onchange="pbSetSpeed(this.value)" title="播放速度">
+    <option value="0.8">0.8x</option>
+    <option value="1" selected>1.0x</option>
+    <option value="1.2">1.2x</option>
+  </select>
+</div>
+
+<script>
+// ── Theme toggle ──
+const THEMES = ['default', 'yellow', 'green'];
+const THEME_LABELS = { default: '⬜ 默认白', yellow: '📄 书本黄', green: '🌿 护眼绿' };
+let themeIdx = parseInt(localStorage.getItem('theme') || '0');
+function applyTheme() {
+  document.body.classList.remove('theme-yellow', 'theme-green');
+  const t = THEMES[themeIdx];
+  if (t !== 'default') document.body.classList.add('theme-' + t);
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.textContent = THEME_LABELS[t];
+}
+function cycleTheme() {
+  themeIdx = (themeIdx + 1) % THEMES.length;
+  localStorage.setItem('theme', themeIdx);
+  applyTheme();
+}
+applyTheme();
+
+const sentences = [
+  "Terri Bolton is a dab hand when it comes to DIY.",
+  "Skilled at putting up shelves and piecing together furniture, she never pays someone else to do a job she can do herself.",
+  "She credits these skills to her late grandfather and builder Derek Lloyd.",
+  "From the age of six, Terri, now 26, accompanied Derek to work during her school holidays.",
+  "A day's work was rewarded with five pounds in pocket money.",
+  "She says: I'm sure I wasn't much of a help to start with, painting the rooms and putting down the flooring throughout the house.",
+  "It took weeks and was backbreaking work, but I know he was proud of my skills.",
+  "Terri, who now rents a house with friends in Wandsworth, South West London, says DIY also saves her from losing any deposit when a tenancy comes to an end.",
+  "She adds: I've moved house many times and I always like to personalise my room and put up pictures.",
+  "So, it's been useful to know how to cover up holes and repaint a room to avoid any charges when I've moved out.",
+  "With millions of people likely to take on DIY projects over the coming weeks, new research shows that more than half of people are planning to make the most of the long, warm summer days to get jobs done.",
+  "The average spend per project will be around eight hundred and twenty-three pounds.",
+  "Two thirds of people aim to improve their comfort while at home.",
+  "A fifth wish to increase the value of their house.",
+  "Though DIY has traditionally been seen as a male hobby, the research shows it is women now leading the charge."
+];
+
+// ── Tooltip system ──
+let activeTooltip = null;
+
+const ANALYSIS_AUDIO = {
+  "analysis-1":  "audio/2023-甲卷-B/analysis-1.mp3",
+  "analysis-3":  "audio/2023-甲卷-B/analysis-3.mp3",
+  "analysis-5":  "audio/2023-甲卷-B/analysis-5.mp3",
+  "analysis-7":  "audio/2023-甲卷-B/analysis-7.mp3",
+  "analysis-9":  "audio/2023-甲卷-B/analysis-9.mp3",
+  "analysis-10": "audio/2023-甲卷-B/analysis-10.mp3",
+  "analysis-14": "audio/2023-甲卷-B/analysis-14.mp3",
+};
+let analysisPlayer = null;
+let analysisBtn = null;
+
+function playAnalysis(id, btn) {
+  if (analysisPlayer) {
+    analysisPlayer.pause();
+    analysisPlayer = null;
+    if (analysisBtn) { analysisBtn.textContent = '🔊 听讲解'; analysisBtn.classList.remove('playing'); }
+    if (analysisBtn === btn) { analysisBtn = null; return; }
+  }
+  const src = ANALYSIS_AUDIO[id];
+  if (!src) return;
+  analysisPlayer = new Audio(src);
+  analysisBtn = btn;
+  btn.textContent = '⏹ 停止';
+  btn.classList.add('playing');
+  analysisPlayer.onended = () => { btn.textContent = '🔊 听讲解'; btn.classList.remove('playing'); analysisPlayer = null; analysisBtn = null; };
+  analysisPlayer.play();
+}
+
+const ZH_AUDIO = {"a-dab-hand":"audio/2023-甲卷-B/a-dab-hand.mp3","when-it-comes-to":"audio/2023-甲卷-B/when-it-comes-to.mp3","skilled-at":"audio/2023-甲卷-B/skilled-at.mp3","putting-up":"audio/2023-甲卷-B/putting-up.mp3","piecing-together":"audio/2023-甲卷-B/piecing-together.mp3","credits-to":"audio/2023-甲卷-B/credits-to.mp3","late":"audio/2023-甲卷-B/late.mp3","from-the-age-of":"audio/2023-甲卷-B/from-the-age-of.mp3","accompanied":"audio/2023-甲卷-B/accompanied.mp3","rewarded-with":"audio/2023-甲卷-B/rewarded-with.mp3","pocket-money":"audio/2023-甲卷-B/pocket-money.mp3","much-of-a":"audio/2023-甲卷-B/much-of-a.mp3","to-start-with":"audio/2023-甲卷-B/to-start-with.mp3","putting-down":"audio/2023-甲卷-B/putting-down.mp3","throughout":"audio/2023-甲卷-B/throughout.mp3","backbreaking":"audio/2023-甲卷-B/backbreaking.mp3","proud-of":"audio/2023-甲卷-B/proud-of.mp3","saves-her-from":"audio/2023-甲卷-B/saves-her-from.mp3","deposit":"audio/2023-甲卷-B/deposit.mp3","tenancy":"audio/2023-甲卷-B/tenancy.mp3","comes-to-an-end":"audio/2023-甲卷-B/comes-to-an-end.mp3","moved-house":"audio/2023-甲卷-B/moved-house.mp3","personalise":"audio/2023-甲卷-B/personalise.mp3","put-up":"audio/2023-甲卷-B/put-up.mp3","cover-up":"audio/2023-甲卷-B/cover-up.mp3","repaint":"audio/2023-甲卷-B/repaint.mp3","avoid-any-charges":"audio/2023-甲卷-B/avoid-any-charges.mp3","take-on":"audio/2023-甲卷-B/take-on.mp3","make-the-most-of":"audio/2023-甲卷-B/make-the-most-of.mp3","get-jobs-done":"audio/2023-甲卷-B/get-jobs-done.mp3","average-spend":"audio/2023-甲卷-B/average-spend.mp3","two-thirds-of":"audio/2023-甲卷-B/two-thirds-of.mp3","aim-to":"audio/2023-甲卷-B/aim-to.mp3","a-fifth":"audio/2023-甲卷-B/a-fifth.mp3","though":"audio/2023-甲卷-B/though.mp3","traditionally":"audio/2023-甲卷-B/traditionally.mp3","seen-as":"audio/2023-甲卷-B/seen-as.mp3","leading-the-charge":"audio/2023-甲卷-B/leading-the-charge.mp3"};
+let zhPlayer = null;
+
+function phraseToSlug(phrase) {
+  return phrase.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function playZhAudio(slug, btn) {
+  if (zhPlayer) { zhPlayer.pause(); zhPlayer = null; }
+  const src = ZH_AUDIO[slug];
+  if (!src) return;
+  zhPlayer = new Audio(src);
+  btn.textContent = '⏹ 停止';
+  zhPlayer.onended = () => { btn.textContent = '🔊 听讲解'; };
+  zhPlayer.play();
+}
+
+function showTooltip(tipEl) {
+  hideTooltip();
+  const raw = tipEl.getAttribute('data-tip');
+  const [phrase, explain] = raw.split('|');
+  const parts = explain.split('｜');
+  const slug = phraseToSlug(phrase);
+  const hasAudio = ZH_AUDIO[slug];
+
+  const tooltip = document.createElement('div');
+  tooltip.className = 'tooltip';
+  tooltip.innerHTML =
+    `<div class="tip-phrase">${phrase}<span class="tip-speak" onclick="speakWord('${phrase}')">&#9654;</span></div>` +
+    parts.map(p => `<div>${p.trim()}</div>`).join('') +
+    (hasAudio ? `<button class="tip-zh-play" onclick="playZhAudio('${slug}', this)">🔊 听讲解</button>` : '');
+  document.body.appendChild(tooltip);
+  activeTooltip = tooltip;
+
+  const rect = tipEl.getBoundingClientRect();
+  const tw = tooltip.offsetWidth;
+  const th = tooltip.offsetHeight;
+  let left = rect.left + rect.width / 2 - tw / 2;
+  left = Math.max(8, Math.min(left, window.innerWidth - tw - 8));
+  const arrowLeft = rect.left + rect.width / 2 - left;
+  tooltip.style.setProperty('--arrow-left', arrowLeft + 'px');
+  let top = rect.top + window.scrollY - th - 10;
+  if (top < window.scrollY + 60) {
+    top = rect.bottom + window.scrollY + 10;
+    tooltip.classList.add('below');
+  }
+  tooltip.style.left = left + 'px';
+  tooltip.style.top = top + 'px';
+}
+
+function hideTooltip() {
+  if (zhPlayer) { zhPlayer.pause(); zhPlayer = null; }
+  if (activeTooltip) { activeTooltip.remove(); activeTooltip = null; }
+}
+
+document.addEventListener('click', function(e) {
+  const tipEl = e.target.closest('.tip');
+  if (tipEl) {
+    e.stopPropagation();
+    if (activeTooltip && activeTooltip._source === tipEl) {
+      hideTooltip();
+    } else {
+      showTooltip(tipEl);
+      if (activeTooltip) activeTooltip._source = tipEl;
+    }
+    return;
+  }
+  if (e.target.closest('.tooltip')) return;
+  hideTooltip();
+});
+
+// ── Playbar ──
+let pbCurrent = null;
+let pbPlaying = false;
+let pbSpeed = 1;
+let enPlayer = null;
+
+function pbStop() {
+  if (enPlayer) { enPlayer.pause(); enPlayer = null; }
+  pbPlaying = false;
+}
+
+function highlightSentence(idx) {
+  document.querySelectorAll('.sentence').forEach(el => el.classList.remove('playing'));
+  if (idx !== null && idx >= 0 && idx < sentences.length) {
+    const el = document.querySelector(`.sentence[data-idx="${idx}"]`);
+    if (el) {
+      el.classList.add('playing');
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+}
+
+function pbUpdateUI() {
+  const playBtn = document.getElementById('pb-play');
+  const counter = document.getElementById('pb-counter');
+  playBtn.textContent = pbPlaying ? '⏸' : '▶';
+  counter.textContent = pbCurrent !== null ? `${pbCurrent + 1} / ${sentences.length}` : `— / ${sentences.length}`;
+}
+
+function pbPlayCurrent() {
+  pbStop();
+  if (pbCurrent === null) { pbUpdateUI(); return; }
+  const src = `audio/2023-甲卷-B/en-s${String(pbCurrent).padStart(2,'0')}.mp3`;
+  enPlayer = new Audio(src);
+  enPlayer.playbackRate = pbSpeed;
+  pbPlaying = true;
+  highlightSentence(pbCurrent);
+  pbUpdateUI();
+  enPlayer.onended = () => {
+    if (pbPlaying) {
+      if (pbCurrent < sentences.length - 1) {
+        pbCurrent++;
+        pbPlayCurrent();
+      } else {
+        pbPlaying = false;
+        highlightSentence(null);
+        pbUpdateUI();
+      }
+    }
+  };
+  enPlayer.onerror = () => {
+    pbPlaying = false;
+    highlightSentence(null);
+    pbUpdateUI();
+  };
+  enPlayer.play();
+}
+
+function pbToggle() {
+  if (pbCurrent === null) {
+    pbCurrent = 0;
+    pbPlayCurrent();
+    return;
+  }
+  if (pbPlaying) {
+    pbStop();
+    highlightSentence(pbCurrent);
+    pbUpdateUI();
+  } else {
+    pbPlayCurrent();
+  }
+}
+
+function pbPrev() {
+  if (pbCurrent === null) pbCurrent = 0;
+  else if (pbCurrent > 0) pbCurrent--;
+  pbPlayCurrent();
+}
+
+function pbNext() {
+  if (pbCurrent === null) pbCurrent = 0;
+  else if (pbCurrent < sentences.length - 1) pbCurrent++;
+  pbPlayCurrent();
+}
+
+function pbSetSpeed(v) {
+  pbSpeed = parseFloat(v);
+  if (enPlayer) enPlayer.playbackRate = pbSpeed;
+}
+
+function pbJumpTo(idx) {
+  pbStop();
+  pbCurrent = idx;
+  highlightSentence(idx);
+  pbUpdateUI();
+}
+
+// Click complex sentence → toggle analysis only; playbar is independent
+document.addEventListener('click', function(e) {
+  if (e.target.closest('.tip') || e.target.closest('.tooltip')) return;
+  const sentence = e.target.closest('.sentence.complex');
+  if (sentence) toggleAnalysis(parseInt(sentence.dataset.idx));
+});
+
+// ── Other UI ──
+function speakWord(word) {
+  const utter = new SpeechSynthesisUtterance(word);
+  const voices = speechSynthesis.getVoices();
+  utter.voice = voices.find(v => v.lang === 'en-GB') || voices.find(v => v.lang.startsWith('en')) || voices[0];
+  utter.rate = 0.8;
+  speechSynthesis.speak(utter);
+}
+
+function toggleAnalysis(idx) {
+  const el = document.getElementById('analysis-' + idx);
+  if (el) el.classList.toggle('open');
+}
+
+function togglePanel(id) { document.getElementById(id).classList.toggle('open'); }
+
+function setMode(mode) {
+  document.body.classList.remove('mode-raw', 'mode-study', 'mode-quiz');
+  if (mode !== 'study') document.body.classList.add('mode-' + mode);
+  document.querySelectorAll('.mode-step').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.mode === mode);
+  });
+  hideTooltip();
+  if (mode === 'quiz') { pbStop(); highlightSentence(null); pbUpdateUI(); resetQuiz(); }
+}
+
+// ── Quiz ──
+function resetQuiz() {
+  document.querySelectorAll('.question-option').forEach(opt => opt.classList.remove('selected','correct','wrong'));
+  document.querySelectorAll('.question-item').forEach(q => q.dataset.answered = '');
+  const score = document.getElementById('quizScore');
+  if (score) score.classList.remove('show');
+}
+
+document.addEventListener('click', function(e) {
+  if (!document.body.classList.contains('mode-quiz')) return;
+  const opt = e.target.closest('.question-option');
+  if (!opt) return;
+  const item = opt.closest('.question-item');
+  if (item.dataset.answered) return;
+  item.dataset.answered = 'true';
+  const picked = opt.dataset.key;
+  const correct = item.dataset.answer;
+  if (picked === correct) {
+    opt.classList.add('correct');
+  } else {
+    opt.classList.add('wrong');
+    item.querySelector(`.question-option[data-key="${correct}"]`).classList.add('correct');
+  }
+  const total = document.querySelectorAll('.question-item[data-answer]').length;
+  const done = document.querySelectorAll('.question-item[data-answered="true"]').length;
+  if (done === total) showQuizScore();
+});
+
+function showQuizScore() {
+  const total = document.querySelectorAll('.question-item[data-answer]').length;
+  const wrong = document.querySelectorAll('.question-option.wrong').length;
+  const score = document.getElementById('quizScore');
+  score.textContent = `得分：${total - wrong} / ${total}`;
+  score.classList.add('show');
+}
+
+function toggleQuestionAnalysis(btn) {
+  const analysis = btn.nextElementSibling;
+  analysis.classList.toggle('open');
+  btn.textContent = analysis.classList.contains('open') ? '收起解析' : '\u{1F50D} 查看解析';
+}
+
+// ── LocalStorage review ──
+function saveReview() {
+  const state = {};
+  document.querySelectorAll('.review-checks input').forEach(cb => { state[cb.id] = cb.checked; });
+  localStorage.setItem('review-b-passage', JSON.stringify(state));
+}
+function loadReview() {
+  try {
+    const state = JSON.parse(localStorage.getItem('review-b-passage'));
+    if (state) Object.keys(state).forEach(id => { const cb = document.getElementById(id); if (cb) cb.checked = state[id]; });
+  } catch(e) {}
+}
+document.querySelectorAll('.review-checks input').forEach(cb => cb.addEventListener('change', saveReview));
+loadReview();
+pbUpdateUI();
+</script>
+</body>
+</html>
