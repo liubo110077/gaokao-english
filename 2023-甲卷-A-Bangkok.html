@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2023甲卷·A篇精读 · Where to Eat in Bangkok</title>
+<style>
+:root {
+  --bg: #fafaf8;
+  --text: #1a1a1a;
+  --text-secondary: #555;
+  --text-muted: #888;
+  --accent: #2563eb;
+  --accent-light: #dbeafe;
+  --complex-bg: #f0f6fc;
+  --border: #e2e2e0;
+  --card-bg: #fff;
+  --hover-bg: #f5f5f4;
+  --shadow: 0 1px 3px rgba(0,0,0,.08);
+  --radius: 6px;
+}
+.theme-yellow {
+  --bg: #f5f0e8;
+  --card-bg: #faf6ee;
+  --border: #ddd5bf;
+  --complex-bg: #ece4d4;
+  --hover-bg: #ede7d8;
+  --accent-light: #fde8b8;
+}
+.theme-green {
+  --bg: #edecea;
+  --card-bg: #f3f2f0;
+  --border: #d6d5d0;
+  --complex-bg: #e5e4e0;
+  --hover-bg: #e8e7e3;
+  --accent-light: #dddcd6;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  padding-bottom: 60px;
+}
+.container { max-width: min(1100px, 88vw); margin: 0 auto; padding: 0 20px; }
+
+/* ── Header ── */
+.header {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header .container { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.header h1 { font-size: 16px; font-weight: 600; flex: 1; min-width: 200px; }
+.header-sub { font-size: 12px; color: var(--accent); font-weight: 500; background: var(--accent-light); padding: 2px 8px; border-radius: 10px; }
+.header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 6px 14px; border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--card-bg); color: var(--text); font-size: 13px;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ── Mode steps ── */
+.mode-steps { display: flex; gap: 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.mode-step {
+  padding: 6px 12px; border: none; background: var(--card-bg); color: var(--text-secondary);
+  font-size: 13px; cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.mode-step + .mode-step { border-left: 1px solid var(--border); }
+.mode-step.active { background: var(--accent); color: #fff; }
+.mode-step:hover:not(.active) { background: var(--accent-light); }
+
+/* ── Passage ── */
+.passage {
+  background: var(--card-bg); border-radius: var(--radius);
+  box-shadow: var(--shadow); margin-top: 20px; padding: 28px 32px;
+}
+.passage-title {
+  text-align: center; font-family: Georgia, "Times New Roman", serif;
+  font-size: 15px; font-weight: 700; letter-spacing: .5px;
+  margin-bottom: 20px; color: var(--text-secondary);
+}
+.passage-subtitle {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px; font-weight: 700; text-align: center;
+  margin-bottom: 16px; color: var(--text);
+}
+.restaurant-name {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700; font-size: 16px;
+  margin: 18px 0 6px 0; color: var(--text);
+}
+.paragraph { margin-bottom: 4px; text-indent: 2em; }
+.sentence {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px; line-height: 1.75;
+  position: relative; transition: background .2s; border-radius: 3px;
+  cursor: pointer;
+}
+.sentence:hover { background: var(--hover-bg); }
+.sentence.playing { background: var(--complex-bg); border-radius: 3px; }
+.sentence.complex { border-bottom: 1.5px dashed #93c5fd; }
+.sentence.complex.playing { background: var(--complex-bg); }
+
+/* ── Phrase tips ── */
+.tip {
+  border-bottom: 1.5px dashed var(--accent);
+  cursor: pointer;
+  position: relative;
+  transition: background .15s;
+}
+.tip:hover { background: var(--accent-light); }
+
+/* Tooltip bubble */
+.tooltip {
+  position: fixed;
+  z-index: 200;
+  background: var(--text);
+  color: #fff;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 8px 14px;
+  border-radius: 8px;
+  max-width: min(520px, calc(100vw - 16px));
+  width: max-content;
+  box-shadow: 0 4px 20px rgba(0,0,0,.25);
+  pointer-events: auto;
+  animation: tipIn .15s ease-out;
+}
+.tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: var(--arrow-left, 50%);
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid var(--text);
+}
+.tooltip.below::after {
+  bottom: auto; top: -6px;
+  border-top: none;
+  border-bottom: 6px solid var(--text);
+}
+.tooltip .tip-phrase {
+  font-family: Georgia, serif;
+  font-weight: 600;
+  color: #93c5fd;
+  margin-bottom: 2px;
+}
+.tooltip .tip-speak {
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 6px;
+  font-size: 12px;
+  opacity: .7;
+  vertical-align: middle;
+}
+.tooltip .tip-speak:hover { opacity: 1; }
+.tooltip .tip-zh-play {
+  display: block;
+  margin-top: 6px;
+  padding: 4px 10px;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 4px;
+  color: #93c5fd;
+  font-size: 12px;
+  cursor: pointer;
+  text-align: center;
+}
+.tooltip .tip-zh-play:hover { background: rgba(255,255,255,.25); }
+@keyframes tipIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Expandable analysis ── */
+.analysis {
+  display: none; margin: 8px 0 12px 0; padding: 12px 16px;
+  background: #f8f9fa; border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 14px; color: var(--text-secondary); line-height: 1.7; text-indent: 0;
+}
+.analysis.open { display: block; }
+.analysis p { margin-bottom: 4px; }
+.analysis b { color: var(--text); font-size: 13px; }
+.analysis-play {
+  float: right; margin-left: 8px;
+  background: none; border: 1px solid var(--border); border-radius: 4px;
+  font-size: 12px; padding: 2px 8px; cursor: pointer; color: var(--accent);
+  transition: all .15s;
+}
+.analysis-play:hover { background: var(--accent-light); border-color: var(--accent); }
+.analysis-play.playing { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ── Translation ── */
+.translation-inline {
+  display: none;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 14px; color: var(--text-muted);
+  margin: 2px 0 6px 0; text-indent: 0;
+}
+body.compare-mode .translation-inline { display: block; }
+
+/* ── Panels ── */
+.panel {
+  background: var(--card-bg); border-radius: var(--radius);
+  box-shadow: var(--shadow); margin-top: 16px; overflow: hidden;
+}
+.panel-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px; cursor: pointer; user-select: none;
+  font-weight: 600; font-size: 15px;
+  border-bottom: 1px solid transparent; transition: border-color .2s;
+}
+.panel-header:hover { color: var(--accent); }
+.panel-header .arrow { transition: transform .2s; font-size: 12px; color: var(--text-muted); }
+.panel.open .panel-header { border-bottom-color: var(--border); }
+.panel.open .panel-header .arrow { transform: rotate(180deg); }
+.panel-body { display: none; padding: 16px 24px; }
+.panel.open .panel-body { display: block; }
+
+/* Vocab cards */
+.vocab-card { border-bottom: 1px solid #f0f0f0; padding: 12px 0; }
+.vocab-card:last-child { border-bottom: none; }
+.vocab-card-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 12px; }
+.vocab-word { font-family: Georgia, serif; font-weight: 600; color: var(--accent); cursor: pointer; font-size: 15px; }
+.vocab-word:hover { text-decoration: underline; }
+.vocab-meaning { font-size: 14px; color: var(--text); }
+.vocab-extra { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+.vocab-tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 3px; background: #fef3c7; color: #92400e; vertical-align: middle; }
+.vocab-tag.tag-core { background: #dcfce7; color: #166534; }
+.vocab-tag.tag-exam { background: #dbeafe; color: #1e40af; }
+.vocab-tag.tag-beyond { background: #fef3c7; color: #92400e; }
+.vocab-detail { display: none; margin-top: 8px; padding: 10px 14px; background: #f8f9fa; border-radius: var(--radius); font-size: 13.5px; line-height: 1.7; }
+.vocab-detail.open { display: block; }
+.vocab-detail .vd-section { margin-bottom: 6px; }
+.vocab-detail .vd-label { font-weight: 600; color: var(--accent); margin-right: 4px; }
+.vocab-detail .vd-example { color: var(--text-secondary); padding-left: 16px; }
+.vocab-detail .vd-example em { color: var(--text); font-style: normal; font-weight: 600; }
+.vocab-expand { font-size: 12px; color: var(--accent); cursor: pointer; border: none; background: none; padding: 0; margin-left: 8px; }
+.vocab-expand:hover { text-decoration: underline; }
+
+/* ── SRS review buttons ── */
+.srs-btns { display: flex; gap: 5px; margin-left: auto; }
+.srs-btn { font-size: 11px; padding: 2px 7px; border-radius: 10px; border: 1.5px solid; cursor: pointer; transition: all .15s; background: none; white-space: nowrap; }
+.srs-btn-know  { border-color: #16a34a; color: #16a34a; }
+.srs-btn-know:hover  { background: #dcfce7; }
+.srs-btn-forget { border-color: #dc2626; color: #dc2626; }
+.srs-btn-forget:hover { background: #fee2e2; }
+.vocab-card.srs-due  .vocab-word::after { content: ' 📌'; font-size: 10px; }
+.vocab-card.srs-known .vocab-word::after { content: ' ✓';  font-size: 11px; color: #16a34a; }
+.srs-badge { font-size: 12px; font-weight: 600; padding: 1px 8px; border-radius: 10px; background: #fef2f2; color: #dc2626; }
+.srs-badge.all-done { background: #dcfce7; color: #16a34a; }
+
+/* ── Questions ── */
+.question-item { padding: 16px 24px; border-bottom: 1px solid #f0f0f0; }
+.question-item:last-child { border-bottom: none; }
+.question-stem { font-weight: 600; font-size: 15px; margin-bottom: 8px; }
+.question-options { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 24px; font-size: 14px; margin-bottom: 8px; }
+.question-option { padding: 2px 0; }
+.show-answer-btn { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; color: var(--accent); cursor: pointer; background: none; border: none; padding: 4px 0; }
+.show-answer-btn:hover { text-decoration: underline; }
+.question-analysis { display: none; margin-top: 10px; padding: 12px 16px; background: #f8f9fa; border-radius: var(--radius); font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+.question-analysis.open { display: block; }
+.question-analysis .answer-line { font-weight: 700; color: #16a34a; margin-bottom: 6px; font-size: 15px; }
+.question-analysis .locate { background: #fef9c3; padding: 6px 10px; border-radius: 4px; margin: 6px 0; font-family: Georgia, serif; font-style: italic; font-size: 14px; color: var(--text); }
+.option-list { margin-top: 10px; display: flex; flex-direction: column; gap: 2px; }
+.option-item { padding: 3px 0; font-size: 13.5px; line-height: 1.5; }
+.option-item .opt-letter { font-weight: 700; }
+.option-item .opt-mark { font-weight: 700; }
+.option-item.correct .opt-mark { color: #15803d; }
+.option-item.wrong .opt-mark { color: #b91c1c; }
+.option-item .opt-why { color: #888; font-size: 12.5px; margin-left: 4px; }
+
+/* ── Review ── */
+.review-section { padding: 20px 24px; }
+.review-section h3 { font-size: 15px; margin-bottom: 12px; }
+.review-checks { display: flex; flex-wrap: wrap; gap: 12px; font-size: 14px; }
+.review-checks label { display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 6px 12px; border: 1px solid var(--border); border-radius: var(--radius); transition: all .15s; }
+.review-checks label:has(input:checked) { background: var(--accent-light); border-color: var(--accent); }
+.review-checks input { accent-color: var(--accent); }
+
+/* ── Raw mode ── */
+body.mode-raw .tip { border-bottom: none; cursor: default; pointer-events: none; }
+body.mode-raw .tip:hover { background: none; }
+body.mode-raw .analysis,
+body.mode-raw .translation-inline,
+body.mode-raw .panel { display: none !important; }
+body.mode-raw .sentence.complex { border-bottom: none; }
+body.mode-raw .sentence { cursor: default; }
+body.mode-raw .sentence:hover { background: none; }
+
+/* ── Quiz mode ── */
+body.mode-quiz .tip { border-bottom: none; cursor: default; pointer-events: none; }
+body.mode-quiz .tip:hover { background: none; }
+body.mode-quiz .analysis,
+body.mode-quiz .translation-inline,
+body.mode-quiz #vocabPanel,
+body.mode-quiz #reviewPanel,
+body.mode-quiz #tipPanel,
+body.mode-quiz #playbar { display: none !important; }
+body.mode-quiz .sentence.complex { border-bottom: none; cursor: default; }
+body.mode-quiz .sentence { cursor: default; }
+body.mode-quiz .sentence:hover { background: none; }
+body.mode-quiz #questionsPanel { display: block; }
+body.mode-quiz #questionsPanel .panel-body { display: block; }
+body.mode-quiz .question-analysis { display: none !important; }
+body.mode-quiz .show-answer-btn { display: none; }
+body.mode-quiz .question-option { cursor: pointer; padding: 6px 10px; border-radius: var(--radius); border: 1.5px solid transparent; transition: all .15s; }
+body.mode-quiz .question-option:hover { background: var(--accent-light); }
+body.mode-quiz .question-option.selected { border-color: var(--accent); background: var(--accent-light); }
+body.mode-quiz .question-option.correct { border-color: #16a34a; background: #dcfce7; }
+body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2e2; }
+.quiz-score { text-align: center; padding: 16px; font-size: 16px; font-weight: 600; color: var(--accent); display: none; }
+.quiz-score.show { display: block; }
+
+/* ── Bottom Playbar ── */
+#playbar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+  background: #1a1a1a; color: #fff;
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  padding: 10px 20px; height: 52px;
+  font-size: 14px;
+  box-shadow: 0 -2px 12px rgba(0,0,0,.2);
+}
+#playbar button {
+  background: none; border: none; color: #fff; font-size: 18px;
+  cursor: pointer; padding: 4px 8px; border-radius: 4px; line-height: 1;
+  transition: background .15s;
+}
+#playbar button:hover { background: rgba(255,255,255,.15); }
+#pb-play { font-size: 22px; }
+#pb-counter { font-size: 13px; color: #aaa; min-width: 52px; text-align: center; }
+#pb-speed {
+  background: #333; border: none; color: #fff; font-size: 13px;
+  padding: 3px 6px; border-radius: 4px; cursor: pointer;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .passage { padding: 20px 16px; }
+  .sentence { font-size: 16px; }
+  .question-options { grid-template-columns: 1fr; }
+  .panel-header, .question-item, .review-section { padding-left: 16px; padding-right: 16px; }
+  .panel-body { padding: 12px 16px; }
+}
+</style>
+</head>
+<body class="mode-study">
+
+<!-- ══════ Header ══════ -->
+<div class="header">
+  <div class="container">
+    <h1>A篇精读 · Where to Eat in Bangkok</h1>
+    <div class="header-controls">
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="study" onclick="setMode('study')">① 精读</button>
+        <button class="mode-step" data-mode="quiz" onclick="setMode('quiz')">② 做题</button>
+        <button class="mode-step" data-mode="raw" onclick="setMode('raw')">③ 原文</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()" title="切换护眼色">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Passage ══════ -->
+<div class="container">
+<div class="passage" id="passage">
+  <div class="passage-title">A</div>
+  <div class="passage-subtitle">Where to Eat in Bangkok</div>
+
+  <!-- ── Intro ── -->
+  <div class="paragraph" id="para-intro">
+    <span class="sentence" data-idx="0">Bangkok is a highly <span class="tip" data-tip="desirable|令人向往的，非常理想的｜desire 是「渴望、想要」，desirable = 值得想要的 = 令人向往的。highly desirable = 非常令人向往的｜常见搭配：a desirable outcome 理想的结果，desirable qualities 理想的品质">desirable</span> <span class="tip" data-tip="destination|目的地｜destine 是「命中注定」，destination = 命中注定要去的地方 = 目的地。旅游、高考作文都很常用｜travel destination 旅游目的地，holiday destination 度假地">destination</span> for food lovers.</span>
+    <span class="sentence" data-idx="1">It has a <span class="tip" data-tip="seemingly bottomless well|好像挖不完的宝库（比喻）｜seem 是「看起来」，seemingly = 表面上看。bottomless = 没有底的。well = 水井。seemingly bottomless well of... = 看似挖不完的…宝藏，比喻选择多到无穷｜这是个整体比喻，不要逐字翻，记住：bottomless = 无穷无尽的">seemingly bottomless well</span> of <span class="tip" data-tip="dining options|餐饮选择｜dine 是「吃正餐」（比 eat 更正式），dining = 用餐，dining room = 餐厅，dining options = 餐饮选择｜option 高考高频：have no option but to = 别无选择只能…">dining options</span>.</span>
+    <span class="sentence" data-idx="2">Here are some suggestions on where to start your Bangkok eating <span class="tip" data-tip="adventure|冒险，新奇体验｜adventure 通常指「冒险」，但这里用在美食上——eating adventure = 美食探险之旅，表示这是一段值得期待的新奇体验。adventurous = 喜欢冒险的，爱尝鲜的">adventure</span>.</span>
+    <div class="translation-inline">曼谷是美食爱好者梦寐以求的目的地。这座城市的餐饮选择多得几乎无穷无尽。以下是一些建议，帮你开启曼谷美食探险之旅。</div>
+  </div>
+
+  <!-- ── Nahm ── -->
+  <div class="restaurant-name">Nahm</div>
+  <div class="paragraph" id="para-nahm">
+    <span class="sentence" data-idx="3">Offering Thai fine dining, Nahm provides the best of Bangkok <span class="tip" data-tip="culinary|烹饪的，美食的｜源自拉丁语 culina（厨房）。culinary experience = 美食体验，culinary school = 烹饪学校，culinary scene = 美食界｜超纲词，高考靠上下文猜：前后都在说餐厅、菜肴，culinary = 和烹饪/美食相关的">culinary</span> experiences.</span>
+    <span class="sentence" data-idx="4">It's the only Thai restaurant that <span class="tip" data-tip="ranks among|跻身于，名列…之中｜rank 是「排名、排列」。rank among the top 10 = 排在前十名之列｜搭配：rank highly 排名靠前，top-ranking 名列前茅，world rankings 世界排名">ranks among</span> the top 10 of the world's 50 best restaurants list.</span>
+    <span class="sentence complex" data-idx="5">Head Chef David Thompson, who <span class="tip" data-tip="received a Michelin star|获得米其林星级｜Michelin 是法国轮胎品牌，他们出版美食指南，给最好的餐厅颁星。一颗星 = 该城市值得一去的好餐厅，三颗星 = 值得专程前往｜receive = 收到、获得">received a Michelin star</span> for his <span class="tip" data-tip="London-based|总部/所在地在伦敦的｜base 是「基地、总部」，London-based = 在伦敦扎根的。常见：Beijing-based company 总部在北京的公司，Shanghai-based = 以上海为基地的">London-based</span> Thai restaurant of the same name, opened this branch in the Metropolitan Hotel in 2010.</span>
+    <div class="analysis" id="analysis-5"><button class="analysis-play" onclick="playAnalysis('analysis-5', this)" title="听讲解">🔊 听讲解</button>
+      <p>这句结构：Head Chef David Thompson... opened this branch in 2010。核心非常简单——汤普森大厨2010年在这家酒店开了这个分店。</p>
+      <p>中间 who received a Michelin star... of the same name 是插入的定语从句，只是在介绍他的背景：在伦敦也有一家同名泰国餐厅，还摘了米其林星。读懂核心后，再回来看插入部分。</p>
+    </div>
+    <div class="translation-inline">Nahm 提供高档泰国美食，是曼谷最佳烹饪体验的代表。它是世界50家最佳餐厅榜单前十中唯一一家泰国餐厅。主厨 David Thompson 曾凭借他在伦敦的同名泰国餐厅荣获米其林星，并于2010年在大都会酒店开设了这家分店。</div>
+  </div>
+
+  <!-- ── Issaya Siamese Club ── -->
+  <div class="restaurant-name">Issaya Siamese Club</div>
+  <div class="paragraph" id="para-issaya">
+    <span class="sentence" data-idx="6">Issaya Siamese Club is internationally known Thai chef Ian Kittichai's first <span class="tip" data-tip="flagship|旗舰，最重要的｜fleet 舰队，flag 旗——flagship 就是挂旗的船，整个舰队最重要的一艘。flagship restaurant/store = 旗舰餐厅/旗舰店，代表品牌最高水准｜flagship 还可作形容词：flagship product 旗舰产品">flagship</span> Bangkok restaurant.</span>
+    <span class="sentence" data-idx="7">The menu in this beautiful <span class="tip" data-tip="colonial|殖民地风格的；有历史感的｜colony 是殖民地，colonial 形容词 = 殖民地时期的。泰国历史上受西方影响，colonial house = 殖民地风格建筑，特点是高大门廊、百叶窗、欧式细节｜这类建筑现在通常指有历史感的老式洋楼">colonial</span> house includes traditional Thai <span class="tip" data-tip="cuisine|（某种风格的）菜肴，烹饪｜法语借词，比 food 更正式。Thai cuisine = 泰国菜，Chinese cuisine = 中餐，French cuisine = 法国菜｜culinary（烹饪的）和 cuisine 同根，高考常配套考查">cuisine</span> combined with modern cooking methods.</span>
+    <div class="translation-inline">Issaya Siamese Club 是国际知名泰国厨师 Ian Kittichai 在曼谷的第一家旗舰餐厅。这栋美丽的殖民风格建筑中，菜单将传统泰国菜肴与现代烹饪方法相结合。</div>
+  </div>
+
+  <!-- ── Bo.lan ── -->
+  <div class="restaurant-name">Bo.lan</div>
+  <div class="paragraph" id="para-bolan">
+    <span class="sentence" data-idx="8">Bo.lan has been <span class="tip" data-tip="making waves|引起轰动，受到广泛关注｜wave 是波浪，make waves = 掀起波浪 = 引起震动/轰动。自2009年开业就一直受到关注｜同义表达：cause a sensation, make a splash, attract attention">making waves</span> in Bangkok's culinary scene since it opened in 2009.</span>
+    <span class="sentence complex" data-idx="9">Serving hard-to-find Thai dishes in an elegant atmosphere, the restaurant <span class="tip" data-tip="is true to|忠于，保持…的本色｜true 是「真实的、忠诚的」。true to its roots = 忠实于根源/本色。保持了泰国传统菜的正宗口味，没有为了迎合外国人而改变｜同义：stay loyal to, remain faithful to">is true to</span> Thai cuisine's roots, yet still manages to add a special <span class="tip" data-tip="twist|独到之处，创意；转折｜twist 本是「扭转、转动」。在传统之上加一个「扭转」= 创新之处。add a twist = 加入独特创意｜with a twist = 有独特创意的：classic dishes with a twist 有创意的经典菜">twist</span>.</span>
+    <div class="analysis" id="analysis-9"><button class="analysis-play" onclick="playAnalysis('analysis-9', this)" title="听讲解">🔊 听讲解</button>
+      <p>句子开头 Serving... 是分词短语作状语，说明餐厅是怎么运营的（以优雅氛围提供难觅的泰国菜肴）。</p>
+      <p>主句核心是：the restaurant is true to roots, yet manages to add a twist。yet 在这里相当于 but——虽然保持了正宗，但同时还能加入创意。两个方面缺一不可，这就是这家餐厅的卖点。</p>
+    </div>
+    <span class="sentence" data-idx="10">This place is good for a <span class="tip" data-tip="candle-lit dinner|烛光晚餐｜candle = 蜡烛，lit = 点亮的（light的过去分词）。candle-lit dinner = 烛光下的晚餐，营造浪漫气氛｜类比：sun-lit = 阳光照耀的，moon-lit = 月光下的">candle-lit dinner</span> or a work meeting with colleagues who <span class="tip" data-tip="appreciate|欣赏；感激｜appreciate 有两个常用义：① 欣赏/感受到…的价值：appreciate fine food 懂得欣赏美食 ② 感激：I appreciate your help. 感谢你的帮助｜名词 appreciation：gain appreciation for = 对…产生欣赏/感激">appreciate</span> fine food.</span>
+    <span class="sentence" data-idx="11">For those <span class="tip" data-tip="extremely hungry|非常饿的；这里指胃口很大的食客｜extremely = 极其，hungry = 饿的。这里幽默地说「特别能吃的人」有大套餐可以选">extremely hungry</span>, there's a large <span class="tip" data-tip="set menu|套餐，固定菜单｜set = 固定的，set menu = 价格和菜品都固定好的一套餐。高档餐厅常见，提前选好多道菜的搭配｜相关：à la carte = 单点，prix fixe = 固定价格套餐">set menu</span>.</span>
+    <div class="translation-inline">Bo.lan 自2009年开业以来便在曼谷美食界引起了广泛关注。餐厅在优雅的氛围中提供难以在别处找到的泰国菜肴，忠于泰国烹饪的根本，同时又加入了独到的创意。这里适合烛光晚餐或与欣赏美食的同事聚餐。对于特别能吃的人，还有大型套餐可供选择。</div>
+  </div>
+
+  <!-- ── Gaggan ── -->
+  <div class="restaurant-name">Gaggan</div>
+  <div class="paragraph" id="para-gaggan">
+    <span class="sentence complex" data-idx="12">Earning first place on the latest "Asia's 50 best restaurants" list, <span class="tip" data-tip="progressive|前卫的，创新的｜progress 是「进步」，progressive = 不断向前、敢于突破的。progressive Indian restaurant = 创新派印度餐厅——不走传统路线，用创意手法呈现印度菜｜在政治上 progressive 是「进步主义的」，这里是美食领域的「创新派」">progressive</span> Indian restaurant Gaggan is one of the most exciting <span class="tip" data-tip="venues|场所，举办地｜venue 是举办活动/聚会的地点。concert venue 演唱会场地，sports venue 运动场馆，wedding venue 婚礼场地，这里指餐厅/就餐场所｜选词：venue 比 place 更正式，常用于介绍高档场所">venues</span> to arrive in Bangkok in recent years.</span>
+    <div class="analysis" id="analysis-12"><button class="analysis-play" onclick="playAnalysis('analysis-12', this)" title="听讲解">🔊 听讲解</button>
+      <p>开头 Earning first place... 是分词短语，交代了背景（刚在榜单上夺冠）。主句核心：Gaggan is one of the most exciting venues to arrive in Bangkok in recent years（近年来曼谷最令人兴奋的餐厅之一）。</p>
+      <p>分词短语里的 latest 是关键词——最新一期榜单上的第一名，说明它现在正当红。</p>
+    </div>
+    <span class="sentence complex" data-idx="13">The best table in this two-story <span class="tip" data-tip="colonial Thai home|殖民风格的泰式老宅｜同第7句的 colonial house。这里是两层楼的泰式老房子改建而成的餐厅，保留了历史建筑的风格">colonial Thai home</span> offers a window right into the kitchen, where you can see chef Gaggan and his staff <span class="tip" data-tip="in action|正在工作，运转中｜action 是「行动」，in action = 在运转/在干活儿中。这里指你坐在最好的位子上，可以透过窗口直接看到厨师们在厨房忙碌的样子｜常见：see sb in action = 亲眼看到某人工作，see the team in action">in action</span>.</span>
+    <div class="analysis" id="analysis-13"><button class="analysis-play" onclick="playAnalysis('analysis-13', this)" title="听讲解">🔊 听讲解</button>
+      <p>主句：The best table offers a window right into the kitchen。offers 在这里不是「提供」而是「给人一个…的机会/视角」——最好的桌子能让你直接看进厨房。</p>
+      <p>后面 where 引导定语从句，修饰 kitchen：在那个厨房里，你能看到 Gaggan 和员工在忙碌。这就是文中说的「美食剧场」——边吃边看厨师表演。</p>
+    </div>
+    <span class="sentence" data-idx="14"><span class="tip" data-tip="Culinary theater at its best|美食剧场的最佳体现｜culinary = 美食/烹饪的，theater = 剧场。culinary theater = 把烹饪当成一场表演。at its best = 达到最佳状态。整句话是评价性的感叹句，不是完整句——高考偶尔出现这类简短评价句，直接理解意思就好">Culinary theater at its best</span>.</span>
+    <div class="translation-inline">凭借在最新一期"亚洲50家最佳餐厅"榜单上夺得首位，前卫印度餐厅 Gaggan 是近年来登陆曼谷最令人兴奋的场所之一。这栋两层殖民风格泰式老宅中，最佳餐桌正对厨房，你可以亲眼看到 Gaggan 大厨和员工们忙碌工作。美食剧场，尽显极致。</div>
+  </div>
+</div>
+
+<!-- ══════ Vocabulary ══════ -->
+<div class="panel" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')">
+    <span>生词与短语（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="vocab-list">
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('desirable')">desirable</span>
+          <span class="vocab-meaning">令人向往的，非常理想的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">Bangkok is a <em>desirable</em> destination for food lovers. 曼谷是美食爱好者梦寐以求的目的地。<br>a <em>desirable</em> outcome 理想的结果 &nbsp;·&nbsp; <em>desirable</em> qualities 理想的品质</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('culinary')">culinary</span>
+          <span class="vocab-meaning">烹饪的，美食的</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
+        </div>
+        <div class="vocab-extra">超纲词，高考靠上下文猜义。<em>culinary</em> experience 美食体验 &nbsp;·&nbsp; <em>culinary</em> school 烹饪学校 &nbsp;·&nbsp; <em>culinary</em> scene 美食界</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('cuisine')">cuisine</span>
+          <span class="vocab-meaning">（某种风格的）菜肴，烹饪</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">法语借词，比 food 更正式。<br>Thai <em>cuisine</em> 泰国菜 &nbsp;·&nbsp; Chinese <em>cuisine</em> 中餐 &nbsp;·&nbsp; French <em>cuisine</em> 法国菜</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('flagship')">flagship</span>
+          <span class="vocab-meaning">旗舰；最重要的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra"><em>flagship</em> restaurant 旗舰餐厅 &nbsp;·&nbsp; <em>flagship</em> store 旗舰店 &nbsp;·&nbsp; <em>flagship</em> product 旗舰产品 &nbsp;·&nbsp; <em>flagship</em> project 核心项目</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('making waves')">make waves</span>
+          <span class="vocab-meaning">引起轰动，广受关注</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">Bo.lan has been <em>making waves</em> in Bangkok's culinary scene. Bo.lan 一直在曼谷美食界引起轰动。<br>同义替换：cause a sensation, make a splash</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('twist')">twist</span>
+          <span class="vocab-tag">熟词僻义</span>
+          <span class="vocab-meaning">独到之处，创意；（本义）扭转</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">add a special <em>twist</em> 加入独特创意<br>with a <em>twist</em> 有创意的：classic dishes with a twist 有创意翻新的经典菜<br>动词：<em>twist</em> open the cap 拧开盖子（本义）</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('progressive')">progressive</span>
+          <span class="vocab-meaning">前卫的，创新的；进步的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra"><em>progressive</em> Indian restaurant 创新派印度餐厅<br><em>progressive</em> ideas 进步的理念 &nbsp;·&nbsp; <em>progressive</em> policy 进步政策<br>反义：conservative 保守的</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('venue')">venue</span>
+          <span class="vocab-meaning">场所，举办地</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">concert <em>venue</em> 演唱会场地 &nbsp;·&nbsp; wedding <em>venue</em> 婚礼场地<br>sports <em>venue</em> 运动场馆 &nbsp;·&nbsp; the most exciting <em>venue</em> 最令人兴奋的场所</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('in action')">in action</span>
+          <span class="vocab-meaning">正在工作，运转中</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">see chef Gaggan and his staff <em>in action</em> 亲眼看到 Gaggan 大厨和员工们忙碌<br>see sb <em>in action</em> = 亲眼看到某人工作/表现 &nbsp;·&nbsp; the machine <em>in action</em> 机器运转中</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('appreciate')">appreciate</span>
+          <span class="vocab-tag">一词多义</span>
+          <span class="vocab-meaning">欣赏；感激；意识到</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-example">① 欣赏：colleagues who <em>appreciate</em> fine food 欣赏美食的同事</div>
+          <div class="vd-example">② 感激：I <em>appreciate</em> your help. 感谢你的帮助。I'd <em>appreciate</em> it if... 如果…我将不胜感激。</div>
+          <div class="vd-example">③ 意识到：You must <em>appreciate</em> that it won't be easy. 你必须意识到这并不容易。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Questions ══════ -->
+<div class="panel" id="questionsPanel">
+  <div class="panel-header" onclick="togglePanel('questionsPanel')">
+    题目与解析（3题）
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="question-item" data-answer="C">
+      <div class="question-stem">21. What do Nahm and Issaya Siamese Club have in common?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. They <span class="tip" data-tip="adopt|采用，采纳｜adopt 是「采用/收养」。adopt modern cooking methods = 采用现代烹饪方法｜和 adapt 别混：adopt = 采用（直接用），adapt = 改编/调整（有修改）">adopt</span> modern cooking methods.</div>
+        <div class="question-option" data-key="B">B. They have <span class="tip" data-tip="branches|分店，分支机构｜branch 是「树枝」，延伸义 = 分支、分店。have branches = 有分店｜branch out = 拓展业务范围">branches</span> in London.</div>
+        <div class="question-option" data-key="C">C. They have <span class="tip" data-tip="top-class chefs|顶级大厨｜top-class = 顶级的，最高水准的，和 world-class 近义。chef = 主厨｜这是正确答案的关键词，要与原文中两家餐厅的描述对应">top-class chefs</span>.</div>
+        <div class="question-option" data-key="D">D. They are <span class="tip" data-tip="based in hotels|设在酒店里的｜based in = 位于，以…为基地。be based in hotels = 开在酒店里面｜只有 Nahm 在 Metropolitan Hotel，Issaya 是在 colonial house，不在酒店">based in hotels</span>.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：C</div>
+        <div class="locate">Nahm: "Head Chef David Thompson, who received a Michelin star..."<br>Issaya: "internationally known Thai chef Ian Kittichai's first flagship Bangkok restaurant."</div>
+        <p style="margin-top:8px"><b>解题思路：</b>找两家餐厅的<b>共同点</b>。Nahm 的大厨 David Thompson 获得过米其林星；Issaya 是"国际知名泰国厨师 Ian Kittichai"的餐厅。两家的共同点都是有<b>顶级大厨</b>。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-letter">A.</span> They adopt modern cooking methods <span class="opt-mark">✗</span><span class="opt-why">只有 Issaya 提到 modern cooking methods，Nahm 未提</span></div>
+          <div class="option-item wrong"><span class="opt-letter">B.</span> They have branches in London <span class="opt-mark">✗</span><span class="opt-why">David Thompson 在伦敦有同名餐厅，但那不是 Nahm 的分店；Issaya 没提伦敦</span></div>
+          <div class="option-item correct"><span class="opt-letter">C.</span> They have top-class chefs <span class="opt-mark">✓</span><span class="opt-why">两家都有知名大厨，这是共同点</span></div>
+          <div class="option-item wrong"><span class="opt-letter">D.</span> They are based in hotels <span class="opt-mark">✗</span><span class="opt-why">Nahm 在酒店里，但 Issaya 在 colonial house（老宅），不是酒店</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="question-item" data-answer="B">
+      <div class="question-stem">22. Which restaurant offers a large <span class="tip" data-tip="set menu|套餐，固定菜单｜set = 固定的，set menu = 多道菜的固定搭配套餐。与 à la carte（单点）相对｜这道题直接在原文找「large set menu」即可">set menu</span>?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. Gaggan.</div>
+        <div class="question-option" data-key="B">B. Bo.lan.</div>
+        <div class="question-option" data-key="C">C. Issaya Siamese Club.</div>
+        <div class="question-option" data-key="D">D. Nahm.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：B</div>
+        <div class="locate">"For those extremely hungry there's a large set menu." — Bo.lan段落</div>
+        <p style="margin-top:8px"><b>解题思路：</b>细节题，直接找原文中"large set menu"出现在哪家餐厅的介绍里。答案就在 Bo.lan 段落的最后一句。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-letter">A.</span> Gaggan <span class="opt-mark">✗</span><span class="opt-why">Gaggan段落没有提到 set menu</span></div>
+          <div class="option-item correct"><span class="opt-letter">B.</span> Bo.lan <span class="opt-mark">✓</span><span class="opt-why">明确提到"there's a large set menu"</span></div>
+          <div class="option-item wrong"><span class="opt-letter">C.</span> Issaya Siamese Club <span class="opt-mark">✗</span><span class="opt-why">Issaya 只提到 menu 包含传统和现代菜，没提 set menu</span></div>
+          <div class="option-item wrong"><span class="opt-letter">D.</span> Nahm <span class="opt-mark">✗</span><span class="opt-why">Nahm 段落没有提到 set menu</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="question-item" data-answer="D">
+      <div class="question-stem">23. What is special about Gaggan?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. It hires staff from India.</div>
+        <div class="question-option" data-key="B">B. It <span class="tip" data-tip="puts on a play|上演戏剧｜put on 是组织/举办，put on a play = 上演一出戏剧。把烹饪比作戏剧，但这里 D 选项才是正确答案">puts on</span> a play every day.</div>
+        <div class="question-option" data-key="C">C. It serves hard-to-find <span class="tip" data-tip="local dishes|当地菜肴｜local = 当地的，local dishes = 当地特色菜。但 Gaggan 是印度菜，不是当地（泰国）菜，这个选项是混淆项，把 Bo.lan 的「hard-to-find Thai dishes」张冠李戴">local dishes</span>.</div>
+        <div class="question-option" data-key="D">D. It shows the <span class="tip" data-tip="cooking process|烹饪过程｜cooking = 烹饪，process = 过程。shows the cooking process to guests = 让客人看到烹饪过程。对应原文「see chef Gaggan and his staff in action」">cooking process</span> to guests.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：D</div>
+        <div class="locate">"The best table... offers a window right into the kitchen, where you can see chef Gaggan and his staff in action."</div>
+        <p style="margin-top:8px"><b>解题思路：</b>Gaggan 最特别的地方：最好的桌子对着厨房，客人可以亲眼看到厨师工作（in action = 正在干活）。这就是"向客人展示烹饪过程"。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-letter">A.</span> It hires staff from India <span class="opt-mark">✗</span><span class="opt-why">原文说的是印度菜，没说员工来自印度</span></div>
+          <div class="option-item wrong"><span class="opt-letter">B.</span> It puts on a play every day <span class="opt-mark">✗</span><span class="opt-why">"Culinary theater"是比喻说法，不是真的表演戏剧</span></div>
+          <div class="option-item wrong"><span class="opt-letter">C.</span> It serves hard-to-find local dishes <span class="opt-mark">✗</span><span class="opt-why">"hard-to-find Thai dishes"是 Bo.lan 的描述，不是 Gaggan；且 Gaggan 是印度菜不是当地菜</span></div>
+          <div class="option-item correct"><span class="opt-letter">D.</span> It shows the cooking process to guests <span class="opt-mark">✓</span><span class="opt-why">see chef...in action = 看到烹饪过程，完全对应</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="quiz-score" id="quizScore"></div>
+  </div>
+</div>
+
+<!-- ══════ Review ══════ -->
+<div class="panel" id="reviewPanel">
+  <div class="panel-header" onclick="togglePanel('reviewPanel')">
+    本篇复盘
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="review-section">
+      <h3>我这篇的卡点：</h3>
+      <div class="review-checks">
+        <label><input type="checkbox" id="rev1"> 长难句看不懂</label>
+        <label><input type="checkbox" id="rev2"> 找不到原文证据</label>
+        <label><input type="checkbox" id="rev3"> 脑补推理</label>
+        <label><input type="checkbox" id="rev4"> 生词太多</label>
+      </div>
+      <h3 style="margin-top:16px">标记：</h3>
+      <div class="review-checks">
+        <label><input type="checkbox" id="rev5"> 待复习</label>
+        <label><input type="checkbox" id="rev6"> 已掌握</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ 阅读技巧 ══════ -->
+<div class="panel" id="tipPanel">
+  <div class="panel-header" onclick="togglePanel('tipPanel')">
+    阅读技巧：广告/介绍类文章怎么读
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body" style="font-size:15px; line-height:1.8;">
+    <p style="margin-bottom:10px;">A篇常考"广告/介绍类"文章——多个并列选项各自特点，题目考你能否<strong>精准找到细节</strong>。</p>
+    <p style="margin-bottom:14px; padding-left:16px;"><strong>策略：</strong>先看题目，再带着问题找对应段落。不要全文细读，锁定关键词（餐厅名、特征词），精准定位。</p>
+    <ol style="padding-left:32px; margin-bottom:0;">
+      <li style="margin-bottom:6px;"><strong>看题先于读文。</strong>题目会告诉你要找什么，带着目标读比漫无目的读快一倍。</li>
+      <li style="margin-bottom:6px;"><strong>段落结构即答题地图。</strong>每个餐厅一段，题目涉及哪家就只读那段。</li>
+      <li style="margin-bottom:0;"><strong>警惕选项混淆。</strong>出题人会把A段的内容放到问B段的题的选项里——读完题选项后，一定回原文核实。</li>
+    </ol>
+  </div>
+</div>
+
+</div><!-- .container -->
+
+<!-- ══════ Bottom Playbar ══════ -->
+<div id="playbar">
+  <button id="pb-prev" onclick="pbPrev()" title="上一句">⏮</button>
+  <button id="pb-play" onclick="pbToggle()" title="播放/暂停">▶</button>
+  <button id="pb-next" onclick="pbNext()" title="下一句">⏭</button>
+  <span id="pb-counter">— / 15</span>
+  <select id="pb-speed" onchange="pbSetSpeed(this.value)" title="播放速度">
+    <option value="0.8">0.8x</option>
+    <option value="1" selected>1.0x</option>
+    <option value="1.2">1.2x</option>
+  </select>
+</div>
+
+<script>
+// ── Theme toggle ──
+const THEMES = ['yellow', 'green'];
+const THEME_LABELS = { yellow: '📄 书本黄', green: '🌿 护眼绿' };
+let themeIdx = parseInt(localStorage.getItem('theme') || '0');
+function applyTheme() {
+  document.body.classList.remove('theme-yellow', 'theme-green');
+  const t = THEMES[themeIdx % THEMES.length];
+  document.body.classList.add('theme-' + t);
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.textContent = THEME_LABELS[t];
+}
+function cycleTheme() {
+  themeIdx = (themeIdx + 1) % THEMES.length;
+  localStorage.setItem('theme', themeIdx);
+  applyTheme();
+}
+applyTheme();
+
+const sentences = [
+  "Bangkok is a highly desirable destination for food lovers.",
+  "It has a seemingly bottomless well of dining options.",
+  "Here are some suggestions on where to start your Bangkok eating adventure.",
+  "Offering Thai fine dining, Nahm provides the best of Bangkok culinary experiences.",
+  "It's the only Thai restaurant that ranks among the top ten of the world's fifty best restaurants list.",
+  "Head Chef David Thompson, who received a Michelin star for his London-based Thai restaurant of the same name, opened this branch in the Metropolitan Hotel in 2010.",
+  "Issaya Siamese Club is internationally known Thai chef Ian Kittichai's first flagship Bangkok restaurant.",
+  "The menu in this beautiful colonial house includes traditional Thai cuisine combined with modern cooking methods.",
+  "Bo.lan has been making waves in Bangkok's culinary scene since it opened in 2009.",
+  "Serving hard-to-find Thai dishes in an elegant atmosphere, the restaurant is true to Thai cuisine's roots, yet still manages to add a special twist.",
+  "This place is good for a candle-lit dinner or a work meeting with colleagues who appreciate fine food.",
+  "For those extremely hungry, there's a large set menu.",
+  "Earning first place on the latest Asia's fifty best restaurants list, progressive Indian restaurant Gaggan is one of the most exciting venues to arrive in Bangkok in recent years.",
+  "The best table in this two-story colonial Thai home offers a window right into the kitchen, where you can see chef Gaggan and his staff in action.",
+  "Culinary theater at its best."
+];
+
+// ── Tooltip system ──
+let activeTooltip = null;
+
+const ANALYSIS_AUDIO = {
+  "analysis-5":  "audio/2023-甲卷-A/analysis-5.mp3",
+  "analysis-9":  "audio/2023-甲卷-A/analysis-9.mp3",
+  "analysis-12": "audio/2023-甲卷-A/analysis-12.mp3",
+  "analysis-13": "audio/2023-甲卷-A/analysis-13.mp3",
+};
+let analysisPlayer = null;
+let analysisBtn = null;
+
+function playAnalysis(id, btn) {
+  if (analysisPlayer) {
+    analysisPlayer.pause();
+    analysisPlayer = null;
+    if (analysisBtn) { analysisBtn.textContent = '🔊 听讲解'; analysisBtn.classList.remove('playing'); }
+    if (analysisBtn === btn) { analysisBtn = null; return; }
+  }
+  const src = ANALYSIS_AUDIO[id];
+  if (!src) return;
+  analysisPlayer = new Audio(src);
+  analysisBtn = btn;
+  btn.textContent = '⏹ 停止';
+  btn.classList.add('playing');
+  analysisPlayer.onended = () => { btn.textContent = '🔊 听讲解'; btn.classList.remove('playing'); analysisPlayer = null; analysisBtn = null; };
+  analysisPlayer.play();
+}
+
+const ZH_AUDIO = {"adopt":"audio/2023-甲卷-A/adopt.mp3","adventure":"audio/2023-甲卷-A/adventure.mp3","appreciate":"audio/2023-甲卷-A/appreciate.mp3","based-in-hotels":"audio/2023-甲卷-A/based-in-hotels.mp3","branches":"audio/2023-甲卷-A/branches.mp3","candle-lit-dinner":"audio/2023-甲卷-A/candle-lit-dinner.mp3","colonial-thai-home":"audio/2023-甲卷-A/colonial-thai-home.mp3","colonial":"audio/2023-甲卷-A/colonial.mp3","cooking-process":"audio/2023-甲卷-A/cooking-process.mp3","cuisine":"audio/2023-甲卷-A/cuisine.mp3","culinary-theater-at-its-best":"audio/2023-甲卷-A/culinary-theater-at-its-best.mp3","culinary":"audio/2023-甲卷-A/culinary.mp3","desirable":"audio/2023-甲卷-A/desirable.mp3","destination":"audio/2023-甲卷-A/destination.mp3","dining-options":"audio/2023-甲卷-A/dining-options.mp3","extremely-hungry":"audio/2023-甲卷-A/extremely-hungry.mp3","flagship":"audio/2023-甲卷-A/flagship.mp3","in-action":"audio/2023-甲卷-A/in-action.mp3","is-true-to":"audio/2023-甲卷-A/is-true-to.mp3","local-dishes":"audio/2023-甲卷-A/local-dishes.mp3","london-based":"audio/2023-甲卷-A/london-based.mp3","making-waves":"audio/2023-甲卷-A/making-waves.mp3","progressive":"audio/2023-甲卷-A/progressive.mp3","puts-on-a-play":"audio/2023-甲卷-A/puts-on-a-play.mp3","ranks-among":"audio/2023-甲卷-A/ranks-among.mp3","received-a-michelin-star":"audio/2023-甲卷-A/received-a-michelin-star.mp3","seemingly-bottomless-well":"audio/2023-甲卷-A/seemingly-bottomless-well.mp3","set-menu":"audio/2023-甲卷-A/set-menu.mp3","top-class-chefs":"audio/2023-甲卷-A/top-class-chefs.mp3","twist":"audio/2023-甲卷-A/twist.mp3","venues":"audio/2023-甲卷-A/venues.mp3"};
+let zhPlayer = null;
+
+function phraseToSlug(phrase) {
+  return phrase.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function playZhAudio(slug, btn) {
+  if (zhPlayer) {
+    zhPlayer.pause();
+    zhPlayer = null;
+    btn.textContent = '🔊 听讲解';
+    return;
+  }
+  const src = ZH_AUDIO[slug];
+  if (!src) return;
+  zhPlayer = new Audio(src);
+  btn.textContent = '⏹ 停止';
+  zhPlayer.onended = () => { btn.textContent = '🔊 听讲解'; zhPlayer = null; };
+  zhPlayer.play();
+}
+
+function showTooltip(tipEl) {
+  hideTooltip();
+  const raw = tipEl.getAttribute('data-tip');
+  const [phrase, explain] = raw.split('|');
+  const parts = explain.split('｜');
+  const slug = phraseToSlug(phrase);
+  const hasAudio = ZH_AUDIO[slug];
+
+  const tooltip = document.createElement('div');
+  tooltip.className = 'tooltip';
+  tooltip.innerHTML =
+    `<div class="tip-phrase">${phrase}<span class="tip-speak" onclick="speakWord('${phrase}')">&#9654;</span></div>` +
+    parts.map(p => `<div>${p.trim()}</div>`).join('') +
+    (hasAudio ? `<button class="tip-zh-play" onclick="playZhAudio('${slug}', this)">🔊 听讲解</button>` : '');
+  document.body.appendChild(tooltip);
+  activeTooltip = tooltip;
+
+  const rect = tipEl.getBoundingClientRect();
+  const tw = tooltip.offsetWidth;
+  const th = tooltip.offsetHeight;
+  let left = rect.left + rect.width / 2 - tw / 2;
+  left = Math.max(8, Math.min(left, window.innerWidth - tw - 8));
+  const arrowLeft = rect.left + rect.width / 2 - left;
+  tooltip.style.setProperty('--arrow-left', arrowLeft + 'px');
+  let top = rect.top - th - 10;
+  if (top < 60) {
+    top = rect.bottom + 10;
+    tooltip.classList.add('below');
+  }
+  tooltip.style.left = left + 'px';
+  tooltip.style.top = top + 'px';
+  speakWord(phrase);
+}
+
+function hideTooltip() {
+  if (zhPlayer) { zhPlayer.pause(); zhPlayer = null; }
+  if (activeTooltip) { activeTooltip.remove(); activeTooltip = null; }
+}
+
+document.addEventListener('click', function(e) {
+  const tipEl = e.target.closest('.tip');
+  if (tipEl) {
+    e.stopPropagation();
+    if (activeTooltip && activeTooltip._source === tipEl) {
+      hideTooltip();
+    } else {
+      showTooltip(tipEl);
+      if (activeTooltip) activeTooltip._source = tipEl;
+    }
+    return;
+  }
+  if (e.target.closest('.tooltip')) return;
+  hideTooltip();
+});
+
+// ── Playbar ──
+let pbCurrent = null;
+let pbPlaying = false;
+let pbSpeed = 1;
+let enPlayer = null;
+
+function pbStop() {
+  if (enPlayer) { enPlayer.pause(); enPlayer = null; }
+  pbPlaying = false;
+}
+
+function highlightSentence(idx) {
+  document.querySelectorAll('.sentence').forEach(el => el.classList.remove('playing'));
+  if (idx !== null && idx >= 0 && idx < sentences.length) {
+    const el = document.querySelector(`.sentence[data-idx="${idx}"]`);
+    if (el) {
+      el.classList.add('playing');
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+}
+
+function pbUpdateUI() {
+  const playBtn = document.getElementById('pb-play');
+  const counter = document.getElementById('pb-counter');
+  playBtn.textContent = pbPlaying ? '⏸' : '▶';
+  counter.textContent = pbCurrent !== null ? `${pbCurrent + 1} / ${sentences.length}` : `— / ${sentences.length}`;
+}
+
+function pbPlayCurrent() {
+  pbStop();
+  if (pbCurrent === null) { pbUpdateUI(); return; }
+  const src = `audio/2023-甲卷-A/en-s${String(pbCurrent).padStart(2,'0')}.mp3`;
+  enPlayer = new Audio(src);
+  enPlayer.playbackRate = pbSpeed;
+  pbPlaying = true;
+  highlightSentence(pbCurrent);
+  pbUpdateUI();
+  enPlayer.onended = () => {
+    if (pbPlaying) {
+      if (pbCurrent < sentences.length - 1) {
+        pbCurrent++;
+        pbPlayCurrent();
+      } else {
+        pbPlaying = false;
+        highlightSentence(null);
+        pbUpdateUI();
+      }
+    }
+  };
+  enPlayer.onerror = () => {
+    pbPlaying = false;
+    highlightSentence(null);
+    pbUpdateUI();
+  };
+  enPlayer.play();
+}
+
+function pbToggle() {
+  if (pbCurrent === null) {
+    pbCurrent = 0;
+    pbPlayCurrent();
+    return;
+  }
+  if (pbPlaying) {
+    pbStop();
+    highlightSentence(pbCurrent);
+    pbUpdateUI();
+  } else {
+    pbPlayCurrent();
+  }
+}
+
+function pbPrev() {
+  if (pbCurrent === null) pbCurrent = 0;
+  else if (pbCurrent > 0) pbCurrent--;
+  pbPlayCurrent();
+}
+
+function pbNext() {
+  if (pbCurrent === null) pbCurrent = 0;
+  else if (pbCurrent < sentences.length - 1) pbCurrent++;
+  pbPlayCurrent();
+}
+
+function pbSetSpeed(v) {
+  pbSpeed = parseFloat(v);
+  if (enPlayer) enPlayer.playbackRate = pbSpeed;
+}
+
+function pbJumpTo(idx) {
+  pbStop();
+  pbCurrent = idx;
+  highlightSentence(idx);
+  pbUpdateUI();
+}
+
+document.addEventListener('click', function(e) {
+  if (e.target.closest('.tip') || e.target.closest('.tooltip')) return;
+  const sentence = e.target.closest('.sentence.complex');
+  if (sentence) toggleAnalysis(parseInt(sentence.dataset.idx));
+});
+
+// ── Other UI ──
+function speakWord(word) {
+  if (enPlayer) { enPlayer.pause(); enPlayer = null; }
+  const slug = 'en-word-' + word.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const src = 'audio/2023-甲卷-A/' + slug + '.mp3';
+  enPlayer = new Audio(src);
+  enPlayer.onerror = function() {
+    const utter = new SpeechSynthesisUtterance(word);
+    const voices = speechSynthesis.getVoices();
+    utter.voice = voices.find(v => v.lang === 'en-GB') || voices.find(v => v.lang.startsWith('en')) || voices[0];
+    utter.rate = 0.8;
+    speechSynthesis.speak(utter);
+  };
+  enPlayer.play();
+}
+
+function toggleAnalysis(idx) {
+  const el = document.getElementById('analysis-' + idx);
+  if (el) el.classList.toggle('open');
+}
+
+function togglePanel(id) { document.getElementById(id).classList.toggle('open'); }
+
+function setMode(mode) {
+  document.body.classList.remove('mode-raw', 'mode-study', 'mode-quiz');
+  if (mode !== 'study') document.body.classList.add('mode-' + mode);
+  document.querySelectorAll('.mode-step').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.mode === mode);
+  });
+  hideTooltip();
+  if (mode === 'quiz') { pbStop(); highlightSentence(null); pbUpdateUI(); resetQuiz(); }
+}
+
+// ── Quiz ──
+function resetQuiz() {
+  document.querySelectorAll('.question-option').forEach(opt => opt.classList.remove('selected','correct','wrong'));
+  document.querySelectorAll('.question-item').forEach(q => q.dataset.answered = '');
+  const score = document.getElementById('quizScore');
+  if (score) score.classList.remove('show');
+}
+
+document.addEventListener('click', function(e) {
+  if (!document.body.classList.contains('mode-quiz')) return;
+  const opt = e.target.closest('.question-option');
+  if (!opt) return;
+  const item = opt.closest('.question-item');
+  if (item.dataset.answered) return;
+  item.dataset.answered = 'true';
+  const picked = opt.dataset.key;
+  const correct = item.dataset.answer;
+  if (picked === correct) {
+    opt.classList.add('correct');
+  } else {
+    opt.classList.add('wrong');
+    item.querySelector(`.question-option[data-key="${correct}"]`).classList.add('correct');
+  }
+  const total = document.querySelectorAll('.question-item[data-answer]').length;
+  const done = document.querySelectorAll('.question-item[data-answered="true"]').length;
+  if (done === total) showQuizScore();
+});
+
+function showQuizScore() {
+  const total = document.querySelectorAll('.question-item[data-answer]').length;
+  const wrong = document.querySelectorAll('.question-option.wrong').length;
+  const score = document.getElementById('quizScore');
+  score.textContent = `得分：${total - wrong} / ${total}`;
+  score.classList.add('show');
+}
+
+function toggleQuestionAnalysis(btn) {
+  const analysis = btn.nextElementSibling;
+  analysis.classList.toggle('open');
+  btn.textContent = analysis.classList.contains('open') ? '收起解析' : '\u{1F50D} 查看解析';
+}
+
+// ── LocalStorage review ──
+function saveReview() {
+  const state = {};
+  document.querySelectorAll('.review-checks input').forEach(cb => { state[cb.id] = cb.checked; });
+  localStorage.setItem('review-a-passage', JSON.stringify(state));
+}
+function loadReview() {
+  try {
+    const state = JSON.parse(localStorage.getItem('review-a-passage'));
+    if (state) Object.keys(state).forEach(id => { const cb = document.getElementById(id); if (cb) cb.checked = state[id]; });
+  } catch(e) {}
+}
+document.querySelectorAll('.review-checks input').forEach(cb => cb.addEventListener('change', saveReview));
+loadReview();
+pbUpdateUI();
+
+// ── Spaced Repetition (SRS) ──
+const SRS_PREFIX = 'srs_2023_jia_A_';
+const SRS_INTERVALS = [1, 3, 7, 14, 30];
+
+function srsLoad(word) {
+  const raw = localStorage.getItem(SRS_PREFIX + word);
+  return raw ? JSON.parse(raw) : null;
+}
+
+function srsSave(word, knew) {
+  const state = srsLoad(word) || { streak: 0 };
+  if (knew) {
+    state.streak = (state.streak || 0) + 1;
+    state.interval = SRS_INTERVALS[Math.min(state.streak - 1, SRS_INTERVALS.length - 1)];
+  } else {
+    state.streak = 0;
+    state.interval = 1;
+  }
+  state.nextReview = Date.now() + state.interval * 86400000;
+  localStorage.setItem(SRS_PREFIX + word, JSON.stringify(state));
+  return state;
+}
+
+function srsIsDue(state) {
+  return !state || Date.now() >= state.nextReview;
+}
+
+function srsUpdateCard(card) {
+  const state = srsLoad(card.dataset.srsWord);
+  card.classList.remove('srs-due', 'srs-known');
+  if (!state) return;
+  card.classList.add(srsIsDue(state) ? 'srs-due' : 'srs-known');
+}
+
+function srsUpdateBadge() {
+  const badge = document.getElementById('srs-badge');
+  if (!badge) return;
+  const cards = document.querySelectorAll('.vocab-card[data-srs-word]');
+  let due = 0;
+  cards.forEach(c => { if (srsIsDue(srsLoad(c.dataset.srsWord))) due++; });
+  if (due === 0) {
+    badge.textContent = '全掌握 ✓';
+    badge.className = 'srs-badge all-done';
+  } else {
+    badge.textContent = due + '个待复习';
+    badge.className = 'srs-badge';
+  }
+}
+
+function srsClick(word, knew, btn) {
+  srsSave(word, knew);
+  const card = btn.closest('.vocab-card');
+  srsUpdateCard(card);
+  srsUpdateBadge();
+  btn.style.opacity = '0.4';
+  setTimeout(() => btn.style.opacity = '', 600);
+}
+
+function srsInit() {
+  document.querySelectorAll('.vocab-card').forEach(card => {
+    const wordEl = card.querySelector('.vocab-word');
+    if (!wordEl) return;
+    const word = wordEl.textContent.trim();
+    card.dataset.srsWord = word;
+    const btns = document.createElement('div');
+    btns.className = 'srs-btns';
+    const esc = word.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    btns.innerHTML =
+      `<button class="srs-btn srs-btn-know"   onclick="srsClick('${esc}',true,this)">认识 ✓</button>` +
+      `<button class="srs-btn srs-btn-forget" onclick="srsClick('${esc}',false,this)">还不会 ✗</button>`;
+    card.querySelector('.vocab-card-head').appendChild(btns);
+    srsUpdateCard(card);
+  });
+  srsUpdateBadge();
+}
+srsInit();
+</script>
+</body>
+</html>
