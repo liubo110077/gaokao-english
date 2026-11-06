@@ -848,7 +848,7 @@ function showTooltip(tipEl) {
   const tw = tooltip.offsetWidth;
   const th = tooltip.offsetHeight;
   let left = rect.left + rect.width / 2 - tw / 2;
-  const container = document.querySelector('.container');
+  const container = tipEl.closest('.container') || document.querySelector('.container');
   const cRect = container ? container.getBoundingClientRect() : { left: 8, right: document.documentElement.clientWidth - 8 };
   left = Math.max(cRect.left, Math.min(left, cRect.right - tw));
   const arrowLeft = rect.left + rect.width / 2 - left;
