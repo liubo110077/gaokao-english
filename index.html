@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2023甲卷 · 英语阅读</title>
+<style>
+:root {
+  --bg:       #f8f7f4;
+  --surface:  #ffffff;
+  --border:   #e5e3de;
+  --text:     #1a1917;
+  --muted:    #6b6865;
+  --accent:   #2563eb;
+  --accent-l: #eff6ff;
+  --green:    #16a34a;
+  --green-l:  #dcfce7;
+  --orange:   #d97706;
+  --orange-l: #fef3c7;
+  --red:      #dc2626;
+  --red-l:    #fee2e2;
+  --radius:   10px;
+  --shadow:   0 1px 4px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+}
+[data-theme=dark] {
+  --bg:      #18181b;
+  --surface: #27272a;
+  --border:  #3f3f46;
+  --text:    #fafafa;
+  --muted:   #a1a1aa;
+  --accent:  #60a5fa;
+  --accent-l:#1e3a5f;
+  --green:   #4ade80;
+  --green-l: #052e16;
+  --orange:  #fbbf24;
+  --orange-l:#451a03;
+  --red:     #f87171;
+  --red-l:   #450a0a;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; min-height: 100vh; }
+
+/* ── Layout ── */
+.wrapper { max-width: min(960px, 92vw); margin: 0 auto; padding: 32px 0 64px; }
+
+/* ── Header ── */
+header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
+.header-left h1 { font-size: 22px; font-weight: 700; letter-spacing: -.3px; }
+.header-left .subtitle { font-size: 13px; color: var(--muted); margin-top: 2px; }
+.header-right { display: flex; align-items: center; gap: 10px; }
+.total-badge { font-size: 13px; font-weight: 600; padding: 4px 12px; border-radius: 20px; background: var(--accent-l); color: var(--accent); }
+.total-badge.has-due { background: var(--orange-l); color: var(--orange); }
+.theme-btn { width: 34px; height: 34px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--surface); color: var(--text); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .15s; }
+.theme-btn:hover { background: var(--border); }
+
+/* ── Overall progress bar ── */
+.overall-bar { margin-bottom: 28px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 18px; box-shadow: var(--shadow); }
+.overall-bar-label { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.overall-bar-label span { font-size: 13px; color: var(--muted); }
+.overall-bar-label strong { font-size: 14px; font-weight: 600; }
+.bar-track { height: 8px; border-radius: 4px; background: var(--border); overflow: hidden; display: flex; }
+.bar-seg { height: 100%; border-radius: 0; transition: width .4s ease; }
+.bar-seg.known  { background: var(--green); }
+.bar-seg.due    { background: var(--orange); }
+
+/* ── Cards grid ── */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); gap: 18px; }
+
+/* ── Passage card ── */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: calc(var(--radius) + 2px); box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; transition: transform .15s, box-shadow .15s; }
+.card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.12), 0 8px 32px rgba(0,0,0,.08); }
+
+.card-top { padding: 18px 18px 14px; flex: 1; }
+.card-tags { display: flex; gap: 6px; margin-bottom: 10px; }
+.tag { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px; letter-spacing: .3px; text-transform: uppercase; }
+.tag-a { background: #fce7f3; color: #9d174d; }
+.tag-b { background: #e0f2fe; color: #0369a1; }
+.tag-c { background: #f0fdf4; color: #15803d; }
+[data-theme=dark] .tag-a { background: #4a0d2a; color: #f9a8d4; }
+[data-theme=dark] .tag-b { background: #0c2d47; color: #7dd3fc; }
+[data-theme=dark] .tag-c { background: #0a2d1a; color: #86efac; }
+.tag-q { background: var(--accent-l); color: var(--accent); font-weight: 600; }
+
+.card-title { font-size: 17px; font-weight: 700; margin-bottom: 3px; line-height: 1.3; }
+.card-desc  { font-size: 13px; color: var(--muted); margin-bottom: 14px; line-height: 1.5; }
+
+/* Vocab progress section */
+.vocab-progress { margin-bottom: 10px; }
+.vocab-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+.vocab-label { font-size: 12px; color: var(--muted); }
+.vocab-counts { font-size: 12px; display: flex; gap: 8px; }
+.vc-known  { color: var(--green); font-weight: 600; }
+.vc-due    { color: var(--orange); font-weight: 600; }
+.vc-unseen { color: var(--muted); }
+.mini-bar { height: 6px; border-radius: 3px; background: var(--border); overflow: hidden; display: flex; }
+.mini-seg { height: 100%; transition: width .4s ease; }
+.mini-seg.known { background: var(--green); }
+.mini-seg.due   { background: var(--orange); }
+
+/* Status line */
+.card-status { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 5px; }
+.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); flex-shrink: 0; }
+.dot.started { background: var(--green); }
+.dot.due     { background: var(--orange); }
+
+/* Card footer */
+.card-foot { border-top: 1px solid var(--border); padding: 12px 18px; }
+.card-btn { display: block; width: 100%; padding: 9px; border-radius: 8px; border: none; font-size: 14px; font-weight: 600; cursor: pointer; text-align: center; text-decoration: none; transition: all .15s; }
+.card-btn-primary  { background: var(--accent); color: #fff; }
+.card-btn-primary:hover  { opacity: .9; }
+.card-btn-secondary { background: var(--accent-l); color: var(--accent); }
+.card-btn-secondary:hover { opacity: .85; }
+.card-btn-new { background: var(--border); color: var(--muted); }
+.card-btn-new:hover { background: var(--muted); color: var(--surface); }
+
+/* Due pill */
+.due-pill { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 10px; background: var(--orange-l); color: var(--orange); }
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .wrapper { padding: 20px 0 40px; }
+  header { flex-direction: column; align-items: flex-start; gap: 10px; }
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <header>
+    <div class="header-left">
+      <h1>2023甲卷 · 英语阅读</h1>
+      <div class="subtitle">高考真题精读 · 词汇 &amp; 语法精讲</div>
+    </div>
+    <div class="header-right">
+      <span class="total-badge" id="totalBadge">加载中…</span>
+      <button class="theme-btn" id="themeBtn" title="切换主题">☀︎</button>
+    </div>
+  </header>
+
+  <div class="overall-bar">
+    <div class="overall-bar-label">
+      <span>全部词汇进度（34词）</span>
+      <strong id="overallText">—</strong>
+    </div>
+    <div class="bar-track">
+      <div class="bar-seg known" id="overallKnown" style="width:0%"></div>
+      <div class="bar-seg due"   id="overallDue"   style="width:0%"></div>
+    </div>
+  </div>
+
+  <div class="cards" id="cards">
+    <!-- filled by JS -->
+  </div>
+</div>
+
+<script>
+const PASSAGES = [
+  {
+    key:    'A',
+    tagCls: 'tag-a',
+    file:   '2023-甲卷-A-Bangkok.html',
+    title:  'Bangkok Dining Guide',
+    titleZh:'曼谷美食指南',
+    desc:   '介绍曼谷四家特色餐厅，涉及米其林星级、殖民风格等话题',
+    qRange: 'Q21–23',
+    total:  10,
+    prefix: 'srs_2023_jia_A_',
+  },
+  {
+    key:    'B',
+    tagCls: 'tag-b',
+    file:   '2023-甲卷-B-DIY.html',
+    title:  'DIY Projects',
+    titleZh:'DIY手工项目',
+    desc:   '讲述作者在家改造各种物品的DIY经历与感悟',
+    qRange: 'Q24–27',
+    total:  15,
+    prefix: 'srs_2023_jia_B_',
+  },
+  {
+    key:    'C',
+    tagCls: 'tag-c',
+    file:   '2023-甲卷-C-Socrates.html',
+    title:  'The Socrates Express',
+    titleZh:'哲学与人生的铁路之旅（书评）',
+    desc:   '评介Eric Weiner的著作，探讨如何用哲学改善日常生活',
+    qRange: 'Q28–31',
+    total:  9,
+    prefix: 'srs_2023_jia_C_',
+  },
+];
+
+// ── SRS helpers ──
+function getSrsStats(prefix, total) {
+  const now = Date.now();
+  let known = 0, due = 0, lastStudied = 0;
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (!k.startsWith(prefix)) continue;
+    try {
+      const s = JSON.parse(localStorage.getItem(k));
+      if (!s) continue;
+      if (s.nextReview) lastStudied = Math.max(lastStudied, s.nextReview - (s.interval || 1) * 86400000);
+      if (now >= (s.nextReview || 0)) due++;
+      else known++;
+    } catch {}
+  }
+  const unseen = Math.max(0, total - known - due);
+  return { known, due, unseen, total, lastStudied };
+}
+
+function formatDate(ts) {
+  if (!ts) return null;
+  const d = new Date(ts);
+  const now = new Date();
+  const diffDays = Math.floor((now - d) / 86400000);
+  if (diffDays === 0) return '今天';
+  if (diffDays === 1) return '昨天';
+  if (diffDays < 7)  return diffDays + '天前';
+  return `${d.getMonth()+1}/${d.getDate()}`;
+}
+
+// ── Render cards ──
+function render() {
+  const container = document.getElementById('cards');
+  container.innerHTML = '';
+
+  let totalKnown = 0, totalDue = 0, totalAll = 0;
+
+  PASSAGES.forEach(p => {
+    const st = getSrsStats(p.prefix, p.total);
+    totalKnown += st.known;
+    totalDue   += st.due;
+    totalAll   += p.total;
+
+    const pct = p.total > 0;
+    const knownPct  = pct ? (st.known / p.total * 100).toFixed(1) : 0;
+    const duePct    = pct ? (st.due   / p.total * 100).toFixed(1) : 0;
+    const started   = st.known + st.due > 0;
+    const dateStr   = formatDate(st.lastStudied);
+
+    let statusDot = `<span class="dot${started ? (st.due > 0 ? ' due' : ' started') : ''}"></span>`;
+    let statusTxt;
+    if (!started) {
+      statusTxt = '尚未开始';
+    } else if (st.due > 0) {
+      statusTxt = `${st.due}个词待复习`;
+    } else {
+      statusTxt = '全部已掌握 ✓';
+    }
+    if (dateStr) statusTxt += `　上次：${dateStr}`;
+
+    let btnCls, btnTxt;
+    if (!started) {
+      btnCls = 'card-btn card-btn-new';
+      btnTxt = '开始学习';
+    } else if (st.due > 0) {
+      btnCls = 'card-btn card-btn-primary';
+      btnTxt = `复习 ${st.due} 个词`;
+    } else {
+      btnCls = 'card-btn card-btn-secondary';
+      btnTxt = '再次学习';
+    }
+
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-top">
+        <div class="card-tags">
+          <span class="tag ${p.tagCls}">${p.key}篇</span>
+          <span class="tag tag-q">${p.qRange}</span>
+          ${st.due > 0 ? `<span class="due-pill">📌 ${st.due}待复习</span>` : ''}
+        </div>
+        <div class="card-title">${p.title}</div>
+        <div class="card-desc">${p.titleZh}　${p.desc}</div>
+        <div class="vocab-progress">
+          <div class="vocab-row">
+            <span class="vocab-label">词汇（${p.total}词）</span>
+            <div class="vocab-counts">
+              <span class="vc-known">${st.known} 已掌握</span>
+              ${st.due > 0    ? `<span class="vc-due">${st.due} 待复习</span>` : ''}
+              ${st.unseen > 0 ? `<span class="vc-unseen">${st.unseen} 未学</span>` : ''}
+            </div>
+          </div>
+          <div class="mini-bar">
+            <div class="mini-seg known" style="width:${knownPct}%"></div>
+            <div class="mini-seg due"   style="width:${duePct}%"></div>
+          </div>
+        </div>
+        <div class="card-status">
+          ${statusDot}
+          <span>${statusTxt}</span>
+        </div>
+      </div>
+      <div class="card-foot">
+        <a class="${btnCls}" href="${p.file}">${btnTxt}</a>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  // Overall bar
+  const pctK = (totalKnown / totalAll * 100).toFixed(1);
+  const pctD = (totalDue   / totalAll * 100).toFixed(1);
+  document.getElementById('overallKnown').style.width = pctK + '%';
+  document.getElementById('overallDue').style.width   = pctD + '%';
+  document.getElementById('overallText').textContent =
+    `${totalKnown} 已掌握 / ${totalDue} 待复习 / ${totalAll - totalKnown - totalDue} 未学`;
+
+  // Header badge
+  const badge = document.getElementById('totalBadge');
+  if (totalDue > 0) {
+    badge.textContent = `📌 共 ${totalDue} 词待复习`;
+    badge.className = 'total-badge has-due';
+  } else if (totalKnown > 0) {
+    badge.textContent = `✓ ${totalKnown}/${totalAll} 词已掌握`;
+    badge.className = 'total-badge';
+  } else {
+    badge.textContent = `共 ${totalAll} 个词汇`;
+    badge.className = 'total-badge';
+  }
+}
+
+// ── Theme ──
+const THEME_KEY = 'theme';
+function applyTheme(dark) {
+  document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+  document.getElementById('themeBtn').textContent = dark ? '☀︎' : '☽';
+}
+let dark = localStorage.getItem(THEME_KEY) === '1' ||
+  (localStorage.getItem(THEME_KEY) === null && window.matchMedia('(prefers-color-scheme: dark)').matches);
+applyTheme(dark);
+document.getElementById('themeBtn').addEventListener('click', () => {
+  dark = !dark;
+  applyTheme(dark);
+  localStorage.setItem(THEME_KEY, dark ? '1' : '0');
+});
+
+render();
+</script>
+</body>
+</html>
