@@ -791,7 +791,8 @@ function showTooltip(tipEl) {
   const tw = tooltip.offsetWidth;
   const th = tooltip.offsetHeight;
   let left = rect.left + rect.width / 2 - tw / 2;
-  left = Math.max(8, Math.min(left, window.innerWidth - tw - 8));
+  const vw = document.documentElement.clientWidth;
+  left = Math.max(8, Math.min(left, vw - tw - 8));
   const arrowLeft = rect.left + rect.width / 2 - left;
   tooltip.style.setProperty('--arrow-left', arrowLeft + 'px');
   let top = rect.top - th - 10;
@@ -799,6 +800,7 @@ function showTooltip(tipEl) {
     top = rect.bottom + 10;
     tooltip.classList.add('below');
   }
+  top = Math.max(8, Math.min(top, window.innerHeight - th - 8));
   tooltip.style.left = left + 'px';
   tooltip.style.top = top + 'px';
   speakWord(phrase);
