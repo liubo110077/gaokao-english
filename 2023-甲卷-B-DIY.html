@@ -813,12 +813,17 @@ function phraseToSlug(phrase) {
 }
 
 function playZhAudio(slug, btn) {
-  if (zhPlayer) { zhPlayer.pause(); zhPlayer = null; }
+  if (zhPlayer) {
+    zhPlayer.pause();
+    zhPlayer = null;
+    btn.textContent = '🔊 听讲解';
+    return;
+  }
   const src = ZH_AUDIO[slug];
   if (!src) return;
   zhPlayer = new Audio(src);
   btn.textContent = '⏹ 停止';
-  zhPlayer.onended = () => { btn.textContent = '🔊 听讲解'; };
+  zhPlayer.onended = () => { btn.textContent = '🔊 听讲解'; zhPlayer = null; };
   zhPlayer.play();
 }
 
