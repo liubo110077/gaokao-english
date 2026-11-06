@@ -782,7 +782,8 @@ function showTooltip(tipEl) {
   let left = rect.left + rect.width / 2 - tw / 2;
   const container = tipEl.closest('.container') || document.querySelector('.container');
   const cRect = container ? container.getBoundingClientRect() : { left: 8, right: document.documentElement.clientWidth - 8 };
-  left = Math.max(cRect.left, Math.min(left, cRect.right - tw));
+  const cPad = container ? parseFloat(getComputedStyle(container).paddingLeft) : 0;
+  left = Math.max(cRect.left + cPad, Math.min(left, cRect.right - cPad - tw));
   const arrowLeft = rect.left + rect.width / 2 - left;
   tooltip.style.setProperty('--arrow-left', arrowLeft + 'px');
   let top = rect.top - th - 10;
