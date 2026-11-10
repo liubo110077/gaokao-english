@@ -151,8 +151,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
 .locate[data-goto] { cursor: pointer; transition: background .15s; }
 .locate[data-goto]:hover { background: #fde68a; }
 .locate[data-goto]::after { content: ' ↗ 跳到原文'; font-size: 11px; color: var(--accent); font-family: -apple-system, sans-serif; font-style: normal; }
-@keyframes sentenceFlash { 0%,10% { background: #fef08a; } 100% { background: transparent; } }
-.sentence.flash { animation: sentenceFlash 1.8s ease-out; }
+.sentence.highlighted { background: #fef08a; border-radius: 3px; }
 @media (max-width: 600px) {
   .passage { padding: 20px 16px; }
   .sentence { font-size: 16px; }
@@ -649,6 +648,9 @@ function hideTooltip() {
 }
 
 document.addEventListener('click', function(e) {
+  if (!e.target.closest('.sentence.highlighted') && !e.target.closest('.locate')) {
+    document.querySelectorAll('.sentence.highlighted').forEach(s => s.classList.remove('highlighted'));
+  }
   const tipEl = e.target.closest('.tip');
   if (tipEl) {
     e.stopPropagation();
@@ -789,11 +791,9 @@ function gotoSentence(idx) {
   const el = document.querySelector(`.sentence[data-idx="${idx}"]`);
   if (!el) return;
   setMode('study');
+  document.querySelectorAll('.sentence.highlighted').forEach(s => s.classList.remove('highlighted'));
   el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  el.classList.remove('flash');
-  void el.offsetWidth;
-  el.classList.add('flash');
-  setTimeout(() => el.classList.remove('flash'), 1900);
+  el.classList.add('highlighted');
 }
 
 function toggleQuestionAnalysis(btn) {
