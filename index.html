@@ -76,9 +76,11 @@ header { display: flex; align-items: center; justify-content: space-between; mar
 .tag-a { background: #fce7f3; color: #9d174d; }
 .tag-b { background: #e0f2fe; color: #0369a1; }
 .tag-c { background: #f0fdf4; color: #15803d; }
+.tag-d { background: #fdf4ff; color: #7e22ce; }
 [data-theme=dark] .tag-a { background: #4a0d2a; color: #f9a8d4; }
 [data-theme=dark] .tag-b { background: #0c2d47; color: #7dd3fc; }
 [data-theme=dark] .tag-c { background: #0a2d1a; color: #86efac; }
+[data-theme=dark] .tag-d { background: #2e1a40; color: #d8b4fe; }
 .tag-q { background: var(--accent-l); color: var(--accent); font-weight: 600; }
 
 .card-title { font-size: 17px; font-weight: 700; margin-bottom: 3px; line-height: 1.3; }
@@ -127,8 +129,8 @@ header { display: flex; align-items: center; justify-content: space-between; mar
 <div class="wrapper">
   <header>
     <div class="header-left">
-      <h1>2023甲卷 · 英语阅读</h1>
-      <div class="subtitle">高考真题精读 · 词汇 &amp; 语法精讲</div>
+      <h1>高考英语阅读精读</h1>
+      <div class="subtitle">2023甲卷 &amp; 北京卷真题 · 词汇 &amp; 语法精讲</div>
     </div>
     <div class="header-right">
       <span class="total-badge" id="totalBadge">加载中…</span>
@@ -138,7 +140,7 @@ header { display: flex; align-items: center; justify-content: space-between; mar
 
   <div class="overall-bar">
     <div class="overall-bar-label">
-      <span>全部词汇进度（34词）</span>
+      <span>全部词汇进度（44词）</span>
       <strong id="overallText">—</strong>
     </div>
     <div class="bar-track">
@@ -186,6 +188,17 @@ const PASSAGES = [
     qRange: 'Q28–31',
     total:  9,
     prefix: 'srs_2023_jia_C_',
+  },
+  {
+    key:    'D',
+    tagCls: 'tag-d',
+    file:   '北京卷-D-Friends.html',
+    title:  'The Best of Friends',
+    titleZh:'北京卷D篇 · 最好的朋友',
+    desc:   '研究揭示当代青少年与父母关系比以往更和谐，颠覆叛逆刻板印象',
+    qRange: 'Q1–5',
+    total:  10,
+    prefix: 'srs_beijing_D_',
   },
 ];
 
