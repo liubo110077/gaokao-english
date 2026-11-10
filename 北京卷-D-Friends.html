@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>北京卷D篇精读 · The Best of Friends</title>
+<style>
+:root {
+  --bg: #fafaf8;
+  --text: #1a1a1a;
+  --text-secondary: #555;
+  --text-muted: #888;
+  --accent: #2563eb;
+  --accent-light: #dbeafe;
+  --complex-bg: #f0f6fc;
+  --border: #e2e2e0;
+  --card-bg: #fff;
+  --hover-bg: #f5f5f4;
+  --shadow: 0 1px 3px rgba(0,0,0,.08);
+  --radius: 6px;
+}
+.theme-yellow {
+  --bg: #f5f0e8; --card-bg: #faf6ee; --border: #ddd5bf;
+  --complex-bg: #ece4d4; --hover-bg: #ede7d8; --accent-light: #fde8b8;
+}
+.theme-green {
+  --bg: #edecea; --card-bg: #f3f2f0; --border: #d6d5d0;
+  --complex-bg: #e5e4e0; --hover-bg: #e8e7e3; --accent-light: #dddcd6;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding-bottom: 60px; }
+.container { max-width: min(1100px, 88vw); margin: 0 auto; padding: 0 20px; }
+.header { background: var(--card-bg); border-bottom: 1px solid var(--border); padding: 16px 0; position: sticky; top: 0; z-index: 100; }
+.header .container { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.header h1 { font-size: 16px; font-weight: 600; flex: 1; min-width: 200px; }
+.header-sub { font-size: 12px; color: var(--accent); font-weight: 500; background: var(--accent-light); padding: 2px 8px; border-radius: 10px; }
+.header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: 4px; padding: 6px 14px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--card-bg); color: var(--text); font-size: 13px; cursor: pointer; transition: all .15s; white-space: nowrap; }
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.mode-steps { display: flex; gap: 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.mode-step { padding: 6px 12px; border: none; background: var(--card-bg); color: var(--text-secondary); font-size: 13px; cursor: pointer; transition: all .15s; white-space: nowrap; }
+.mode-step + .mode-step { border-left: 1px solid var(--border); }
+.mode-step.active { background: var(--accent); color: #fff; }
+.mode-step:hover:not(.active) { background: var(--accent-light); }
+.passage { background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); margin-top: 20px; padding: 28px 32px; }
+.passage-title { text-align: center; font-family: Georgia, "Times New Roman", serif; font-size: 15px; font-weight: 700; letter-spacing: .5px; margin-bottom: 20px; color: var(--text-secondary); }
+.paragraph { margin-bottom: 4px; text-indent: 2em; }
+.sentence { font-family: Georgia, "Times New Roman", serif; font-size: 18px; line-height: 1.75; position: relative; transition: background .2s; border-radius: 3px; cursor: pointer; }
+.sentence:hover { background: var(--hover-bg); }
+.sentence.playing { background: var(--complex-bg); border-radius: 3px; }
+.sentence.complex { border-bottom: 1.5px dashed #93c5fd; }
+.sentence.complex.playing { background: var(--complex-bg); }
+.tip { border-bottom: 1.5px dashed var(--accent); cursor: pointer; position: relative; transition: background .15s; }
+.tip:hover { background: var(--accent-light); }
+.tooltip { position: fixed; z-index: 200; background: var(--text); color: #fff; font-family: -apple-system, "PingFang SC", sans-serif; font-size: 14px; line-height: 1.5; padding: 8px 14px; border-radius: 8px; max-width: min(520px, calc(100vw - 16px)); width: max-content; box-shadow: 0 4px 20px rgba(0,0,0,.25); pointer-events: auto; animation: tipIn .15s ease-out; }
+.tooltip::after { content: ''; position: absolute; bottom: -6px; left: var(--arrow-left, 50%); transform: translateX(-50%); width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 6px solid var(--text); }
+.tooltip.below::after { bottom: auto; top: -6px; border-top: none; border-bottom: 6px solid var(--text); }
+.tooltip .tip-phrase { font-family: Georgia, serif; font-weight: 600; color: #93c5fd; margin-bottom: 2px; }
+.tooltip .tip-speak { display: inline-block; cursor: pointer; margin-left: 6px; font-size: 12px; opacity: .7; vertical-align: middle; }
+.tooltip .tip-speak:hover { opacity: 1; }
+.tooltip .tip-zh-play { display: block; margin-top: 6px; padding: 4px 10px; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25); border-radius: 4px; color: #93c5fd; font-size: 12px; cursor: pointer; text-align: center; }
+.tooltip .tip-zh-play:hover { background: rgba(255,255,255,.25); }
+@keyframes tipIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+.analysis { display: none; margin: 8px 0 12px 0; padding: 12px 16px; background: #f8f9fa; border-left: 3px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; font-family: -apple-system, "PingFang SC", sans-serif; font-size: 14px; color: var(--text-secondary); line-height: 1.7; text-indent: 0; }
+.analysis.open { display: block; }
+.analysis p { margin-bottom: 4px; }
+.analysis b { color: var(--text); font-size: 13px; }
+.translation-inline { display: none; font-family: -apple-system, "PingFang SC", sans-serif; font-size: 14px; color: var(--text-muted); margin: 2px 0 6px 0; text-indent: 0; }
+body.compare-mode .translation-inline { display: block; }
+.panel { background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); margin-top: 16px; overflow: hidden; }
+.panel-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; cursor: pointer; user-select: none; font-weight: 600; font-size: 15px; border-bottom: 1px solid transparent; transition: border-color .2s; }
+.panel-header:hover { color: var(--accent); }
+.panel-header .arrow { transition: transform .2s; font-size: 12px; color: var(--text-muted); }
+.panel.open .panel-header { border-bottom-color: var(--border); }
+.panel.open .panel-header .arrow { transform: rotate(180deg); }
+.panel-body { display: none; padding: 16px 24px; }
+.panel.open .panel-body { display: block; }
+.vocab-card { border-bottom: 1px solid #f0f0f0; padding: 12px 0; }
+.vocab-card:last-child { border-bottom: none; }
+.vocab-card-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 12px; }
+.vocab-word { font-family: Georgia, serif; font-weight: 600; color: var(--accent); cursor: pointer; font-size: 15px; }
+.vocab-word:hover { text-decoration: underline; }
+.vocab-meaning { font-size: 14px; color: var(--text); }
+.vocab-extra { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+.vocab-tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 3px; background: #fef3c7; color: #92400e; vertical-align: middle; }
+.vocab-tag.tag-core { background: #dcfce7; color: #166534; }
+.vocab-tag.tag-exam { background: #dbeafe; color: #1e40af; }
+.vocab-tag.tag-beyond { background: #fef3c7; color: #92400e; }
+.vocab-detail { display: none; margin-top: 8px; padding: 10px 14px; background: #f8f9fa; border-radius: var(--radius); font-size: 13.5px; line-height: 1.7; }
+.vocab-detail.open { display: block; }
+.vocab-detail .vd-example { color: var(--text-secondary); padding-left: 16px; }
+.vocab-detail .vd-example em { color: var(--text); font-style: normal; font-weight: 600; }
+.vocab-expand { font-size: 12px; color: var(--accent); cursor: pointer; border: none; background: none; padding: 0; margin-left: 8px; }
+.vocab-expand:hover { text-decoration: underline; }
+.srs-btns { display: flex; gap: 5px; margin-left: auto; }
+.srs-btn { font-size: 11px; padding: 2px 7px; border-radius: 10px; border: 1.5px solid; cursor: pointer; transition: all .15s; background: none; white-space: nowrap; }
+.srs-btn-know  { border-color: #16a34a; color: #16a34a; }
+.srs-btn-know:hover  { background: #dcfce7; }
+.srs-btn-forget { border-color: #dc2626; color: #dc2626; }
+.srs-btn-forget:hover { background: #fee2e2; }
+.vocab-card.srs-due  .vocab-word::after { content: ' 📌'; font-size: 10px; }
+.vocab-card.srs-known .vocab-word::after { content: ' ✓'; font-size: 11px; color: #16a34a; }
+.srs-badge { font-size: 12px; font-weight: 600; padding: 1px 8px; border-radius: 10px; background: #fef2f2; color: #dc2626; }
+.srs-badge.all-done { background: #dcfce7; color: #16a34a; }
+.question-item { padding: 16px 24px; border-bottom: 1px solid #f0f0f0; }
+.question-item:last-child { border-bottom: none; }
+.question-stem { font-weight: 600; font-size: 15px; margin-bottom: 8px; }
+.question-options { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 24px; font-size: 14px; margin-bottom: 8px; }
+.question-option { padding: 2px 0; }
+.show-answer-btn { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; color: var(--accent); cursor: pointer; background: none; border: none; padding: 4px 0; }
+.show-answer-btn:hover { text-decoration: underline; }
+.question-analysis { display: none; margin-top: 10px; padding: 12px 16px; background: #f8f9fa; border-radius: var(--radius); font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+.question-analysis.open { display: block; }
+.question-analysis .answer-line { font-weight: 700; color: #16a34a; margin-bottom: 6px; font-size: 15px; }
+.question-analysis .locate { background: #fef9c3; padding: 6px 10px; border-radius: 4px; margin: 6px 0; font-family: Georgia, serif; font-style: italic; font-size: 14px; color: var(--text); }
+.option-list { margin-top: 10px; display: flex; flex-direction: column; gap: 2px; }
+.option-item { padding: 3px 0; font-size: 13.5px; line-height: 1.5; }
+.option-item .opt-letter { font-weight: 700; }
+.option-item.correct .opt-mark { color: #15803d; font-weight: 700; }
+.option-item.wrong .opt-mark { color: #b91c1c; font-weight: 700; }
+.option-item .opt-why { color: #888; font-size: 12.5px; margin-left: 4px; }
+.quiz-score { text-align: center; padding: 16px; font-size: 16px; font-weight: 600; color: var(--accent); display: none; }
+.quiz-score.show { display: block; }
+#playbar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 200; background: #1a1a1a; color: #fff; display: flex; align-items: center; justify-content: center; gap: 16px; padding: 10px 20px; height: 52px; font-size: 14px; box-shadow: 0 -2px 12px rgba(0,0,0,.2); }
+#playbar button { background: none; border: none; color: #fff; font-size: 18px; cursor: pointer; padding: 4px 8px; border-radius: 4px; line-height: 1; transition: background .15s; }
+#playbar button:hover { background: rgba(255,255,255,.15); }
+#pb-play { font-size: 22px; }
+#pb-counter { font-size: 13px; color: #aaa; min-width: 52px; text-align: center; }
+#pb-speed { background: #333; border: none; color: #fff; font-size: 13px; padding: 3px 6px; border-radius: 4px; cursor: pointer; }
+body.mode-raw .tip { border-bottom: none; cursor: default; pointer-events: none; }
+body.mode-raw .tip:hover { background: none; }
+body.mode-raw .analysis, body.mode-raw .translation-inline, body.mode-raw .panel { display: none !important; }
+body.mode-raw .sentence.complex { border-bottom: none; }
+body.mode-raw .sentence { cursor: default; }
+body.mode-raw .sentence:hover { background: none; }
+body.mode-quiz .tip { border-bottom: none; cursor: default; pointer-events: none; }
+body.mode-quiz .tip:hover { background: none; }
+body.mode-quiz .analysis, body.mode-quiz .translation-inline, body.mode-quiz #vocabPanel, body.mode-quiz #tipPanel, body.mode-quiz #playbar { display: none !important; }
+body.mode-quiz .sentence.complex { border-bottom: none; cursor: default; }
+body.mode-quiz .sentence { cursor: default; }
+body.mode-quiz .sentence:hover { background: none; }
+body.mode-quiz #questionsPanel { display: block; }
+body.mode-quiz #questionsPanel .panel-body { display: block; }
+body.mode-quiz .question-analysis { display: none !important; }
+body.mode-quiz .show-answer-btn { display: none; }
+body.mode-quiz .question-option { cursor: pointer; padding: 6px 10px; border-radius: var(--radius); border: 1.5px solid transparent; transition: all .15s; }
+body.mode-quiz .question-option:hover { background: var(--accent-light); }
+body.mode-quiz .question-option.selected { border-color: var(--accent); background: var(--accent-light); }
+body.mode-quiz .question-option.correct { border-color: #16a34a; background: #dcfce7; }
+body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2e2; }
+@media (max-width: 600px) {
+  .passage { padding: 20px 16px; }
+  .sentence { font-size: 16px; }
+  .question-options { grid-template-columns: 1fr; }
+  .panel-header, .question-item { padding-left: 16px; padding-right: 16px; }
+  .panel-body { padding: 12px 16px; }
+}
+</style>
+</head>
+<body class="mode-study">
+
+<!-- ══════ Header ══════ -->
+<div class="header">
+  <div class="container">
+    <h1>北京卷D篇精读 · The Best of Friends</h1>
+    <div class="header-controls">
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="study" onclick="setMode('study')">① 精读</button>
+        <button class="mode-step" data-mode="quiz" onclick="setMode('quiz')">② 做题</button>
+        <button class="mode-step" data-mode="raw" onclick="setMode('raw')">③ 原文</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()" title="切换护眼色">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Passage ══════ -->
+<div class="container">
+<div class="passage" id="passage">
+  <div class="passage-title">D</div>
+
+  <!-- ── Paragraph 1 ── -->
+  <div class="paragraph" id="para-1">
+    <span class="sentence" data-idx="0">The evidence for <span class="tip" data-tip="harmony|和谐（名词）｜你可能在音乐里见过 harmony——和声，好几个声部融合在一起很和谐。生活里 harmony = 和睦、和谐。the evidence for harmony = 和睦存在的证据｜形容词：harmonious 和谐的。搭配：live in harmony 和谐共处，family harmony 家庭和睦">harmony</span> may not be obvious in some families.</span>
+    <span class="sentence complex" data-idx="1">But it seems that four out of five young people now <span class="tip" data-tip="get on with|与...相处融洽｜on 表示顺畅运转，get on with sb = 和某人相处好、关系融洽。就像机器「顺畅运转」一样｜= get along with（也很常考）。反义：not get on with = 合不来。搭配：get on well with sb 和某人相处很好">get on with</span> their parents, which is the opposite of the <span class="tip" data-tip="popularly-held image|普遍存在的刻板印象｜popular 流行的你认识。popularly = 被大众普遍地。held = 持有。popularly-held = 大众普遍持有的，就是刻板印象｜image 在这里是「印象、形象」，不是「图片」">popularly-held image</span> of unhappy teenagers <span class="tip" data-tip="locked in their room|被关在房间里｜lock 是锁，你知道 lock the door（锁门）。be locked in = 被锁在里面。这里说的是刻板印象里的青少年：吵完架，气呼呼地把自己关在房间里">locked in their room</span> after endless family quarrels.</span>
+    <div class="analysis" id="analysis-1">
+      <p><b>句子结构：</b>主干是 <em>four out of five young people get on with their parents</em>（五分之四的年轻人和父母关系融洽）。</p>
+      <p><b>which 是谁？</b>逗号 + which 引导非限制性定语从句——这个 which 不是指前面某一个词，而是指整个主句的结论。<em>which is the opposite of...</em> = 这件事（4/5年轻人和父母相处融洽）和大众刻板印象正好相反。</p>
+      <p><b>后面的分词定语：</b><em>locked in their room after endless family quarrels</em> 是过去分词短语，修饰 teenagers。 = teenagers who are locked in their room...（被关在房间里的那种青少年）。高考阅读里这种「名词 + 分词短语」很常见，别被它割断了对主句的理解。</p>
+    </div>
+    <div class="translation-inline">和睦的证据在某些家庭里可能不那么明显。但看起来，每五个年轻人中就有四个能和父母和睦相处——这与大众对于青少年的刻板印象恰恰相反：那种吵完架就把自己锁在房间里的不开心的青少年。</div>
+  </div>
+
+  <!-- ── Paragraph 2 ── -->
+  <div class="paragraph" id="para-2">
+    <span class="sentence" data-idx="2">An important new study into <span class="tip" data-tip="teenage attitudes|青少年的态度和看法｜teen = 13-19岁的年龄段（thirteen → nineteen，都以-teen结尾），teenage = 青少年的。attitude 是「态度、看法」，高考必背词。study into = 对...的研究｜搭配：have a positive/negative attitude towards sth 对某事持积极/消极态度">teenage attitudes</span> <span class="tip" data-tip="surprisingly|令人惊讶地｜surprise 惊讶你认识，加 -ing 变形容词，再加 -ly 变副词。surprisingly shows = 令人惊讶地显示。后面的内容就是让研究者惊讶的东西">surprisingly</span> shows that their family life is more <span class="tip" data-tip="harmonious|和谐的（形容词）｜harmony 的形容词形式，加 -ous 后缀。more harmonious than it has ever been = 比以往任何时候都更和谐。it has ever been = 过去一直以来的状态｜搭配：harmonious relationship 和谐关系，harmonious atmosphere 和谐氛围">harmonious</span> than it has ever been in the past.</span>
+    <span class="sentence" data-idx="3">"We were surprised by just how positive today's young people seem to be about their families," said one member of the research team.</span>
+    <span class="sentence" data-idx="4">"They're expected to be <span class="tip" data-tip="rebellious|叛逆的｜rebel 是「反叛者、叛徒」，teenage rebel 青少年叛逆者。加 -ious 变形容词 = rebellious 叛逆的。be rebellious = 表现出叛逆。名词 rebellion 叛逆、反叛｜搭配：rebellious teenager 叛逆的青少年，rebel against 反抗">rebellious</span> and <span class="tip" data-tip="selfish|自私的｜self 是「自己」（self-study 自学，self-confident 自信）。selfish = 以自我为中心的 = 自私的。反义词：selfless 无私的（less = 没有）｜high考反义词：generous 大方的，considerate 体贴的">selfish</span> but actually they have other things on their minds: they want a car and <span class="tip" data-tip="material goods|物质财富，物质的东西｜material 是「物质的」（material world 物质世界），goods 是「商品、财物」。material goods = 钱、车、手机这类物质上的东西｜对比：spiritual needs 精神需求。写作文可以用：pursue material goods vs. spiritual growth">material goods</span>, and they worry about whether school is <span class="tip" data-tip="serving them well|（学校）是否真正帮到他们｜serve 是「服务、满足需求」。school is serving them well = 学校是否真正满足了他们的需求、对他们有帮助｜服务类搭配：serve one's purpose 达到目的，serve the community 服务社区">serving them well</span>.</span>
+    <span class="sentence" data-idx="5">There's more <span class="tip" data-tip="negotiation|谈判，协商｜negotiate 是「谈判、协商」，negotiation 是名词。家庭里的 negotiation = 父母和孩子之间的商量和协商，不是命令式的管教｜搭配：reach a negotiation 达成协议，negotiate with sb 与某人协商。形容词：negotiable 可协商的">negotiation</span> and discussion between parents and children, and children expect to <span class="tip" data-tip="take part in|参与，参加｜part 是「部分」，take part = 拿走一部分（参与进去）。take part in sth = 参加某事。= participate in（更正式）｜高考超高频！写作文必备：take part in a competition/activity/discussion">take part in</span> the family <span class="tip" data-tip="decision-making process|决策过程｜decision = 决定（decide 的名词），making = 做，decision-making = 做决定，process = 过程。family decision-making process = 家庭做决定的过程｜搭配：make a decision 做决定，decision-making skills 决策能力">decision-making process</span>.</span>
+    <span class="sentence" data-idx="6">They don't want to <span class="tip" data-tip="rock the boat|捣乱，搞破坏，制造麻烦｜rock 是「摇晃」，boat 是「船」。想象大家坐在一条平稳行驶的船上，有人开始猛地摇船——那不就是在捣乱、破坏平衡吗？Don't rock the boat = 别捣乱、别破坏现状｜这是英语习语，整体记，意思是「别添麻烦」">rock the boat</span>."</span>
+    <div class="translation-inline">一项重要的关于青少年态度的新研究令人惊讶地显示，他们的家庭生活比以往任何时候都更和谐。"我们对当今年轻人对家庭如此积极的态度感到吃惊，"一位研究团队成员说，"人们以为他们会叛逆、自私，但实际上他们心里想的是别的：他们想要车子和物质财富，他们担心学校是否真正对他们有帮助。父母和孩子之间有了更多协商和讨论，孩子们也希望参与家庭决策过程。他们不想惹麻烦。"</div>
+  </div>
+
+  <!-- ── Paragraph 3 ── -->
+  <div class="paragraph" id="para-3">
+    <span class="sentence complex" data-idx="7">So it seems that this <span class="tip" data-tip="generation|一代人，这一代｜generate 是「产生」，generation = 被产生出来的一群人 = 一代人。this generation of parents = 这一代父母（现在当父母的人）。30 years ago 那代父母 vs. 现在这代父母，态度差别很大｜搭配：the younger generation 年轻一代，generation gap 代沟，Generation Z Z世代">generation</span> of parents is <span class="tip" data-tip="much more likely than...to do|比...更有可能做...｜likely 是「有可能的」（likely to happen = 可能发生）。much 加强比较级。much more likely than A to do B = 比A更有可能去做B｜这个结构高考很常考：She is much more likely than her classmates to win.">much more likely than</span> parents of 30 years ago to treat their children as friends.</span>
+    <div class="analysis" id="analysis-7">
+      <p><b>句子结构：</b>开头 <em>it seems that...</em> 是形式主语，真正的主语是后面整个 that 从句。</p>
+      <p><b>比较级核心：</b><em>much more likely than parents of 30 years ago to treat their children as friends</em>——拆开看：<em>more likely than A</em>（比A更有可能）+ <em>to treat...</em>（做什么）。much 是程度副词，让比较级更强。</p>
+      <p><b>主干提炼：</b>this generation of parents is likely to treat their children as friends（这代父母倾向于把孩子当朋友）。</p>
+    </div>
+    <span class="sentence" data-idx="8">"My parents are happy to discuss things with me and willing to listen to me," says 17-year-old Daniel Lazall.</span>
+    <span class="sentence" data-idx="9">"I always tell them when I'm <span class="tip" data-tip="going out clubbing|出去泡夜店｜club 是「俱乐部、夜店」，clubbing = 去夜店玩这件事。go out clubbing = 出门去夜店。Daniel 说他每次出去夜店都会告诉父母——这正是「把孩子当朋友」的体现">going out clubbing</span>.</span>
+    <span class="sentence" data-idx="10"><span class="tip" data-tip="As long as|只要…（条件状语）｜long 是「长」，as long as 表示条件：只要满足这个条件，后面就成立。= provided that（更书面）｜高考写作超高频！As long as you work hard, you will succeed. 只要你努力，就会成功。As long as they know what I'm doing = 只要他们知道我在干嘛">As long as</span> they know what I'm doing, they're fine with it."</span>
+    <span class="sentence" data-idx="11">Susan Crome, <span class="tip" data-tip="who is now 21|非限制性定语从句补充信息｜who 引导定语从句，修饰 Susan Crome，补充她现在21岁这个信息。这种「人名 + , who...」的结构是插入的补充说明，不影响主句意思。逗号夹住的部分先跳过也能读懂主句">who is now 21</span>, agrees.</span>
+    <span class="sentence" data-idx="12">"Looking back on the last 10 years, there was a lot of <span class="tip" data-tip="what you could call negotiation|你可以称之为「谈判」的东西｜what you could call... = 你可以称为…的东西，说话人在稍微婉转地表达。Susan 说她和父母之间有很多"谈判"——可以这么称呼。这个结构很地道，不过高考认识就好">what you could call negotiation</span>.</span>
+    <span class="sentence" data-idx="13">For example, <span class="tip" data-tip="as long as I'd done|只要我做完了...｜as long as + 过去完成时。I'd done = I had done，表示在「被允许出去」之前，「写完作业」这件事必须先完成。这里的顺序：先完成作业 → 才能出去">as long as I'd done</span> all my homework, I could go out on a Saturday night.</span>
+    <span class="sentence" data-idx="14">But I think my grandparents were a lot <span class="tip" data-tip="stricter|更严格的｜strict 是「严格的、严厉的」，你肯定见过 a strict teacher（严格的老师）。比较级 stricter = 更严格。Susan 说祖父母对父母比现在的父母对她严多了，说明一代比一代宽松｜搭配：strict with sb 对某人严格，strict rules 严格的规定">stricter</span> with my parents than that."</span>
+    <div class="translation-inline">所以，这一代父母似乎比30年前的父母更有可能把孩子当作朋友来对待。"我父母很愿意和我讨论事情，也愿意听我说，"17岁的Daniel Lazall说，"我每次出去夜店都会告诉他们。只要他们知道我在干嘛，他们就没意见。"现年21岁的Susan Crome也表示赞同。"回顾过去10年，有很多可以称之为谈判的东西。比如，只要我把作业都做完了，周六晚上就可以出去。但我觉得祖父母对我父母那一代严多了。"</div>
+  </div>
+
+  <!-- ── Paragraph 4 ── -->
+  <div class="paragraph" id="para-4">
+    <span class="sentence" data-idx="15">Maybe this positive view of family life should not be <span class="tip" data-tip="unexpected|出乎意料的｜expect 是「预期、期待」（你肯定认识），unexpected = 没被预期到的 = 出乎意料的。should not be unexpected = 其实不应该让人意外——言下之意是，这个结果其实是有道理的">unexpected</span>.</span>
+    <span class="sentence" data-idx="16">It is possible that the idea of teenage <span class="tip" data-tip="rebellion|叛逆，反叛｜rebel → rebellion，名词形式。the idea of teenage rebellion = 青少年会叛逆这个想法/概念。后面作者说这个 idea 可能根本没有现实依据，意思是「青少年天生叛逆」可能只是个谣言｜动词：rebel against 反抗">rebellion</span> is not <span class="tip" data-tip="rooted in|根植于，源于｜root 是「根」，树根。rooted in = 有根基在某事物里 = 源于、基于。not rooted in real facts = 没有现实依据，不是基于真实事实｜搭配：deep-rooted 根深蒂固的，be rooted in tradition 根植于传统">rooted in</span> real facts.</span>
+    <span class="sentence complex" data-idx="17">A researcher comments, "Our surprise that teenagers say they <span class="tip" data-tip="get along well with|与...相处很好｜= get on with（第1段见过）。get along well with sb = 和某人相处愉快。teenagers get along well with their parents = 青少年和父母相处很好｜这两个短语在高考里可以互换：get on with = get along with">get along well with</span> their parents comes because of a brief period in our social history when teenagers were <span class="tip" data-tip="regarded as|被看作，被视为｜regard 是「看待、认为」。be regarded as = 被认为是、被视为。teenagers were regarded as different beings = 青少年曾被视为另类｜= be considered as，= be seen as，= be viewed as。写作文这四个可以替换着用">regarded as</span> different beings.</span>
+    <div class="analysis" id="analysis-17">
+      <p><b>句子主干：</b>Our surprise comes because of a brief period（我们的惊讶源于历史上一个短暂时期）。</p>
+      <p><b>两个从句：</b></p>
+      <p>① <em>that teenagers say they get along well with their parents</em>：同位语从句，解释 surprise 的具体内容（惊讶于什么？→ 惊讶于青少年说和父母相处很好）。</p>
+      <p>② <em>when teenagers were regarded as different beings</em>：定语从句，修饰 period（哪个时期？→ 青少年被视为异类的那段时期）。</p>
+      <p><b>整句意思：</b>我们之所以对「青少年和父母相处融洽」感到惊讶，是因为历史上曾有短暂一段时期，青少年被视为与其他人完全不同的异类。</p>
+    </div>
+    <span class="sentence complex" data-idx="18">But that idea of <span class="tip" data-tip="rebelling and breaking away from|反叛和脱离（父母）｜rebelling = rebel 的动名词，反叛。breaking away from = 脱离、摆脱。两个动名词并列，说的是「叛逆」这个概念的具体内容：反抗父母、脱离父母的掌控｜break away from 也很常用：break away from bad habits 摆脱坏习惯">rebelling and breaking away from</span> their parents really only happened during that one time in the 1960s <span class="tip" data-tip="when everyone rebelled|定语从句，修饰"那个年代"｜when 在这里是关系副词，引导定语从句修饰 that one time（那个时代）。when everyone rebelled = 那个人人都在反叛的年代（指1960年代的社会运动）">when everyone rebelled</span>.</span>
+    <div class="analysis" id="analysis-18">
+      <p><b>句子主干：</b>that idea really only happened during that one time in the 1960s（那种「青少年叛逆」的概念其实只在1960年代发生过一次）。</p>
+      <p><b>of rebelling and breaking away from their parents：</b>介词短语作定语，修饰 idea。整个 that idea of... = 「叛逆、脱离父母」这个概念。</p>
+      <p><b>when everyone rebelled：</b>定语从句，修饰 that one time（那个所有人都在反叛的年代）。</p>
+      <p><b>really only：</b>really 是强调，only 是限定。really only happened = 确实只是在那一次发生过，表达「就发生过这一次，不是常态」的语气。</p>
+    </div>
+    <span class="sentence" data-idx="19">The normal situation throughout history has been a <span class="tip" data-tip="smooth change|平稳的过渡｜smooth 是「光滑的、顺畅的」（smooth road 平坦的路，smooth process 顺畅的过程）。smooth change = 平稳的变化，没有什么剧烈反抗｜副词 smoothly：everything went smoothly 一切进展顺利。写作文用：a smooth transition from... to...">smooth change</span> from <span class="tip" data-tip="helping out with the family business|帮家族生意做事｜help out = 帮忙，出一份力（比 help 更口语）。the family business = 家族生意。从帮着干活 → 到接管生意，这是正常的代际传承">helping out with the family business</span> to <span class="tip" data-tip="taking it over|接管（家业）｜take over = 接管，接手。从 helping out（帮着干）到 taking over（全面接管）——就是子承父业的过程｜搭配：take over a company 接管公司，take over from sb 从某人手中接管">taking it over</span>."</span>
+    <div class="translation-inline">也许这种对家庭生活的积极看法不应该让人感到意外。青少年叛逆这个概念可能并没有现实依据。一位研究人员评论道："我们对青少年声称和父母相处融洽感到惊讶，是因为我们社会史上有一个短暂时期，青少年被视为另类。但那种反叛和脱离父母的想法真的只在1960年代那个全民反叛的时代发生过一次。纵观历史，正常的情况一直是从帮助家族生意到接管家族生意的平稳过渡。"</div>
+  </div>
+</div>
+
+<!-- ══════ Vocabulary ══════ -->
+<div class="panel open" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')">
+    <span>生词与短语（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="vocab-list">
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('get on with')">get on with</span>
+          <span class="vocab-meaning">与...相处融洽</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-example">① 相处融洽：She <em>gets on well with</em> her classmates. 她和同学相处很好。</div>
+          <div class="vd-example">② = get along with，高考两个都考，意思完全一样。</div>
+          <div class="vd-example">③ 继续做（get on with sth）：Let's <em>get on with</em> the work. 我们继续工作吧。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('harmonious')">harmonious</span>
+          <span class="vocab-meaning">和谐的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">harmony（名词）→ harmonious（形容词）。记住 harmony = 音乐里的「和声」，就不会忘。<br><em>harmonious</em> family relationship 和谐的家庭关系 &nbsp;·&nbsp; live in <em>harmony</em> 和谐共处</div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('take part in')">take part in</span>
+          <span class="vocab-meaning">参与，参加</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-example">= participate in（更正式，写作文用）。</div>
+          <div class="vd-example"><em>Take part in</em> a competition/discussion/activity. 参加比赛/讨论/活动。</div>
+          <div class="vd-example">高考作文必备：Students are encouraged to <em>take part in</em> outdoor activities.</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('rock the boat')">rock the boat</span>
+          <span class="vocab-meaning">捣乱，制造麻烦（习语）</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
+        </div>
+        <div class="vocab-extra">整体记这个画面：大家坐在一条船里，有人开始猛摇船 = 在破坏平衡、制造麻烦。<br>Don't <em>rock the boat</em>. 别捣乱。 &nbsp;·&nbsp; They didn't want to <em>rock the boat</em>. 他们不想惹麻烦。</div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('as long as')">as long as</span>
+          <span class="vocab-meaning">只要（表条件）</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-example">= provided that（更书面）= on condition that（更正式）。</div>
+          <div class="vd-example"><em>As long as</em> you work hard, you will succeed. 只要努力，就会成功。</div>
+          <div class="vd-example"><em>As long as</em> they know what I'm doing, they're fine with it. 只要他们知道我在干嘛，就没问题。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('be regarded as')">be regarded as</span>
+          <span class="vocab-meaning">被看作，被视为</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-example">高考四个同义替换（写作文这几个换着用）：</div>
+          <div class="vd-example">be <em>regarded</em> as = be <em>considered</em> as = be <em>seen</em> as = be <em>viewed</em> as</div>
+          <div class="vd-example">DIY was <em>regarded as</em> a male hobby. DIY 曾被视为男性爱好。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('be rooted in')">be rooted in</span>
+          <span class="vocab-meaning">根植于，源于</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">root = 根（树根），rooted in = 有根基在...里面。<br>not <em>rooted in</em> real facts 没有现实依据 &nbsp;·&nbsp; <em>deep-rooted</em> beliefs 根深蒂固的信念</div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('break away from')">break away from</span>
+          <span class="vocab-meaning">脱离，摆脱</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">break（打破）+ away（离开）+ from（从）= 打破束缚、脱离。<br><em>break away from</em> their parents 脱离父母 &nbsp;·&nbsp; <em>break away from</em> bad habits 摆脱坏习惯</div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('generation')">generation</span>
+          <span class="vocab-meaning">一代人</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-example">generate（产生）→ generation（被产生出来的一群人）→ 一代人，约25-30年。</div>
+          <div class="vd-example"><em>generation</em> gap 代沟 &nbsp;·&nbsp; the younger <em>generation</em> 年轻一代</div>
+          <div class="vd-example">this <em>generation</em> of parents = 这一代父母（现在当父母的人）</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('smooth')">smooth</span>
+          <span class="vocab-meaning">顺畅的，平稳的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">原意是「光滑的」（smooth surface 光滑的表面），引申为「顺畅的、平稳的」。<br>a <em>smooth</em> change 平稳的过渡 &nbsp;·&nbsp; go <em>smoothly</em> 进展顺利 &nbsp;·&nbsp; a <em>smooth</em> flight 平稳的飞行</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Questions ══════ -->
+<div class="panel open" id="questionsPanel">
+  <div class="panel-header" onclick="togglePanel('questionsPanel')">
+    <span>题目解析（5题）</span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="quiz-score" id="quizScore"></div>
+
+    <!-- Q1 -->
+    <div class="question-item" data-answer="D">
+      <div class="question-stem">1. What is the popular image of teenagers today?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. They worry about school.</div>
+        <div class="question-option" data-key="B">B. They dislike living with their parents.</div>
+        <div class="question-option" data-key="C">C. They have to be locked in to avoid troubles.</div>
+        <div class="question-option" data-key="D">D. They quarrel a lot with other family members.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：D</div>
+        <div class="locate">"...the popularly-held image of unhappy teenagers locked in their room after endless family quarrels."</div>
+        <p>题目问"大众对当今青少年的刻板印象是什么"。第一段直接说了：popularly-held image = 不开心的青少年，吵了无数架之后把自己锁在房间里。<b>D</b>（和家庭成员大量争吵）最接近。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— 文中提到青少年担心学校，但这不是大众对他们的"印象"，而是他们自己心里在想的事。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ B</span><span class="opt-why">— 文中没有提到不喜欢和父母住在一起。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ C</span><span class="opt-why">— 被关在房间是事实，但原因说反了。不是为了"避免麻烦"，而是争吵之后被关或自己躲进去。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ D</span><span class="opt-why">— 与原文"after endless family quarrels"（无休止的家庭争吵）直接对应。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question-item" data-answer="B">
+      <div class="question-stem">2. The study shows that teenagers don't want to ______.</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. share family responsibility</div>
+        <div class="question-option" data-key="B">B. cause trouble in their families</div>
+        <div class="question-option" data-key="C">C. go boating with their family</div>
+        <div class="question-option" data-key="D">D. make family decisions</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：B</div>
+        <div class="locate">"They don't want to rock the boat."</div>
+        <p>这道题考习语 rock the boat（制造麻烦、捣乱）。rock the boat = cause trouble。选 <b>B</b>。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— 文中说孩子们希望参与家庭决策，不是不愿意分担责任。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ B</span><span class="opt-why">— rock the boat 的直接释义就是 cause trouble。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ C</span><span class="opt-why">— go boating（划船）是对 rock the boat 的字面误读陷阱，别被绕进去。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— 恰好相反，文中说孩子们"expect to take part in the family decision-making process"，他们是想参与的。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question-item" data-answer="D">
+      <div class="question-stem">3. Compared with parents of 30 years ago, today's parents ______.</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. go to clubs more often with their children</div>
+        <div class="question-option" data-key="B">B. are much stricter with their children</div>
+        <div class="question-option" data-key="C">C. care less about their children's life</div>
+        <div class="question-option" data-key="D">D. give their children more freedom</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：D</div>
+        <div class="locate">"...this generation of parents is much more likely than parents of 30 years ago to treat their children as friends."<br>"...my grandparents were a lot stricter with my parents than that."</div>
+        <p>两处证据：① 现在的父母更可能把孩子当朋友 ② Susan 说祖父母对父母比现在的父母对她严多了。两者都说明：现在的父母给孩子更多自由 = <b>D</b>。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— 文中 clubbing 是孩子出去玩，不是和父母一起去夜店。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ B</span><span class="opt-why">— 恰好相反，是祖父母那一代更严格。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ C</span><span class="opt-why">— 现在的父母更愿意倾听和讨论，不是不关心。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ D</span><span class="opt-why">— 把孩子当朋友 + 允许孩子出去玩，都体现了给予更多自由。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question-item" data-answer="A">
+      <div class="question-stem">4. According to the author, teenage rebellion ______.</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. may be a false belief</div>
+        <div class="question-option" data-key="B">B. is common nowadays</div>
+        <div class="question-option" data-key="C">C. existed only in the 1960s</div>
+        <div class="question-option" data-key="D">D. resulted from changes in families</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：A</div>
+        <div class="locate">"It is possible that the idea of teenage rebellion is not rooted in real facts."</div>
+        <p>作者用 <em>it is possible that...</em> + <em>not rooted in real facts</em> 表达：青少年叛逆这个概念可能根本没有现实依据。= may be a false belief（可能只是个错误的信念）= <b>A</b>。</p>
+        <div class="option-list">
+          <div class="option-item correct"><span class="opt-mark">✓ A</span><span class="opt-why">— "not rooted in real facts" = 可能是假的信念，直接对应 "may be a false belief"。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ B</span><span class="opt-why">— 恰好相反，作者认为现在青少年并不叛逆。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ C</span><span class="opt-why">— 文章说叛逆在1960年代比较明显，但没说"only existed in the 1960s"，表述太绝对。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— 文章没有说叛逆是由家庭变化引起的。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question-item" data-answer="C">
+      <div class="question-stem">5. What is the passage mainly about?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. Negotiation in family.</div>
+        <div class="question-option" data-key="B">B. Education in family.</div>
+        <div class="question-option" data-key="C">C. Harmony in family.</div>
+        <div class="question-option" data-key="D">D. Teenage trouble in family.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：C</div>
+        <p>文章标题"The Best of Friends"就是暗示，全文从各角度说明现在的青少年和父母关系很好、家庭和睦。研究发现、青少年的证词、研究员的分析，都在证明「家庭关系比以往更和谐」。选 <b>C</b>。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— negotiation（协商）只是文中提到的一个现象，不是主题。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ B</span><span class="opt-why">— 文章几乎没有涉及教育话题。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ C</span><span class="opt-why">— 全文主旨：家庭和谐，青少年与父母关系比以往更好。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— 恰好相反，文章论证的是青少年并没有给家庭带来麻烦。</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<!-- ══════ Playbar ══════ -->
+<div id="playbar">
+  <button onclick="pbPrev()" title="上一句">⏮</button>
+  <button id="pb-play" onclick="pbToggle()">▶</button>
+  <button onclick="pbNext()" title="下一句">⏭</button>
+  <span id="pb-counter">— / 20</span>
+  <select id="pb-speed" onchange="pbSetSpeed(this.value)">
+    <option value="0.75">0.75×</option>
+    <option value="1" selected>1×</option>
+    <option value="1.25">1.25×</option>
+    <option value="1.5">1.5×</option>
+  </select>
+</div>
+
+<script>
+// ── Theme ──
+const THEMES = ['yellow', 'green'];
+const THEME_LABELS = { yellow: '📄 书本黄', green: '🌿 护眼绿' };
+let themeIdx = parseInt(localStorage.getItem('theme') || '0');
+function applyTheme() {
+  document.body.classList.remove('theme-yellow', 'theme-green');
+  const t = THEMES[themeIdx % THEMES.length];
+  document.body.classList.add('theme-' + t);
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.textContent = THEME_LABELS[t];
+}
+function cycleTheme() {
+  themeIdx = (themeIdx + 1) % THEMES.length;
+  localStorage.setItem('theme', themeIdx);
+  applyTheme();
+}
+applyTheme();
+
+const sentences = [
+  "The evidence for harmony may not be obvious in some families.",
+  "But it seems that four out of five young people now get on with their parents, which is the opposite of the popularly-held image of unhappy teenagers locked in their room after endless family quarrels.",
+  "An important new study into teenage attitudes surprisingly shows that their family life is more harmonious than it has ever been in the past.",
+  "We were surprised by just how positive today's young people seem to be about their families, said one member of the research team.",
+  "They're expected to be rebellious and selfish but actually they have other things on their minds: they want a car and material goods, and they worry about whether school is serving them well.",
+  "There's more negotiation and discussion between parents and children, and children expect to take part in the family decision-making process.",
+  "They don't want to rock the boat.",
+  "So it seems that this generation of parents is much more likely than parents of 30 years ago to treat their children as friends.",
+  "My parents are happy to discuss things with me and willing to listen to me, says 17-year-old Daniel Lazall.",
+  "I always tell them when I'm going out clubbing.",
+  "As long as they know what I'm doing, they're fine with it.",
+  "Susan Crome, who is now 21, agrees.",
+  "Looking back on the last 10 years, there was a lot of what you could call negotiation.",
+  "For example, as long as I'd done all my homework, I could go out on a Saturday night.",
+  "But I think my grandparents were a lot stricter with my parents than that.",
+  "Maybe this positive view of family life should not be unexpected.",
+  "It is possible that the idea of teenage rebellion is not rooted in real facts.",
+  "A researcher comments: Our surprise that teenagers say they get along well with their parents comes because of a brief period in our social history when teenagers were regarded as different beings.",
+  "But that idea of rebelling and breaking away from their parents really only happened during that one time in the 1960s when everyone rebelled.",
+  "The normal situation throughout history has been a smooth change from helping out with the family business to taking it over."
+];
+
+// ── Tooltip ──
+let activeTooltip = null;
+const ZH_AUDIO = {};
+let zhPlayer = null;
+
+function phraseToSlug(phrase) {
+  return phrase.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function playZhAudio(slug, btn) {
+  if (zhPlayer) { zhPlayer.pause(); zhPlayer = null; btn.textContent = '🔊 听讲解'; return; }
+  const src = ZH_AUDIO[slug];
+  if (!src) return;
+  zhPlayer = new Audio(src);
+  btn.textContent = '⏹ 停止';
+  zhPlayer.onended = () => { btn.textContent = '🔊 听讲解'; zhPlayer = null; };
+  zhPlayer.play();
+}
+
+function showTooltip(tipEl) {
+  hideTooltip();
+  const raw = tipEl.getAttribute('data-tip');
+  const [phrase, explain] = raw.split('|');
+  const parts = explain.split('｜');
+  const slug = phraseToSlug(phrase);
+  const hasAudio = ZH_AUDIO[slug];
+  const tooltip = document.createElement('div');
+  tooltip.className = 'tooltip';
+  tooltip.innerHTML =
+    `<div class="tip-phrase">${phrase}<span class="tip-speak" onclick="speakWord('${phrase}')">&#9654;</span></div>` +
+    parts.map(p => `<div>${p.trim()}</div>`).join('') +
+    (hasAudio ? `<button class="tip-zh-play" onclick="playZhAudio('${slug}', this)">🔊 听讲解</button>` : '');
+  document.body.appendChild(tooltip);
+  activeTooltip = tooltip;
+  const rect = tipEl.getBoundingClientRect();
+  const tw = tooltip.offsetWidth;
+  const th = tooltip.offsetHeight;
+  let left = rect.left + rect.width / 2 - tw / 2;
+  const container = tipEl.closest('.container') || document.querySelector('.container');
+  const cRect = container ? container.getBoundingClientRect() : { left: 8, right: document.documentElement.clientWidth - 8 };
+  const cPad = container ? parseFloat(getComputedStyle(container).paddingLeft) : 0;
+  left = Math.max(cRect.left + cPad, Math.min(left, cRect.right - cPad - tw));
+  const arrowLeft = rect.left + rect.width / 2 - left;
+  tooltip.style.setProperty('--arrow-left', arrowLeft + 'px');
+  let top = rect.top - th - 10;
+  if (top < 60) { top = rect.bottom + 10; tooltip.classList.add('below'); }
+  top = Math.max(8, Math.min(top, window.innerHeight - th - 8));
+  tooltip.style.left = left + 'px';
+  tooltip.style.top = top + 'px';
+  speakWord(phrase);
+}
+
+function hideTooltip() {
+  if (zhPlayer) { zhPlayer.pause(); zhPlayer = null; }
+  if (activeTooltip) { activeTooltip.remove(); activeTooltip = null; }
+}
+
+document.addEventListener('click', function(e) {
+  const tipEl = e.target.closest('.tip');
+  if (tipEl) {
+    e.stopPropagation();
+    if (activeTooltip && activeTooltip._source === tipEl) { hideTooltip(); }
+    else { showTooltip(tipEl); if (activeTooltip) activeTooltip._source = tipEl; }
+    return;
+  }
+  if (e.target.closest('.tooltip')) return;
+  hideTooltip();
+});
+
+// ── Playbar ──
+let pbCurrent = null, pbPlaying = false, pbSpeed = 1, enPlayer = null;
+
+function pbStop() { if (enPlayer) { enPlayer.pause(); enPlayer = null; } pbPlaying = false; }
+
+function highlightSentence(idx) {
+  document.querySelectorAll('.sentence').forEach(el => el.classList.remove('playing'));
+  if (idx !== null && idx >= 0 && idx < sentences.length) {
+    const el = document.querySelector(`.sentence[data-idx="${idx}"]`);
+    if (el) { el.classList.add('playing'); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+  }
+}
+
+function pbUpdateUI() {
+  document.getElementById('pb-play').textContent = pbPlaying ? '⏸' : '▶';
+  document.getElementById('pb-counter').textContent = pbCurrent !== null ? `${pbCurrent + 1} / ${sentences.length}` : `— / ${sentences.length}`;
+}
+
+function pbPlayCurrent() {
+  pbStop();
+  if (pbCurrent === null) { pbUpdateUI(); return; }
+  const src = `audio/北京卷-D/en-s${String(pbCurrent).padStart(2,'0')}.mp3`;
+  enPlayer = new Audio(src);
+  enPlayer.playbackRate = pbSpeed;
+  pbPlaying = true;
+  highlightSentence(pbCurrent);
+  pbUpdateUI();
+  enPlayer.onerror = () => {
+    // Fallback: Web Speech API
+    const utter = new SpeechSynthesisUtterance(sentences[pbCurrent]);
+    const voices = speechSynthesis.getVoices();
+    utter.voice = voices.find(v => v.lang === 'en-GB') || voices.find(v => v.lang.startsWith('en')) || null;
+    utter.rate = pbSpeed * 0.85;
+    utter.onend = () => {
+      if (pbPlaying) {
+        if (pbCurrent < sentences.length - 1) { pbCurrent++; pbPlayCurrent(); }
+        else { pbPlaying = false; highlightSentence(null); pbUpdateUI(); }
+      }
+    };
+    speechSynthesis.speak(utter);
+    enPlayer = null;
+  };
+  enPlayer.onended = () => {
+    if (pbPlaying) {
+      if (pbCurrent < sentences.length - 1) { pbCurrent++; pbPlayCurrent(); }
+      else { pbPlaying = false; highlightSentence(null); pbUpdateUI(); }
+    }
+  };
+  enPlayer.play();
+}
+
+function pbToggle() {
+  if (pbCurrent === null) { pbCurrent = 0; pbPlayCurrent(); return; }
+  if (pbPlaying) { pbStop(); highlightSentence(pbCurrent); pbUpdateUI(); }
+  else { pbPlayCurrent(); }
+}
+function pbPrev() { if (pbCurrent === null) pbCurrent = 0; else if (pbCurrent > 0) pbCurrent--; pbPlayCurrent(); }
+function pbNext() { if (pbCurrent === null) pbCurrent = 0; else if (pbCurrent < sentences.length - 1) pbCurrent++; pbPlayCurrent(); }
+function pbSetSpeed(v) { pbSpeed = parseFloat(v); if (enPlayer) enPlayer.playbackRate = pbSpeed; }
+
+document.addEventListener('click', function(e) {
+  if (e.target.closest('.tip') || e.target.closest('.tooltip')) return;
+  const sentence = e.target.closest('.sentence.complex');
+  if (sentence) toggleAnalysis(parseInt(sentence.dataset.idx));
+});
+
+// ── Misc ──
+function speakWord(word) {
+  if (enPlayer) { enPlayer.pause(); enPlayer = null; }
+  const slug = 'en-word-' + word.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const src = 'audio/北京卷-D/' + slug + '.mp3';
+  enPlayer = new Audio(src);
+  enPlayer.onerror = function() {
+    const utter = new SpeechSynthesisUtterance(word);
+    const voices = speechSynthesis.getVoices();
+    utter.voice = voices.find(v => v.lang === 'en-GB') || voices.find(v => v.lang.startsWith('en')) || voices[0];
+    utter.rate = 0.8;
+    speechSynthesis.speak(utter);
+  };
+  enPlayer.play();
+}
+
+function toggleAnalysis(idx) { const el = document.getElementById('analysis-' + idx); if (el) el.classList.toggle('open'); }
+function togglePanel(id) { document.getElementById(id).classList.toggle('open'); }
+
+function setMode(mode) {
+  document.body.classList.remove('mode-raw', 'mode-study', 'mode-quiz');
+  if (mode !== 'study') document.body.classList.add('mode-' + mode);
+  document.querySelectorAll('.mode-step').forEach(btn => btn.classList.toggle('active', btn.dataset.mode === mode));
+  hideTooltip();
+  if (mode === 'quiz') { pbStop(); highlightSentence(null); pbUpdateUI(); resetQuiz(); }
+}
+
+// ── Quiz ──
+function resetQuiz() {
+  document.querySelectorAll('.question-option').forEach(opt => opt.classList.remove('selected','correct','wrong'));
+  document.querySelectorAll('.question-item').forEach(q => q.dataset.answered = '');
+  const score = document.getElementById('quizScore');
+  if (score) score.classList.remove('show');
+}
+
+document.addEventListener('click', function(e) {
+  if (!document.body.classList.contains('mode-quiz')) return;
+  const opt = e.target.closest('.question-option');
+  if (!opt) return;
+  const item = opt.closest('.question-item');
+  if (item.dataset.answered) return;
+  item.dataset.answered = 'true';
+  const picked = opt.dataset.key;
+  const correct = item.dataset.answer;
+  if (picked === correct) { opt.classList.add('correct'); }
+  else { opt.classList.add('wrong'); item.querySelector(`.question-option[data-key="${correct}"]`).classList.add('correct'); }
+  const total = document.querySelectorAll('.question-item[data-answer]').length;
+  const done = document.querySelectorAll('.question-item[data-answered="true"]').length;
+  if (done === total) showQuizScore();
+});
+
+function showQuizScore() {
+  const total = document.querySelectorAll('.question-item[data-answer]').length;
+  const wrong = document.querySelectorAll('.question-option.wrong').length;
+  const score = document.getElementById('quizScore');
+  score.textContent = `得分：${total - wrong} / ${total}`;
+  score.classList.add('show');
+}
+
+function toggleQuestionAnalysis(btn) {
+  const analysis = btn.nextElementSibling;
+  analysis.classList.toggle('open');
+  btn.textContent = analysis.classList.contains('open') ? '收起解析' : '🔍 查看解析';
+}
+
+// ── SRS ──
+const SRS_PREFIX = 'srs_beijing_D_';
+const SRS_INTERVALS = [1, 3, 7, 14, 30];
+
+function srsLoad(word) { const raw = localStorage.getItem(SRS_PREFIX + word); return raw ? JSON.parse(raw) : null; }
+
+function srsSave(word, knew) {
+  const state = srsLoad(word) || { streak: 0 };
+  if (knew) { state.streak = (state.streak || 0) + 1; state.interval = SRS_INTERVALS[Math.min(state.streak - 1, SRS_INTERVALS.length - 1)]; }
+  else { state.streak = 0; state.interval = 1; }
+  state.nextReview = Date.now() + state.interval * 86400000;
+  localStorage.setItem(SRS_PREFIX + word, JSON.stringify(state));
+  return state;
+}
+
+function srsIsDue(state) { return !state || Date.now() >= state.nextReview; }
+
+function srsUpdateCard(card) {
+  const state = srsLoad(card.dataset.srsWord);
+  card.classList.remove('srs-due', 'srs-known');
+  if (!state) return;
+  card.classList.add(srsIsDue(state) ? 'srs-due' : 'srs-known');
+}
+
+function srsUpdateBadge() {
+  const badge = document.getElementById('srs-badge');
+  if (!badge) return;
+  const cards = document.querySelectorAll('.vocab-card[data-srs-word]');
+  let due = 0;
+  cards.forEach(c => { if (srsIsDue(srsLoad(c.dataset.srsWord))) due++; });
+  if (due === 0) { badge.textContent = '全掌握 ✓'; badge.className = 'srs-badge all-done'; }
+  else { badge.textContent = due + '个待复习'; badge.className = 'srs-badge'; }
+}
+
+function srsClick(word, knew, btn) {
+  srsSave(word, knew);
+  const card = btn.closest('.vocab-card');
+  srsUpdateCard(card);
+  srsUpdateBadge();
+  btn.style.opacity = '0.4';
+  setTimeout(() => btn.style.opacity = '', 600);
+}
+
+function srsInit() {
+  document.querySelectorAll('.vocab-card').forEach(card => {
+    const wordEl = card.querySelector('.vocab-word');
+    if (!wordEl) return;
+    const word = wordEl.textContent.trim();
+    card.dataset.srsWord = word;
+    const btns = document.createElement('div');
+    btns.className = 'srs-btns';
+    const esc = word.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    btns.innerHTML =
+      `<button class="srs-btn srs-btn-know" onclick="srsClick('${esc}',true,this)">认识 ✓</button>` +
+      `<button class="srs-btn srs-btn-forget" onclick="srsClick('${esc}',false,this)">还不会 ✗</button>`;
+    card.querySelector('.vocab-card-head').appendChild(btns);
+    srsUpdateCard(card);
+  });
+  srsUpdateBadge();
+}
+
+pbUpdateUI();
+srsInit();
+</script>
+</body>
+</html>
