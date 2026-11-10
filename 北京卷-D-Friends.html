@@ -58,6 +58,14 @@ body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
 .tooltip .tip-phrase { font-family: Georgia, serif; font-weight: 600; color: #93c5fd; margin-bottom: 2px; }
 .tooltip .tip-speak { display: inline-block; cursor: pointer; margin-left: 6px; font-size: 12px; opacity: .7; vertical-align: middle; }
 .tooltip .tip-speak:hover { opacity: 1; }
+.analysis-play {
+  float: right; margin-left: 8px;
+  background: none; border: 1px solid var(--border); border-radius: 4px;
+  font-size: 12px; padding: 2px 8px; cursor: pointer; color: var(--accent);
+  transition: all .15s;
+}
+.analysis-play:hover { background: var(--accent-light); border-color: var(--accent); }
+.analysis-play.playing { background: var(--accent); color: #fff; border-color: var(--accent); }
 .tooltip .tip-zh-play { display: block; margin-top: 6px; padding: 4px 10px; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25); border-radius: 4px; color: #93c5fd; font-size: 12px; cursor: pointer; text-align: center; }
 .tooltip .tip-zh-play:hover { background: rgba(255,255,255,.25); }
 @keyframes tipIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
@@ -187,7 +195,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
   <div class="paragraph" id="para-1">
     <span class="sentence" data-idx="0">The <span class="tip" data-tip="evidence|证据，依据｜法庭剧里常听到：We need evidence！就是「证据」。The evidence for harmony = 和睦存在的证据，evidence for sth = 支持某事的证据｜高考常见句式：There is evidence that... 有证据表明...（阅读理解里超常见）">evidence</span> for <span class="tip" data-tip="harmony|和谐（名词）｜你可能在音乐里见过 harmony——和声，好几个声部融合在一起很和谐。生活里 harmony = 和睦、和谐。the evidence for harmony = 和睦存在的证据｜形容词：harmonious 和谐的。搭配：live in harmony 和谐共处，family harmony 家庭和睦">harmony</span> may not be <span class="tip" data-tip="obvious|明显的，显而易见的｜ob = 朝向，via = 路（via 经由，你可能见过）。obvious = 摆在路上一眼就看到的 = 显而易见的。not obvious = 不那么明显｜副词：obviously 显然地（写作文好用：Obviously, ...）。It is obvious that... 很明显...（高考作文句式）">obvious</span> in some families.</span>
     <span class="sentence complex" data-idx="1">But it seems that <span class="tip" data-tip="four out of five|五分之四（表比例的固定说法）｜out of = 从...里面取出。four out of five = 从五个里取四个 = 五分之四。这个结构很常考：3 out of 10 students = 十分之三的学生。two out of three = 三分之二｜类似用法：9 out of 10 people agree. 十分之九的人同意。">four out of five</span> young people now <span class="tip" data-tip="get on with|与...相处融洽｜on 表示顺畅运转，get on with sb = 和某人相处好、关系融洽。就像机器「顺畅运转」一样｜= get along with（也很常考）。反义：not get on with = 合不来。搭配：get on well with sb 和某人相处很好">get on with</span> their parents, which is the <span class="tip" data-tip="opposite|相反的，对立的｜op = 朝向对面（op-pose = 站到对面去）。the opposite of... = ...的反面/对立面。be the opposite of A = 和A完全相反｜名词也是 opposite：Black is the opposite of white. 黑是白的反义。搭配：in the opposite direction 朝相反方向，just the opposite 恰好相反">opposite</span> of the <span class="tip" data-tip="popularly-held image|普遍存在的刻板印象｜popular 流行的你认识。popularly = 被大众普遍地。held = 持有。popularly-held = 大众普遍持有的，就是刻板印象｜image 在这里是「印象、形象」，不是「图片」">popularly-held image</span> of unhappy <span class="tip" data-tip="teenagers|13到19岁的青少年｜thirteen、fourteen...nineteen，这七个数字结尾都带 -teen。teenager = 年龄里有 -teen 的人 = 13~19岁。12岁不算（twelve 没有 -teen）｜形容词：teenage（青少年的）。teen 也单独用：She's a teen. 她是个青少年">teenagers</span> <span class="tip" data-tip="locked in their room|被关在房间里｜lock 是锁，你知道 lock the door（锁门）。be locked in = 被锁在里面。这里说的是刻板印象里的青少年：吵完架，气呼呼地把自己关在房间里">locked in their room</span> after endless family <span class="tip" data-tip="quarrels|争吵，口角｜argument（争论）你可能见过，quarrel 更口语，专指家人朋友之间的吵架。endless quarrels = 没完没了的争吵。动词也是 quarrel：quarrel with sb = 和某人吵架｜搭配：have a quarrel with sb 和某人争吵，quarrel about/over sth 为某事吵架">quarrels</span>.</span>
-    <div class="analysis" id="analysis-1">
+    <div class="analysis" id="analysis-1"><button class="analysis-play" onclick="playAnalysis('analysis-1', this)" title="听讲解">🔊 听讲解</button>
       <p><b>句子结构：</b>主干是 <em>four out of five young people get on with their parents</em>（五分之四的年轻人和父母关系融洽）。</p>
       <p><b>which 是谁？</b>逗号 + which 引导非限制性定语从句——这个 which 不是指前面某一个词，而是指整个主句的结论。<em>which is the opposite of...</em> = 这件事（4/5年轻人和父母相处融洽）和大众刻板印象正好相反。</p>
       <p><b>后面的分词定语：</b><em>locked in their room after endless family quarrels</em> 是过去分词短语，修饰 teenagers。 = teenagers who are locked in their room...（被关在房间里的那种青少年）。高考阅读里这种「名词 + 分词短语」很常见，别被它割断了对主句的理解。</p>
@@ -208,7 +216,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
   <!-- ── Paragraph 3 ── -->
   <div class="paragraph" id="para-3">
     <span class="sentence complex" data-idx="7">So it seems that this <span class="tip" data-tip="generation|一代人，这一代｜generate 是「产生」，generation = 被产生出来的一群人 = 一代人。this generation of parents = 这一代父母（现在当父母的人）。30 years ago 那代父母 vs. 现在这代父母，态度差别很大｜搭配：the younger generation 年轻一代，generation gap 代沟，Generation Z Z世代">generation</span> of parents is <span class="tip" data-tip="much more likely than...to do|比...更有可能做...｜likely 是「有可能的」（likely to happen = 可能发生）。much 加强比较级。much more likely than A to do B = 比A更有可能去做B｜这个结构高考很常考：She is much more likely than her classmates to win.">much more likely than</span> parents of 30 years ago to treat their children as friends.</span>
-    <div class="analysis" id="analysis-7">
+    <div class="analysis" id="analysis-7"><button class="analysis-play" onclick="playAnalysis('analysis-7', this)" title="听讲解">🔊 听讲解</button>
       <p><b>句子结构：</b>开头 <em>it seems that...</em> 是形式主语，真正的主语是后面整个 that 从句。</p>
       <p><b>比较级核心：</b><em>much more likely than parents of 30 years ago to treat their children as friends</em>——拆开看：<em>more likely than A</em>（比A更有可能）+ <em>to treat...</em>（做什么）。much 是程度副词，让比较级更强。</p>
       <p><b>主干提炼：</b>this generation of parents is likely to treat their children as friends（这代父母倾向于把孩子当朋友）。</p>
@@ -228,7 +236,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
     <span class="sentence" data-idx="15">Maybe this positive view of family life should not be <span class="tip" data-tip="unexpected|出乎意料的｜expect 是「预期、期待」（你肯定认识），unexpected = 没被预期到的 = 出乎意料的。should not be unexpected = 其实不应该让人意外——言下之意是，这个结果其实是有道理的">unexpected</span>.</span>
     <span class="sentence" data-idx="16">It is possible that the idea of teenage <span class="tip" data-tip="rebellion|叛逆，反叛｜rebel → rebellion，名词形式。the idea of teenage rebellion = 青少年会叛逆这个想法/概念。后面作者说这个 idea 可能根本没有现实依据，意思是「青少年天生叛逆」可能只是个谣言｜动词：rebel against 反抗">rebellion</span> is not <span class="tip" data-tip="rooted in|根植于，源于｜root 是「根」，树根。rooted in = 有根基在某事物里 = 源于、基于。not rooted in real facts = 没有现实依据，不是基于真实事实｜搭配：deep-rooted 根深蒂固的，be rooted in tradition 根植于传统">rooted in</span> real facts.</span>
     <span class="sentence complex" data-idx="17">A researcher comments, "Our surprise that teenagers say they <span class="tip" data-tip="get along well with|与...相处很好｜= get on with（第1段见过）。get along well with sb = 和某人相处愉快。teenagers get along well with their parents = 青少年和父母相处很好｜这两个短语在高考里可以互换：get on with = get along with">get along well with</span> their parents comes because of a <span class="tip" data-tip="brief|短暂的，简短的｜brief meeting = 简短的会议，brief visit = 短暂的拜访。a brief period = 一段短暂的时期（强调时间不长）｜副词：briefly 简短地。作文好用：in brief = 简而言之（结尾段）。名词：briefing 简报">brief</span> period in our social history when teenagers were <span class="tip" data-tip="regarded as|被看作，被视为｜regard 是「看待、认为」。be regarded as = 被认为是、被视为。teenagers were regarded as different beings = 青少年曾被视为另类｜= be considered as，= be seen as，= be viewed as。写作文这四个可以替换着用">regarded as</span> different beings.</span>
-    <div class="analysis" id="analysis-17">
+    <div class="analysis" id="analysis-17"><button class="analysis-play" onclick="playAnalysis('analysis-17', this)" title="听讲解">🔊 听讲解</button>
       <p><b>句子主干：</b>Our surprise comes because of a brief period（我们的惊讶源于历史上一个短暂时期）。</p>
       <p><b>两个从句：</b></p>
       <p>① <em>that teenagers say they get along well with their parents</em>：同位语从句，解释 surprise 的具体内容（惊讶于什么？→ 惊讶于青少年说和父母相处很好）。</p>
@@ -236,7 +244,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       <p><b>整句意思：</b>我们之所以对「青少年和父母相处融洽」感到惊讶，是因为历史上曾有短暂一段时期，青少年被视为与其他人完全不同的异类。</p>
     </div>
     <span class="sentence complex" data-idx="18">But that idea of <span class="tip" data-tip="rebelling and breaking away from|反叛和脱离（父母）｜rebelling = rebel 的动名词，反叛。breaking away from = 脱离、摆脱。两个动名词并列，说的是「叛逆」这个概念的具体内容：反抗父母、脱离父母的掌控｜break away from 也很常用：break away from bad habits 摆脱坏习惯">rebelling and breaking away from</span> their parents really only happened during that one time in the 1960s <span class="tip" data-tip="when everyone rebelled|定语从句，修饰"那个年代"｜when 在这里是关系副词，引导定语从句修饰 that one time（那个时代）。when everyone rebelled = 那个人人都在反叛的年代（指1960年代的社会运动）">when everyone rebelled</span>.</span>
-    <div class="analysis" id="analysis-18">
+    <div class="analysis" id="analysis-18"><button class="analysis-play" onclick="playAnalysis('analysis-18', this)" title="听讲解">🔊 听讲解</button>
       <p><b>句子主干：</b>that idea really only happened during that one time in the 1960s（那种「青少年叛逆」的概念其实只在1960年代发生过一次）。</p>
       <p><b>of rebelling and breaking away from their parents：</b>介词短语作定语，修饰 idea。整个 that idea of... = 「叛逆、脱离父母」这个概念。</p>
       <p><b>when everyone rebelled：</b>定语从句，修饰 that one time（那个所有人都在反叛的年代）。</p>
@@ -592,7 +600,31 @@ const sentences = [
 
 // ── Tooltip ──
 let activeTooltip = null;
-const ZH_AUDIO = {};
+const ANALYSIS_AUDIO = {
+  "analysis-1": "audio/北京卷-D/analysis-1.mp3",
+  "analysis-7": "audio/北京卷-D/analysis-7.mp3",
+  "analysis-17": "audio/北京卷-D/analysis-17.mp3",
+  "analysis-18": "audio/北京卷-D/analysis-18.mp3"
+};
+let analysisPlayer = null;
+let analysisBtn = null;
+function playAnalysis(id, btn) {
+  if (analysisPlayer) {
+    analysisPlayer.pause();
+    analysisPlayer = null;
+    if (analysisBtn) { analysisBtn.textContent = '🔊 听讲解'; analysisBtn.classList.remove('playing'); }
+    if (analysisBtn === btn) { analysisBtn = null; return; }
+  }
+  const src = ANALYSIS_AUDIO[id];
+  if (!src) return;
+  analysisPlayer = new Audio(src);
+  analysisBtn = btn;
+  btn.textContent = '⏹ 停止';
+  btn.classList.add('playing');
+  analysisPlayer.onended = () => { btn.textContent = '🔊 听讲解'; btn.classList.remove('playing'); analysisPlayer = null; analysisBtn = null; };
+  analysisPlayer.play();
+}
+const ZH_AUDIO = {"evidence": "audio/北京卷-D/evidence.mp3", "harmony": "audio/北京卷-D/harmony.mp3", "obvious": "audio/北京卷-D/obvious.mp3", "four-out-of-five": "audio/北京卷-D/four-out-of-five.mp3", "get-on-with": "audio/北京卷-D/get-on-with.mp3", "opposite": "audio/北京卷-D/opposite.mp3", "popularly-held-image": "audio/北京卷-D/popularly-held-image.mp3", "teenagers": "audio/北京卷-D/teenagers.mp3", "locked-in-their-room": "audio/北京卷-D/locked-in-their-room.mp3", "quarrels": "audio/北京卷-D/quarrels.mp3", "teenage-attitudes": "audio/北京卷-D/teenage-attitudes.mp3", "surprisingly": "audio/北京卷-D/surprisingly.mp3", "harmonious": "audio/北京卷-D/harmonious.mp3", "positive": "audio/北京卷-D/positive.mp3", "rebellious": "audio/北京卷-D/rebellious.mp3", "selfish": "audio/北京卷-D/selfish.mp3", "material-goods": "audio/北京卷-D/material-goods.mp3", "serving-them-well": "audio/北京卷-D/serving-them-well.mp3", "negotiation": "audio/北京卷-D/negotiation.mp3", "take-part-in": "audio/北京卷-D/take-part-in.mp3", "decision-making-process": "audio/北京卷-D/decision-making-process.mp3", "rock-the-boat": "audio/北京卷-D/rock-the-boat.mp3", "generation": "audio/北京卷-D/generation.mp3", "much-more-likely-than-to-do": "audio/北京卷-D/much-more-likely-than-to-do.mp3", "willing": "audio/北京卷-D/willing.mp3", "going-out-clubbing": "audio/北京卷-D/going-out-clubbing.mp3", "as-long-as": "audio/北京卷-D/as-long-as.mp3", "who-is-now-21": "audio/北京卷-D/who-is-now-21.mp3", "what-you-could-call-negotiation": "audio/北京卷-D/what-you-could-call-negotiation.mp3", "as-long-as-i-d-done": "audio/北京卷-D/as-long-as-i-d-done.mp3", "stricter": "audio/北京卷-D/stricter.mp3", "unexpected": "audio/北京卷-D/unexpected.mp3", "rebellion": "audio/北京卷-D/rebellion.mp3", "rooted-in": "audio/北京卷-D/rooted-in.mp3", "get-along-well-with": "audio/北京卷-D/get-along-well-with.mp3", "brief": "audio/北京卷-D/brief.mp3", "regarded-as": "audio/北京卷-D/regarded-as.mp3", "rebelling-and-breaking-away-from": "audio/北京卷-D/rebelling-and-breaking-away-from.mp3", "when-everyone-rebelled": "audio/北京卷-D/when-everyone-rebelled.mp3", "smooth-change": "audio/北京卷-D/smooth-change.mp3", "helping-out-with-the-family-business": "audio/北京卷-D/helping-out-with-the-family-business.mp3", "taking-it-over": "audio/北京卷-D/taking-it-over.mp3"};
 let zhPlayer = null;
 
 function phraseToSlug(phrase) {
