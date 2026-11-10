@@ -339,6 +339,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
 }
 
 /* ── Responsive ── */
+.sentence.highlighted { background: #fef08a; border-radius: 3px; }
 @media (max-width: 600px) {
   .passage { padding: 20px 16px; }
   .sentence { font-size: 16px; }
@@ -547,7 +548,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
       <div class="question-analysis">
         <div class="answer-line">答案：C</div>
-        <div class="locate">"an uncle gave me a copy of Jostein Gaarder's Sophie's World... It spoke to me and brought me into a world of philosophy."</div>
+        <div class="locate" data-goto="0" onclick="gotoSentence(0)">"an uncle gave me a copy of Jostein Gaarder's Sophie's World... It spoke to me and brought me into a world of philosophy."</div>
         <p style="margin-top:8px"><b>解题思路：</b>找谁开启了作者的哲学之门。第1段：叔叔给了他《苏菲的世界》，这本书把他带进了哲学世界。是 Gaarder（书的作者）的书起了作用。</p>
         <div class="option-list">
           <div class="option-item wrong"><span class="opt-letter">A.</span> Foucault <span class="opt-mark">✗</span><span class="opt-why">Foucault等哲学家出现在第2段，作者吐槽大学里有人自以为懂这些人——是负面场景</span></div>
@@ -568,7 +569,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
       <div class="question-analysis">
         <div class="answer-line">答案：D</div>
-        <div class="locate">"The end result is a read in which we learn to wonder like Socrates, see like Thoreau, listen like Schopenhauer, and have no regrets like Nietzsche."</div>
+        <div class="locate" data-goto="8" onclick="gotoSentence(8)">"The end result is a read in which we learn to wonder like Socrates, see like Thoreau, listen like Schopenhauer, and have no regrets like Nietzsche."</div>
         <p style="margin-top:8px"><b>解题思路：</b>第4段（即文中第四个段落）列举苏格拉底等人，是为了说明 Weiner 的书是怎么运作的——每位哲学家教你一件事（想 wonder/see/listen/have no regrets）。列举的目的是帮读者理解 Weiner 书的内容和价值。</p>
         <div class="option-list">
           <div class="option-item wrong"><span class="opt-letter">A.</span> To compare Weiner with them <span class="opt-mark">✗</span><span class="opt-why">没有把 Weiner 和哲学家比较高下，而是说 Weiner 通过他们来教我们</span></div>
@@ -589,7 +590,8 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
       <div class="question-analysis">
         <div class="answer-line">答案：B</div>
-        <div class="locate">"...is a book about learning to use philosophy to improve a life."<br>"He makes philosophical thought an appealing exercise that improves the quality of our experiences."</div>
+        <div class="locate" data-goto="9" onclick="gotoSentence(9)">"...is a book about learning to use philosophy to improve a life."</div>
+        <div class="locate" data-goto="10" onclick="gotoSentence(10)" style="margin-top:4px">"He makes philosophical thought an appealing exercise that improves the quality of our experiences."</div>
         <p style="margin-top:8px"><b>解题思路：</b>原文核心主题：这本书是"学习用哲学改善生活"的书，哲学思想能"改善体验质量"。B选项的"ideas can be applied to daily life"是对这个意思的同义替换。</p>
         <div class="option-list">
           <div class="option-item wrong"><span class="opt-letter">A.</span> Its views on history are well-presented <span class="opt-mark">✗</span><span class="opt-why">原文没有提到历史观点</span></div>
@@ -610,7 +612,8 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
       <div class="question-analysis">
         <div class="answer-line">答案：D</div>
-        <div class="locate">"He makes philosophical thought an appealing exercise... he does so with plenty of humor."<br>"a fun, sharp book that draws readers in with its apparent simplicity..."</div>
+        <div class="locate" data-goto="10" onclick="gotoSentence(10)">"He makes philosophical thought an appealing exercise... he does so with plenty of humor."</div>
+        <div class="locate" data-goto="12" onclick="gotoSentence(12)" style="margin-top:4px">"a fun, sharp book that draws readers in with its apparent simplicity..."</div>
         <p style="margin-top:8px"><b>解题思路：</b>原文用了 fun（有趣）、with plenty of humor（充满幽默）→ 对应 humorous；apparent simplicity、draws readers in（表面简单、易于读进去）→ 对应 straightforward。</p>
         <div class="option-list">
           <div class="option-item wrong"><span class="opt-letter">A.</span> Objective and plain <span class="opt-mark">✗</span><span class="opt-why">plain=平淡，原文说的是 fun（有趣），不平淡</span></div>
@@ -814,6 +817,9 @@ function hideTooltip() {
 }
 
 document.addEventListener('click', function(e) {
+  if (!e.target.closest('.sentence.highlighted') && !e.target.closest('.locate')) {
+    document.querySelectorAll('.sentence.highlighted').forEach(s => s.classList.remove('highlighted'));
+  }
   const tipEl = e.target.closest('.tip');
   if (tipEl) {
     e.stopPropagation();
@@ -999,6 +1005,15 @@ function showQuizScore() {
   const score = document.getElementById('quizScore');
   score.textContent = `得分：${total - wrong} / ${total}`;
   score.classList.add('show');
+}
+
+function gotoSentence(idx) {
+  const el = document.querySelector(`.sentence[data-idx="${idx}"]`);
+  if (!el) return;
+  setMode('study');
+  document.querySelectorAll('.sentence.highlighted').forEach(s => s.classList.remove('highlighted'));
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  el.classList.add('highlighted');
 }
 
 function toggleQuestionAnalysis(btn) {

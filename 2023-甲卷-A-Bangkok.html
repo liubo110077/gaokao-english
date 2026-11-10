@@ -349,6 +349,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
 }
 
 /* ── Responsive ── */
+.sentence.highlighted { background: #fef08a; border-radius: 3px; }
 @media (max-width: 600px) {
   .passage { padding: 20px 16px; }
   .sentence { font-size: 16px; }
@@ -559,7 +560,8 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
       <div class="question-analysis">
         <div class="answer-line">答案：C</div>
-        <div class="locate">Nahm: "Head Chef David Thompson, who received a Michelin star..."<br>Issaya: "internationally known Thai chef Ian Kittichai's first flagship Bangkok restaurant."</div>
+        <div class="locate" data-goto="5" onclick="gotoSentence(5)">Nahm: "Head Chef David Thompson, who received a Michelin star..."</div>
+        <div class="locate" data-goto="6" onclick="gotoSentence(6)" style="margin-top:4px">Issaya: "internationally known Thai chef Ian Kittichai's first flagship Bangkok restaurant."</div>
         <p style="margin-top:8px"><b>解题思路：</b>找两家餐厅的<b>共同点</b>。Nahm 的大厨 David Thompson 获得过米其林星；Issaya 是"国际知名泰国厨师 Ian Kittichai"的餐厅。两家的共同点都是有<b>顶级大厨</b>。</p>
         <div class="option-list">
           <div class="option-item wrong"><span class="opt-letter">A.</span> They adopt modern cooking methods <span class="opt-mark">✗</span><span class="opt-why">只有 Issaya 提到 modern cooking methods，Nahm 未提</span></div>
@@ -580,7 +582,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
       <div class="question-analysis">
         <div class="answer-line">答案：B</div>
-        <div class="locate">"For those extremely hungry there's a large set menu." — Bo.lan段落</div>
+        <div class="locate" data-goto="11" onclick="gotoSentence(11)">"For those extremely hungry there's a large set menu." — Bo.lan段落</div>
         <p style="margin-top:8px"><b>解题思路：</b>细节题，直接找原文中"large set menu"出现在哪家餐厅的介绍里。答案就在 Bo.lan 段落的最后一句。</p>
         <div class="option-list">
           <div class="option-item wrong"><span class="opt-letter">A.</span> Gaggan <span class="opt-mark">✗</span><span class="opt-why">Gaggan段落没有提到 set menu</span></div>
@@ -601,7 +603,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
       <div class="question-analysis">
         <div class="answer-line">答案：D</div>
-        <div class="locate">"The best table... offers a window right into the kitchen, where you can see chef Gaggan and his staff in action."</div>
+        <div class="locate" data-goto="13" onclick="gotoSentence(13)">"The best table... offers a window right into the kitchen, where you can see chef Gaggan and his staff in action."</div>
         <p style="margin-top:8px"><b>解题思路：</b>Gaggan 最特别的地方：最好的桌子对着厨房，客人可以亲眼看到厨师工作（in action = 正在干活）。这就是"向客人展示烹饪过程"。</p>
         <div class="option-list">
           <div class="option-item wrong"><span class="opt-letter">A.</span> It hires staff from India <span class="opt-mark">✗</span><span class="opt-why">原文说的是印度菜，没说员工来自印度</span></div>
@@ -803,6 +805,9 @@ function hideTooltip() {
 }
 
 document.addEventListener('click', function(e) {
+  if (!e.target.closest('.sentence.highlighted') && !e.target.closest('.locate')) {
+    document.querySelectorAll('.sentence.highlighted').forEach(s => s.classList.remove('highlighted'));
+  }
   const tipEl = e.target.closest('.tip');
   if (tipEl) {
     e.stopPropagation();
@@ -988,6 +993,15 @@ function showQuizScore() {
   const score = document.getElementById('quizScore');
   score.textContent = `得分：${total - wrong} / ${total}`;
   score.classList.add('show');
+}
+
+function gotoSentence(idx) {
+  const el = document.querySelector(`.sentence[data-idx="${idx}"]`);
+  if (!el) return;
+  setMode('study');
+  document.querySelectorAll('.sentence.highlighted').forEach(s => s.classList.remove('highlighted'));
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  el.classList.add('highlighted');
 }
 
 function toggleQuestionAnalysis(btn) {

@@ -338,6 +338,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
   padding: 3px 6px; border-radius: 4px; cursor: pointer;
 }
 
+.sentence.highlighted { background: #fef08a; border-radius: 3px; }
 /* ── Responsive ── */
 @media (max-width: 600px) {
   .passage { padding: 20px 16px; }
@@ -603,7 +604,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
       <div class="question-analysis">
         <div class="answer-line">答案：C</div>
-        <div class="locate">"Terri Bolton is a dab hand when it comes to DIY. Skilled at putting up shelves and piecing together furniture..."</div>
+        <div class="locate" data-goto="0" onclick="gotoSentence(0)">"Terri Bolton is a dab hand when it comes to DIY. Skilled at putting up shelves and piecing together furniture..."</div>
         <p style="margin-top:8px"><b>解题思路：</b>dab hand 不认识没关系，往下读——"Skilled at putting up shelves and piecing together furniture"，skilled=熟练，说明她动手能力很强，所以 dab hand = <b>在某方面很拿手的人</b>。</p>
         <div class="option-list">
           <div class="option-item wrong"><span class="opt-letter">A.</span> An artist <span class="opt-mark">✗</span><span class="opt-why">artist=艺术家，和"拿手"不是一回事</span></div>
@@ -624,7 +625,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
       <div class="question-analysis">
         <div class="answer-line">答案：B</div>
-        <div class="locate">"A day's work was rewarded with £5 in pocket money."</div>
+        <div class="locate" data-goto="4" onclick="gotoSentence(4)">"A day's work was rewarded with £5 in pocket money."</div>
         <p style="margin-top:8px"><b>解题思路：</b>rewarded=奖励，pocket money=零花钱。干了一天活，爷爷给£5零花钱作为<b>奖励</b>。</p>
         <div class="option-list">
           <div class="option-item wrong"><span class="opt-letter">A.</span> For a birthday gift <span class="opt-mark">✗</span><span class="opt-why">原文没提生日</span></div>
@@ -645,7 +646,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
       <div class="question-analysis">
         <div class="answer-line">答案：A</div>
-        <div class="locate">"cover up holes and repaint a room to avoid any charges when I've moved out"</div>
+        <div class="locate" data-goto="9" onclick="gotoSentence(9)">"cover up holes and repaint a room to avoid any charges when I've moved out"</div>
         <p style="margin-top:8px"><b>解题思路：</b>cover up holes=补墙洞，repaint=重新粉刷，avoid any charges=不被扣钱。退租前补洞+粉刷，就是把房子<b>恢复原状</b>。</p>
         <div class="option-list">
           <div class="option-item correct"><span class="opt-letter">A.</span> By making it look like before <span class="opt-mark">✓</span><span class="opt-why">补洞+粉刷=恢复原状</span></div>
@@ -666,7 +667,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
       <div class="question-analysis">
         <div class="answer-line">答案：D</div>
-        <div class="locate">"it is women now leading the charge"</div>
+        <div class="locate" data-goto="14" onclick="gotoSentence(14)">"it is women now leading the charge"</div>
         <p style="margin-top:8px"><b>解题思路：</b>leading the charge=带头冲锋/引领潮流，主语是 women。DIY 领域现在是<b>女性在带头</b>。</p>
         <div class="option-list">
           <div class="option-item wrong"><span class="opt-letter">A.</span> It is becoming more costly <span class="opt-mark">✗</span><span class="opt-why">提到每项目花£823，但没说费用在增加</span></div>
@@ -871,6 +872,9 @@ function hideTooltip() {
 }
 
 document.addEventListener('click', function(e) {
+  if (!e.target.closest('.sentence.highlighted') && !e.target.closest('.locate')) {
+    document.querySelectorAll('.sentence.highlighted').forEach(s => s.classList.remove('highlighted'));
+  }
   const tipEl = e.target.closest('.tip');
   if (tipEl) {
     e.stopPropagation();
@@ -1057,6 +1061,15 @@ function showQuizScore() {
   const score = document.getElementById('quizScore');
   score.textContent = `得分：${total - wrong} / ${total}`;
   score.classList.add('show');
+}
+
+function gotoSentence(idx) {
+  const el = document.querySelector(`.sentence[data-idx="${idx}"]`);
+  if (!el) return;
+  setMode('study');
+  document.querySelectorAll('.sentence.highlighted').forEach(s => s.classList.remove('highlighted'));
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  el.classList.add('highlighted');
 }
 
 function toggleQuestionAnalysis(btn) {
