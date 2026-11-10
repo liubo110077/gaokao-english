@@ -1,8 +1,10 @@
 # Python scripts (contain API keys)
 *.py
+!volc_tts_gen.py
 __pycache__/
 
 # Local files not for web
 *.txt
 *.png
 .DS_Store
+voice-test-*.mp3
