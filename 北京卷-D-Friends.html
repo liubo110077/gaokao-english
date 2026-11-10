@@ -148,6 +148,11 @@ body.mode-quiz .question-option:hover { background: var(--accent-light); }
 body.mode-quiz .question-option.selected { border-color: var(--accent); background: var(--accent-light); }
 body.mode-quiz .question-option.correct { border-color: #16a34a; background: #dcfce7; }
 body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2e2; }
+.locate[data-goto] { cursor: pointer; transition: background .15s; }
+.locate[data-goto]:hover { background: #fde68a; }
+.locate[data-goto]::after { content: ' ↗ 跳到原文'; font-size: 11px; color: var(--accent); font-family: -apple-system, sans-serif; font-style: normal; }
+@keyframes sentenceFlash { 0%,10% { background: #fef08a; } 100% { background: transparent; } }
+.sentence.flash { animation: sentenceFlash 1.8s ease-out; }
 @media (max-width: 600px) {
   .passage { padding: 20px 16px; }
   .sentence { font-size: 16px; }
@@ -422,7 +427,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
       <div class="question-analysis">
         <div class="answer-line">答案：D</div>
-        <div class="locate">"...the popularly-held image of unhappy teenagers locked in their room after endless family quarrels."</div>
+        <div class="locate" data-goto="1" onclick="gotoSentence(1)">"...the popularly-held image of unhappy teenagers locked in their room after endless family quarrels."</div>
         <p>题目问"大众对当今青少年的刻板印象是什么"。第一段直接说了：popularly-held image = 不开心的青少年，吵了无数架之后把自己锁在房间里。<b>D</b>（和家庭成员大量争吵）最接近。</p>
         <div class="option-list">
           <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— 文中提到青少年担心学校，但这不是大众对他们的"印象"，而是他们自己心里在想的事。</span></div>
@@ -445,7 +450,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
       <div class="question-analysis">
         <div class="answer-line">答案：B</div>
-        <div class="locate">"They don't want to rock the boat."</div>
+        <div class="locate" data-goto="6" onclick="gotoSentence(6)">"They don't want to rock the boat."</div>
         <p>这道题考习语 rock the boat（制造麻烦、捣乱）。rock the boat = cause trouble。选 <b>B</b>。</p>
         <div class="option-list">
           <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— 文中说孩子们希望参与家庭决策，不是不愿意分担责任。</span></div>
@@ -468,7 +473,8 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
       <div class="question-analysis">
         <div class="answer-line">答案：D</div>
-        <div class="locate">"...this generation of parents is much more likely than parents of 30 years ago to treat their children as friends."<br>"...my grandparents were a lot stricter with my parents than that."</div>
+        <div class="locate" data-goto="7" onclick="gotoSentence(7)">"...this generation of parents is much more likely than parents of 30 years ago to treat their children as friends."</div>
+        <div class="locate" data-goto="14" onclick="gotoSentence(14)" style="margin-top:4px">"...my grandparents were a lot stricter with my parents than that."</div>
         <p>两处证据：① 现在的父母更可能把孩子当朋友 ② Susan 说祖父母对父母比现在的父母对她严多了。两者都说明：现在的父母给孩子更多自由 = <b>D</b>。</p>
         <div class="option-list">
           <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— 文中 clubbing 是孩子出去玩，不是和父母一起去夜店。</span></div>
@@ -491,7 +497,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
       <div class="question-analysis">
         <div class="answer-line">答案：A</div>
-        <div class="locate">"It is possible that the idea of teenage rebellion is not rooted in real facts."</div>
+        <div class="locate" data-goto="16" onclick="gotoSentence(16)">"It is possible that the idea of teenage rebellion is not rooted in real facts."</div>
         <p>作者用 <em>it is possible that...</em> + <em>not rooted in real facts</em> 表达：青少年叛逆这个概念可能根本没有现实依据。= may be a false belief（可能只是个错误的信念）= <b>A</b>。</p>
         <div class="option-list">
           <div class="option-item correct"><span class="opt-mark">✓ A</span><span class="opt-why">— "not rooted in real facts" = 可能是假的信念，直接对应 "may be a false belief"。</span></div>
@@ -777,6 +783,17 @@ function showQuizScore() {
   const score = document.getElementById('quizScore');
   score.textContent = `得分：${total - wrong} / ${total}`;
   score.classList.add('show');
+}
+
+function gotoSentence(idx) {
+  const el = document.querySelector(`.sentence[data-idx="${idx}"]`);
+  if (!el) return;
+  setMode('study');
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  el.classList.remove('flash');
+  void el.offsetWidth;
+  el.classList.add('flash');
+  setTimeout(() => el.classList.remove('flash'), 1900);
 }
 
 function toggleQuestionAnalysis(btn) {
