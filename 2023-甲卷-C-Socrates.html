@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>2023甲卷·C篇精读 · The Socrates Express</title>
 <style>
 :root {
@@ -355,6 +355,29 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
   .panel-header, .question-item, .review-section { padding-left: 16px; padding-right: 16px; }
   .panel-body { padding: 12px 16px; }
 }
+
+/* ── Full-width layout + safe areas (iPad / iPhone / home-screen app) ── */
+.container {
+  max-width: 1400px; width: 100%;
+  padding-left: max(12px, env(safe-area-inset-left));
+  padding-right: max(12px, env(safe-area-inset-right));
+}
+.header { padding-top: calc(16px + env(safe-area-inset-top)); }
+body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
+#playbar {
+  height: calc(52px + env(safe-area-inset-bottom));
+  padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  padding-left: max(20px, env(safe-area-inset-left));
+  padding-right: max(20px, env(safe-area-inset-right));
+}
+.passage { padding: 24px 24px; }
+@media (max-width: 600px) {
+  .passage { padding: 18px 14px; }
+  .panel-header, .question-item, .review-section { padding-left: 14px; padding-right: 14px; }
+  .panel-body { padding: 12px 14px; }
+}
+/* Tooltip: arrow stays outside the scroll area; only the body scrolls */
+.tooltip .tip-scroll { overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
 </style>
 </head>
 <body class="mode-study">
@@ -780,33 +803,84 @@ function showTooltip(tipEl) {
 
   const tooltip = document.createElement('div');
   tooltip.className = 'tooltip';
-  tooltip.innerHTML =
+  tooltip.innerHTML = '<div class="tip-scroll">' +
     `<div class="tip-phrase">${phrase}${tipEl.dataset.level ? `<span class="level-badge badge-${tipEl.dataset.level}">${tipEl.dataset.level}</span>` : ''}<span class="tip-speak" onclick="speakWord('${phrase}')">&#9654;</span></div>` +
     parts.map(p => `<div>${p.trim()}</div>`).join('') +
-    (hasAudio ? `<button class="tip-zh-play" onclick="playZhAudio('${slug}', this)">🔊 听讲解</button>` : '');
+    (hasAudio ? `<button class="tip-zh-play" onclick="playZhAudio('${slug}', this)">🔊 听讲解</button>` : '') + '</div>';
   document.body.appendChild(tooltip);
   activeTooltip = tooltip;
-
-  const rect = tipEl.getBoundingClientRect();
-  const tw = tooltip.offsetWidth;
-  const th = tooltip.offsetHeight;
-  let left = rect.left + rect.width / 2 - tw / 2;
-  const container = tipEl.closest('.container') || document.querySelector('.container');
-  const cRect = container ? container.getBoundingClientRect() : { left: 8, right: document.documentElement.clientWidth - 8 };
-  const cPad = container ? parseFloat(getComputedStyle(container).paddingLeft) : 0;
-  left = Math.max(cRect.left + cPad, Math.min(left, cRect.right - cPad - tw));
-  const arrowLeft = rect.left + rect.width / 2 - left;
-  tooltip.style.setProperty('--arrow-left', arrowLeft + 'px');
-  let top = rect.top - th - 10;
-  if (top < 60) {
-    top = rect.bottom + 10;
-    tooltip.classList.add('below');
-  }
-  top = Math.max(8, Math.min(top, window.innerHeight - th - 8));
-  tooltip.style.left = left + 'px';
-  tooltip.style.top = top + 'px';
+  tooltip._tip = tipEl;
+  positionTooltip();
+  if (!activeTooltip) return;
   speakWord(phrase);
 }
+
+// Visible frame for tooltips: viewport minus safe areas, sticky header and fixed playbar.
+let _safeProbe = null;
+function tooltipFrame() {
+  if (!_safeProbe) {
+    _safeProbe = document.createElement('div');
+    _safeProbe.style.cssText = 'position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;pointer-events:none;' +
+      'padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)';
+    document.body.appendChild(_safeProbe);
+  }
+  const cs = getComputedStyle(_safeProbe);
+  const M = 8;
+  const vw = document.documentElement.clientWidth, vh = window.innerHeight;
+  let minY = M + (parseFloat(cs.paddingTop) || 0);
+  let maxY = vh - M - (parseFloat(cs.paddingBottom) || 0);
+  const hdr = document.querySelector('.header');
+  if (hdr) { const b = hdr.getBoundingClientRect().bottom; if (b > 0) minY = Math.max(minY, b + 4); }
+  const pb = document.getElementById('playbar');
+  if (pb && getComputedStyle(pb).display !== 'none') { maxY = Math.min(maxY, pb.getBoundingClientRect().top - 4); }
+  return { minX: M + (parseFloat(cs.paddingLeft) || 0), maxX: vw - M - (parseFloat(cs.paddingRight) || 0), minY, maxY };
+}
+
+function positionTooltip() {
+  const tooltip = activeTooltip;
+  if (!tooltip) return;
+  const tipEl = tooltip._tip;
+  const rects = tipEl.getClientRects();
+  const f = tooltipFrame();
+  if (!rects.length) { hideTooltip(); return; }
+  const first = rects[0], last = rects[rects.length - 1];
+  // Anchor gone (scrolled out of the visible band): close instead of floating in the wrong place.
+  if (last.bottom < f.minY - 4 || first.top > f.maxY + 4) { hideTooltip(); return; }
+
+  const GAP = 10, PAD = 16;           // arrow + gap; tooltip vertical padding
+  const body = tooltip.firstElementChild;
+  tooltip.style.maxWidth = Math.max(120, Math.min(520, f.maxX - f.minX)) + 'px';
+  body.style.maxHeight = 'none';
+  tooltip.style.left = '0px'; tooltip.style.top = '0px';
+  const tw = tooltip.offsetWidth, naturalH = tooltip.offsetHeight;
+  const spaceAbove = first.top - f.minY - GAP;
+  const spaceBelow = f.maxY - last.bottom - GAP;
+  let below;
+  if (naturalH <= spaceAbove) below = false;
+  else if (naturalH <= spaceBelow) below = true;
+  else below = spaceBelow > spaceAbove;
+  const avail = Math.max(60, below ? spaceBelow : spaceAbove);
+  const th = Math.min(naturalH, avail);
+  if (naturalH > avail) body.style.maxHeight = Math.max(30, avail - PAD) + 'px';
+
+  const r = below ? last : first;
+  const cx = r.left + r.width / 2;
+  const left = Math.max(f.minX, Math.min(cx - tw / 2, f.maxX - tw));
+  let top = below ? last.bottom + GAP : first.top - GAP - tooltip.offsetHeight;
+  top = Math.max(f.minY, Math.min(top, f.maxY - tooltip.offsetHeight));
+  tooltip.classList.toggle('below', below);
+  tooltip.style.setProperty('--arrow-left', Math.max(14, Math.min(cx - left, tw - 14)) + 'px');
+  tooltip.style.left = left + 'px';
+  tooltip.style.top = top + 'px';
+}
+(function () {
+  let raf = 0;
+  const re = () => { if (!activeTooltip || raf) return; raf = requestAnimationFrame(() => { raf = 0; positionTooltip(); }); };
+  window.addEventListener('scroll', re, { passive: true });
+  window.addEventListener('resize', re);
+  window.addEventListener('orientationchange', re);
+  if (window.visualViewport) { visualViewport.addEventListener('resize', re); visualViewport.addEventListener('scroll', re); }
+})();
 
 function hideTooltip() {
   if (zhPlayer) { zhPlayer.pause(); zhPlayer = null; }
