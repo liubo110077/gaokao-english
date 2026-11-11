@@ -1,4 +1,5 @@
 __pycache__/
+.env
 
 # Local files not for web
 *.txt
