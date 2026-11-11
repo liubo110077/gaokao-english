@@ -45,6 +45,10 @@ for m in re.finditer(r'<div class="analysis" id="(analysis-\d+)">(.*?)</div>', s
 
 if EN_ONLY:
     items = {k: v for k, v in items.items() if k.startswith("en-")}
+for a in sys.argv:
+    if a.startswith("--only="):
+        only = set(a[7:].split(","))
+        items = {k: v for k, v in items.items() if k in only}
 cpath = os.path.join(OUT, ".tts_cache.json")
 cache = json.load(open(cpath)) if os.path.exists(cpath) else {}
 def job(k):
