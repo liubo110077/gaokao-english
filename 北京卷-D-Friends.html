@@ -52,6 +52,8 @@ body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
 .sentence.complex.playing { background: var(--complex-bg); }
 .tip { border-bottom: 1.5px dashed var(--accent); cursor: pointer; position: relative; transition: background .15s; }
 .tip:hover { background: var(--accent-light); }
+.tip.tip-flash { outline: 2px solid var(--accent); border-radius: 2px; animation: tipFlash 1.6s ease-out forwards; }
+@keyframes tipFlash { 0%{background:var(--accent);color:#fff;} 40%{background:var(--accent-light);color:inherit;} 100%{background:transparent;} }
 .tooltip { position: fixed; z-index: 200; background: var(--text); color: #fff; font-family: -apple-system, "PingFang SC", sans-serif; font-size: 14px; line-height: 1.5; padding: 8px 14px; border-radius: 8px; max-width: min(520px, calc(100vw - 16px)); width: max-content; box-shadow: 0 4px 20px rgba(0,0,0,.25); pointer-events: auto; animation: tipIn .15s ease-out; }
 .tooltip::after { content: ''; position: absolute; bottom: -6px; left: var(--arrow-left, 50%); transform: translateX(-50%); width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 6px solid var(--text); }
 .tooltip.below::after { bottom: auto; top: -6px; border-top: none; border-bottom: 6px solid var(--text); }
@@ -107,6 +109,9 @@ body.compare-mode .translation-inline { display: block; }
 .vocab-card.srs-known .vocab-word::after { content: ' ✓'; font-size: 11px; color: #16a34a; }
 .srs-badge { font-size: 12px; font-weight: 600; padding: 1px 8px; border-radius: 10px; background: #fef2f2; color: #dc2626; }
 .srs-badge.all-done { background: #dcfce7; color: #16a34a; }
+.analysis-play { float: right; margin-left: 8px; background: none; border: 1px solid var(--border); border-radius: 4px; font-size: 12px; padding: 2px 8px; cursor: pointer; color: var(--accent); transition: all .15s; }
+.analysis-play:hover { background: var(--accent-light); border-color: var(--accent); }
+.analysis-play.playing { background: var(--accent); color: #fff; border-color: var(--accent); }
 .question-item { padding: 16px 24px; border-bottom: 1px solid #f0f0f0; }
 .question-item:last-child { border-bottom: none; }
 .question-stem { font-weight: 600; font-size: 15px; margin-bottom: 8px; }
@@ -140,7 +145,7 @@ body.mode-raw .sentence { cursor: default; }
 body.mode-raw .sentence:hover { background: none; }
 body.mode-quiz .tip { border-bottom: none; cursor: default; pointer-events: none; }
 body.mode-quiz .tip:hover { background: none; }
-body.mode-quiz .analysis, body.mode-quiz .translation-inline, body.mode-quiz #vocabPanel, body.mode-quiz #tipPanel, body.mode-quiz #playbar { display: none !important; }
+body.mode-quiz .analysis, body.mode-quiz .translation-inline, body.mode-quiz #vocabPanel, body.mode-quiz #reviewPanel, body.mode-quiz #tipPanel, body.mode-quiz #writingPanel, body.mode-quiz #playbar { display: none !important; }
 body.mode-quiz .sentence.complex { border-bottom: none; cursor: default; }
 body.mode-quiz .sentence { cursor: default; }
 body.mode-quiz .sentence:hover { background: none; }
@@ -192,7 +197,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
   <div class="paragraph" id="para-1">
     <span class="sentence" data-idx="0">The <span class="tip" data-tip="evidence|证据，依据｜法庭剧里常听到：We need evidence！就是「证据」。The evidence for harmony = 和睦存在的证据，evidence for sth = 支持某事的证据｜高考常见句式：There is evidence that... 有证据表明...（阅读理解里超常见）" data-level="拓展">evidence</span> for <span class="tip" data-tip="harmony|和谐（名词）｜你可能在音乐里见过 harmony——和声，好几个声部融合在一起很和谐。生活里 harmony = 和睦、和谐。the evidence for harmony = 和睦存在的证据｜形容词：harmonious 和谐的。搭配：live in harmony 和谐共处，family harmony 家庭和睦" data-level="拓展">harmony</span> may not be <span class="tip" data-tip="obvious|明显的，显而易见的｜ob = 朝向，via = 路（via 经由，你可能见过）。obvious = 摆在路上一眼就看到的 = 显而易见的。not obvious = 不那么明显｜副词：obviously 显然地（写作文好用：Obviously, ...）。It is obvious that... 很明显...（高考作文句式）" data-level="选必">obvious</span> in some families.</span>
     <span class="sentence complex" data-idx="1">But it seems that <span class="tip" data-tip="four out of five|五分之四（表比例的固定说法）｜out of = 从...里面取出。four out of five = 从五个里取四个 = 五分之四。这个结构很常考：3 out of 10 students = 十分之三的学生。two out of three = 三分之二｜类似用法：9 out of 10 people agree. 十分之九的人同意。">four out of five</span> young people now <span class="tip" data-tip="get on with|与...相处融洽｜on 表示顺畅运转，get on with sb = 和某人相处好、关系融洽。就像机器「顺畅运转」一样｜= get along with（也很常考）。反义：not get on with = 合不来。搭配：get on well with sb 和某人相处很好">get on with</span> their parents, which is the <span class="tip" data-tip="opposite|相反的，对立的｜op = 朝向对面（op-pose = 站到对面去）。the opposite of... = ...的反面/对立面。be the opposite of A = 和A完全相反｜名词也是 opposite：Black is the opposite of white. 黑是白的反义。搭配：in the opposite direction 朝相反方向，just the opposite 恰好相反">opposite</span> of the <span class="tip" data-tip="popularly-held image|普遍存在的刻板印象｜popular 流行的你认识。popularly = 被大众普遍地。held = 持有。popularly-held = 大众普遍持有的，就是刻板印象｜image 在这里是「印象、形象」，不是「图片」" data-level="选必">popularly-held image</span> of unhappy <span class="tip" data-tip="teenagers|13到19岁的青少年｜thirteen、fourteen...nineteen，这七个数字结尾都带 -teen。teenager = 年龄里有 -teen 的人 = 13~19岁。12岁不算（twelve 没有 -teen）｜形容词：teenage（青少年的）。teen 也单独用：She's a teen. 她是个青少年" data-level="选必">teenagers</span> <span class="tip" data-tip="locked in|be locked in = 被锁在里面；把自己关在里面｜lock 是锁，你知道 lock the door（锁门）。locked in their room = 把自己关在房间里。刻板印象：和父母吵完架，气呼呼地锁上房间门">locked in</span> their room after endless family <span class="tip" data-tip="quarrels|争吵，口角｜argument（争论）你可能见过，quarrel 更口语，专指家人朋友之间的吵架。endless quarrels = 没完没了的争吵。动词也是 quarrel：quarrel with sb = 和某人吵架｜搭配：have a quarrel with sb 和某人争吵，quarrel about/over sth 为某事吵架" data-level="超纲">quarrels</span>.</span>
-    <div class="analysis" id="analysis-1">
+    <div class="analysis" id="analysis-1"><button class="analysis-play" onclick="playAnalysis('analysis-1', this)" title="听讲解">🔊 听讲解</button>
       <p><b>句子结构：</b>主干是 <em>four out of five young people get on with their parents</em>（五分之四的年轻人和父母关系融洽）。</p>
       <p><b>which 是谁？</b>逗号 + which 引导非限制性定语从句——这个 which 不是指前面某一个词，而是指整个主句的结论。<em>which is the opposite of...</em> = 这件事（4/5年轻人和父母相处融洽）和大众刻板印象正好相反。</p>
       <p><b>后面的分词定语：</b><em>locked in their room after endless family quarrels</em> 是过去分词短语，修饰 teenagers。 = teenagers who are locked in their room...（被关在房间里的那种青少年）。高考阅读里这种「名词 + 分词短语」很常见，别被它割断了对主句的理解。</p>
@@ -213,7 +218,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
   <!-- ── Paragraph 3 ── -->
   <div class="paragraph" id="para-3">
     <span class="sentence complex" data-idx="7">So it seems that this <span class="tip" data-tip="generation|一代人，这一代｜generate 是「产生」，generation = 被产生出来的一群人 = 一代人。this generation of parents = 这一代父母（现在当父母的人）。30 years ago 那代父母 vs. 现在这代父母，态度差别很大｜搭配：the younger generation 年轻一代，generation gap 代沟，Generation Z Z世代" data-level="选必">generation</span> of parents is <span class="tip" data-tip="much more likely than...to do|比...更有可能做...｜likely 是「有可能的」（likely to happen = 可能发生）。much 加强比较级。much more likely than A to do B = 比A更有可能去做B｜这个结构高考很常考：She is much more likely than her classmates to win." data-level="选必">much more likely than</span> parents of 30 years ago to treat their children as friends.</span>
-    <div class="analysis" id="analysis-7">
+    <div class="analysis" id="analysis-7"><button class="analysis-play" onclick="playAnalysis('analysis-7', this)" title="听讲解">🔊 听讲解</button>
       <p><b>句子结构：</b>开头 <em>it seems that...</em> 是形式主语，真正的主语是后面整个 that 从句。</p>
       <p><b>比较级核心：</b><em>much more likely than parents of 30 years ago to treat their children as friends</em>——拆开看：<em>more likely than A</em>（比A更有可能）+ <em>to treat...</em>（做什么）。much 是程度副词，让比较级更强。</p>
       <p><b>主干提炼：</b>this generation of parents is likely to treat their children as friends（这代父母倾向于把孩子当朋友）。</p>
@@ -233,7 +238,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
     <span class="sentence" data-idx="15">Maybe this positive view of family life should not be <span class="tip" data-tip="unexpected|出乎意料的｜expect 是「预期、期待」（你肯定认识），unexpected = 没被预期到的 = 出乎意料的。should not be unexpected = 其实不应该让人意外——言下之意是，这个结果其实是有道理的">unexpected</span>.</span>
     <span class="sentence" data-idx="16">It is possible that the idea of teenage <span class="tip" data-tip="rebellion|叛逆，反叛｜rebel → rebellion，名词形式。the idea of teenage rebellion = 青少年会叛逆这个想法/概念。后面作者说这个 idea 可能根本没有现实依据，意思是「青少年天生叛逆」可能只是个谣言｜动词：rebel against 反抗" data-level="超纲">rebellion</span> is not <span class="tip" data-tip="rooted in|根植于，源于｜root 是「根」，树根。rooted in = 有根基在某事物里 = 源于、基于。not rooted in real facts = 没有现实依据，不是基于真实事实｜搭配：deep-rooted 根深蒂固的，be rooted in tradition 根植于传统" data-level="拓展">rooted in</span> real facts.</span>
     <span class="sentence complex" data-idx="17">A researcher comments, "Our surprise that teenagers say they <span class="tip" data-tip="get along well with|与...相处很好｜= get on with（第1段见过）。get along well with sb = 和某人相处愉快。teenagers get along well with their parents = 青少年和父母相处很好｜这两个短语在高考里可以互换：get on with = get along with">get along well with</span> their parents comes because of a <span class="tip" data-tip="brief|短暂的，简短的｜brief meeting = 简短的会议，brief visit = 短暂的拜访。a brief period = 一段短暂的时期（强调时间不长）｜副词：briefly 简短地。作文好用：in brief = 简而言之（结尾段）。名词：briefing 简报" data-level="选必">brief</span> period in our social history when teenagers were <span class="tip" data-tip="regarded as|被看作，被视为｜regard 是「看待、认为」。be regarded as = 被认为是、被视为。teenagers were regarded as different beings = 青少年曾被视为另类｜= be considered as，= be seen as，= be viewed as。写作文这四个可以替换着用" data-level="选必">regarded as</span> different beings.</span>
-    <div class="analysis" id="analysis-17">
+    <div class="analysis" id="analysis-17"><button class="analysis-play" onclick="playAnalysis('analysis-17', this)" title="听讲解">🔊 听讲解</button>
       <p><b>句子主干：</b>Our surprise comes because of a brief period（我们的惊讶源于历史上一个短暂时期）。</p>
       <p><b>两个从句：</b></p>
       <p>① <em>that teenagers say they get along well with their parents</em>：同位语从句，解释 surprise 的具体内容（惊讶于什么？→ 惊讶于青少年说和父母相处很好）。</p>
@@ -241,7 +246,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       <p><b>整句意思：</b>我们之所以对「青少年和父母相处融洽」感到惊讶，是因为历史上曾有短暂一段时期，青少年被视为与其他人完全不同的异类。</p>
     </div>
     <span class="sentence complex" data-idx="18">But that idea of <span class="tip" data-tip="rebelling and breaking away from|反叛和脱离（父母）｜rebelling = rebel 的动名词，反叛。breaking away from = 脱离、摆脱。两个动名词并列，说的是「叛逆」这个概念的具体内容：反抗父母、脱离父母的掌控｜break away from 也很常用：break away from bad habits 摆脱坏习惯" data-level="超纲">rebelling and breaking away from</span> their parents really only happened during that one time in the 1960s <span class="tip" data-tip="when everyone rebelled|定语从句，修饰"那个年代"｜when 在这里是关系副词，引导定语从句修饰 that one time（那个时代）。when everyone rebelled = 那个人人都在反叛的年代（指1960年代的社会运动）" data-level="超纲">when everyone rebelled</span>.</span>
-    <div class="analysis" id="analysis-18">
+    <div class="analysis" id="analysis-18"><button class="analysis-play" onclick="playAnalysis('analysis-18', this)" title="听讲解">🔊 听讲解</button>
       <p><b>句子主干：</b>that idea really only happened during that one time in the 1960s（那种「青少年叛逆」的概念其实只在1960年代发生过一次）。</p>
       <p><b>of rebelling and breaking away from their parents：</b>介词短语作定语，修饰 idea。整个 that idea of... = 「叛逆、脱离父母」这个概念。</p>
       <p><b>when everyone rebelled：</b>定语从句，修饰 that one time（那个所有人都在反叛的年代）。</p>
@@ -253,17 +258,18 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
 </div>
 
 <!-- ══════ Vocabulary ══════ -->
-<div class="panel open" id="vocabPanel">
+<div class="panel" id="vocabPanel">
   <div class="panel-header" onclick="togglePanel('vocabPanel')">
-    <span>生词与短语（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span>生词与短语（9个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
     <span class="arrow">&#9660;</span>
   </div>
   <div class="panel-body">
     <div class="vocab-list">
 
+      <!-- ── 高频 ── -->
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('get on with')">get on with</span>
+          <span class="vocab-word" onclick="vocabClick('get on with')">get on with</span>
           <span class="vocab-meaning">与...相处融洽</span>
           <span class="vocab-tag tag-core">高频</span>
           <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
@@ -277,7 +283,95 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
 
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('harmonious')">harmonious</span>
+          <span class="vocab-word" onclick="vocabClick('take part in')">take part in</span>
+          <span class="vocab-meaning">参与，参加</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-example">= participate in（更正式，写作文用）。</div>
+          <div class="vd-example"><em>Take part in</em> a competition/discussion/activity. 参加比赛/讨论/活动。</div>
+          <div class="vd-example">高考作文必备：Students are encouraged to <em>take part in</em> outdoor activities.</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('as long as')">as long as</span>
+          <span class="vocab-meaning">只要（表条件）</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-example">= provided that（更书面）= on condition that（更正式）。</div>
+          <div class="vd-example"><em>As long as</em> you work hard, you will succeed. 只要努力，就会成功。</div>
+          <div class="vd-example"><em>As long as</em> they know what I'm doing, they're fine with it. 只要他们知道我在干嘛，就没问题。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('break away from')">break away from</span>
+          <span class="vocab-meaning">脱离，摆脱</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>拆开记：break（打破）+ away（离开）+ from（从某处）= 打破束缚、脱离开去。</div>
+          <div class="vd-example">① teenagers <em>breaking away from</em> their parents 脱离父母的青少年（课文）</div>
+          <div class="vd-example">② You need to <em>break away from</em> bad habits. 你需要摆脱坏习惯。（写作文可以用）</div>
+          <div class="vd-example">③ She finally <em>broke away from</em> the group. 她终于脱离了那个团体。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('smooth')">smooth</span>
+          <span class="vocab-meaning">顺畅的，平稳的</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>原意「光滑的」→ 引申「顺畅的、平稳的」（光滑 = 没有阻力和摩擦 = 顺畅）。副词 smoothly 也很常用。</div>
+          <div class="vd-example">① a <em>smooth</em> change from A to B 从A到B的平稳过渡（课文）</div>
+          <div class="vd-example">② Everything went <em>smoothly</em>. 一切进展顺利。（写作文结尾好用）</div>
+          <div class="vd-example">③ <em>smooth</em> surface 光滑的表面 &nbsp;·&nbsp; <em>smooth</em> skin 光滑的皮肤（原义）</div>
+        </div>
+      </div>
+
+      <!-- ── 考纲内 ── -->
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('be regarded as')">be regarded as</span>
+          <span class="vocab-meaning">被看作，被视为</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-example">高考四个同义替换（写作文这几个换着用）：</div>
+          <div class="vd-example">be <em>regarded</em> as = be <em>considered</em> as = be <em>seen</em> as = be <em>viewed</em> as</div>
+          <div class="vd-example">DIY was <em>regarded as</em> a male hobby. DIY 曾被视为男性爱好。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('generation')">generation</span>
+          <span class="vocab-meaning">一代人</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-example">generate（产生）→ generation（被产生出来的一群人）→ 一代人，约25-30年。</div>
+          <div class="vd-example"><em>generation</em> gap 代沟 &nbsp;·&nbsp; the younger <em>generation</em> 年轻一代</div>
+          <div class="vd-example">this <em>generation</em> of parents = 这一代父母（现在当父母的人）</div>
+        </div>
+      </div>
+
+      <!-- ── 拓展 ── -->
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('harmonious')">harmonious</span>
           <span class="vocab-meaning">和谐的</span>
           <span class="vocab-tag tag-extend">拓展</span>
           <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
@@ -292,64 +386,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
 
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('take part in')">take part in</span>
-          <span class="vocab-meaning">参与，参加</span>
-          <span class="vocab-tag tag-core">高频</span>
-          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
-        </div>
-        <div class="vocab-detail">
-          <div class="vd-example">= participate in（更正式，写作文用）。</div>
-          <div class="vd-example"><em>Take part in</em> a competition/discussion/activity. 参加比赛/讨论/活动。</div>
-          <div class="vd-example">高考作文必备：Students are encouraged to <em>take part in</em> outdoor activities.</div>
-        </div>
-      </div>
-
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('rock the boat')">rock the boat</span>
-          <span class="vocab-meaning">捣乱，制造麻烦（习语）</span>
-          <span class="vocab-tag tag-beyond">超纲</span>
-          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
-        </div>
-        <div class="vocab-detail">
-          <div>rock music（摇滚乐）你肯定知道——rock 本来就是动词「摇、晃动」，摇滚乐就是让人跟着摇摆的音乐。rock the boat = 摇船。大家坐在船里好好的，有人猛地摇船 = 破坏平衡、制造麻烦。超纲习语，高考认识意思就好。</div>
-          <div class="vd-example">① They didn't want to <em>rock the boat</em>. 他们不想惹麻烦。（课文原句）</div>
-          <div class="vd-example">② Don't <em>rock the boat</em> — everything is going well. 别捣乱，现在一切都好。</div>
-          <div class="vd-example">③ He always <em>rocks the boat</em> at meetings. 他开会总是出来搅局。</div>
-        </div>
-      </div>
-
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('as long as')">as long as</span>
-          <span class="vocab-meaning">只要（表条件）</span>
-          <span class="vocab-tag tag-core">高频</span>
-          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
-        </div>
-        <div class="vocab-detail">
-          <div class="vd-example">= provided that（更书面）= on condition that（更正式）。</div>
-          <div class="vd-example"><em>As long as</em> you work hard, you will succeed. 只要努力，就会成功。</div>
-          <div class="vd-example"><em>As long as</em> they know what I'm doing, they're fine with it. 只要他们知道我在干嘛，就没问题。</div>
-        </div>
-      </div>
-
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('be regarded as')">be regarded as</span>
-          <span class="vocab-meaning">被看作，被视为</span>
-          <span class="vocab-tag tag-core">高频</span>
-          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
-        </div>
-        <div class="vocab-detail">
-          <div class="vd-example">高考四个同义替换（写作文这几个换着用）：</div>
-          <div class="vd-example">be <em>regarded</em> as = be <em>considered</em> as = be <em>seen</em> as = be <em>viewed</em> as</div>
-          <div class="vd-example">DIY was <em>regarded as</em> a male hobby. DIY 曾被视为男性爱好。</div>
-        </div>
-      </div>
-
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('be rooted in')">be rooted in</span>
+          <span class="vocab-word" onclick="vocabClick('be rooted in')">be rooted in</span>
           <span class="vocab-meaning">根植于，源于</span>
           <span class="vocab-tag tag-extend">拓展</span>
           <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
@@ -362,62 +399,17 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
         </div>
       </div>
 
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('break away from')">break away from</span>
-          <span class="vocab-meaning">脱离，摆脱</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
-          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
-        </div>
-        <div class="vocab-detail">
-          <div>拆开记：break（打破）+ away（离开）+ from（从某处）= 打破束缚、脱离开去。</div>
-          <div class="vd-example">① teenagers <em>breaking away from</em> their parents 脱离父母的青少年（课文）</div>
-          <div class="vd-example">② You need to <em>break away from</em> bad habits. 你需要摆脱坏习惯。（写作文可以用）</div>
-          <div class="vd-example">③ She finally <em>broke away from</em> the group. 她终于脱离了那个团体。</div>
-        </div>
-      </div>
-
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('generation')">generation</span>
-          <span class="vocab-meaning">一代人</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
-          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
-        </div>
-        <div class="vocab-detail">
-          <div class="vd-example">generate（产生）→ generation（被产生出来的一群人）→ 一代人，约25-30年。</div>
-          <div class="vd-example"><em>generation</em> gap 代沟 &nbsp;·&nbsp; the younger <em>generation</em> 年轻一代</div>
-          <div class="vd-example">this <em>generation</em> of parents = 这一代父母（现在当父母的人）</div>
-        </div>
-      </div>
-
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('smooth')">smooth</span>
-          <span class="vocab-meaning">顺畅的，平稳的</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
-          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
-        </div>
-        <div class="vocab-detail">
-          <div>原意「光滑的」→ 引申「顺畅的、平稳的」（光滑 = 没有阻力和摩擦 = 顺畅）。副词 smoothly 也很常用。</div>
-          <div class="vd-example">① a <em>smooth</em> change from A to B 从A到B的平稳过渡（课文）</div>
-          <div class="vd-example">② Everything went <em>smoothly</em>. 一切进展顺利。（写作文结尾好用）</div>
-          <div class="vd-example">③ <em>smooth</em> surface 光滑的表面 &nbsp;·&nbsp; <em>smooth</em> skin 光滑的皮肤（原义）</div>
-        </div>
-      </div>
-
     </div>
   </div>
 </div>
 
 <!-- ══════ Questions ══════ -->
-<div class="panel open" id="questionsPanel">
+<div class="panel" id="questionsPanel">
   <div class="panel-header" onclick="togglePanel('questionsPanel')">
     <span>题目解析（5题）</span>
     <span class="arrow">&#9660;</span>
   </div>
   <div class="panel-body">
-    <div class="quiz-score" id="quizScore"></div>
 
     <!-- Q1 -->
     <div class="question-item" data-answer="D">
@@ -533,7 +525,41 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
         </div>
       </div>
     </div>
+    <div class="quiz-score" id="quizScore"></div>
 
+  </div>
+</div>
+
+<!-- ══════ Review ══════ -->
+<div class="panel" id="reviewPanel">
+  <div class="panel-header" onclick="togglePanel('reviewPanel')">
+    阅读原文
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body" style="font-size:15px; line-height:1.9;">
+    <!-- 纯文本内容待补充 -->
+  </div>
+</div>
+
+<!-- ══════ 阅读技巧 ══════ -->
+<div class="panel" id="tipPanel">
+  <div class="panel-header" onclick="togglePanel('tipPanel')">
+    阅读技巧
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body" style="font-size:15px; line-height:1.8;">
+    <!-- 内容待补充 -->
+  </div>
+</div>
+
+<!-- ══════ 作文拓展 ══════ -->
+<div class="panel" id="writingPanel">
+  <div class="panel-header" onclick="togglePanel('writingPanel')">
+    作文拓展：好句式 &amp; 连接词速查
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body" style="font-size:15px; line-height:1.8;">
+    <!-- 内容待补充 -->
   </div>
 </div>
 
@@ -546,10 +572,9 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
   <button onclick="pbNext()" title="下一句">⏭</button>
   <span id="pb-counter">— / 20</span>
   <select id="pb-speed" onchange="pbSetSpeed(this.value)">
-    <option value="0.75">0.75×</option>
-    <option value="1" selected>1×</option>
-    <option value="1.25">1.25×</option>
-    <option value="1.5">1.5×</option>
+    <option value="0.8">0.8×</option>
+    <option value="1" selected>1.0×</option>
+    <option value="1.2">1.2×</option>
   </select>
 </div>
 
@@ -747,6 +772,50 @@ function speakWord(word) {
     speechSynthesis.speak(utter);
   };
   enPlayer.play();
+}
+
+const ANALYSIS_AUDIO = {};
+let analysisPlayer = null;
+let analysisBtn = null;
+
+function playAnalysis(id, btn) {
+  if (analysisPlayer) {
+    analysisPlayer.pause();
+    analysisPlayer = null;
+    if (analysisBtn) { analysisBtn.textContent = '🔊 听讲解'; analysisBtn.classList.remove('playing'); }
+    if (analysisBtn === btn) { analysisBtn = null; return; }
+  }
+  const src = ANALYSIS_AUDIO[id];
+  if (!src) return;
+  analysisPlayer = new Audio(src);
+  analysisBtn = btn;
+  btn.textContent = '⏹ 停止';
+  btn.classList.add('playing');
+  analysisPlayer.onended = () => { btn.textContent = '🔊 听讲解'; btn.classList.remove('playing'); analysisPlayer = null; analysisBtn = null; };
+  analysisPlayer.play();
+}
+
+function highlightWord(phrase) {
+  const tips = document.querySelectorAll('.tip');
+  const matches = [];
+  const lc = phrase.toLowerCase();
+  tips.forEach(el => {
+    const tipPhrase = (el.dataset.tip || '').split('|')[0].toLowerCase();
+    if (tipPhrase === lc) matches.push(el);
+  });
+  if (!matches.length) return;
+  matches.forEach(el => {
+    el.classList.remove('tip-flash');
+    void el.offsetWidth;
+    el.classList.add('tip-flash');
+    setTimeout(() => el.classList.remove('tip-flash'), 1700);
+  });
+  matches[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function vocabClick(phrase) {
+  speakWord(phrase);
+  highlightWord(phrase);
 }
 
 function toggleAnalysis(idx) { const el = document.getElementById('analysis-' + idx); if (el) el.classList.toggle('open'); }

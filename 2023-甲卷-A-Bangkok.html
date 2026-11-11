@@ -117,6 +117,8 @@ body {
   transition: background .15s;
 }
 .tip:hover { background: var(--accent-light); }
+.tip.tip-flash { outline: 2px solid var(--accent); border-radius: 2px; animation: tipFlash 1.6s ease-out forwards; }
+@keyframes tipFlash { 0%{background:var(--accent);color:#fff;} 40%{background:var(--accent-light);color:inherit;} 100%{background:transparent;} }
 
 /* Tooltip bubble */
 .tooltip {
@@ -289,6 +291,35 @@ body.compare-mode .translation-inline { display: block; }
 .option-item.wrong .opt-mark { color: #b91c1c; }
 .option-item .opt-why { color: #888; font-size: 12.5px; margin-left: 4px; }
 
+/* ── Writing panel ── */
+.writing-block { margin-bottom: 20px; }
+.writing-block:last-child { margin-bottom: 0; }
+.writing-block-title { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: .04em; text-transform: uppercase; margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+.writing-phrase-list { display: flex; flex-direction: column; gap: 0; }
+.writing-phrase { padding: 10px 0; border-bottom: 1px solid #f3f3f3; font-size: 14px; }
+.writing-phrase:last-child { border-bottom: none; }
+.writing-phrase-en { font-family: Georgia, serif; font-weight: 600; color: var(--text); font-size: 15px; }
+.writing-phrase-cn { color: var(--text-secondary); font-size: 13px; margin: 2px 0; }
+.writing-phrase-src { font-size: 12px; color: #aaa; font-style: italic; }
+.writing-phrase-src em { color: var(--accent); font-style: normal; }
+.writing-phrase-use { font-size: 13px; color: #555; margin-top: 4px; padding: 5px 10px; background: var(--hover-bg); border-radius: 4px; border-left: 2px solid var(--accent); }
+.conn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+@media (max-width: 600px) { .conn-grid { grid-template-columns: 1fr; } }
+.conn-card { padding: 10px 12px; border-radius: var(--radius); background: var(--hover-bg); font-size: 13.5px; }
+.conn-card-title { font-weight: 700; font-size: 12px; letter-spacing: .04em; margin-bottom: 6px; }
+.conn-card.c-add .conn-card-title { color: #0369a1; }
+.conn-card.c-contrast .conn-card-title { color: #b45309; }
+.conn-card.c-result .conn-card-title { color: #15803d; }
+.conn-card.c-example .conn-card-title { color: #7c3aed; }
+.conn-card.c-conclude .conn-card-title { color: #be185d; }
+.conn-item { display: inline-block; margin: 2px 3px 2px 0; padding: 2px 7px; border-radius: 10px; font-size: 12.5px; font-family: Georgia, serif; }
+.conn-card.c-add .conn-item { background: #e0f2fe; color: #0369a1; }
+.conn-card.c-contrast .conn-item { background: #fef3c7; color: #92400e; }
+.conn-card.c-result .conn-item { background: #dcfce7; color: #15803d; }
+.conn-card.c-example .conn-item { background: #ede9fe; color: #6d28d9; }
+.conn-card.c-conclude .conn-item { background: #fce7f3; color: #9d174d; }
+.conn-note { font-size: 12px; color: #888; margin-top: 5px; }
+
 /* ── Review ── */
 .review-section { padding: 20px 24px; }
 .review-section h3 { font-size: 15px; margin-bottom: 12px; }
@@ -315,6 +346,7 @@ body.mode-quiz .translation-inline,
 body.mode-quiz #vocabPanel,
 body.mode-quiz #reviewPanel,
 body.mode-quiz #tipPanel,
+body.mode-quiz #writingPanel,
 body.mode-quiz #playbar { display: none !important; }
 body.mode-quiz .sentence.complex { border-bottom: none; cursor: default; }
 body.mode-quiz .sentence { cursor: default; }
@@ -389,8 +421,8 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
 
   <!-- ── Intro ── -->
   <div class="paragraph" id="para-intro">
-    <span class="sentence" data-idx="0"><span class="tip" data-tip="Bangkok|曼谷，泰国首都｜泰国最大城市">Bangkok</span> is a highly <span class="tip" data-tip="desirable|令人向往的，非常理想的｜desire 是「渴望、想要」，desirable = 值得想要的 = 令人向往的。highly desirable = 非常令人向往的｜常见搭配：a desirable outcome 理想的结果，desirable qualities 理想的品质" data-level="选必">desirable</span> <span class="tip" data-tip="destination|目的地｜destine 是「命中注定」，destination = 命中注定要去的地方 = 目的地。旅游、高考作文都很常用｜travel destination 旅游目的地，holiday destination 度假地" data-level="选必">destination</span> for food lovers.</span>
-    <span class="sentence" data-idx="1">It has a seemingly <span class="tip" data-tip="bottomless well|没有底的井（比喻）｜bottom = 底部，bottomless = 没有底的。well = 水井。bottomless well of dining options = 像口挖不完的井一样多的餐饮选择，比喻多到无穷">bottomless well</span> of <span class="tip" data-tip="dining|用餐，吃饭（较正式）｜dine 是「吃正餐」（比 eat 更正式）。dining room = 餐厅，dining options = 餐饮选择。高考: fine dining = 高档餐饮" data-level="选必">dining</span> options.</span>
+    <span class="sentence" data-idx="0"><span class="tip" data-tip="Bangkok|曼谷，泰国首都｜泰国最大城市" data-level="超纲">Bangkok</span> is a highly <span class="tip" data-tip="desirable|令人向往的，非常理想的｜desire 是「渴望、想要」，desirable = 值得想要的 = 令人向往的。highly desirable = 非常令人向往的｜常见搭配：a desirable outcome 理想的结果，desirable qualities 理想的品质" data-level="选必">desirable</span> <span class="tip" data-tip="destination|目的地｜destine 是「命中注定」，destination = 命中注定要去的地方 = 目的地。旅游、高考作文都很常用｜travel destination 旅游目的地，holiday destination 度假地" data-level="选必">destination</span> for food lovers.</span>
+    <span class="sentence" data-idx="1">It has a seemingly <span class="tip" data-tip="bottomless well|没有底的井（比喻）｜bottom = 底部，bottomless = 没有底的。well = 水井。bottomless well of dining options = 像口挖不完的井一样多的餐饮选择，比喻多到无穷" data-level="超纲">bottomless well</span> of <span class="tip" data-tip="dining|用餐，吃饭（较正式）｜dine 是「吃正餐」（比 eat 更正式）。dining room = 餐厅，dining options = 餐饮选择。高考: fine dining = 高档餐饮">dining</span> options.</span>
     <span class="sentence" data-idx="2">Here are some suggestions on where to start your Bangkok eating <span class="tip" data-tip="adventure|冒险，新奇体验｜adventure 通常指「冒险」，但这里用在美食上——eating adventure = 美食探险之旅，表示这是一段值得期待的新奇体验。adventurous = 喜欢冒险的，爱尝鲜的" data-level="选必">adventure</span>.</span>
     <div class="translation-inline">曼谷是美食爱好者梦寐以求的目的地。这座城市的餐饮选择多得几乎无穷无尽。以下是一些建议，帮你开启曼谷美食探险之旅。</div>
   </div>
@@ -400,7 +432,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
   <div class="paragraph" id="para-nahm">
     <span class="sentence" data-idx="3">Offering Thai fine dining, Nahm provides the best of Bangkok <span class="tip" data-tip="culinary|烹饪的，美食的｜源自拉丁语 culina（厨房）。culinary experience = 美食体验，culinary school = 烹饪学校，culinary scene = 美食界｜超纲词，高考靠上下文猜：前后都在说餐厅、菜肴，culinary = 和烹饪/美食相关的" data-level="超纲">culinary</span> experiences.</span>
     <span class="sentence" data-idx="4">It's the only Thai restaurant that <span class="tip" data-tip="ranks|排名，名列（动词）｜rank = 排名。It ranks among the top 10 = 它跻身前十。名词也是 rank：high rank 高排名｜搭配：rank highly 排名靠前，top-ranking 名列前茅" data-level="拓展">ranks</span> among the top 10 of the world's 50 best restaurants list.</span>
-    <span class="sentence complex" data-idx="5">Head <span class="tip" data-tip="chef|大厨，主厨｜法语借词，chef 在餐厅里是「主厨/厨师长」（比 cook 更专业）。head chef = 总厨，sous chef = 副总厨｜在写高档餐厅时必然提到 chef，不用 cook" data-level="拓展">Chef</span> David Thompson, who received a <span class="tip" data-tip="Michelin star|米其林星级｜Michelin 是法国轮胎品牌，他们出版美食指南，给最好的餐厅颁星。一颗星 = 该城市值得一去的好餐厅，三颗星 = 值得专程前往" data-level="超纲">Michelin star</span> for his <span class="tip" data-tip="London-based|总部/所在地在伦敦的｜base 是「基地、总部」，London-based = 在伦敦扎根的。常见：Beijing-based company 总部在北京的公司，Shanghai-based = 以上海为基地的">London-based</span> Thai restaurant of the same name, opened this <span class="tip" data-tip="branch|分店，分支机构｜branch 本是树枝，树干分出的枝 = 分支/分店。opened this branch = 在这里开设了这家分店｜搭配：branch out = 拓展业务，branch office 分公司" data-level="选必">branch</span> in the <span class="tip" data-tip="Metropolitan Hotel|大都会酒店｜曼谷的一家五星级高档酒店，Nahm 餐厅就开在酒店里面">Metropolitan Hotel</span> in 2010.</span>
+    <span class="sentence complex" data-idx="5">Head <span class="tip" data-tip="chef|大厨，主厨｜法语借词，chef 在餐厅里是「主厨/厨师长」（比 cook 更专业）。head chef = 总厨，sous chef = 副总厨｜在写高档餐厅时必然提到 chef，不用 cook" data-level="拓展">Chef</span> David Thompson, who received a <span class="tip" data-tip="Michelin star|米其林星级｜Michelin 是法国轮胎品牌，他们出版美食指南，给最好的餐厅颁星。一颗星 = 该城市值得一去的好餐厅，三颗星 = 值得专程前往" data-level="超纲">Michelin star</span> for his <span class="tip" data-tip="London-based|总部/所在地在伦敦的｜base 是「基地、总部」，London-based = 在伦敦扎根的。常见：Beijing-based company 总部在北京的公司，Shanghai-based = 以上海为基地的">London-based</span> Thai restaurant of the same name, opened this <span class="tip" data-tip="branch|分店，分支机构｜branch 本是树枝，树干分出的枝 = 分支/分店。opened this branch = 在这里开设了这家分店｜搭配：branch out = 拓展业务，branch office 分公司" data-level="选必">branch</span> in the <span class="tip" data-tip="Metropolitan Hotel|大都会酒店｜曼谷的一家五星级高档酒店，Nahm 餐厅就开在酒店里面" data-level="超纲">Metropolitan Hotel</span> in 2010.</span>
     <div class="analysis" id="analysis-5"><button class="analysis-play" onclick="playAnalysis('analysis-5', this)" title="听讲解">🔊 听讲解</button>
       <p>这句结构：Head Chef David Thompson... opened this branch in 2010。核心非常简单——汤普森大厨2010年在这家酒店开了这个分店。</p>
       <p>中间 who received a Michelin star... of the same name 是插入的定语从句，只是在介绍他的背景：在伦敦也有一家同名泰国餐厅，还摘了米其林星。读懂核心后，再回来看插入部分。</p>
@@ -411,7 +443,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
   <!-- ── Issaya Siamese Club ── -->
   <div class="restaurant-name">Issaya Siamese Club</div>
   <div class="paragraph" id="para-issaya">
-    <span class="sentence" data-idx="6">Issaya <span class="tip" data-tip="Siamese|暹罗的，泰国的（古称）｜Siam（暹罗）是泰国的旧称，Siamese = 来自暹罗/泰国的。现在日常用 Thai，Siamese 更多出现在历史、文化或品牌名中｜Siamese cat = 暹罗猫（一种猫的品种）">Siamese</span> Club is internationally known Thai <span class="tip" data-tip="chef|大厨，主厨｜法语借词，专业厨师用 chef，不用 cook。这里 Thai chef = 泰国名厨｜同第5句 head chef" data-level="拓展">chef</span> Ian Kittichai's first <span class="tip" data-tip="flagship|旗舰，最重要的｜fleet 舰队，flag 旗——flagship 就是挂旗的船，整个舰队最重要的一艘。flagship restaurant/store = 旗舰餐厅/旗舰店，代表品牌最高水准｜flagship 还可作形容词：flagship product 旗舰产品" data-level="超纲">flagship</span> Bangkok restaurant.</span>
+    <span class="sentence" data-idx="6">Issaya <span class="tip" data-tip="Siamese|暹罗的，泰国的（古称）｜Siam（暹罗）是泰国的旧称，Siamese = 来自暹罗/泰国的。现在日常用 Thai，Siamese 更多出现在历史、文化或品牌名中｜Siamese cat = 暹罗猫（一种猫的品种）" data-level="超纲">Siamese</span> Club is internationally known Thai <span class="tip" data-tip="chef|大厨，主厨｜法语借词，专业厨师用 chef，不用 cook。这里 Thai chef = 泰国名厨｜同第5句 head chef" data-level="拓展">chef</span> Ian Kittichai's first <span class="tip" data-tip="flagship|旗舰，最重要的｜fleet 舰队，flag 旗——flagship 就是挂旗的船，整个舰队最重要的一艘。flagship restaurant/store = 旗舰餐厅/旗舰店，代表品牌最高水准｜flagship 还可作形容词：flagship product 旗舰产品" data-level="超纲">flagship</span> Bangkok restaurant.</span>
     <span class="sentence" data-idx="7">The menu in this beautiful <span class="tip" data-tip="colonial|殖民地风格的；有历史感的｜colony 是殖民地，colonial 形容词 = 殖民地时期的。泰国历史上受西方影响，colonial house = 殖民地风格建筑，特点是高大门廊、百叶窗、欧式细节｜这类建筑现在通常指有历史感的老式洋楼" data-level="超纲">colonial</span> house <span class="tip" data-tip="includes|包含，包括｜include 的第三人称单数形式。The menu includes... = 菜单上有...｜include 和 contain 区别：include 通常指「是其中一部分」，contain 指「里面装有」。高考常考：including 作介词 = 包括">includes</span> <span class="tip" data-tip="traditional|传统的｜tradition 是传统，traditional = 传统的。traditional Thai cuisine = 传统泰国菜（正宗做法，没有被改良的）｜反义：modern, innovative。高考作文常用：traditional values 传统价值观，traditional customs 传统习俗">traditional</span> Thai <span class="tip" data-tip="cuisine|（某种风格的）菜肴，烹饪｜法语借词，比 food 更正式。Thai cuisine = 泰国菜，Chinese cuisine = 中餐，French cuisine = 法国菜｜记法：某地名 + cuisine = 某地菜，出现在高考直接读「某地美食」就对" data-level="拓展">cuisine</span> <span class="tip" data-tip="combined|结合，混合｜combine v. 结合，combined 是过去分词，这里 combined with = 和…结合在一起。Thai cuisine combined with modern methods = 泰国菜 + 现代烹饪方法的融合｜搭配：combine A with B 把A和B结合，常见搭配" data-level="拓展">combined</span> with modern cooking <span class="tip" data-tip="methods|方法，方式｜method 单数，methods 复数。cooking methods = 烹饪方法。与 way 区别：method 更正式，指有步骤的方法｜高考作文好用：teaching methods 教学方法，learning methods 学习方法">methods</span>.</span>
     <div class="translation-inline">Issaya Siamese Club 是国际知名泰国厨师 Ian Kittichai 在曼谷的第一家旗舰餐厅。这栋美丽的殖民风格建筑中，菜单将传统泰国菜肴与现代烹饪方法相结合。</div>
   </div>
@@ -438,7 +470,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       <p>句子开头 Earning first place on the latest "Asia's 50 best restaurants" list 在交代背景——Gaggan 刚在榜单上夺了第一。读到逗号之后才是主语：progressive Indian restaurant Gaggan（这家餐厅）。主句核心：Gaggan is one of the most exciting venues to arrive in Bangkok in recent years。</p>
       <p>其中 latest 是关键词——最新一期榜单上的第一，说明它现在正当红。</p>
     </div>
-    <span class="sentence complex" data-idx="13">The best table in this two-story <span class="tip" data-tip="colonial Thai home|殖民风格的泰式老宅｜同第7句的 colonial house。这里是两层楼的泰式老房子改建而成的餐厅，保留了历史建筑的风格" data-level="超纲">colonial Thai home</span> offers a window right into the kitchen, where you can see <span class="tip" data-tip="chef|大厨，主厨｜法语借词，专业厨师叫 chef，不叫 cook。这里 chef Gaggan = Gaggan 大厨（以名字代称）｜同第5句 head chef" data-level="拓展">chef</span> Gaggan and his <span class="tip" data-tip="staff|员工，全体工作人员｜staff 是集合名词，指一家公司/餐厅的全部员工（整体）。and his staff = 和他的团队/员工们｜搭配：staff member 员工，kitchen staff 厨房员工，medical staff 医护人员" data-level="选必">staff</span> <span class="tip" data-tip="in action|正在工作，运转中｜action 是「行动」，in action = 在运转/在干活儿中。这里指你坐在最好的位子上，可以透过窗口直接看到厨师们在厨房忙碌的样子｜常见：see sb in action = 亲眼看到某人工作，see the team in action" data-level="超纲">in action</span>.</span>
+    <span class="sentence complex" data-idx="13">The best table in this two-story <span class="tip" data-tip="colonial Thai home|殖民风格的泰式老宅｜同第7句的 colonial house。这里是两层楼的泰式老房子改建而成的餐厅，保留了历史建筑的风格" data-level="超纲">colonial Thai home</span> offers a window right into the kitchen, where you can see <span class="tip" data-tip="chef|大厨，主厨｜法语借词，专业厨师叫 chef，不叫 cook。这里 chef Gaggan = Gaggan 大厨（以名字代称）｜同第5句 head chef" data-level="拓展">chef</span> Gaggan and his <span class="tip" data-tip="staff|员工，全体工作人员｜staff 是集合名词，指一家公司/餐厅的全部员工（整体）。and his staff = 和他的团队/员工们｜搭配：staff member 员工，kitchen staff 厨房员工，medical staff 医护人员" data-level="选必">staff</span> <span class="tip" data-tip="in action|正在工作，运转中｜action 是「行动」，in action = 在运转/在干活儿中。这里指你坐在最好的位子上，可以透过窗口直接看到厨师们在厨房忙碌的样子｜常见：see sb in action = 亲眼看到某人工作，see the team in action">in action</span>.</span>
     <div class="analysis" id="analysis-13"><button class="analysis-play" onclick="playAnalysis('analysis-13', this)" title="听讲解">🔊 听讲解</button>
       <p>主句：The best table offers a window right into the kitchen。offers 在这里不是「提供」而是「给人一个…的机会/视角」——最好的桌子能让你直接看进厨房。</p>
       <p>后面 where 引导定语从句，修饰 kitchen：在那个厨房里，你能看到 Gaggan 和员工在忙碌。这就是文中说的「美食剧场」——边吃边看厨师表演。</p>
@@ -451,14 +483,88 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
 <!-- ══════ Vocabulary ══════ -->
 <div class="panel" id="vocabPanel">
   <div class="panel-header" onclick="togglePanel('vocabPanel')">
-    <span>生词与短语（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span>生词与短语（23个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
     <span class="arrow">&#9660;</span>
   </div>
   <div class="panel-body">
     <div class="vocab-list">
+      <!-- ── 高频 ── -->
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('desirable')">desirable</span>
+          <span class="vocab-word" onclick="vocabClick('dining')">dining</span>
+          <span class="vocab-meaning">用餐（较正式）</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">dine 是「吃正餐」（比 eat 更正式）。<br><em>dining</em> room 餐厅 &nbsp;·&nbsp; <em>dining</em> options 餐饮选择 &nbsp;·&nbsp; fine <em>dining</em> 高档餐饮</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('includes')">include</span>
+          <span class="vocab-meaning">包含，包括</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">The menu <em>includes</em>... = 菜单上有...。include 和 contain 区别：include 通常指「是其中一部分」，contain 指「里面装有」。<br>高考常考：including 作介词 = 包括</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('traditional')">traditional</span>
+          <span class="vocab-meaning">传统的</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">tradition 是传统，<em>traditional</em> = 传统的。<em>traditional</em> Thai cuisine = 传统泰国菜（正宗做法，没有被改良的）。<br>反义：modern, innovative &nbsp;·&nbsp; <em>traditional</em> values 传统价值观</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('methods')">method</span>
+          <span class="vocab-meaning">方法，方式</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">method 比 way 更正式，指有步骤的方法。cooking <em>methods</em> = 烹饪方法。<br>teaching <em>methods</em> 教学方法 &nbsp;·&nbsp; learning <em>methods</em> 学习方法（作文常用）</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('manage to')">manage to</span>
+          <span class="vocab-meaning">设法做到，终于做成</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">manage 通常是「管理」，但还有「设法/勉强做到」的意思。manage to do = 设法做了某事。<br>I <em>managed</em> to pass. 我设法通过了。 &nbsp;·&nbsp; yet still manages to add a twist 但竟然还能加入创意</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('progressive')">progressive</span>
+          <span class="vocab-meaning">前卫的，创新的；进步的</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">progress 是「进步」，<em>progressive</em> = 不断向前、敢于突破的。<em>progressive</em> Indian restaurant = 创新派印度餐厅——不走传统路线，用创意手法呈现印度菜。<br>反义：conservative 保守的</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('candle-lit dinner')">lit</span>
+          <span class="vocab-meaning">点亮的（light 的过去分词）</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">light → lit（不规则变化，常考）。<em>candle-lit</em> = 蜡烛点亮的，用作形容词。<br>类比：sun-<em>lit</em> 阳光照耀的 &nbsp;·&nbsp; moon-<em>lit</em> 月光下的 &nbsp;·&nbsp; well-<em>lit</em> 光线充足的</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('set menu')">set</span>
+          <span class="vocab-meaning">固定的，预先确定的（形容词）</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">set 常见义是「放置/设定」，这里作形容词 = 固定不变的。<em>set menu</em> = 菜品和价格固定好的套餐。<br><em>set</em> time 固定时间 &nbsp;·&nbsp; <em>set</em> phrase 固定表达 &nbsp;·&nbsp; <em>set</em> in one's ways 习惯固化，很难改变</div>
+      </div>
+      <!-- ── 考纲内（选必）── -->
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('extremely hungry')">extremely</span>
+          <span class="vocab-meaning">极其，非常（比 very 更正式）</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">作文里把 very 换成 <em>extremely</em> 是立竿见影的加分操作。<br><em>extremely</em> important / popular / effective / difficult（后接形容词，考场通用）</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('desirable')">desirable</span>
           <span class="vocab-meaning">令人向往的，非常理想的</span>
           <span class="vocab-tag tag-exam">考纲内</span>
         </div>
@@ -466,75 +572,99 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       </div>
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('culinary')">culinary</span>
-          <span class="vocab-meaning">烹饪的，美食的</span>
-          <span class="vocab-tag tag-beyond">超纲</span>
-        </div>
-        <div class="vocab-extra">超纲词，高考靠上下文猜义。<em>culinary</em> experience 美食体验 &nbsp;·&nbsp; <em>culinary</em> school 烹饪学校 &nbsp;·&nbsp; <em>culinary</em> scene 美食界</div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('cuisine')">cuisine</span>
-          <span class="vocab-meaning">（某种风格的）菜肴，烹饪</span>
+          <span class="vocab-word" onclick="vocabClick('destination')">destination</span>
+          <span class="vocab-meaning">目的地</span>
           <span class="vocab-tag tag-exam">考纲内</span>
         </div>
-        <div class="vocab-extra">法语借词，比 food 更正式。<br>Thai <em>cuisine</em> 泰国菜 &nbsp;·&nbsp; Chinese <em>cuisine</em> 中餐 &nbsp;·&nbsp; French <em>cuisine</em> 法国菜</div>
+        <div class="vocab-extra">destine 是「命中注定」，destination = 命中注定要去的地方 = 目的地。<br>travel <em>destination</em> 旅游目的地 &nbsp;·&nbsp; holiday <em>destination</em> 度假地</div>
       </div>
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('flagship')">flagship</span>
-          <span class="vocab-meaning">旗舰；最重要的</span>
-          <span class="vocab-tag tag-beyond">超纲</span>
-        </div>
-        <div class="vocab-extra"><em>flagship</em> restaurant 旗舰餐厅 &nbsp;·&nbsp; <em>flagship</em> store 旗舰店 &nbsp;·&nbsp; <em>flagship</em> product 旗舰产品 &nbsp;·&nbsp; <em>flagship</em> project 核心项目</div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('making waves')">make waves</span>
-          <span class="vocab-meaning">引起轰动，广受关注</span>
-          <span class="vocab-tag tag-beyond">超纲</span>
-        </div>
-        <div class="vocab-extra">Bo.lan has been <em>making waves</em> in Bangkok's culinary scene. Bo.lan 一直在曼谷美食界引起轰动。<br>同义替换：cause a sensation, make a splash</div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('twist')">twist</span>
-          <span class="vocab-tag">熟词僻义</span>
-          <span class="vocab-meaning">独到之处，创意；（本义）扭转</span>
-          <span class="vocab-tag tag-beyond">超纲</span>
-        </div>
-        <div class="vocab-extra">add a special <em>twist</em> 加入独特创意<br>with a <em>twist</em> 有创意的：classic dishes with a twist 有创意翻新的经典菜<br>动词：<em>twist</em> open the cap 拧开盖子（本义）</div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('progressive')">progressive</span>
-          <span class="vocab-meaning">前卫的，创新的；进步的</span>
+          <span class="vocab-word" onclick="vocabClick('adventure')">adventure</span>
+          <span class="vocab-meaning">冒险，新奇体验</span>
           <span class="vocab-tag tag-exam">考纲内</span>
         </div>
-        <div class="vocab-extra"><em>progressive</em> Indian restaurant 创新派印度餐厅<br><em>progressive</em> ideas 进步的理念 &nbsp;·&nbsp; <em>progressive</em> policy 进步政策<br>反义：conservative 保守的</div>
+        <div class="vocab-extra">eating <em>adventure</em> = 美食探险之旅，表示这是一段值得期待的新奇体验。<br>adventurous = 喜欢冒险的，爱尝鲜的</div>
       </div>
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('venue')">venue</span>
-          <span class="vocab-meaning">场所，举办地</span>
+          <span class="vocab-word" onclick="vocabClick('branch')">branch</span>
+          <span class="vocab-meaning">分店，分支机构</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">branch 本是树枝，树干分出的枝 = 分支/分店。opened this <em>branch</em> = 在这里开设了这家分店。<br><em>branch</em> out = 拓展业务 &nbsp;·&nbsp; <em>branch</em> office 分公司</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('scene')">scene</span>
+          <span class="vocab-meaning">（某领域的）圈子，界</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">scene = 场景，也表示「某个圈子/界」。culinary <em>scene</em> = 美食界。<br>music <em>scene</em> 音乐圈 &nbsp;·&nbsp; art <em>scene</em> 艺术界 &nbsp;·&nbsp; 同义：world（the fashion world 时尚界）</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('staff')">staff</span>
+          <span class="vocab-meaning">员工，全体工作人员</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">staff 是集合名词，指一家公司/餐厅的全部员工（整体）。<br><em>staff</em> member 员工 &nbsp;·&nbsp; kitchen <em>staff</em> 厨房员工 &nbsp;·&nbsp; medical <em>staff</em> 医护人员</div>
+      </div>
+      <!-- ── 拓展 ── -->
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('ranks')">rank</span>
+          <span class="vocab-meaning">排名，名列（动词）</span>
           <span class="vocab-tag tag-extend">拓展</span>
         </div>
-        <div class="vocab-extra">concert <em>venue</em> 演唱会场地 &nbsp;·&nbsp; wedding <em>venue</em> 婚礼场地<br>sports <em>venue</em> 运动场馆 &nbsp;·&nbsp; the most exciting <em>venue</em> 最令人兴奋的场所</div>
+        <div class="vocab-extra">It <em>ranks</em> among the top 10 = 它跻身前十。名词也是 rank：high rank 高排名。<br><em>rank</em> highly 排名靠前 &nbsp;·&nbsp; top-ranking 名列前茅</div>
       </div>
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('in action')">in action</span>
-          <span class="vocab-meaning">正在工作，运转中</span>
-          <span class="vocab-tag tag-beyond">超纲</span>
+          <span class="vocab-word" onclick="vocabClick('chef')">chef</span>
+          <span class="vocab-meaning">大厨，主厨</span>
+          <span class="vocab-tag tag-extend">拓展</span>
         </div>
-        <div class="vocab-extra">see chef Gaggan and his staff <em>in action</em> 亲眼看到 Gaggan 大厨和员工们忙碌<br>see sb <em>in action</em> = 亲眼看到某人工作/表现 &nbsp;·&nbsp; the machine <em>in action</em> 机器运转中</div>
+        <div class="vocab-extra">法语借词，比 cook 更专业。head <em>chef</em> = 总厨，sous <em>chef</em> = 副总厨。<br>写高档餐厅时必然提到 <em>chef</em>，不用 cook</div>
       </div>
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('appreciate')">appreciate</span>
+          <span class="vocab-word" onclick="vocabClick('cuisine')">cuisine</span>
+          <span class="vocab-meaning">（某种风格的）菜肴，烹饪</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">法语借词，比 food 更正式。某地名 + <em>cuisine</em> = 某地菜。<br>Thai <em>cuisine</em> 泰国菜 &nbsp;·&nbsp; Chinese <em>cuisine</em> 中餐 &nbsp;·&nbsp; French <em>cuisine</em> 法国菜</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('combined')">combine</span>
+          <span class="vocab-meaning">结合，混合</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">combine v. 结合，<em>combined</em> with = 和…结合在一起。<br>Thai cuisine <em>combined</em> with modern methods = 泰国菜 + 现代烹饪方法的融合 &nbsp;·&nbsp; combine A with B 把A和B结合</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('elegant')">elegant</span>
+          <span class="vocab-meaning">优雅的，精致的</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra"><em>elegant</em> atmosphere = 优雅的氛围，<em>elegant</em> style = 优雅的风格。<br>近义：graceful 优雅，sophisticated 精致高端（写作文好用）</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('roots')">root</span>
+          <span class="vocab-meaning">根源，根本</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">root 是树根，延伸义 = 根源。true to its <em>roots</em> = 忠于根源，不忘本。<br>put down <em>roots</em> = 在某地扎根 &nbsp;·&nbsp; get back to your <em>roots</em> = 回归本源</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('appreciate')">appreciate</span>
           <span class="vocab-tag">一词多义</span>
           <span class="vocab-meaning">欣赏；感激；意识到</span>
-          <span class="vocab-tag tag-core">高频</span>
+          <span class="vocab-tag tag-extend">拓展</span>
           <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
         </div>
         <div class="vocab-detail">
@@ -542,6 +672,14 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
           <div class="vd-example">② 感激：I <em>appreciate</em> your help. 感谢你的帮助。I'd <em>appreciate</em> it if... 如果…我将不胜感激。</div>
           <div class="vd-example">③ 意识到：You must <em>appreciate</em> that it won't be easy. 你必须意识到这并不容易。</div>
         </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('venues')">venue</span>
+          <span class="vocab-meaning">场所，举办地</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">concert <em>venue</em> 演唱会场地 &nbsp;·&nbsp; wedding <em>venue</em> 婚礼场地<br>sports <em>venue</em> 运动场馆 &nbsp;·&nbsp; the most exciting <em>venues</em> to arrive in Bangkok 最令人兴奋的场所</div>
       </div>
     </div>
   </div>
@@ -669,6 +807,140 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
     <p style="margin-bottom:0; padding-left:16px; color:#555;">
       出题人最喜欢把<strong>A餐厅的细节</strong>塞进问<strong>B餐厅的题</strong>里。比如 Q23 选项C说 Gaggan "serves hard-to-find local dishes"——但"hard-to-find Thai dishes"是 <strong>Bo.lan</strong> 的描述（第9句），不是 Gaggan！Q21 选项B说两家在伦敦都有分店——David Thompson 在伦敦有同名餐厅，但那是他个人经历，不是 Nahm 的分店，而且 Issaya 根本没提伦敦。遇到选项，永远回原文核实，不要靠感觉选。
     </p>
+  </div>
+</div>
+
+<!-- ══════ 作文拓展 ══════ -->
+<div class="panel" id="writingPanel">
+  <div class="panel-header" onclick="togglePanel('writingPanel')">
+    作文拓展：好句式 &amp; 连接词速查
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body" style="font-size:15px; line-height:1.8;">
+
+    <!-- 好句式 -->
+    <div class="writing-block">
+      <div class="writing-block-title">从文章偷来的好句式</div>
+      <div class="writing-phrase-list">
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">... ranks among the top X in the world for Y.</div>
+          <div class="writing-phrase-cn">在Y方面跻身全球前X之列</div>
+          <div class="writing-phrase-src">原句：<em>Bangkok ranks among the top places in the world for food.</em></div>
+          <div class="writing-phrase-use">作文套用：Shanghai <em>ranks among the top cities in the world</em> for finance. 把 Bangkok 换成任何城市/国家都能用。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">It manages to be both A and B.</div>
+          <div class="writing-phrase-cn">它兼顾了A和B（言下之意：两个方向都做到了，很厉害）</div>
+          <div class="writing-phrase-src">原句：<em>it manages to be both true to its roots and progressive</em></div>
+          <div class="writing-phrase-use">作文套用：The program <em>manages to be both</em> affordable <em>and</em> effective. 表达「做到了两全其美」时用，比 "both...and..." 更有层次感。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">... is a desirable destination for X lovers.</div>
+          <div class="writing-phrase-cn">...是X爱好者梦寐以求的目的地</div>
+          <div class="writing-phrase-src">原句：<em>It is a desirable destination for adventure eaters.</em></div>
+          <div class="writing-phrase-use">作文套用：Chengdu <em>is a desirable destination for</em> nature lovers. 写推荐某地/某事物时，比「is a good place」高级很多。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">... combined with ..., the result is ...</div>
+          <div class="writing-phrase-cn">...与...结合，产生的效果是...</div>
+          <div class="writing-phrase-src">原句：<em>traditional Thai cuisine combined with modern cooking methods</em></div>
+          <div class="writing-phrase-use">作文套用：Hard work, <em>combined with</em> the right method, produces outstanding results. 比"and"正式，常用于议论文分析原因时。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">... at its best</div>
+          <div class="writing-phrase-cn">...的极致体现，...最好的样子</div>
+          <div class="writing-phrase-src">原句：<em>Bangkok cuisine at its best</em></div>
+          <div class="writing-phrase-use">作文套用：This is teamwork <em>at its best</em>. 结尾升华用，比 "the best example of..." 更简洁有力。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">Not only does/is ..., but it also ...</div>
+          <div class="writing-phrase-cn">不仅...而且...（倒装，更书面）</div>
+          <div class="writing-phrase-src">原句改写：<em>Not only does the restaurant serve traditional dishes, but it also uses modern methods.</em></div>
+          <div class="writing-phrase-use">注意：not only 放句首时主谓倒装，助动词提前。比普通 "not only...but also" 更加高级，直接给分。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">extremely + 形容词（代替 very）</div>
+          <div class="writing-phrase-cn">极其...，非常...（书面感更强）</div>
+          <div class="writing-phrase-src">原句：<em>For those extremely hungry</em></div>
+          <div class="writing-phrase-use">作文中把 very 换成 extremely 就是加分操作：<em>extremely important / extremely popular / extremely effective</em>。考场上能用就用。</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 连接词速查 -->
+    <div class="writing-block">
+      <div class="writing-block-title">连接词速查（按功能分）</div>
+      <div class="conn-grid">
+
+        <div class="conn-card c-add">
+          <div class="conn-card-title">递进 / 补充</div>
+          <span class="conn-item">furthermore</span>
+          <span class="conn-item">moreover</span>
+          <span class="conn-item">in addition</span>
+          <span class="conn-item">what's more</span>
+          <span class="conn-item">not only...but also</span>
+          <div class="conn-note">比 "also" 和 "and" 正式，议论文首选</div>
+        </div>
+
+        <div class="conn-card c-contrast">
+          <div class="conn-card-title">转折 / 对比</div>
+          <span class="conn-item">however</span>
+          <span class="conn-item">yet</span>
+          <span class="conn-item">while</span>
+          <span class="conn-item">in contrast</span>
+          <span class="conn-item">on the other hand</span>
+          <div class="conn-note">yet 用在句子中间（不另起段）；however 另起用</div>
+        </div>
+
+        <div class="conn-card c-result">
+          <div class="conn-card-title">结果 / 因此</div>
+          <span class="conn-item">as a result</span>
+          <span class="conn-item">therefore</span>
+          <span class="conn-item">consequently</span>
+          <span class="conn-item">thus</span>
+          <div class="conn-note">thus 最简洁，thus + 分词短语直接高分</div>
+        </div>
+
+        <div class="conn-card c-example">
+          <div class="conn-card-title">举例说明</div>
+          <span class="conn-item">for instance</span>
+          <span class="conn-item">for example</span>
+          <span class="conn-item">take...for example</span>
+          <span class="conn-item">such as</span>
+          <div class="conn-note">for instance 比 for example 更口语化一点点，两者都可用</div>
+        </div>
+
+        <div class="conn-card c-conclude">
+          <div class="conn-card-title">总结 / 结尾</div>
+          <span class="conn-item">in conclusion</span>
+          <span class="conn-item">to sum up</span>
+          <span class="conn-item">in short</span>
+          <span class="conn-item">overall</span>
+          <span class="conn-item">in a word</span>
+          <div class="conn-note">结尾段第一句用，考官扫一眼就知道你会写结论</div>
+        </div>
+
+        <div class="conn-card c-add">
+          <div class="conn-card-title">顺序 / 衔接</div>
+          <span class="conn-item">first of all</span>
+          <span class="conn-item">secondly</span>
+          <span class="conn-item">finally</span>
+          <span class="conn-item">meanwhile</span>
+          <span class="conn-item">at the same time</span>
+          <div class="conn-note">列举多个原因/步骤时用，让文章结构清晰</div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -954,6 +1226,29 @@ function speakWord(word) {
     speechSynthesis.speak(utter);
   };
   enPlayer.play();
+}
+
+function highlightWord(phrase) {
+  const tips = document.querySelectorAll('.tip');
+  const matches = [];
+  const lc = phrase.toLowerCase();
+  tips.forEach(el => {
+    const tipPhrase = (el.dataset.tip || '').split('|')[0].toLowerCase();
+    if (tipPhrase === lc) matches.push(el);
+  });
+  if (!matches.length) return;
+  matches.forEach(el => {
+    el.classList.remove('tip-flash');
+    void el.offsetWidth;
+    el.classList.add('tip-flash');
+    setTimeout(() => el.classList.remove('tip-flash'), 1700);
+  });
+  matches[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function vocabClick(phrase) {
+  speakWord(phrase);
+  highlightWord(phrase);
 }
 
 function toggleAnalysis(idx) {

@@ -107,6 +107,8 @@ body {
   transition: background .15s;
 }
 .tip:hover { background: var(--accent-light); }
+.tip.tip-flash { outline: 2px solid var(--accent); border-radius: 2px; animation: tipFlash 1.6s ease-out forwards; }
+@keyframes tipFlash { 0%{background:var(--accent);color:#fff;} 40%{background:var(--accent-light);color:inherit;} 100%{background:transparent;} }
 
 /* Tooltip bubble */
 .tooltip {
@@ -305,6 +307,7 @@ body.mode-quiz .translation-inline,
 body.mode-quiz #vocabPanel,
 body.mode-quiz #reviewPanel,
 body.mode-quiz #tipPanel,
+body.mode-quiz #writingPanel,
 body.mode-quiz #playbar { display: none !important; }
 body.mode-quiz .sentence.complex { border-bottom: none; cursor: default; }
 body.mode-quiz .sentence { cursor: default; }
@@ -439,21 +442,15 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
 <!-- ══════ Vocabulary ══════ -->
 <div class="panel" id="vocabPanel">
   <div class="panel-header" onclick="togglePanel('vocabPanel')">
-    <span>生词与短语（15个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span>生词与短语（11个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
     <span class="arrow">&#9660;</span>
   </div>
   <div class="panel-body">
     <div class="vocab-list">
+      <!-- ── 高频 ── -->
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('dab hand')">dab hand</span>
-          <span class="vocab-meaning">能手，行家</span>
-          <span class="vocab-tag tag-beyond">超纲</span>
-        </div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('put up')">put up</span>
+          <span class="vocab-word" onclick="vocabClick('put up')">put up</span>
           <span class="vocab-meaning">安装，搭建（架子）</span>
           <span class="vocab-tag tag-core">高频</span>
           <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
@@ -467,28 +464,15 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       </div>
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('piece together')">piece together</span>
+          <span class="vocab-word" onclick="vocabClick('piece together')">piece together</span>
           <span class="vocab-meaning">拼装，组装（家具）</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
+          <span class="vocab-tag tag-core">高频</span>
         </div>
         <div class="vocab-extra">piece 从名词"一块"变动词"拼"，together 强调拼到一起。<br>She spent an hour <em>piecing together</em> the furniture. 她花了一小时拼装家具。<br>抽象义：<em>piece together</em> the truth from clues 从线索中拼凑出真相。</div>
       </div>
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('credit')">credit ... to ...</span>
-          <span class="vocab-meaning">把…归功于</span>
-          <span class="vocab-tag tag-core">高频</span>
-          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
-        </div>
-        <div class="vocab-detail">
-          <div class="vd-example">① 信用卡：a <em>credit</em> card</div>
-          <div class="vd-example">② 学分：earn three <em>credits</em> for the course 修这门课得3个学分</div>
-          <div class="vd-example">③ 归功于（本文）：She <em>credits</em> her skills <em>to</em> her grandfather. 她把这些技能归功于祖父。</div>
-        </div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('late')">late</span>
+          <span class="vocab-word" onclick="vocabClick('late')">late</span>
           <span class="vocab-tag">熟词僻义</span>
           <span class="vocab-meaning">已故的（her late grandfather）</span>
           <span class="vocab-tag tag-core">高频</span>
@@ -497,15 +481,7 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       </div>
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('accompany')">accompany</span>
-          <span class="vocab-meaning">陪伴，陪同</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
-        </div>
-        <div class="vocab-extra">She <em>accompanied</em> her grandfather to work every holiday. 每逢假期她都陪祖父去上班。<br>被动搭配：be <em>accompanied</em> by sb 由某人陪同 &nbsp;·&nbsp; 名词：companion 同伴</div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('treat')">treat</span>
+          <span class="vocab-word" onclick="vocabClick('treat')">treat</span>
           <span class="vocab-tag">题目选项词</span>
           <span class="vocab-meaning">奖赏，款待；对待；治疗</span>
           <span class="vocab-tag tag-core">高频</span>
@@ -520,46 +496,23 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       </div>
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('backbreaking')">backbreaking</span>
-          <span class="vocab-meaning">极其辛苦的，累人的</span>
-          <span class="vocab-tag tag-beyond">超纲</span>
-        </div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('deposit')">deposit</span>
-          <span class="vocab-tag">熟词僻义</span>
-          <span class="vocab-meaning">押金，保证金；存款</span>
-          <span class="vocab-tag tag-beyond">超纲</span>
-        </div>
-        <div class="vocab-extra">① 押金：pay a <em>deposit</em> before moving in 入住前交押金<br>② 存款：make a <em>deposit</em> at the bank 在银行存钱</div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('tenancy')">tenancy</span>
-          <span class="vocab-meaning">租期，租约</span>
-          <span class="vocab-tag tag-beyond">超纲</span>
-        </div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('personalise')">personalise</span>
+          <span class="vocab-word" onclick="vocabClick('personalise')">personalise</span>
           <span class="vocab-meaning">使个性化，自定义装饰</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
+          <span class="vocab-tag tag-core">高频</span>
         </div>
         <div class="vocab-extra">She likes to <em>personalise</em> her room with photos and curtains. 她喜欢用照片和窗帘把房间装饰出自己的风格。</div>
       </div>
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('cover up')">cover up</span>
+          <span class="vocab-word" onclick="vocabClick('cover up')">cover up</span>
           <span class="vocab-meaning">遮盖，填补（墙洞）</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
+          <span class="vocab-tag tag-core">高频</span>
         </div>
         <div class="vocab-extra"><em>cover up</em> holes in the wall 填补墙洞<br>引申义：<em>cover up</em> the truth 掩盖真相</div>
       </div>
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('take on')">take on</span>
+          <span class="vocab-word" onclick="vocabClick('take on')">take on</span>
           <span class="vocab-tag">一词多义</span>
           <span class="vocab-meaning">承担，从事（项目）</span>
           <span class="vocab-tag tag-core">高频</span>
@@ -573,19 +526,42 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       </div>
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('make the most of')">make the most of</span>
+          <span class="vocab-word" onclick="vocabClick('make the most of')">make the most of</span>
           <span class="vocab-meaning">充分利用</span>
           <span class="vocab-tag tag-core">高频</span>
         </div>
         <div class="vocab-extra"><em>Make the most of</em> every opportunity. 充分利用每一个机会。<br>同义替换（作文）：make full use of / take advantage of</div>
       </div>
+      <!-- ── 考纲内 ── -->
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('lead the charge')">lead the charge</span>
+          <span class="vocab-word" onclick="vocabClick('credit')">credit ... to ...</span>
+          <span class="vocab-meaning">把…归功于</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-example">① 信用卡：a <em>credit</em> card</div>
+          <div class="vd-example">② 学分：earn three <em>credits</em> for the course 修这门课得3个学分</div>
+          <div class="vd-example">③ 归功于（本文）：She <em>credits</em> her skills <em>to</em> her grandfather. 她把这些技能归功于祖父。</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('lead the charge')">lead the charge</span>
           <span class="vocab-meaning">引领潮流，带头冲锋</span>
           <span class="vocab-tag tag-exam">考纲内</span>
         </div>
         <div class="vocab-extra">It is women now <em>leading the charge</em> in DIY. 现在是女性在引领DIY的潮流。<br>charge 的核心考义：in charge of 负责 · free of charge 免费 · charge your phone 充电</div>
+      </div>
+      <!-- ── 拓展 ── -->
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('accompany')">accompany</span>
+          <span class="vocab-meaning">陪伴，陪同</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">She <em>accompanied</em> her grandfather to work every holiday. 每逢假期她都陪祖父去上班。<br>被动搭配：be <em>accompanied</em> by sb 由某人陪同 &nbsp;·&nbsp; 名词：companion 同伴</div>
       </div>
     </div>
   </div>
@@ -724,6 +700,18 @@ body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2
       <li style="margin-bottom:6px;"><strong>够用就行。</strong>猜出「大概啥意思」就能做对题，不必精确翻译。</li>
       <li style="margin-bottom:0;"><strong>别被吓住。</strong>出题人放生词是故意的——遇到说明你进了拉分区，稳住就是赚到。</li>
     </ol>
+  </div>
+</div>
+
+
+<!-- ══════ 作文拓展 ══════ -->
+<div class="panel" id="writingPanel">
+  <div class="panel-header" onclick="togglePanel('writingPanel')">
+    作文拓展：好句式 &amp; 连接词速查
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body" style="font-size:15px; line-height:1.8;">
+    <!-- 内容待补充 -->
   </div>
 </div>
 
@@ -1013,6 +1001,29 @@ function speakWord(word) {
     speechSynthesis.speak(utter);
   };
   enPlayer.play();
+}
+
+function highlightWord(phrase) {
+  const tips = document.querySelectorAll('.tip');
+  const matches = [];
+  const lc = phrase.toLowerCase();
+  tips.forEach(el => {
+    const tipPhrase = (el.dataset.tip || '').split('|')[0].toLowerCase();
+    if (tipPhrase === lc) matches.push(el);
+  });
+  if (!matches.length) return;
+  matches.forEach(el => {
+    el.classList.remove('tip-flash');
+    void el.offsetWidth;
+    el.classList.add('tip-flash');
+    setTimeout(() => el.classList.remove('tip-flash'), 1700);
+  });
+  matches[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function vocabClick(phrase) {
+  speakWord(phrase);
+  highlightWord(phrase);
 }
 
 function toggleAnalysis(idx) {

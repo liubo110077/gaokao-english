@@ -37,9 +37,24 @@ STOP = {
     'has','have','had','was','were','am','are','been','being','get','got',
 }
 
+# Manual overrides for phrases whose constituent words are all common, but the phrase
+# itself is a collocation/idiom that the word-by-word logic would mis-classify.
+# Keys are lowercase phrase strings (matching data-tip first segment, lowercased).
+# Values: '' = 核心, '*' = 选必, '**' = 拓展, None = 超纲
+PHRASE_OVERRIDES = {
+    # Idioms: words may be common but the idiomatic meaning is 超纲
+    "making waves":  None,
+    "bottomless well": None,
+}
+
+
 def phrase_level(phrase):
     """Return raw level code: '', '*', '**', or None (超纲)."""
     p = phrase.lower().strip()
+
+    # 0. Manual override takes top priority
+    if p in PHRASE_OVERRIDES:
+        return PHRASE_OVERRIDES[p]
 
     # 1. Exact phrase match (handles multi-word phrases like "according to")
     if p in EXPANDED:
