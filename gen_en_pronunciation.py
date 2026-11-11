@@ -8,7 +8,7 @@ Usage:
 """
 import asyncio, hashlib, html, json, os, re, struct, subprocess, sys, uuid
 
-API_KEY     = "cf0333ca-cb6d-45d0-a197-40ef11fd561a"
+from volc_config import API_KEY  # read from env VOLC_API_KEY or .env (not committed)
 RESOURCE_ID = "seed-tts-2.0"
 SPEAKER     = "zh_male_shaonianzixin_uranus_bigtts"
 SAMPLE_RATE = 24000

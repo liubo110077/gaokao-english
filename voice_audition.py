@@ -1,7 +1,7 @@
 """Audition 少年梓辛 and related Volcano seed-tts-2.0 voices."""
 import asyncio, json, os, struct, subprocess, uuid
 
-API_KEY     = "cf0333ca-cb6d-45d0-a197-40ef11fd561a"
+from volc_config import API_KEY  # read from env VOLC_API_KEY or .env (not committed)
 RESOURCE_ID = "seed-tts-2.0"
 SAMPLE_RATE = 24000
 URL         = "wss://openspeech.bytedance.com/api/v3/tts/bidirection"
