@@ -49,6 +49,13 @@ for a in sys.argv:
     if a.startswith("--only="):
         only = set(a[7:].split(","))
         items = {k: v for k, v in items.items() if k in only}
+# Local Longman British clips take priority: never synthesize words the dictionary already covers.
+_ls = os.path.join(REPO, "tools", "longman_slugs.json")
+if os.path.exists(_ls):
+    _covered = set(json.load(open(_ls, encoding="utf-8")).get(SUB, []))
+    _drop = [k for k in items if k.startswith("en-word-") and k[len("en-word-"):] in _covered]
+    for k in _drop: del items[k]
+    if _drop: print("skip (local dictionary audio):", len(_drop))
 cpath = os.path.join(OUT, ".tts_cache.json")
 cache = json.load(open(cpath)) if os.path.exists(cpath) else {}
 def job(k):

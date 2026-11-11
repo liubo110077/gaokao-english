@@ -40,6 +40,7 @@ for (d,sl),(w,k) in sorted(plan.items()):
     if k not in got: continue
     open(f"{R}audio/{d}/en-word-{sl}.mp3","wb").write(got[k]); log.setdefault(d,[]).append(w)
 json.dump(log,open(R+"tools/longman_replaced.json","w"),ensure_ascii=False,indent=1)
+json.dump({d:sorted({slug(w) for w in ws}) for d,ws in log.items()},open(R+"tools/longman_slugs.json","w"),ensure_ascii=False,indent=1)  # gen_audio.py skips these slugs
 for d,ws in log.items(): print(d,len(ws),"个")
 miss=[(w,k) for (d,sl),(w,k) in plan.items() if k not in got]
 print("没取到:",miss[:10])

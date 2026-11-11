@@ -14,6 +14,7 @@ metadata:
 - Never hardcode the API key. Scripts read `VOLC_API_KEY` via `volc_config.py` (env or a gitignored `.env`); the local helper reads `~/.volc_tts.env`. The repo is PUBLIC; a key was leaked once in old commits and must be rotated, not just deleted.
 
 **Real-voice British clips for single words (decision: user chose British, accepted that the repo is public)**
+- Priority rule: dictionary clip first, covered words are never synthesized (`gen_audio.py` skips slugs in `tools/longman_slugs.json`; see [[feedback_pronunciation_local_dictionary_first]]).
 - Source: local Longman LDOCE5++ MDict in the user's EuDic folder. `tools/extract_longman_bre.py` copies the British clip into `en-word-<slug>.mp3` only when the word has its OWN dictionary entry (redirects like dining→dine are skipped). `tools/longman_replaced.json` lists what was replaced (≈75 words).
 - Needs a venv with `pip install mdict-utils` (python-lzo is not needed/does not build). MDD has no `get()`; iterate `items()`.
 - Phrases (≈100 items such as manage to, put up) are not in the dictionary → they stay Volcano TTS.
