@@ -1,22 +1,25 @@
-"""Generate Chinese TTS audio using Volcano Engine seed-tts-2.0.
+"""Generate TTS audio using Volcano Engine seed-tts-2.0.
 
-Generates two types:
-  1. Tooltip phrase explanations  → audio/<passage>/<slug>.mp3
-  2. Sentence analysis sections   → audio/<passage>/analysis-<n>.mp3
+Generates three types:
+  1. Tooltip phrase explanations (Chinese) → audio/<passage>/<slug>.mp3
+  2. Sentence analysis sections  (Chinese) → audio/<passage>/analysis-<n>.mp3
+  3. English word/phrase pronunciation     → audio/<passage>/en-word-<slug>.mp3
 
 Usage:
     python volc_tts_gen.py                      # B篇 (default)
     python volc_tts_gen.py --passage A          # A篇
-    python volc_tts_gen.py --passage C          # C篇
+    python volc_tts_gen.py --passage D          # D篇
     python volc_tts_gen.py --force              # overwrite existing
     python volc_tts_gen.py --test               # one item only
     python volc_tts_gen.py --list               # list without generating
     python volc_tts_gen.py --tips-only
     python volc_tts_gen.py --analysis-only
+    python volc_tts_gen.py --en-words-only      # 只生成英文单词发音
+    python volc_tts_gen.py --en-words           # 同时生成英文发音（和中文一起）
 """
 import asyncio, hashlib, html, json, os, re, struct, subprocess, sys, uuid
 
-from volc_config import API_KEY, RESOURCE_ID, SPEAKER
+from volc_config import API_KEY, RESOURCE_ID, SPEAKER, EN_SPEAKER
 SAMPLE_RATE = 24000
 URL         = "wss://openspeech.bytedance.com/api/v3/tts/bidirection"
 
@@ -26,6 +29,7 @@ PASSAGE_MAP = {
     "A": ("2023-甲卷-A-Bangkok.html",  "audio/2023-甲卷-A"),
     "B": ("2023-甲卷-B-DIY.html",      "audio/2023-甲卷-B"),
     "C": ("2023-甲卷-C-Socrates.html", "audio/2023-甲卷-C"),
+    "D": ("北京卷-D-Friends.html",     "audio/北京卷-D"),
 }
 
 def _resolve_passage():
@@ -134,6 +138,20 @@ async def synthesize(text):
     return b"".join(pcm_chunks)
 
 
+def extract_en_words(html_text):
+    """Extract English tooltip phrases for pronunciation audio (en-word-*.mp3)."""
+    items = []
+    seen = set()
+    for m in re.finditer(r'data-tip="([^"]*)"', html_text):
+        raw = html.unescape(m.group(1))
+        phrase = raw.split("|")[0].strip()
+        if phrase and phrase not in seen:
+            seen.add(phrase)
+            slug = 'en-word-' + re.sub(r'[^a-zA-Z0-9]+', '-', phrase.lower()).strip('-')
+            items.append({"slug": slug, "text": phrase, "label": phrase})
+    return items
+
+
 def extract_tips(html_text):
     items = []
     for m in re.finditer(r'data-tip="([^"]*)"', html_text):
@@ -180,7 +198,48 @@ def _save_cache(cache):
         json.dump(cache, f, ensure_ascii=False, indent=2)
 
 
-async def generate_one(item, force=False, cache=None):
+async def synthesize_with_speaker(text, speaker):
+    """Like synthesize() but with a custom speaker."""
+    from websockets.legacy.client import connect
+
+    session_id = str(uuid.uuid4())
+    headers = {
+        "X-Api-Key": API_KEY,
+        "X-Api-Resource-Id": RESOURCE_ID,
+        "X-Api-Connect-Id": str(uuid.uuid4()),
+    }
+    ws = await connect(URL, extra_headers=headers, max_size=10*1024*1024,
+                       max_queue=16, open_timeout=10, close_timeout=5)
+    try:
+        await ws.send(frame(E_START_CONN))
+        parse_frame(await ws.recv())
+
+        start_payload = json.dumps({"req_params": {
+            "speaker": speaker,
+            "audio_params": {"format": "pcm", "sample_rate": SAMPLE_RATE},
+        }}).encode()
+        await ws.send(frame(E_START_SESSION, start_payload, session_id))
+        parse_frame(await ws.recv())
+
+        text_payload = json.dumps({"req_params": {"text": text}}).encode()
+        await ws.send(frame(E_TASK_REQUEST, text_payload, session_id))
+        await ws.send(frame(E_FINISH_SESSION, session_id=session_id))
+
+        pcm_chunks = []
+        while True:
+            msg_type, event, payload = parse_frame(await ws.recv())
+            if msg_type == 0xB and event == E_TTS_RESPONSE:
+                pcm_chunks.append(payload)
+            elif event == E_SESSION_FINISHED:
+                break
+        await ws.send(frame(E_FINISH_CONN))
+        parse_frame(await ws.recv())
+    finally:
+        await ws.close()
+    return b"".join(pcm_chunks)
+
+
+async def generate_one(item, force=False, cache=None, speaker=None):
     path = os.path.join(AUDIO_DIR, f"{item['slug']}.mp3")
     current_hash = _text_hash(item["text"])
     cached_hash = cache.get(item["slug"]) if cache is not None else None
@@ -192,7 +251,8 @@ async def generate_one(item, force=False, cache=None):
         print(f"  update: {item['slug']} (text changed)")
 
     try:
-        pcm = await synthesize(item["text"])
+        spk = speaker or SPEAKER
+        pcm = await synthesize_with_speaker(item["text"], spk)
         pcm_to_mp3(pcm, SAMPLE_RATE, path)
         if cache is not None:
             cache[item["slug"]] = current_hash
@@ -207,35 +267,54 @@ async def main():
     list_mode     = "--list" in sys.argv
     tips_only     = "--tips-only" in sys.argv
     analysis_only = "--analysis-only" in sys.argv
+    en_words_mode = "--en-words" in sys.argv
+    en_words_only = "--en-words-only" in sys.argv
 
     with open(HTML_FILE, "r", encoding="utf-8") as f:
         html_text = f.read()
 
-    tips     = [] if analysis_only else extract_tips(html_text)
-    analyses = [] if tips_only     else extract_analyses(html_text)
-    all_items = tips + analyses
+    if en_words_only:
+        zh_items = []
+    else:
+        tips     = [] if analysis_only else extract_tips(html_text)
+        analyses = [] if tips_only     else extract_analyses(html_text)
+        zh_items = tips + analyses
+
+    en_items = extract_en_words(html_text) if (en_words_mode or en_words_only) else []
 
     if list_mode:
-        print("── Tooltip phrases ──")
-        for t in tips:
-            print(f"  [{t['slug']}]  {t['text'][:70]}...")
-        print("\n── Sentence analyses ──")
-        for a in analyses:
-            print(f"  [{a['slug']}]  {a['text'][:70]}...")
-        print(f"\nTotal: {len(tips)} tips + {len(analyses)} analyses")
+        if zh_items:
+            tips_list = [] if analysis_only else extract_tips(html_text)
+            an_list   = [] if tips_only     else extract_analyses(html_text)
+            print("── Tooltip phrases ──")
+            for t in tips_list:
+                print(f"  [{t['slug']}]  {t['text'][:70]}...")
+            print("\n── Sentence analyses ──")
+            for a in an_list:
+                print(f"  [{a['slug']}]  {a['text'][:70]}...")
+        if en_items:
+            print("\n── English words ──")
+            for e in en_items:
+                print(f"  [{e['slug']}]  {e['text']}")
+        print(f"\nTotal: {len(zh_items)} ZH + {len(en_items)} EN")
         return
 
     os.makedirs(AUDIO_DIR, exist_ok=True)
     cache = _load_cache()
 
+    all_count = len(zh_items) + len(en_items)
     if test_mode:
-        all_items = all_items[:1]
-        print("Test mode: 1 item")
+        zh_items = zh_items[:1] if zh_items else []
+        en_items = en_items[:1] if en_items else []
+        print("Test mode: up to 1 item per type")
     else:
-        print(f"Generating {len(all_items)} items → {AUDIO_DIR}")
+        print(f"Generating {all_count} items → {AUDIO_DIR}")
 
-    for item in all_items:
-        await generate_one(item, force=force, cache=cache)
+    for item in zh_items:
+        await generate_one(item, force=force, cache=cache, speaker=SPEAKER)
+
+    for item in en_items:
+        await generate_one(item, force=force, cache=cache, speaker=EN_SPEAKER)
 
     _save_cache(cache)
     print("Done!")

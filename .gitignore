@@ -1,6 +1,3 @@
-# Python scripts (contain API keys)
-*.py
-!volc_tts_gen.py
 __pycache__/
 
 # Local files not for web
