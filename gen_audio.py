@@ -30,7 +30,7 @@ def tts(text):
 items = {}  # filename -> text
 sents = json.loads(re.search(r"const sentences = (\[.*?\]);", src, re.S).group(1))
 for i, s in enumerate(sents): items[f"en-s{i:02d}"] = s
-words = set(re.findall(r"speakWord\('([^'$]+)'\)", src))
+words = set(re.findall(r"(?:speakWord|vocabClick)\('([^'$]+)'\)", src))
 tips = []
 for m in re.finditer(r'data-tip="([^"]*)"', src):
     parts = html.unescape(m.group(1)).split("|")
