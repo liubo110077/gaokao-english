@@ -270,6 +270,10 @@ body.mode-annotate .para-ann {
 }
 .pan-en  { font-family: Georgia, serif; font-weight: 700; font-size: 18px; color: #1a1a1a; }
 .pan-cn  { color: var(--accent); font-weight: 600; font-size: 15px; }
+.pan-lv { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 4px; line-height: 1.4; }
+.lv-超纲 { background: #fee2e2; color: #b91c1c; }
+.lv-拓展 { background: #ffedd5; color: #c2410c; }
+.lv-选必 { background: #dbeafe; color: #1e40af; }
 .pan-det { margin: 12px 0 0 32px; color: #666; font-size: 14px; line-height: 1.85; }
 .pan-det div { position: relative; padding-left: 12px; }
 .pan-det div + div { margin-top: 8px; }
@@ -1158,7 +1162,7 @@ function initAnnotations() {
       const contentParts = parts[1].split('｜');
       const cn = contentParts[0].trim();
       const det = contentParts.slice(1).map(s => s.replace(/<[^>]+>/g, '').trim()).filter(Boolean);
-      items.push({ num: idx, phrase, cn, det });
+      items.push({ num: idx, phrase, cn, det, level: el.dataset.level || '' });
       idx++;
     });
 
@@ -1172,6 +1176,7 @@ function initAnnotations() {
           <span class="pan-num">${i.num}</span>
           <span class="pan-en">${i.phrase}</span>
           <span class="pan-cn">${i.cn}</span>
+          ${i.level ? `<span class="pan-lv lv-${i.level}">${i.level}</span>` : ''}
         </div>
         ${i.det.length ? `<div class="pan-det">${i.det.map(d => `<div>${d}</div>`).join('')}</div>` : ''}
       </div>`
