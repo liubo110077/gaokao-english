@@ -86,6 +86,8 @@
 
 根目录：`/Users/liubo/Doubao/chats/2026-11-12/new-chat-1/高考英语真题/`（豆包整理，非官方转录）
 
+**在别的电脑上**：整个文件夹已推到**私有仓库** `liubo110077/gaokao-english-materials`，用 `gh repo clone liubo110077/gaokao-english-materials` 拉下来。下表路径相对于其中的 `高考英语真题/`。没放进本仓库是因为本仓库是公开的（GitHub Pages），试卷有版权，资料自带的说明写着"勿二次分发"。
+
 | 要找的 | 位置 |
 |---|---|
 | 北京卷原卷 2021–2025 | `01_北京卷（优先）/*.docx` |
