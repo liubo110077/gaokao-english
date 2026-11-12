@@ -100,6 +100,25 @@ details.es[open] > summary::before{content:'▾ '}
   body{background:#fff}.header-right,.back{display:none}
   .ch{box-shadow:none;break-inside:avoid-page}.sent input{display:none}
 }
+
+/* ── Larger type + wider column for iPad / desktop (>=700px) ── */
+@media (min-width:700px){
+  .wrapper{max-width:min(1100px,97vw);padding-left:max(0px,env(safe-area-inset-left));padding-right:max(0px,env(safe-area-inset-right))}
+  header h1{font-size:26px}.subtitle{font-size:16px}.back{font-size:16px}.badge{font-size:15px}
+  .ch{padding-left:36px;padding-right:36px}
+  .ch-no{font-size:14px}.ch h2{font-size:24px}.ch p{font-size:19px;line-height:1.8}
+  .say{font-size:20px}.key{font-size:19px}.muted{font-size:16px}
+  ul.plain li,ul.dot li{font-size:19px}
+  .blk{font-size:19px}.chip{font-size:14px}
+  details.more > summary{font-size:17px}details.more .inner{font-size:17px}
+  table{font-size:17px}th{font-size:14px}.from{font-size:14px}
+  .group-title{font-size:15px}
+  .sent .en{font-size:19px}.sent .zh{font-size:15px}
+  details.es > summary{font-size:18px}
+  .essay .task{font-size:15px}.essay .ver{font-size:15px}
+  .essay .txt,.essay .txt p{font-size:19px;line-height:1.9}
+  .essay .note{font-size:15px}
+}
 </style>
 </head>
 <body>
