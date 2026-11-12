@@ -152,6 +152,24 @@ header { display: flex; align-items: center; justify-content: space-between; mar
   <div class="cards" id="cards">
     <!-- filled by JS -->
   </div>
+
+  <h2 style="font-size:17px;margin:32px 0 14px">✍️ 写作</h2>
+  <div class="cards">
+    <div class="card">
+      <div class="card-top">
+        <div class="card-tags">
+          <span class="tag tag-d">作文</span>
+          <span class="tag tag-q">20分</span>
+        </div>
+        <div class="card-title">北京卷作文 · 一页搞定</div>
+        <div class="card-desc">五年真题规律 + 三段骨架 + 15 个万能句 + 五篇范文，背一套用到高考</div>
+        <div class="card-status"><span class="dot" id="wDot"></span><span id="wStatus">尚未开始</span></div>
+      </div>
+      <div class="card-foot">
+        <a class="card-btn card-btn-primary" href="北京卷-作文规律.html">开始</a>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -349,6 +367,16 @@ document.getElementById('themeBtn').addEventListener('click', () => {
 });
 
 render();
+
+// Writing page progress (sentences ticked on 北京卷-作文规律.html)
+(() => {
+  let n = 0;
+  for (let i = 0; i < 15; i++) if (localStorage.getItem('writing_tpl_' + i) === '1') n++;
+  if (n > 0) {
+    document.getElementById('wStatus').textContent = n === 15 ? '15 句全部背会 ✓' : `已背会 ${n}/15 句`;
+    document.getElementById('wDot').classList.add('started');
+  }
+})();
 </script>
 </body>
 </html>
