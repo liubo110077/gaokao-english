@@ -6,3 +6,6 @@ __pycache__/
 *.png
 .DS_Store
 voice-test-*.mp3
+
+# Exam papers: copyrighted, never publish (public repo)
+高考真题/

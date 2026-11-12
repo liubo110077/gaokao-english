@@ -2,26 +2,26 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>北京卷作文 · 慢慢聊</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>北京卷作文 · 拿到题目照着写</title>
 <style>
 :root {
   --bg:#f8f7f4; --surface:#fff; --border:#e5e3de; --text:#1a1917; --muted:#6b6865;
   --accent:#2563eb; --accent-l:#eff6ff; --green:#16a34a; --green-l:#dcfce7;
-  --orange:#d97706; --orange-l:#fef3c7; --red:#dc2626;
-  --purple:#7e22ce; --purple-l:#fdf4ff;
+  --orange:#d97706; --orange-l:#fef3c7; --red:#dc2626; --red-l:#fee2e2;
+  --purple:#7e22ce; --purple-l:#fdf4ff; --gray-l:#f1f0ed;
   --radius:10px; --shadow:0 1px 4px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.06);
 }
 [data-theme=dark] {
   --bg:#18181b; --surface:#27272a; --border:#3f3f46; --text:#fafafa; --muted:#a1a1aa;
   --accent:#60a5fa; --accent-l:#1e3a5f; --green:#4ade80; --green-l:#052e16;
-  --orange:#fbbf24; --orange-l:#451a03; --red:#f87171;
-  --purple:#d8b4fe; --purple-l:#2e1a40;
+  --orange:#fbbf24; --orange-l:#451a03; --red:#f87171; --red-l:#450a0a;
+  --purple:#d8b4fe; --purple-l:#2e1a40; --gray-l:#2f2f33;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;line-height:1.85}
-.wrapper{max-width:min(720px,92vw);margin:0 auto;padding:32px 0 80px}
-header{display:flex;align-items:center;justify-content:space-between;margin:8px 0 28px;gap:12px}
+.wrapper{max-width:min(760px,94vw);margin:0 auto;padding:28px 0 80px}
+header{display:flex;align-items:center;justify-content:space-between;margin:8px 0 24px;gap:12px}
 header h1{font-size:22px;font-weight:700}
 .subtitle{font-size:13px;color:var(--muted)}
 .header-right{display:flex;align-items:center;gap:10px}
@@ -29,95 +29,105 @@ header h1{font-size:22px;font-weight:700}
 .badge{font-size:13px;font-weight:600;padding:4px 12px;border-radius:20px;background:var(--accent-l);color:var(--accent);white-space:nowrap}
 .theme-btn{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);color:var(--text);font-size:16px;cursor:pointer}
 
-.ch{background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:26px 28px;margin-bottom:22px}
+.ch{background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:24px 26px;margin-bottom:20px}
 .ch-no{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:1px}
-.ch h2{font-size:19px;font-weight:700;margin:2px 0 14px}
-.ch p{font-size:16px;margin:10px 0}
-.ch b{font-weight:700}
+.ch h2{font-size:19px;font-weight:700;margin:2px 0 12px}
+.ch h3{font-size:16px;font-weight:700;margin:18px 0 6px}
+.ch p{font-size:16px;margin:8px 0}
 .en{font-family:Georgia,'Times New Roman',serif}
-.say{font-family:Georgia,'Times New Roman',serif;font-size:17px;background:var(--bg);border-radius:8px;padding:12px 16px;margin:12px 0;line-height:1.9}
 .key{background:var(--green-l);border-radius:8px;padding:12px 16px;margin:14px 0;font-size:16px}
+.warn{background:var(--orange-l);border-radius:8px;padding:10px 14px;margin:12px 0;font-size:15px}
 .muted{color:var(--muted);font-size:14px}
-.slot{color:var(--accent);border-bottom:2px solid var(--accent)}
+.slot{color:var(--accent);font-weight:600}
 .hl{background:var(--orange-l);border-radius:3px;padding:0 2px}
-
-ul.plain{list-style:none;margin:10px 0}
-ul.plain li{font-size:16px;padding:3px 0}
-ul.dot{padding-left:22px;margin:8px 0}
-ul.dot li{font-size:16px;margin:4px 0}
-
-/* 拆解 */
-.blocks{margin:14px 0;display:grid;gap:6px}
-.blk{display:flex;gap:12px;align-items:baseline;font-family:Georgia,serif;font-size:16px}
-.chip{font-family:-apple-system,system-ui,sans-serif;font-size:12px;font-weight:700;padding:1px 8px;border-radius:6px;min-width:58px;text-align:center;flex-shrink:0}
-.chip.a{background:var(--accent-l);color:var(--accent)}
-.chip.s{background:var(--orange-l);color:var(--orange)}
-.chip.r{background:var(--green-l);color:var(--green)}
-.chip.b{background:var(--purple-l);color:var(--purple)}
-.blk.gap{margin-top:10px}
-
-/* 细看 */
-details.more{margin-top:16px;border-top:1px dashed var(--border);padding-top:10px}
-details.more > summary{cursor:pointer;font-size:14px;color:var(--accent);list-style:none}
-details.more > summary::-webkit-details-marker{display:none}
-details.more > summary::before{content:'＋ '}
-details.more[open] > summary::before{content:'－ '}
-details.more .inner{margin-top:10px;font-size:14px}
-table{width:100%;border-collapse:collapse;font-size:14px;margin:8px 0}
+ul.dot{padding-left:22px;margin:6px 0}
+ul.dot li{font-size:16px;margin:3px 0}
+table{width:100%;border-collapse:collapse;font-size:15px;margin:8px 0}
 th,td{border-bottom:1px solid var(--border);padding:7px 6px;text-align:left;vertical-align:top}
-th{color:var(--muted);font-weight:600;font-size:12px}
-tr.target td{background:var(--green-l)}
-.from{color:var(--muted);font-size:12px;white-space:nowrap}
+th{color:var(--muted);font-weight:600;font-size:13px}
+
+/* 骨架图 */
+.skel{border:2px solid var(--border);border-radius:10px;padding:14px 16px;margin:12px 0;font-size:16px}
+.skel .given{font-family:Georgia,serif;color:var(--muted)}
+.skel .row{display:flex;gap:12px;align-items:baseline;padding:7px 0;border-top:1px dashed var(--border)}
+.skel .row:first-of-type{border-top:none}
+.skel .num{font-weight:700;min-width:84px}
+.skel .cnt{margin-left:auto;color:var(--muted);font-size:14px;white-space:nowrap}
+.c1{color:var(--accent)} .c2{color:var(--orange)} .c3{color:var(--green)} .c4{color:var(--purple)}
+
+/* 步骤 */
+.step{display:flex;gap:14px;margin:14px 0}
+.step .n{flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:15px;margin-top:2px}
+.step .b{flex:1}
+.step .t{font-weight:700;font-size:16px}
+.step p{margin:4px 0}
 
 /* 句型 */
-.group-title{font-size:13px;font-weight:700;color:var(--muted);margin:16px 0 6px}
-.sent{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:8px;border:1px solid var(--border);margin-bottom:6px;cursor:pointer}
-.sent:hover{background:var(--bg)}
-.sent input{margin-top:7px;width:16px;height:16px;accent-color:var(--green);flex-shrink:0;cursor:pointer}
-.sent .en{font-size:16px}
-.sent .zh{font-size:13px;color:var(--muted)}
-.sent.done{background:var(--green-l);border-color:transparent}
-.sent.done .en{color:var(--green)}
+.pat{border-left:4px solid var(--border);padding:4px 0 4px 12px;margin:8px 0}
+.pat.b1{border-color:var(--accent)} .pat.b2{border-color:var(--orange)} .pat.b3{border-color:var(--green)} .pat.b4{border-color:var(--purple)}
+.pat .e{font-family:Georgia,serif;font-size:17px}
+.pat .z{font-size:14px;color:var(--muted)}
+.pat .ex{font-size:14px;color:var(--muted);font-family:Georgia,serif}
+.role{display:inline-block;font-size:12px;font-weight:700;padding:1px 8px;border-radius:6px;margin-right:6px;vertical-align:2px}
+.r-open{background:var(--accent-l);color:var(--accent)}
+.r-idea{background:var(--orange-l);color:var(--orange)}
+.r-why{background:var(--green-l);color:var(--green)}
+.r-good{background:var(--purple-l);color:var(--purple)}
+.r-end{background:var(--gray-l);color:var(--muted)}
 
-/* 范文 */
+/* 演示 */
 details.es{border:1px solid var(--border);border-radius:8px;margin-bottom:8px}
 details.es > summary{cursor:pointer;padding:10px 14px;font-size:15px;font-weight:600;list-style:none}
 details.es > summary::-webkit-details-marker{display:none}
 details.es > summary::before{content:'▸ ';color:var(--muted)}
 details.es[open] > summary::before{content:'▾ '}
-.essay{padding:0 16px 14px}
-.essay .task{font-size:13px;color:var(--muted);background:var(--bg);padding:8px 12px;border-radius:6px;margin-bottom:8px}
-.essay .ver{font-size:13px;font-weight:700;margin:12px 0 4px}
-.essay .ver span{font-weight:400;color:var(--muted)}
-.essay .txt{font-family:Georgia,serif;font-size:16px;line-height:1.85;border-left:3px solid var(--border);padding-left:12px}
-.essay .txt.ref{border-color:var(--accent)}
-.essay .txt.mine{border-color:var(--green)}
-.essay .txt p{margin:4px 0;font-size:16px}
-.essay .note{font-size:13px;color:var(--red);margin-top:6px}
+.essay{padding:0 14px 14px}
+.essay .task{font-size:14px;color:var(--muted);background:var(--bg);padding:8px 12px;border-radius:6px;margin-bottom:6px}
+.essay .plan{font-size:14px;background:var(--accent-l);padding:8px 12px;border-radius:6px;margin-bottom:8px}
+.essay .line{display:flex;gap:8px;align-items:baseline;padding:3px 0;font-family:Georgia,serif;font-size:16px;line-height:1.7}
+.essay .line .role{font-family:-apple-system,system-ui,sans-serif;flex-shrink:0;min-width:4.6em;text-align:center}
+.essay .gap{height:8px}
+.essay .wc{font-size:13px;color:var(--muted);margin-top:6px}
+.essay .letter{font-family:Georgia,serif;font-size:16px;line-height:1.85;border-left:3px solid var(--green);padding-left:12px;margin-top:8px}
+.essay .letter p{margin:3px 0}
+details.sub{margin-top:6px}
+details.sub > summary{cursor:pointer;font-size:14px;color:var(--accent);list-style:none}
+details.sub > summary::-webkit-details-marker{display:none}
 
-@media (max-width:480px){header{flex-direction:column;align-items:flex-start}.ch{padding:20px 18px}}
+/* 15 句 */
+.group-title{font-size:13px;font-weight:700;color:var(--muted);margin:14px 0 6px}
+.sent{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:8px;border:1px solid var(--border);margin-bottom:6px;cursor:pointer}
+.sent:hover{background:var(--bg)}
+.sent input{margin-top:7px;width:16px;height:16px;accent-color:var(--green);flex-shrink:0;cursor:pointer}
+.sent .se{font-family:Georgia,serif;font-size:16px}
+.sent .sz{font-size:13px;color:var(--muted)}
+.sent.done{background:var(--green-l);border-color:transparent}
+.sent.done .se{color:var(--green)}
+
+.wrong{color:var(--red);text-decoration:line-through}
+.right{color:var(--green);font-weight:600}
+
+@media (max-width:480px){header{flex-direction:column;align-items:flex-start}.ch{padding:18px 16px}.skel .num{min-width:70px}}
 @media print{
   body{background:#fff}.header-right,.back{display:none}
   .ch{box-shadow:none;break-inside:avoid-page}.sent input{display:none}
 }
-
-/* ── Larger type + wider column for iPad / desktop (>=700px) ── */
 @media (min-width:700px){
   .wrapper{max-width:min(1100px,97vw);padding-left:max(0px,env(safe-area-inset-left));padding-right:max(0px,env(safe-area-inset-right))}
   header h1{font-size:26px}.subtitle{font-size:16px}.back{font-size:16px}.badge{font-size:15px}
   .ch{padding-left:36px;padding-right:36px}
-  .ch-no{font-size:14px}.ch h2{font-size:24px}.ch p{font-size:19px;line-height:1.8}
-  .say{font-size:20px}.key{font-size:19px}.muted{font-size:16px}
-  ul.plain li,ul.dot li{font-size:19px}
-  .blk{font-size:19px}.chip{font-size:14px}
-  details.more > summary{font-size:17px}details.more .inner{font-size:17px}
-  table{font-size:17px}th{font-size:14px}.from{font-size:14px}
-  .group-title{font-size:15px}
-  .sent .en{font-size:19px}.sent .zh{font-size:15px}
+  .ch-no{font-size:14px}.ch h2{font-size:24px}.ch h3{font-size:20px}.ch p{font-size:19px;line-height:1.8}
+  .key{font-size:19px}.warn{font-size:18px}.muted{font-size:16px}
+  ul.dot li{font-size:19px} table{font-size:18px} th{font-size:15px}
+  .skel{font-size:19px}.skel .cnt{font-size:16px}
+  .step .t{font-size:19px}.step .n{width:34px;height:34px;font-size:17px}
+  .pat .e{font-size:20px}.pat .z,.pat .ex{font-size:16px}
+  .role{font-size:14px}
   details.es > summary{font-size:18px}
-  .essay .task{font-size:15px}.essay .ver{font-size:15px}
-  .essay .txt,.essay .txt p{font-size:19px;line-height:1.9}
-  .essay .note{font-size:15px}
+  .essay .task,.essay .plan{font-size:16px}
+  .essay .line{font-size:19px}.essay .letter{font-size:19px}
+  .essay .wc{font-size:15px} details.sub > summary{font-size:16px}
+  .group-title{font-size:15px}.sent .se{font-size:19px}.sent .sz{font-size:15px}
 }
 </style>
 </head>
@@ -126,8 +136,8 @@ details.es[open] > summary::before{content:'▾ '}
   <a class="back" href="index.html">← 回到首页</a>
   <header>
     <div>
-      <h1>✍️ 北京卷作文，慢慢聊</h1>
-      <div class="subtitle">花 15 分钟读完，你会发现作文没那么可怕</div>
+      <h1>✍️ 北京卷作文：拿到题目，照着写</h1>
+      <div class="subtitle">先搭架子，再放句子，最后换词</div>
     </div>
     <div class="header-right">
       <span class="badge" id="badge">已背会 0/15 句</span>
@@ -137,319 +147,331 @@ details.es[open] > summary::before{content:'▾ '}
 
   <!-- 1 -->
   <div class="ch">
-    <div class="ch-no">第 1 节</div>
-    <h2>先说个好消息：出题人其实很"懒"</h2>
-    <p>作文 20 分，很多人一看到就头大，觉得要"自由发挥"，脑子里空空的。</p>
-    <p>可你把北京卷最近五年的作文题摆在一起看看：</p>
-    <ul class="plain">
-      <li>2025　Jim 要参加联合国的活动，问你写点什么</li>
-      <li>2024　Jim 要给校报写中国的发展，问你写点什么</li>
-      <li>2023　Jim 要办一个"绿色北京"活动，问你怎么办</li>
-      <li>2022　你请 Jim 给你们班讲讲英语写作</li>
-      <li>2021　你和 Jim 约好周末出去，结果去不了了</li>
-    </ul>
-    <p>发现了吗？<b>每年都是你（李华）给外国朋友 Jim 写一封邮件</b>，连名字都没换过。</p>
-    <p>而且每次题目只让你说<b>两件事</b>，大多数时候就是"<b>出个主意，再说说为什么</b>"。字数大概 100 个，也就八九句话。</p>
-    <div class="key">所以作文不是自由发挥，它更像<b>填空</b>：信的样子是固定的，你只要往里面放内容。</div>
+    <div class="ch-no">第 1 步 · 先认识它</div>
+    <h2>北京卷作文每年都一个样</h2>
+    <p>第 44 题，20 分。每年都是<b>"红星中学的李华，给外国朋友 Jim 写一封邮件"</b>，100 词左右。开头 <i class="en">Dear Jim,</i> 和结尾 <i class="en">Yours, Li Hua</i> 题目已经给你了。</p>
+    <p>题目里永远有<b>两个要点</b>，就是"内容包括 1. ……  2. ……"那两行：</p>
+    <table>
+      <tr><th>年份</th><th>Jim 的事</th><th>要点 1</th><th>要点 2</th></tr>
+      <tr><td>2025</td><td>参加联合国青少年倡议活动，问你写什么</td><td>建议</td><td>理由</td></tr>
+      <tr><td>2024</td><td>给校报写新中国 75 年的发展，问你写什么</td><td>建议内容</td><td>理由</td></tr>
+      <tr><td>2023</td><td>办"绿色北京"社团活动，问你的建议</td><td>活动形式</td><td>活动内容</td></tr>
+      <tr><td>2022</td><td>你邀请 Jim 给你们班做线上英语写作交流</td><td>交流内容及原因</td><td>时间和其他事项</td></tr>
+      <tr><td>2021</td><td>你们约好周末出去，你去不了了</td><td>道歉 + 原因</td><td>建议 + 理由</td></tr>
+      <tr><td class="muted">2025 海淀一模</td><td>Jim 做"信息时代怎么阅读"的访谈</td><td>信息时代对阅读的影响</td><td>你的阅读方式和理由</td></tr>
+      <tr><td class="muted">2025 东城一模</td><td>参加"我眼中的孔子"作品征集，问你的建议</td><td>建议</td><td>理由</td></tr>
+    </table>
+    <div class="key">所以你真正要写的，只是<b>中间八九句话</b>，而且要说的事，题目已经告诉你了。</div>
+    <p class="muted">北京卷的详细评分细则不公开。能确定的是：两个要点都写到、句子基本正确、用连接词把句子串起来，就是中上水平的作文（全国卷公开的评分参考里，第四档就是这样描述的）。</p>
   </div>
 
   <!-- 2 -->
   <div class="ch">
-    <div class="ch-no">第 2 节</div>
-    <h2>阅卷老师到底在看什么？</h2>
-    <p>阅卷老师一天要看几百篇，一篇也就看一两分钟。他心里其实就问三个问题：</p>
-    <ul class="dot">
-      <li><b>那两件事写了没有？</b>这是最重要的。漏掉一件，写得再漂亮也上不去</li>
-      <li><b>错得多不多？</b>有点小错没关系，别错到让人看不懂</li>
-      <li><b>句子连不连得上？</b>有没有"首先、另外、因为"这样的词把句子串起来</li>
-    </ul>
-    <p>你看，里面没有一条是"要用高级词"。评分标准里写得很清楚，中上的档次只要求：</p>
-    <div class="say" style="font-family:inherit;font-size:15px">覆盖所有主要内容……语法结构和词汇<b>基本准确</b>……应用<b>简单的</b>语句间连接成分，使全文结构紧凑。</div>
-    <div class="key">所以你的目标很简单：<b>两件事都写到，用简单的句子写对，用几个连接词串起来。</b>这些靠背就能做到。</div>
-    <details class="more">
-      <summary>细看：官方五档评分标准（家长可以看看）</summary>
-      <div class="inner">
-        <p class="muted">来源：《2026 年高考英语评分参考》全国卷应用文部分（转录版，15 分制）。北京卷 20 分的细则没有公开过，但考查方向一致。</p>
-        <table>
-          <tr><th>档次</th><th>内容</th><th>语言和连贯</th></tr>
-          <tr><td>第五档 13–15</td><td>覆盖所有要点</td><td>结构词汇较丰富，有错也是因为用了复杂结构；连接有效</td></tr>
-          <tr class="target"><td>第四档 10–12 🎯</td><td>覆盖所有主要内容</td><td>基本准确；用简单连接成分</td></tr>
-          <tr><td>第三档 7–9</td><td>漏一些，但主要内容在</td><td>有错但不影响理解</td></tr>
-          <tr><td>第二档 4–6</td><td>漏了主要内容</td><td>错误影响理解，缺少连接</td></tr>
-          <tr><td>第一档 1–3</td><td>明显没看懂题</td><td>错误多，不连贯</td></tr>
-        </table>
-        <p class="muted">另外：少于 60 词减 2 分；字迹差到影响阅读，降一档。北京教育考试院 2023 年评析还提到，作文要"明确交际目的、交际场合、参与人的身份"，说白了就是：记住你是在给朋友写信。</p>
-      </div>
-    </details>
+    <div class="ch-no">第 2 步 · 搭架子</div>
+    <h2>骨架：四块，九句左右</h2>
+    <p>不管题目是什么，中间都分成这四块，每块写什么是固定的：</p>
+    <div class="skel">
+      <div class="given">Dear Jim,　<span class="muted">（题目给了）</span></div>
+      <div class="row"><span class="num c1">① 开头</span><span>回应 Jim，说明你为什么写信</span><span class="cnt">1–2 句</span></div>
+      <div class="row"><span class="num c2">② 要点一</span><span>说出来 → 为什么 → 好处或例子</span><span class="cnt">3 句</span></div>
+      <div class="row"><span class="num c3">③ 要点二</span><span>说出来 → 为什么 → 好处或例子</span><span class="cnt">3 句</span></div>
+      <div class="row"><span class="num c4">④ 结尾</span><span>说句客气话</span><span class="cnt">1–2 句</span></div>
+      <div class="given" style="margin-top:6px">Yours,<br>Li Hua　<span class="muted">（题目给了）</span></div>
+    </div>
+    <p>算一下：一句话大约 11 个词，九句就是 100 词左右，<b>每个要点写满 3 句，字数自然就够了</b>，不用硬凑。</p>
+    <p>写的时候，四块各自<b>另起一段</b>，阅卷老师一眼就能看出你有结构、两个要点都写了。</p>
+    <div class="key">2025 年北京卷的参考答案，几乎就是这个样子：开头 2 句，两个建议各 3 句，结尾 2 句。</div>
   </div>
 
   <!-- 3 -->
   <div class="ch">
-    <div class="ch-no">第 3 节</div>
-    <h2>我们来拆一篇标准答案</h2>
-    <p>光说不练没意思。下面是 2025 年北京卷答案卷里的参考范文，我们一句一句看它在干嘛：</p>
-    <div class="blocks">
-      <div class="blk"><span class="chip a">回应</span><span>I'm glad to hear that you want to take part in the UN's initiative for global teenagers.</span></div>
-      <div class="blk"><span class="chip a">过渡</span><span>Here's my advice.</span></div>
-      <div class="blk gap"><span class="chip s">主意 1</span><span>I suggest focusing on environmental protection.</span></div>
-      <div class="blk"><span class="chip r">为什么</span><span>As we know, the environment is facing serious problems, which affect everyone's life.</span></div>
-      <div class="blk"><span class="chip r">好处</span><span>If we can raise awareness about it …, it will make a big difference.</span></div>
-      <div class="blk gap"><span class="chip s">主意 2</span><span>Another idea is to promote cultural exchange.</span></div>
-      <div class="blk"><span class="chip r">为什么</span><span>We live in a world where different cultures coexist.</span></div>
-      <div class="blk"><span class="chip r">好处</span><span>By sharing our cultures …, we can build a more harmonious global community.</span></div>
-      <div class="blk gap"><span class="chip b">收尾</span><span>I hope these suggestions help!</span></div>
-    </div>
-    <p>是不是挺清楚的？开头两句打个招呼，结尾一句客气话。中间是两个主意，<b>每个主意后面都跟着"为什么"和"有什么好处"</b>。</p>
-    <div class="key">记住这个样子：<b>打招呼 → 主意 + 为什么 → 主意 + 为什么 → 客气话。</b>你以后每篇都这么搭。</div>
+    <div class="ch-no">第 3 步 · 拿到题目怎么想</div>
+    <h2>照这 5 步走，别急着动笔</h2>
+
+    <div class="step"><div class="n">1</div><div class="b">
+      <div class="t">圈出两个要点，决定中间两块写什么</div>
+      <p>找到题目里"内容包括"那两行。分两种情况：</p>
+      <ul class="dot">
+        <li><b>两个要点是两件事</b>（比如 2023 年"形式"和"内容"，2021 年"道歉"和"建议"）：第 ② 块写要点 1，第 ③ 块写要点 2。</li>
+        <li><b>两个要点是"建议 + 理由"</b>（2024、2025、东城一模）：写<b>两个建议</b>，每个建议后面<b>马上跟理由</b>。这样两个要点都写到了。</li>
+      </ul>
+    </div></div>
+
+    <div class="step"><div class="n">2</div><div class="b">
+      <div class="t">看是谁先写的信，决定开头</div>
+      <ul class="dot">
+        <li><b>Jim 来信问你</b>（大多数年份）：用"回信"的开头，<i class="en">I'm glad to hear that …</i></li>
+        <li><b>你主动写信</b>（邀请、道歉）：直接说目的，<i class="en">I'm writing to invite you to …</i> / <i class="en">I'm sorry to tell you that …</i></li>
+      </ul>
+    </div></div>
+
+    <div class="step"><div class="n">3</div><div class="b">
+      <div class="t">在草稿纸上用中文列提纲</div>
+      <p>②③ 两块，每块写三个关键词：<b>做什么、为什么、有什么好处</b>。比如 2025 年：</p>
+      <p class="en" style="background:var(--bg);padding:8px 12px;border-radius:6px">② 节约粮食 · 很多食物被浪费 · 每个人做一点就有大变化<br>③ 种树 · 空气更干净 · 地球更美好</p>
+      <p><b>挑你能用简单英语说清楚的事</b>，不要挑想法很好但不会写的。想不出来，就从第 6 节的几个万能话题里挑。</p>
+    </div></div>
+
+    <div class="step"><div class="n">4</div><div class="b">
+      <div class="t">照提纲，一句一句套句型</div>
+      <p>每个关键词，对应第 4 节里的一个句型，把中文意思填进空格就行。</p>
+    </div></div>
+
+    <div class="step"><div class="n">5</div><div class="b">
+      <div class="t">留 2 分钟检查</div>
+      <ul class="dot">
+        <li>两个要点<b>都写到了</b>吗？这条最重要。</li>
+        <li>数一数，<b>八九句、100 词左右</b>了吗？</li>
+        <li>查四个小错：<b>时态</b>、<b>he/she 后面动词加 -s</b>、<b>名词复数</b>、<b>句首字母大写</b>。</li>
+      </ul>
+    </div></div>
   </div>
 
   <!-- 4 -->
   <div class="ch">
-    <div class="ch-no">第 4 节</div>
-    <h2>说穿了，就是换换词</h2>
-    <p>我把这几年北京卷、全国卷的标准答案都翻了一遍，发现一个秘密：它们用的是<b>同一批句子</b>，只是把中间几个词换了。</p>
-    <p>比如开头，三年的标准答案是这么写的：</p>
-    <div class="say">
-      I'm glad to hear that you want to <span class="slot">take part in the UN's activity</span>.<br>
-      It's great to hear you're planning to <span class="slot">write about China's achievements</span>.<br>
-      Hearing that you are planning <span class="slot">a "Green Beijing" activity</span>, …
-    </div>
-    <p>前面那半句意思都是"听说你要……"，<span class="slot">蓝色</span>的部分才是根据题目换的。</p>
-    <p>出主意也一样：</p>
-    <div class="say">
-      I suggest <span class="slot">focusing on environmental protection</span>.<br>
-      Another idea is to <span class="slot">promote cultural exchange</span>.
-    </div>
-    <p>所以你不用每次从零造句。<b>先把句子的"壳"背下来，考试时往里填词就行。</b>第 7 节我给你挑好了 15 个最好用的壳。</p>
-    <details class="more">
-      <summary>细看：更多标准答案里的"同一个壳"</summary>
-      <div class="inner">
-        <table>
-          <tr><th>壳</th><th>标准答案原句</th></tr>
-          <tr><td class="en">I'm writing to …</td><td class="en">I'm writing to <span class="slot">share with you an art class</span>. <span class="from">全国 2024</span><br>I'm writing to <span class="slot">inquire about the progress of the article</span>. <span class="from">全国 2025</span><br>I am writing to <span class="slot">apply for taking part in the activity</span>. <span class="from">天津 2023</span></td></tr>
-          <tr><td class="en">I think you can …</td><td class="en">I think you can <span class="slot">carry out this activity in an interactive manner</span>. <span class="from">北京 2023</span></td></tr>
-          <tr><td class="en">My suggestion is to …</td><td class="en">My suggestion is to <span class="slot">group students based on their abilities</span>. <span class="from">全国 2023</span></td></tr>
-          <tr><td class="en">If we …, it will …</td><td class="en">If we can <span class="slot">raise awareness</span>, it will <span class="slot">make a big difference</span>. <span class="from">北京 2025</span></td></tr>
-          <tr><td class="en">This way, …</td><td class="en">This way, everyone can <span class="slot">feel more comfortable</span>. <span class="from">全国 2023</span></td></tr>
-          <tr><td class="en">Looking forward to …</td><td class="en">Looking forward to <span class="slot">reading your article</span>! <span class="from">北京 2024</span></td></tr>
-          <tr><td class="en">Thank you for …</td><td class="en">Thank you for <span class="slot">considering my suggestion</span>. <span class="from">全国 2023</span></td></tr>
-        </table>
-      </div>
-    </details>
+    <div class="ch-no">第 4 步 · 放句子</div>
+    <h2>每一块，用这几个句型</h2>
+    <p><span class="slot">蓝色 ___ </span>是要你填的地方。每一类先会<b>第一个</b>就够了，后面的是换着用的。</p>
+
+    <h3 class="c1">① 开头：回应 + 说目的</h3>
+    <p class="muted">Jim 来信问你（回信）：</p>
+    <div class="pat b1"><div class="e">I'm glad to hear that you are going to <span class="slot">___</span>.</div><div class="z">听说你要……，我很高兴。</div><div class="ex">例：I'm glad to hear that you are going to plan a club activity.</div></div>
+    <div class="pat b1"><div class="e">Here are my suggestions.</div><div class="z">下面是我的建议。（访谈类换成 Here are my ideas.）</div></div>
+    <div class="pat b1"><div class="e">Thank you for asking me about <span class="slot">___</span>.</div><div class="z">谢谢你问我关于……的事。（Jim 访谈你、问你看法时用）</div></div>
+    <p class="muted">你主动写信：</p>
+    <div class="pat b1"><div class="e">I'm writing to invite you to <span class="slot">___</span>.</div><div class="z">我写信是想邀请你……</div></div>
+    <div class="pat b1"><div class="e">I'm sorry to tell you that I can't <span class="slot">___</span>.</div><div class="z">很抱歉地告诉你，我不能……了。</div></div>
+
+    <h3 class="c2">②③ 要点：每块三句，"说出来 → 为什么 → 好处"</h3>
+    <p><span class="role r-idea">说出来</span>第一句说你的主意：</p>
+    <div class="pat b2"><div class="e">First, I suggest <span class="slot">___ing</span>.</div><div class="z">首先，我建议……（suggest 后面用 -ing）</div><div class="ex">例：First, I suggest writing about saving food.</div></div>
+    <div class="pat b2"><div class="e">Besides, you could <span class="slot">___</span>.</div><div class="z">另外，你可以……（第二个要点用它开头）</div></div>
+    <div class="pat b2"><div class="e">As for <span class="slot">___</span>, <span class="slot">___</span>.</div><div class="z">至于……，……（要点有名字时用，比如 As for the time, … 阅卷老师一看就知道你写到了这一点）</div></div>
+    <div class="pat b2"><div class="e">How about <span class="slot">___ing</span>?</div><div class="z">……怎么样？（提议改个时间、换个做法时用）</div></div>
+
+    <p><span class="role r-why">为什么</span>第二句说理由：</p>
+    <div class="pat b3"><div class="e">This is because <span class="slot">___</span>.</div><div class="z">这是因为……</div><div class="ex">例：This is because a lot of food is wasted every day.</div></div>
+    <div class="pat b3"><div class="e">As we know, <span class="slot">___</span>.</div><div class="z">我们都知道，……</div></div>
+
+    <p><span class="role r-good">好处</span>第三句说好处，或者举个例子：</p>
+    <div class="pat b4"><div class="e">In this way, <span class="slot">___</span>.</div><div class="z">这样一来，……</div><div class="ex">例：In this way, more people will learn about Chinese culture.</div></div>
+    <div class="pat b4"><div class="e">If we <span class="slot">___</span>, it will make a big difference.</div><div class="z">如果我们……，就会带来很大的改变。</div></div>
+    <div class="pat b4"><div class="e">For example, <span class="slot">___</span>.</div><div class="z">比如……</div></div>
+
+    <h3 class="c4">④ 结尾：客气话</h3>
+    <div class="pat b4"><div class="e">I hope my suggestions are helpful.</div><div class="z">希望我的建议对你有帮助。</div></div>
+    <div class="pat b4"><div class="e">Looking forward to your reply.</div><div class="z">期待你的回复。（邀请、道歉时用）</div></div>
+    <div class="pat b4"><div class="e">Good luck with <span class="slot">___</span>!</div><div class="z">祝……顺利！</div></div>
   </div>
 
   <!-- 5 -->
   <div class="ch">
-    <div class="ch-no">第 5 节</div>
-    <h2>句子之间，用几个小词串起来</h2>
-    <p>一句一句写出来以后，如果直接堆在一起，读起来会很生硬。这时候需要几个"胶水词"。</p>
-    <p>你先只记这 5 个就够用：</p>
-    <div class="say">
-      <b>First,</b> …　首先<br>
-      <b>Besides,</b> …　另外<br>
-      … <b>because</b> …　因为<br>
-      … <b>so</b> …　所以<br>
-      … <b>for example</b> …　比如
+    <div class="ch-no">第 5 步 · 把句子串起来</div>
+    <h2>连接词：先记 5 个</h2>
+    <table>
+      <tr><th>词</th><th>意思</th><th>放在哪</th></tr>
+      <tr><td class="en">First,</td><td>首先</td><td>第一个要点开头</td></tr>
+      <tr><td class="en">Besides,</td><td>另外</td><td>第二个要点开头</td></tr>
+      <tr><td class="en">because</td><td>因为</td><td>说理由</td></tr>
+      <tr><td class="en">so</td><td>所以</td><td>说结果</td></tr>
+      <tr><td class="en">In this way,</td><td>这样一来</td><td>说好处</td></tr>
+    </table>
+    <p>这 5 个用熟了，再换着用：<i class="en">Also,</i>（也）、<i class="en">What's more,</i>（而且）、<i class="en">such as</i>（比如）、<i class="en">However,</i>（但是）。</p>
+    <div class="warn"><b>最常见的三个错：</b><br>
+      <span class="wrong en">I suggest you to go</span> → <span class="right en">I suggest going</span><br>
+      <span class="wrong en">Looking forward to hear from you</span> → <span class="right en">Looking forward to hearing from you</span><br>
+      <span class="wrong en">Because it is fun, so I like it.</span> → because 和 so 不能放在一句里，只留一个
     </div>
-    <p>用熟了，再换着用 <i class="en">To begin with</i>、<i class="en">In addition</i>、<i class="en">What's more</i>，显得不那么单调。标准答案里用的也就是这些。</p>
-    <details class="more">
-      <summary>细看：按用途分好的连接词</summary>
-      <div class="inner">
-        <table class="en">
-          <tr><th style="font-family:system-ui">用途</th><th style="font-family:system-ui">先会这个</th><th style="font-family:system-ui">换着用</th></tr>
-          <tr><td style="font-family:system-ui">排顺序</td><td>First, Second</td><td>To begin with · Then · Finally</td></tr>
-          <tr><td style="font-family:system-ui">再加一点</td><td>Besides</td><td>In addition · Also · What's more · More importantly</td></tr>
-          <tr><td style="font-family:system-ui">说原因</td><td>because</td><td>since · as · As we know</td></tr>
-          <tr><td style="font-family:system-ui">说结果</td><td>so</td><td>This way · In this way · As a result</td></tr>
-          <tr><td style="font-family:system-ui">举例子</td><td>for example</td><td>such as · like</td></tr>
-          <tr><td style="font-family:system-ui">转折</td><td>but</td><td>However · while</td></tr>
-          <tr><td style="font-family:system-ui">总结</td><td>In a word</td><td>All in all · In short</td></tr>
-        </table>
-      </div>
-    </details>
   </div>
 
   <!-- 6 -->
   <div class="ch">
-    <div class="ch-no">第 6 节</div>
-    <h2>那"写什么内容"呢？</h2>
-    <p>壳有了，胶水有了，剩下的就是<b>你到底要建议什么</b>。这是唯一需要你自己想的地方。</p>
-    <p>不过这个也能提前准备。你想啊，Jim 是外国人，题目又总跟"中国""环保""年轻人"有关，所以翻来覆去就是这三类内容：</p>
-    <ul class="dot">
-      <li><b>中国文化</b>：春节 <i class="en">the Spring Festival</i>、剪纸 <i class="en">paper-cutting</i>、京剧 <i class="en">Peking Opera</i></li>
-      <li><b>环保</b>：骑车 <i class="en">ride bikes</i>、种树 <i class="en">plant trees</i>、节约粮食 <i class="en">save food</i></li>
-      <li><b>中国的变化</b>：高铁 <i class="en">high-speed railway</i>、手机支付 <i class="en">mobile payment</i></li>
-    </ul>
-    <p>每一类再配一句万能的"好处"：</p>
-    <div class="say">
-      It shows the beauty of Chinese culture.<br>
-      It is good for both our health and the environment.<br>
-      It has greatly changed people's lives.
-    </div>
-    <div class="key">考场上看到题目，从这三类里挑一个塞进去。2023 年和 2025 年的标准答案，写的都是环保。</div>
+    <div class="ch-no">第 6 步 · 换词</div>
+    <h2>空格里填什么：几个万能话题</h2>
+    <p>Jim 是外国人，题目又常跟中国、环保、年轻人有关，所以内容翻来覆去就是这几类。每类记两三个短语，再配一句好处：</p>
+    <table>
+      <tr><th>话题</th><th>可以写的事</th><th>配一句好处</th></tr>
+      <tr><td><b>中国文化</b></td><td class="en">the Spring Festival 春节<br>paper-cutting 剪纸<br>Chinese food 中国菜</td><td class="en">It helps people learn more about Chinese culture.</td></tr>
+      <tr><td><b>环保</b></td><td class="en">save food 节约粮食<br>plant trees 种树<br>ride bikes 骑自行车</td><td class="en">It can make our city cleaner and greener.</td></tr>
+      <tr><td><b>中国的发展</b></td><td class="en">high-speed trains 高铁<br>mobile payment 手机支付</td><td class="en">It has made our lives much easier.</td></tr>
+      <tr><td><b>学习和交流</b></td><td class="en">share tips 分享方法<br>read more books 多读书<br>make friends from other countries 交外国朋友</td><td class="en">It helps us understand each other better.</td></tr>
+    </table>
+    <div class="key">"换换词"就是这个意思：句型不动，只把空格里的话题换掉，就能写出另一篇作文。下面的演示里，你会看到同样的句子在不同的题目里反复出现。</div>
   </div>
 
   <!-- 7 -->
   <div class="ch">
-    <div class="ch-no">第 7 节</div>
-    <h2>好，现在只需要背 15 句</h2>
-    <p>前面说的"壳"，我挑了最简单、最常用的 15 句。按在信里出现的位置排好了，背会一句就点一下打勾，会自动保存。</p>
-    <div id="sentences"></div>
-    <p class="muted">小提醒：<i class="en">I suggest you to go</i> 是错的，要写 <i class="en">I suggest going</i>；<i class="en">Looking forward to</i> 后面要接 <i class="en">-ing</i>。这是最常见的两个扣分点。</p>
+    <div class="ch-no">演示</div>
+    <h2>同一个骨架，写出 7 道题</h2>
+    <p>每句前面的小标签告诉你这句是哪一种：<span class="role r-open">开头</span><span class="role r-idea">说出来</span><span class="role r-why">为什么</span><span class="role r-good">好处</span><span class="role r-end">结尾</span>。<span class="hl">橙色</span>的部分就是第 4 节的句型。</p>
+    <p>建议先只看题目和提纲，自己试着写，再点开对照。范文是本页自己写的，只用简单词和第 4 节的句型。</p>
+    <div id="essays"></div>
   </div>
 
   <!-- 8 -->
   <div class="ch">
-    <div class="ch-no">第 8 节</div>
-    <h2>看看五年的题，用这套方法写出来是什么样</h2>
-    <p>每篇我写了一个<b>背诵版</b>，只用简单句和上面那 15 句。<span class="hl">橙色</span>的部分就是背过的句子，你会发现它们反复出现。</p>
-    <p>建议你先只看题目，自己想想"两件事各写什么"，再点开对答案。2023–2025 年还附了答案卷里的标准答案，可以对照着看。</p>
-    <div id="essays"></div>
+    <div class="ch-no">背下来</div>
+    <h2>背这 15 句就够了</h2>
+    <p>按信里的顺序排好了。背会一句，就点一下打勾，会自动保存，首页也能看到进度。</p>
+    <div id="sentences"></div>
   </div>
 
   <!-- 9 -->
   <div class="ch">
-    <div class="ch-no">第 9 节</div>
-    <h2>如果题目换了花样呢？</h2>
-    <p>别担心。全国卷、浙江卷有时候不写邮件，而是让你写投稿或者演讲稿。</p>
-    <p>变的其实只是<b>开头和结尾</b>：投稿就不写 <i class="en">Dear Jim</i>，直接说观点；演讲稿开头换成 <i class="en">Good morning, everyone.</i>。<b>中间还是"两件事，各说为什么"</b>，一点没变。</p>
-    <p>北京卷五年都是写邮件，你先把邮件练熟，其他的到时候改个开头就行。</p>
-    <details class="more">
-      <summary>细看：全国卷 / 天津卷的标准答案和新题型</summary>
-      <div class="inner">
-        <div id="national"></div>
-        <table>
-          <tr><th>卷子</th><th>题目</th><th>怎么套</th></tr>
-          <tr><td>2026 全国二卷</td><td>给外教写邮件：建议作文集配图 + 自荐画图</td><td>邮件，照常写</td></tr>
-          <tr><td>2026 全国一卷</td><td>投稿：给学习、社交、睡眠排个序</td><td>去掉 Dear 和客套话</td></tr>
-          <tr><td>2026 浙江</td><td>投稿：图书馆的书被乱画，呼吁爱护</td><td>同上</td></tr>
-          <tr><td>2025 浙江</td><td>演讲：校园里拍短视频，谈看法 + 提建议</td><td>开头换成问好</td></tr>
-        </table>
-      </div>
-    </details>
-  </div>
-
-  <!-- 10 -->
-  <div class="ch">
-    <div class="ch-no">最后</div>
-    <h2>考试那 15 分钟，和接下来两周</h2>
-    <p>考场上别急着动笔。先花一分钟<b>把题目里那"两件事"圈出来</b>，再花两分钟想想每件事写什么、为什么。</p>
-    <p>然后开头结尾直接默写背好的句子，中间照着"主意 + 为什么"一句一句写。写完留两分钟，查查时态、第三人称加没加 -s、首字母有没有大写。</p>
-    <p>至于怎么练：</p>
+    <div class="ch-no">考场上</div>
+    <h2>15 分钟怎么分</h2>
+    <table>
+      <tr><th>时间</th><th>做什么</th></tr>
+      <tr><td>2 分钟</td><td>圈两个要点 → 看是回信还是主动写 → 草稿纸上写 ②③ 的中文关键词</td></tr>
+      <tr><td>10 分钟</td><td>四块各写一段：开头、结尾直接默写背好的句子，中间照提纲套句型</td></tr>
+      <tr><td>3 分钟</td><td>检查：两个要点都写了吗？够 100 词吗？时态、-s、复数、大写</td></tr>
+    </table>
+    <h3>接下来两周怎么练</h3>
     <ul class="dot">
-      <li><b>第一周</b>：把第 7 节的 15 句背熟，每天打几个勾</li>
-      <li><b>第二周</b>：每两天挑一篇第 8 节的题目，<b>遮住范文自己写</b>，写完再对</li>
+      <li><b>第一周</b>：背熟上面 15 句，每天打几个勾。</li>
+      <li><b>第二周</b>：每两天挑一道演示里的题，<b>遮住范文，先列提纲再写</b>，写完对照。</li>
     </ul>
-    <div class="key">两周以后你会发现，自己已经能写出八九成像范文的东西了。作文可能是整张卷子里<b>最容易提分</b>的一块。加油！</div>
   </div>
 
-  <p class="muted" style="text-align:center">真题来源：2021–2025 北京卷、2023–2026 全国卷等（第三方转录）· 评分标准：《2026 年高考英语评分参考》转录版、北京教育考试院试题评析 · 背诵版范文为本页自编</p>
+  <p class="muted" style="text-align:center">题目来源：2021–2025 北京卷、2025 海淀和东城一模（第三方整理）· 范文为本页自编 · <a href="北京卷-作文-旧版参考.html">旧版作文页（含第三方标准答案和全国卷）</a></p>
 </div>
 
 <script>
+// ── 15 句：进度存 localStorage writing_tpl_0..14（首页读取，数量变了要同步改 index.html 的 15）──
 const SENTENCES = [
-  { g:'开头 · 别人来信问你', items:[
-    { en:"I'm glad to hear that you are going to ...", zh:'听说你要……，我很高兴' },
-    { en:'Here are my suggestions.', zh:'下面是我的建议' },
+  { g:'① 开头', items:[
+    { en:"I'm glad to hear that you are going to ___.", zh:'听说你要……，我很高兴。（回信）' },
+    { en:'Here are my suggestions.', zh:'下面是我的建议。' },
+    { en:"I'm writing to invite you to ___.", zh:'我写信是想邀请你……（主动写信）' },
+    { en:"I'm sorry to tell you that I can't ___.", zh:'很抱歉地告诉你，我不能……了。（道歉）' },
   ]},
-  { g:'开头 · 你主动写信', items:[
-    { en:"I'm writing to invite you to ...", zh:'我写信是想邀请你……（invite 可以换成别的动词）' },
-    { en:"I'm sorry to tell you that ...", zh:'很抱歉地告诉你……' },
+  { g:'②③ 要点 · 说出来', items:[
+    { en:'First, I suggest ___ing.', zh:'首先，我建议……' },
+    { en:'Besides, you could ___.', zh:'另外，你可以……' },
+    { en:'As for ___, ___.', zh:'至于……，……' },
+    { en:'How about ___ing?', zh:'……怎么样？' },
   ]},
-  { g:'中间 · 出主意', items:[
-    { en:'I think you can ...', zh:'我觉得你可以……' },
-    { en:'I suggest doing ...', zh:'我建议……（注意是 doing）' },
-    { en:'Another idea is to ...', zh:'另一个主意是……' },
-    { en:'Why not ...?', zh:'为什么不……呢？' },
+  { g:'②③ 要点 · 为什么', items:[
+    { en:'This is because ___.', zh:'这是因为……' },
+    { en:'As we know, ___.', zh:'我们都知道，……' },
   ]},
-  { g:'中间 · 说为什么、有什么好处', items:[
-    { en:'..., because ...', zh:'……，因为……' },
-    { en:'If we ..., it will make a big difference.', zh:'如果我们……，就会带来很大改变' },
-    { en:'By doing ..., we can ...', zh:'通过做……，我们可以……' },
-    { en:'First, ... Besides, ...', zh:'首先……另外……' },
+  { g:'②③ 要点 · 好处', items:[
+    { en:'In this way, ___.', zh:'这样一来，……' },
+    { en:'If we ___, it will make a big difference.', zh:'如果我们……，就会带来很大的改变。' },
   ]},
-  { g:'结尾', items:[
-    { en:'I hope my suggestions will be helpful.', zh:'希望我的建议对你有帮助' },
-    { en:'Looking forward to your reply.', zh:'期待你的回复' },
-    { en:'Thank you for considering my suggestion.', zh:'谢谢你考虑我的建议' },
+  { g:'④ 结尾', items:[
+    { en:'I hope my suggestions are helpful.', zh:'希望我的建议对你有帮助。' },
+    { en:'Looking forward to your reply.', zh:'期待你的回复。' },
+    { en:'Good luck with ___!', zh:'祝……顺利！' },
   ]},
 ];
 
+// r: open | idea | why | good | end ; '' = 段落分隔
+const R = { open:['r-open','开头'], idea:['r-idea','说出来'], why:['r-why','为什么'], good:['r-good','好处'], end:['r-end','结尾'] };
 const ESSAYS = [
-  { y:'2025', t:'Jim 要参加联合国的倡议活动，问你写什么',
+  { y:'2025 北京卷', t:'Jim 参加联合国青少年倡议活动，问你写什么',
     task:'内容：1. 提出的建议；2. 建议的理由。',
-    mine:[
-      `<span class="hl">I'm glad to hear that you are going to</span> take part in the UN's proposal activity. <span class="hl">Here are my suggestions.</span>`,
-      `<span class="hl">I think you can</span> write about saving food. Every day, a lot of food is wasted, while many people in the world still go hungry. Young people can start from small things, such as ordering only what we can eat. <span class="hl">If we</span> all do this, <span class="hl">it will make a big difference.</span> <span class="hl">Another idea is to</span> plant more trees, <span class="hl">because</span> trees make our air cleaner.`,
-      `<span class="hl">I hope my suggestions will be helpful.</span> Good luck!`],
-    refSrc:'2025 北京卷参考答案',
-    ref:[
-      `I'm glad to hear that you want to take part in the UN's initiative for global teenagers. Here's my advice.`,
-      `I suggest focusing on environmental protection. As we know, the environment is facing serious problems, which affect everyone's life. If we can raise awareness about it and encourage more people to take action, it will make a big difference. Another idea is to promote cultural exchange. We live in a world where different cultures coexist. By sharing our cultures and learning from each other, we can build a more harmonious global community.`,
-      `I hope these suggestions help! Let me know if you need more ideas. Best wishes!`]},
-  { y:'2024', t:'Jim 要给校报写中国的发展成就，问你写什么',
-    task:'内容：1. 建议投稿内容；2. 简要说明理由。',
-    mine:[
-      `<span class="hl">I'm glad to hear that you are going to</span> write about China's development. <span class="hl">Here are my suggestions.</span>`,
-      `<span class="hl">I think you can</span> write about China's high-speed railway. Today it takes only about four hours to go from Beijing to Shanghai by train. It is fast and comfortable, and <span class="hl">it has greatly changed people's lives.</span> <span class="hl">Besides,</span> you can introduce mobile payment. With a phone, we can pay for almost everything, even at a small street stall. Both of them show how fast China is developing.`,
-      `<span class="hl">I hope my suggestions will be helpful.</span> <span class="hl">Looking forward to</span> reading your article!`],
-    refSrc:'2024 北京卷答案解析',
-    ref:[
-      `It's great to hear you're planning to write about China's achievements on the occasion of the 75th anniversary of the founding of this country. Here are a few suggestions for your article.`,
-      `To begin with, talk about China's economic growth and technological advancements, which are the highlights in the past few decades. Then, projects like the Belt and Road Initiative make a good topic to discuss because it showcases China's determination to build a shared future with the world. In addition, you can also mention China's role in helping solving global issues such as the global warming, offering a more comprehensive view.`,
-      `Looking forward to reading your article!`],
-    refNote:'这篇标准答案里其实有两处小错（helping solving、the global warming）。连标准答案都不完美，所以别怕小错。'},
-  { y:'2023', t:'Jim 办"绿色北京"社团活动，问你的建议',
+    plan:'两个要点是"建议 + 理由" → 写两个建议，每个后面跟理由。② 节约粮食 · 浪费多 · 每人做一点就有大变化　③ 种树 · 空气干净 · 地球更美好',
+    s:[
+      ['open',`<span class="hl">I'm glad to hear that you are going to</span> take part in the UN's proposal activity for teenagers.`],
+      ['open',`<span class="hl">Here are my suggestions.</span>`], [],
+      ['idea',`<span class="hl">First, I suggest</span> writing about saving food.`],
+      ['why',`<span class="hl">This is because</span> a lot of food is wasted every day, while many people in the world are still hungry.`],
+      ['good',`<span class="hl">If</span> young people only order what they can eat, <span class="hl">it will make a big difference.</span>`], [],
+      ['idea',`<span class="hl">Besides, you could</span> write about planting trees.`],
+      ['why',`<span class="hl">As we know,</span> trees make the air cleaner and keep our cities cool.`],
+      ['good',`<span class="hl">In this way,</span> the earth will be a better home for all of us.`], [],
+      ['end',`<span class="hl">I hope my suggestions are helpful.</span> <span class="hl">Good luck with</span> your proposal!`],
+    ]},
+  { y:'2024 北京卷', t:'Jim 给校报写新中国 75 年的发展，问你写什么',
+    task:'内容：1. 建议投稿内容；2. 就以上建议简要说明理由。',
+    plan:'"建议 + 理由" → 两个建议。② 高铁 · 出行快 · 北京到上海 4 小时　③ 手机支付 · 买东西方便 · 生活更容易',
+    s:[
+      ['open',`<span class="hl">I'm glad to hear that you are going to</span> write about China's development for your school newspaper.`],
+      ['open',`<span class="hl">Here are my suggestions.</span>`], [],
+      ['idea',`<span class="hl">First, I suggest</span> writing about high-speed trains.`],
+      ['why',`<span class="hl">This is because</span> they have made travel much faster than before.`],
+      ['good',`<span class="hl">For example,</span> it only takes about four hours to go from Beijing to Shanghai by train.`], [],
+      ['idea',`<span class="hl">Besides, you could</span> write about mobile payment.`],
+      ['why',`<span class="hl">As we know,</span> people in China can pay for almost everything with a phone, even at a small shop.`],
+      ['good',`It shows how China's development <span class="hl">has made our lives much easier.</span>`], [],
+      ['end',`<span class="hl">I hope my suggestions are helpful.</span> Looking forward to reading your article!`],
+    ]},
+  { y:'2023 北京卷', t:'Jim 办"绿色北京"社团活动，问你的建议',
     task:'内容：1. 活动形式；2. 活动内容。',
-    mine:[
-      `<span class="hl">I'm glad to hear that you are</span> planning a club activity about "Green Beijing". <span class="hl">Here are my suggestions.</span>`,
-      `<span class="hl">First,</span> <span class="hl">I suggest</span> having a cycling trip around the city, <span class="hl">because</span> <span class="hl">it is good for both our health and the environment.</span> During the trip, members can take photos of green places in Beijing, like parks and tree-lined streets. After that, we can hold a photo show at school, <span class="hl">so</span> more students will learn to protect the environment.`,
-      `<span class="hl">I hope my suggestions will be helpful.</span>`],
-    refSrc:'2023 北京卷参考答案',
-    ref:[
-      `Hearing that you are planning a club activity with the theme of "Green Beijing" and need my help, I am writing to offer you my suggestions.`,
-      `I think you can carry out this activity in an interactive and experiential manner, which means students can participate and have a better understanding of "Green Beijing" through getting involved in different activities by themselves. You can showcase garbage classification on site, plant trees and publicize sharing economy, which will all fit into the theme of "Green Beijing".`,
-      `Hopefully, you will get some inspiration from my suggestions. Wish you success.`]},
-  { y:'2022', t:'你邀请 Jim 给你们班做线上英语写作交流',
-    task:'内容：1. 交流的具体内容及原因；2. 交流时间和其他事项。',
-    mine:[
-      `How is everything going? <span class="hl">I'm writing to invite you to</span> give an online talk on English writing to our class.`,
-      `We hope you can share some tips on how to write a good English email, <span class="hl">because</span> many of us find it hard to put our ideas in order. It would be great if you could also show us some good sentences. The talk will be held on Tencent Meeting next Friday, from 4 to 5 pm. If possible, please send me your PPT before Thursday.`,
-      `<span class="hl">Looking forward to your reply.</span>`]},
-  { y:'2021', t:'你和 Jim 约好周末出去，但去不了了',
+    plan:'两个要点是两件事 → ② 写形式，③ 写内容，用 As for 开头点明。② 骑车游北京 · 健康又环保 · 拍绿色照片　③ 种树 + 学垃圾分类 · 自己动手 · 更爱护环境',
+    s:[
+      ['open',`<span class="hl">I'm glad to hear that you are going to</span> plan a club activity about "Green Beijing".`],
+      ['open',`<span class="hl">Here are my suggestions.</span>`], [],
+      ['idea',`<span class="hl">As for</span> the form, I think a bike trip around the city is a good choice.`],
+      ['why',`<span class="hl">This is because</span> riding bikes is good for both our health and the environment.`],
+      ['good',`On the way, members can also take photos of the green places in Beijing.`], [],
+      ['idea',`<span class="hl">As for</span> the content, members could plant trees in a park and learn how to sort rubbish.`],
+      ['why',`Doing things with our own hands is the best way to learn.`],
+      ['good',`<span class="hl">In this way,</span> everyone will care more about our environment.`], [],
+      ['end',`<span class="hl">I hope my suggestions are helpful.</span> <span class="hl">Good luck with</span> your activity!`],
+    ]},
+  { y:'2022 北京卷', t:'你邀请 Jim 给你们班做线上英语写作交流',
+    task:'内容：1. 建议交流的具体内容及其原因；2. 交流时间和其他相关事项。',
+    plan:'你主动写信（邀请）→ 开头用 I\'m writing to invite you to。② 内容：怎么写好英语邮件 · 很多人不会理清思路 · 想看好例子　③ 时间：下周五 4–5 点 · 周四前发 PPT',
+    s:[
+      ['open',`How is everything going? <span class="hl">I'm writing to invite you to</span> give an online talk on English writing to our class.`], [],
+      ['idea',`<span class="hl">First,</span> we hope you can share some tips on how to write a good English email.`],
+      ['why',`<span class="hl">This is because</span> many of us find it hard to put our ideas in order.`],
+      ['good',`It would be great if you could also show us some good examples.`], [],
+      ['idea',`<span class="hl">As for</span> the time, the talk will be held online next Friday, from 4 to 5 pm.`],
+      ['good',`If possible, please send me your PPT before Thursday, so I can share it with my classmates.`], [],
+      ['end',`<span class="hl">Looking forward to your reply.</span>`],
+    ]},
+  { y:'2021 北京卷', t:'你们约好周末出去，你去不了了',
     task:'内容：1. 表达歉意并说明原因；2. 提出建议并给出理由。',
-    mine:[
-      `<span class="hl">I'm sorry to tell you that</span> I can't go out with you this weekend as we planned. My grandma is ill in hospital, and I have to look after her on Saturday. I hope you can understand.`,
-      `<span class="hl">Why not</span> go next weekend instead? By then, the weather will be warmer, and the park will be more beautiful. <span class="hl">Besides,</span> I will have finished my exams, <span class="hl">so</span> we can spend the whole day together. If you have a better idea, please let me know.`,
-      `Sorry again. <span class="hl">Looking forward to your reply.</span>`]},
+    plan:'你主动写信（道歉）→ 开头用 I\'m sorry to tell you that。② 道歉 + 原因：奶奶生病要照顾　③ 建议：下周末去 · 考完试了 · 天气更暖和',
+    s:[
+      ['open',`<span class="hl">I'm sorry to tell you that I can't</span> go out with you this weekend as we planned.`],
+      ['why',`<span class="hl">This is because</span> my grandma is ill, and I have to look after her at home.`],
+      ['why',`My parents are away on business, <span class="hl">so</span> I am the only one who can help her.`],
+      ['end',`I hope you can understand.`], [],
+      ['idea',`<span class="hl">How about</span> going next weekend instead?`],
+      ['why',`My exams will be over by then, <span class="hl">so</span> we can spend the whole day together.`],
+      ['good',`<span class="hl">Besides,</span> the weather will be warmer, and there will be more flowers in the park.`],
+      ['good',`We can ride bikes there and have a picnic by the lake.`], [],
+      ['end',`Sorry again. <span class="hl">Looking forward to your reply.</span>`],
+    ]},
+  { y:'2025 海淀一模', t:'Jim 做"信息时代中学生怎么阅读"的访谈',
+    task:'内容：1. 信息时代对阅读的影响；2. 你的阅读方式和理由。',
+    plan:'Jim 来问你看法 → 开头用 Thank you for asking me about。② 影响：手机上随时能读 · 但短视频分心　③ 我的方式：读纸质书 · 更专心 · 手机查生词',
+    s:[
+      ['open',`<span class="hl">Thank you for asking me about</span> reading in the information age.`],
+      ['open',`Here are my ideas.`], [],
+      ['idea',`<span class="hl">First,</span> the Internet has changed the way we read.`],
+      ['good',`We can find books and articles on our phones at any time.`],
+      ['why',`<span class="hl">However,</span> short videos and messages often take our attention away from reading.`], [],
+      ['idea',`<span class="hl">As for</span> me, I like to read paper books in my free time.`],
+      ['why',`<span class="hl">This is because</span> I can focus better without a screen.`],
+      ['good',`I only use my phone to look up new words quickly.`], [],
+      ['end',`I hope my answers are helpful for your project.`],
+    ]},
+  { y:'2025 东城一模', t:'Jim 参加"我眼中的孔子"作品征集，问你的建议',
+    task:'内容：1. 提出建议；2. 说明理由。',
+    plan:'"建议 + 理由" → 两个建议。② 拍短视频讲孔子的一句话 · 好看好分享　③ 讲孔子的话怎么帮到日常生活 · 让人知道这些话今天还有用',
+    s:[
+      ['open',`<span class="hl">I'm glad to hear that you are going to</span> take part in the "Confucius in My Eyes" activity.`],
+      ['open',`<span class="hl">Here are my suggestions.</span>`], [],
+      ['idea',`<span class="hl">First, I suggest</span> making a short video about one of Confucius' ideas, <span class="hl">such as</span> being kind to others.`],
+      ['why',`<span class="hl">This is because</span> a video is easy to watch and share.`],
+      ['good',`<span class="hl">In this way,</span> more young people around the world will know him.`], [],
+      ['idea',`<span class="hl">Besides, you could</span> tell a story about how his ideas help us in daily life.`],
+      ['why',`<span class="hl">As we know,</span> many of his words are still true today.`],
+      ['good',`A real story will make people feel closer to him.`], [],
+      ['end',`<span class="hl">I hope my suggestions are helpful.</span> <span class="hl">Good luck with</span> your work!`],
+    ]},
 ];
 
-const NATIONAL = [
-  { y:'2023 新课标卷', t:'外教随机分组练口语有问题 · 说明问题 + 提建议', to:'Dear Ryan,', end:'Yours sincerely,',
-    task:'外教 Ryan 准备把学生随机两人一组练口语，你觉得有问题。', refSrc:'2023 新课标卷解析',
-    ref:[
-      `I'm Li Hua from Class 3. I think it's not a good idea to randomly pair up students for the spoken English training after class. The reasons are as follows.`,
-      `To begin with, randomly pairing up students may lead to unbalanced language abilities within the groups. This can hinder the progress of students as the more advanced one may dominate the conversation, leaving little room for the other students to improve. Besides, students may feel uncomfortable or less motivated if paired with someone who they don't get along with or have difficulty communicating with.`,
-      `My suggestion is to group students based on their language abilities or to let students choose their own partners. This way, everyone can feel more comfortable practicing and improving their spoken English together. Thank you for considering my suggestion.`]},
-  { y:'2024 新课标卷', t:'公园美术课 · 分享作品 + 感想', to:'Dear Chris,', end:'Yours,',
-    task:'上周五你们班在公园上了美术课，给英国朋友 Chris 分享。', refSrc:'2024 新课标Ⅰ卷答案解析',
-    ref:[
-      `I'm writing to share with you an art class I had in a park last Friday.`,
-      `We were tasked to draw or paint something that impressed us most. Inspired by the fantastic scenery, I decided to create a watercolor painting of the small bridge over the park's pond, surrounded by blooming flowers.`,
-      `The entire experience was incredibly refreshing. Being surrounded by nature not only sparked my creativity but also offered a much-needed break from the usual hustle and bustle of school life. I felt a deep sense of peace as I painted.`,
-      `In a word, It was not just an art class; it was a moment of connection with nature that I truly cherished.`]},
-  { y:'2025 新课标Ⅱ卷', t:'外教答应写稿 · 询问进展 + 提醒交稿', to:'Dear Chris,', end:'Best wishes,',
-    task:'你是校英文报编辑，外教 Chris 答应写一篇加拿大体育的文章。', refSrc:'2025 新课标Ⅱ卷参考答案',
-    ref:[
-      `Hope this email finds you well! Last month, you kindly agreed to write an article about sports in Canada, and we're all looking forward to reading it.`,
-      `I'm writing to politely inquire about the progress of the article. Would you mind letting me know how it's going? Also, could I remind you that the deadline for submission is this Friday, June 14th? Your insights into Canadian sports will surely enrich our readers' understanding of global sports culture, which will be of benefit to us.`,
-      `Thank you again for your support!`]},
-];
-
-// ── 15 句，进度存 localStorage（首页读取 writing_tpl_0..14）──
+// ── 15 句 ──
 const KEY = 'writing_tpl_';
 let idx = 0, total = 0;
 const box = document.getElementById('sentences');
+const esc = s => s.replace(/___ing|___/g, m => `<span class="slot">${m}</span>`);
 SENTENCES.forEach(grp => {
   box.insertAdjacentHTML('beforeend', `<div class="group-title">${grp.g}</div>`);
   grp.items.forEach(s => {
@@ -458,7 +480,7 @@ SENTENCES.forEach(grp => {
     row.className = 'sent';
     const done = localStorage.getItem(id) === '1';
     if (done) row.classList.add('done');
-    row.innerHTML = `<input type="checkbox" ${done ? 'checked' : ''}><div><div class="en">${s.en}</div><div class="zh">${s.zh}</div></div>`;
+    row.innerHTML = `<input type="checkbox" ${done ? 'checked' : ''}><div><div class="se">${esc(s.en)}</div><div class="sz">${s.zh}</div></div>`;
     row.querySelector('input').addEventListener('change', e => {
       localStorage.setItem(id, e.target.checked ? '1' : '0');
       row.classList.toggle('done', e.target.checked);
@@ -474,27 +496,28 @@ function updateBadge() {
 }
 updateBadge();
 
-// ── 范文 ──
-const words = ps => ps.join(' ').replace(/<[^>]+>/g, '').split(/\s+/).filter(Boolean).length;
-const letter = (ps, cls, to, end) => `<div class="txt ${cls}"><p>${to}</p>${ps.map(p => `<p>&emsp;${p}</p>`).join('')}<p>${end}<br>Li Hua</p></div>`;
-function renderList(list, elId) {
-  const el = document.getElementById(elId);
-  list.forEach(e => {
-    const to = e.to || 'Dear Jim,', end = e.end || 'Yours,';
-    let h = `<summary>${e.y} · ${e.t}</summary><div class="essay"><div class="task">📝 ${e.task}</div>`;
-    if (e.mine) h += `<div class="ver">✏️ 背诵版 <span>· ${words(e.mine)} 词</span></div>${letter(e.mine, 'mine', to, end)}`;
-    if (e.ref) {
-      h += `<div class="ver">📄 答案卷标准答案 <span>· ${e.refSrc} · ${words(e.ref)} 词</span></div>${letter(e.ref, 'ref', to, end)}`;
-      if (e.refNote) h += `<div class="note">${e.refNote}</div>`;
-    }
-    const d = document.createElement('details');
-    d.className = 'es';
-    d.innerHTML = h + '</div>';
-    el.appendChild(d);
-  });
-}
-renderList(ESSAYS, 'essays');
-renderList(NATIONAL, 'national');
+// ── 演示 ──
+const plain = h => h.replace(/<[^>]+>/g, '');
+const wc = list => list.filter(x => x.length).map(x => plain(x[1])).join(' ').split(/\s+/).filter(Boolean).length;
+const el = document.getElementById('essays');
+ESSAYS.forEach((e, i) => {
+  const lines = e.s.map(x => x.length ? `<div class="line"><span class="role ${R[x[0]][0]}">${R[x[0]][1]}</span><span>${x[1]}</span></div>` : '<div class="gap"></div>').join('');
+  const paras = []; let cur = [];
+  e.s.forEach(x => { if (!x.length) { if (cur.length) paras.push(cur); cur = []; } else cur.push(plain(x[1])); });
+  if (cur.length) paras.push(cur);
+  const letter = `<div class="letter"><p>Dear Jim,</p>${paras.map(p => `<p>&emsp;${p.join(' ')}</p>`).join('')}<p>Yours,<br>Li Hua</p></div>`;
+  const d = document.createElement('details');
+  d.className = 'es';
+  if (i === 0) d.open = true;
+  d.innerHTML = `<summary>${e.y} · ${e.t}</summary><div class="essay">
+    <div class="task">📝 ${e.task}</div>
+    <div class="plan">🧭 提纲：${e.plan}</div>
+    ${lines}
+    <div class="wc">共 ${wc(e.s)} 词</div>
+    <details class="sub"><summary>✉️ 看成一封完整的信</summary>${letter}</details>
+  </div>`;
+  el.appendChild(d);
+});
 
 // ── 主题 ──
 const THEME_KEY = 'theme';
