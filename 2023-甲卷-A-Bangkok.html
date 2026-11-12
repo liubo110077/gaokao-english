@@ -119,6 +119,19 @@ body {
 .tip:hover { background: var(--accent-light); }
 .tip.tip-flash { outline: 2px solid var(--accent); border-radius: 2px; animation: tipFlash 1.6s ease-out forwards; }
 @keyframes tipFlash { 0%{background:var(--accent);color:#fff;} 40%{background:var(--accent-light);color:inherit;} 100%{background:transparent;} }
+/* 行间注解 */
+.tip-ann {
+  display: none;
+  font-size: 0.72em;
+  color: var(--accent);
+  font-weight: 500;
+  margin-left: 1px;
+  opacity: 0.9;
+}
+body.mode-annotate .tip-ann { display: inline; }
+body.mode-quiz .tip-ann,
+body.mode-raw .tip-ann { display: none !important; }
+#annotate-btn.on { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
 
 /* Tooltip bubble */
 .tooltip {
@@ -466,6 +479,7 @@ body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
         <button class="mode-step" data-mode="quiz" onclick="setMode('quiz')">② 做题</button>
         <button class="mode-step" data-mode="raw" onclick="setMode('raw')">③ 原文</button>
       </div>
+      <button class="btn" id="annotate-btn" onclick="toggleAnnotate()" title="显示/隐藏行间注解">注解</button>
       <button class="btn" id="theme-btn" onclick="cycleTheme()" title="切换护眼色">⬜ 默认白</button>
     </div>
   </div>
@@ -1358,6 +1372,30 @@ function highlightWord(phrase) {
 function vocabClick(phrase) {
   speakWord(phrase);
 }
+
+function initAnnotations() {
+  document.querySelectorAll('.tip').forEach(el => {
+    if (el.nextSibling && el.nextSibling.classList && el.nextSibling.classList.contains('tip-ann')) return;
+    const tip = el.dataset.tip || '';
+    const parts = tip.split('|');
+    if (parts.length < 2) return;
+    const cn = parts[1].split('｜')[0].trim();
+    if (!cn) return;
+    const ann = document.createElement('span');
+    ann.className = 'tip-ann';
+    ann.textContent = '（' + cn + '）';
+    el.after(ann);
+  });
+}
+
+function toggleAnnotate() {
+  const on = document.body.classList.toggle('mode-annotate');
+  const btn = document.getElementById('annotate-btn');
+  btn.textContent = on ? '注解 ✓' : '注解';
+  btn.classList.toggle('on', on);
+}
+
+document.addEventListener('DOMContentLoaded', initAnnotations);
 
 function toggleAnalysis(idx) {
   const el = document.getElementById('analysis-' + idx);
