@@ -119,18 +119,53 @@ body {
 .tip:hover { background: var(--accent-light); }
 .tip.tip-flash { outline: 2px solid var(--accent); border-radius: 2px; animation: tipFlash 1.6s ease-out forwards; }
 @keyframes tipFlash { 0%{background:var(--accent);color:#fff;} 40%{background:var(--accent-light);color:inherit;} 100%{background:transparent;} }
-/* 行间注解 */
-.tip-ann {
+/* 注解模式：上标序号 */
+sup.ann-sup {
   display: none;
-  font-size: 0.72em;
-  color: var(--accent);
-  font-weight: 500;
-  margin-left: 1px;
-  opacity: 0.9;
+  font-size: 0.6em; color: var(--accent); font-weight: 700;
+  vertical-align: super; line-height: 0; margin-left: 2px;
+  font-family: system-ui, sans-serif; pointer-events: none;
 }
-body.mode-annotate .tip-ann { display: inline; }
-body.mode-quiz .tip-ann,
-body.mode-raw .tip-ann { display: none !important; }
+body.mode-annotate sup.ann-sup { display: inline; }
+
+/* 注解模式：段后词注块 */
+.para-ann {
+  display: none;
+  margin: 16px 0 28px 0;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 15px; color: #333; text-indent: 0;
+}
+body.mode-annotate .para-ann {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+  gap: 16px 18px;
+  align-items: start;
+}
+.pan-row {
+  background: #fff;
+  border: 1px solid #ece8e0;
+  border-radius: 12px;
+  padding: 16px 20px 18px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+.pan-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pan-num {
+  flex-shrink: 0;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  font-size: 12px; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.pan-en  { font-family: Georgia, serif; font-weight: 700; font-size: 18px; color: #1a1a1a; }
+.pan-cn  { color: var(--accent); font-weight: 600; font-size: 15px; }
+.pan-det { margin: 12px 0 0 32px; color: #666; font-size: 14px; line-height: 1.85; }
+.pan-det div { position: relative; padding-left: 12px; }
+.pan-det div + div { margin-top: 8px; }
+.pan-det div::before { content: ''; position: absolute; left: 0; top: 0.8em; width: 4px; height: 4px; border-radius: 50%; background: #c9c3b8; }
+
+
+body.mode-quiz .para-ann, body.mode-raw .para-ann { display: none !important; }
+body.mode-quiz sup.ann-sup, body.mode-raw sup.ann-sup { display: none !important; }
 #annotate-btn.on { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
 
 /* Tooltip bubble */
@@ -230,7 +265,8 @@ body.mode-raw .tip-ann { display: none !important; }
   font-size: 14px; color: var(--text-muted);
   margin: 2px 0 6px 0; text-indent: 0;
 }
-body.compare-mode .translation-inline { display: block; }
+body.compare-mode .translation-inline,
+body.mode-annotate .translation-inline { display: block; }
 
 /* ── Panels ── */
 .panel {
@@ -465,6 +501,32 @@ body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
   .tooltip .tip-zh-play { font-size: 14px; }
   #pb-counter, #pb-speed { font-size: 15px; }
 }
+
+/* 注解模式：长难句拆解（无音频，替代 .analysis） */
+.sb-block { display: none; }
+body.mode-annotate .sb-block {
+  display: block; margin: 4px 0 28px; padding: 16px 20px 18px;
+  background: #f8f9fa; border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-family: -apple-system, "PingFang SC", sans-serif; text-indent: 0;
+}
+body.mode-annotate .analysis { display: none !important; }
+body.mode-quiz .sb-block, body.mode-raw .sb-block { display: none !important; }
+.sb-title { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: .08em; margin-bottom: 12px; }
+.sb-sent { font-family: Georgia, serif; font-size: 18px; line-height: 2.3; color: #1a1a1a; background: #fff; border: 1px solid #ece8e0; border-radius: 10px; padding: 14px 18px; }
+.sb-chip { display: inline-block; font-family: -apple-system, "PingFang SC", sans-serif; font-size: 11px; font-weight: 700; line-height: 1; padding: 4px 7px; border-radius: 999px; margin-right: 5px; vertical-align: 3px; }
+.sb-core { font-weight: 700; border-bottom: 2.5px solid var(--accent); }
+.sb-core-chip { background: var(--accent); color: #fff; }
+.sb-ins { color: #9a9a9a; background: #eeebe4; border-radius: 4px; padding: 2px 4px; }
+.sb-ins-chip { background: #e4e0d8; color: #777; }
+.sb-rest { border-bottom: 2.5px solid #4caf7a; }
+.sb-rest-chip { background: #4caf7a; color: #fff; }
+.sb-steps { margin-top: 14px; display: grid; gap: 10px; }
+.sb-step { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; font-size: 15px; line-height: 1.75; color: #333; }
+.sb-step-n { width: 24px; height: 24px; border-radius: 50%; background: #1a1a1a; color: #fff; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; margin-top: 2px; }
+.sb-step em { font-style: normal; font-family: Georgia, serif; color: #111; background: #fff; border: 1px solid #ece8e0; padding: 0 5px; border-radius: 4px; }
+.sb-step .arrow { color: #aaa; margin: 0 4px; }
+.sb-tip { margin-top: 14px; font-size: 14px; color: #8a6d1f; background: #fdf6e3; border-radius: 8px; padding: 9px 14px; }
 </style>
 </head>
 <body class="mode-study">
@@ -510,6 +572,7 @@ body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
       <p>中间 who received a Michelin star... of the same name 是插入的定语从句，只是在介绍他的背景：在伦敦也有一家同名泰国餐厅，还摘了米其林星。读懂核心后，再回来看插入部分。</p>
     </div>
     <div class="translation-inline">Nahm 提供高档泰国美食，是曼谷最佳烹饪体验的代表。它是世界50家最佳餐厅榜单前十中唯一一家泰国餐厅。主厨 David Thompson 曾凭借他在伦敦的同名泰国餐厅荣获米其林星，并于2010年在大都会酒店开设了这家分店。</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-core-chip">谁</span><span class="sb-core">Head Chef David Thompson,</span> <span class="sb-chip sb-ins-chip">插入 · 先跳过</span><span class="sb-ins">who received a Michelin star for his London-based Thai restaurant of the same name,</span> <span class="sb-chip sb-core-chip">干了什么</span><span class="sb-core">opened this branch</span> <span class="sb-chip sb-rest-chip">在哪 · 何时</span><span class="sb-rest">in the Metropolitan Hotel in 2010.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读主干：<em>Head Chef David Thompson … opened this branch</em><span class="arrow">→</span>汤普森大厨开了这家分店</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>补上地点和时间：<em>in the Metropolitan Hotel in 2010</em><span class="arrow">→</span>2010 年，在大都会酒店</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>最后回头看插入：<em>who received a Michelin star …</em><span class="arrow">→</span>他在伦敦有家同名泰国餐厅，还拿过米其林星</div></div></div><div class="sb-tip">💡 看到「逗号 + who」，后面多半是插进来介绍人物的，先跳过，往后找真正的动词（这里是 opened）。</div></div>
   </div>
 
   <!-- ── Issaya Siamese Club ── -->
@@ -532,6 +595,7 @@ body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
     <span class="sentence" data-idx="10">This place is good for a <span class="tip" data-tip="candle-lit dinner|烛光晚餐｜candle = 蜡烛，lit = 点亮的（light的过去分词）。candle-lit dinner = 烛光下的晚餐，营造浪漫气氛｜类比：sun-lit = 阳光照耀的，moon-lit = 月光下的">candle-lit dinner</span> or a work meeting with <span class="tip" data-tip="colleagues|同事，同僚｜co- 是「共同」，league 是「团队/群体」——colleague = 一起工作的人 = 同事。这里 colleagues who appreciate fine food = 懂得欣赏美食的同事｜同义：coworker（更口语），workmate" data-level="超纲">colleagues</span> who <span class="tip" data-tip="appreciate|欣赏；感激｜appreciate 有两个常用义：① 欣赏/感受到…的价值：appreciate fine food 懂得欣赏美食 ② 感激：I appreciate your help. 感谢你的帮助｜名词 appreciation：gain appreciation for = 对…产生欣赏/感激" data-level="拓展">appreciate</span> fine food.</span>
     <span class="sentence" data-idx="11">For those <span class="tip" data-tip="extremely hungry|非常饿的；这里指胃口很大的食客｜extremely = 极其，hungry = 饿的。这里幽默地说「特别能吃的人」有大套餐可以选" data-level="选必">extremely hungry</span>, there's a large <span class="tip" data-tip="set menu|套餐，固定菜单｜set = 固定的，set menu = 价格和菜品都固定好的一套餐。高档餐厅常见，提前选好多道菜的搭配">set menu</span>.</span>
     <div class="translation-inline">Bo.lan 自2009年开业以来便在曼谷美食界引起了广泛关注。餐厅在优雅的氛围中提供难以在别处找到的泰国菜肴，忠于泰国烹饪的根本，同时又加入了独到的创意。这里适合烛光晚餐或与欣赏美食的同事聚餐。对于特别能吃的人，还有大型套餐可供选择。</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-ins-chip">背景 · 先跳过</span><span class="sb-ins">Serving hard-to-find Thai dishes in an elegant atmosphere,</span> <span class="sb-chip sb-core-chip">谁</span><span class="sb-core">the restaurant</span> <span class="sb-chip sb-core-chip">怎么样 ①</span><span class="sb-core">is true to Thai cuisine's roots,</span> <span class="sb-chip sb-rest-chip">转折 · 怎么样 ②</span><span class="sb-rest">yet still manages to add a special twist.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读主干：<em>the restaurant is true to Thai cuisine's roots</em><span class="arrow">→</span>这家餐厅忠于泰国菜的本色</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>yet = but，转折：<em>yet still manages to add a special twist</em><span class="arrow">→</span>但还能加点独特的创意</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>回头看开头：<em>Serving hard-to-find Thai dishes …</em><span class="arrow">→</span>在优雅的环境里端出难得一见的泰国菜</div></div></div><div class="sb-tip">💡 句子用 -ing 开头、后面跟逗号，开头这段多半是背景，主语在逗号后面（这里是 the restaurant）。正宗 + 创意，两样都有，就是这家店的卖点。</div></div>
   </div>
 
   <!-- ── Gaggan ── -->
@@ -549,6 +613,8 @@ body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
     </div>
     <span class="sentence" data-idx="14"><span class="tip" data-tip="culinary theater|美食剧场，把烹饪当成一场表演｜culinary = 美食/烹饪的（超纲词）。theater = 剧场，这里比喻把烹饪做成一场演出体验，你吃饭同时在看表演" data-level="超纲">Culinary theater</span> <span class="tip" data-tip="at its best|处于最佳状态，到了极致｜at = 在…状态，best = 最好。at its best = 在它最好的那个点上 = 极致体现。常见：London at its best = 伦敦最美的样子，summer at its best = 夏天最好的状态｜高考作文好用：X at its best 表示某事物的极致">at its best</span>.</span>
     <div class="translation-inline">凭借在最新一期"亚洲50家最佳餐厅"榜单上夺得首位，前卫印度餐厅 Gaggan 是近年来登陆曼谷最令人兴奋的场所之一。这栋两层殖民风格泰式老宅中，最佳餐桌正对厨房，你可以亲眼看到 Gaggan 大厨和员工们忙碌工作。美食剧场，尽显极致。</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-ins-chip">背景 · 先跳过</span><span class="sb-ins">Earning first place on the latest "Asia's 50 best restaurants" list,</span> <span class="sb-chip sb-core-chip">谁</span><span class="sb-core">progressive Indian restaurant Gaggan</span> <span class="sb-chip sb-core-chip">是什么</span><span class="sb-core">is one of the most exciting venues</span> <span class="sb-chip sb-rest-chip">补充</span><span class="sb-rest">to arrive in Bangkok in recent years.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读主干：<em>Gaggan is one of the most exciting venues</em><span class="arrow">→</span>Gaggan 是最让人兴奋的餐厅之一</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>补上范围：<em>to arrive in Bangkok in recent years</em><span class="arrow">→</span>近几年在曼谷开张的餐厅里</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>回头看开头：<em>Earning first place on the latest … list</em><span class="arrow">→</span>它刚在最新一期榜单上拿了第一</div></div></div><div class="sb-tip">💡 latest = 最新一期，说明它现在正当红。one of the most + 复数名词 = 最……之一，高考常考。</div></div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-core-chip">谁</span><span class="sb-core">The best table</span> <span class="sb-chip sb-rest-chip">在哪</span><span class="sb-rest">in this two-story colonial Thai home</span> <span class="sb-chip sb-core-chip">干什么</span><span class="sb-core">offers a window right into the kitchen,</span> <span class="sb-chip sb-ins-chip">补充说明 kitchen</span><span class="sb-ins">where you can see chef Gaggan and his staff in action.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读主干：<em>The best table offers a window into the kitchen</em><span class="arrow">→</span>最好的那张桌子正对着厨房</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>offers 在这里不是「提供」，是「给你一个看……的视角」<span class="arrow">→</span>坐在那儿能直接看进厨房</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>再看 where：<em>where you can see chef Gaggan and his staff in action</em><span class="arrow">→</span>在厨房里你能看到 Gaggan 和员工在忙活</div></div></div><div class="sb-tip">💡 「逗号 + where」紧跟在地点后面，就是在说明这个地方。边吃边看厨师表演，就是后面说的「美食剧场」。</div></div>
   </div>
 </div>
 
@@ -1374,17 +1440,59 @@ function vocabClick(phrase) {
 }
 
 function initAnnotations() {
-  document.querySelectorAll('.tip').forEach(el => {
-    if (el.nextSibling && el.nextSibling.classList && el.nextSibling.classList.contains('tip-ann')) return;
-    const tip = el.dataset.tip || '';
-    const parts = tip.split('|');
-    if (parts.length < 2) return;
-    const cn = parts[1].split('｜')[0].trim();
-    if (!cn) return;
-    const ann = document.createElement('span');
-    ann.className = 'tip-ann';
-    ann.textContent = '（' + cn + '）';
-    el.after(ann);
+  document.querySelectorAll('sup.ann-sup, .para-ann').forEach(el => el.remove());
+
+  document.querySelectorAll('.passage .paragraph').forEach(para => {
+    const seen = new Set();
+    const items = [];
+    let idx = 1;
+
+    para.querySelectorAll('.tip').forEach(el => {
+      const tip = el.dataset.tip || '';
+      const parts = tip.split('|');
+      if (parts.length < 2) return;
+      const phrase = parts[0].trim();
+
+      if (seen.has(phrase)) {
+        const prevIdx = items.findIndex(i => i.phrase === phrase) + 1;
+        const sup = document.createElement('sup');
+        sup.className = 'ann-sup';
+        sup.textContent = prevIdx;
+        el.after(sup);
+        return;
+      }
+      seen.add(phrase);
+
+      const sup = document.createElement('sup');
+      sup.className = 'ann-sup';
+      sup.textContent = idx;
+      el.after(sup);
+
+      const contentParts = parts[1].split('｜');
+      const cn = contentParts[0].trim();
+      const det = contentParts.slice(1).map(s => s.replace(/<[^>]+>/g, '').trim()).filter(Boolean);
+      items.push({ num: idx, phrase, cn, det });
+      idx++;
+    });
+
+    if (items.length === 0) return;
+
+    const ann = document.createElement('div');
+    ann.className = 'para-ann';
+    ann.innerHTML = items.map(i =>
+      `<div class="pan-row">
+        <div class="pan-head">
+          <span class="pan-num">${i.num}</span>
+          <span class="pan-en">${i.phrase}</span>
+          <span class="pan-cn">${i.cn}</span>
+        </div>
+        ${i.det.length ? `<div class="pan-det">${i.det.map(d => `<div>${d}</div>`).join('')}</div>` : ''}
+      </div>`
+    ).join('');
+
+    const trans = para.querySelector('.translation-inline');
+    if (trans) trans.after(ann);
+    else para.appendChild(ann);
   });
 }
 

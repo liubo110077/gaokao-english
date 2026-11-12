@@ -207,7 +207,8 @@ body {
   font-size: 14px; color: var(--text-muted);
   margin: 2px 0 6px 0; text-indent: 0;
 }
-body.compare-mode .translation-inline { display: block; }
+body.compare-mode .translation-inline,
+body.mode-annotate .translation-inline { display: block; }
 
 /* ── Panels ── */
 .panel {
@@ -413,6 +414,80 @@ body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
   .tooltip .tip-zh-play { font-size: 14px; }
   #pb-counter, #pb-speed { font-size: 15px; }
 }
+/* 注解模式：上标序号 */
+sup.ann-sup {
+  display: none;
+  font-size: 0.6em; color: var(--accent); font-weight: 700;
+  vertical-align: super; line-height: 0; margin-left: 2px;
+  font-family: system-ui, sans-serif; pointer-events: none;
+}
+body.mode-annotate sup.ann-sup { display: inline; }
+
+/* 注解模式：段后词注块 */
+.para-ann {
+  display: none;
+  margin: 16px 0 28px 0;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 15px; color: #333; text-indent: 0;
+}
+body.mode-annotate .para-ann {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+  gap: 16px 18px;
+  align-items: start;
+}
+.pan-row {
+  background: #fff;
+  border: 1px solid #ece8e0;
+  border-radius: 12px;
+  padding: 16px 20px 18px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+.pan-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pan-num {
+  flex-shrink: 0;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  font-size: 12px; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.pan-en  { font-family: Georgia, serif; font-weight: 700; font-size: 18px; color: #1a1a1a; }
+.pan-cn  { color: var(--accent); font-weight: 600; font-size: 15px; }
+.pan-det { margin: 12px 0 0 32px; color: #666; font-size: 14px; line-height: 1.85; }
+.pan-det div { position: relative; padding-left: 12px; }
+.pan-det div + div { margin-top: 8px; }
+.pan-det div::before { content: ''; position: absolute; left: 0; top: 0.8em; width: 4px; height: 4px; border-radius: 50%; background: #c9c3b8; }
+
+
+body.mode-quiz .para-ann, body.mode-raw .para-ann { display: none !important; }
+body.mode-quiz sup.ann-sup, body.mode-raw sup.ann-sup { display: none !important; }
+#annotate-btn.on { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+
+/* 注解模式：长难句拆解（无音频，替代 .analysis） */
+.sb-block { display: none; }
+body.mode-annotate .sb-block {
+  display: block; margin: 4px 0 28px; padding: 16px 20px 18px;
+  background: #f8f9fa; border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-family: -apple-system, "PingFang SC", sans-serif; text-indent: 0;
+}
+body.mode-annotate .analysis { display: none !important; }
+body.mode-quiz .sb-block, body.mode-raw .sb-block { display: none !important; }
+.sb-title { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: .08em; margin-bottom: 12px; }
+.sb-sent { font-family: Georgia, serif; font-size: 18px; line-height: 2.3; color: #1a1a1a; background: #fff; border: 1px solid #ece8e0; border-radius: 10px; padding: 14px 18px; }
+.sb-chip { display: inline-block; font-family: -apple-system, "PingFang SC", sans-serif; font-size: 11px; font-weight: 700; line-height: 1; padding: 4px 7px; border-radius: 999px; margin-right: 5px; vertical-align: 3px; }
+.sb-core { font-weight: 700; border-bottom: 2.5px solid var(--accent); }
+.sb-core-chip { background: var(--accent); color: #fff; }
+.sb-ins { color: #9a9a9a; background: #eeebe4; border-radius: 4px; padding: 2px 4px; }
+.sb-ins-chip { background: #e4e0d8; color: #777; }
+.sb-rest { border-bottom: 2.5px solid #4caf7a; }
+.sb-rest-chip { background: #4caf7a; color: #fff; }
+.sb-steps { margin-top: 14px; display: grid; gap: 10px; }
+.sb-step { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; font-size: 15px; line-height: 1.75; color: #333; }
+.sb-step-n { width: 24px; height: 24px; border-radius: 50%; background: #1a1a1a; color: #fff; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; margin-top: 2px; }
+.sb-step em { font-style: normal; font-family: Georgia, serif; color: #111; background: #fff; border: 1px solid #ece8e0; padding: 0 5px; border-radius: 4px; }
+.sb-step .arrow { color: #aaa; margin: 0 4px; }
+.sb-tip { margin-top: 14px; font-size: 14px; color: #8a6d1f; background: #fdf6e3; border-radius: 8px; padding: 9px 14px; }
 </style>
 </head>
 <body class="mode-study">
@@ -427,6 +502,7 @@ body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
         <button class="mode-step" data-mode="quiz" onclick="setMode('quiz')">② 做题</button>
         <button class="mode-step" data-mode="raw" onclick="setMode('raw')">③ 原文</button>
       </div>
+      <button class="btn" id="annotate-btn" onclick="toggleAnnotate()" title="显示/隐藏行间注解">注解</button>
       <button class="btn" id="theme-btn" onclick="cycleTheme()" title="切换护眼色">⬜ 默认白</button>
     </div>
   </div>
@@ -454,6 +530,7 @@ body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
       <p>— and then try to explain them 破折号后面加了一笔：这些人不仅自以为懂，还要来「解释给你听」——这才是真正让人想逃的原因。整句话是作者的吐槽：大学里遇到的「懂哲学的人」让他对哲学失去了兴趣。</p>
     </div>
     <div class="translation-inline">那对哲学的热爱一直持续到我上了大学。没有什么东西能比那些自以为比你更懂傅柯、鲍德里亚或孔子、然后还要来给你解释的人，更快地扼杀对哲学的热爱了。</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-core-chip">谁</span><span class="sb-core">Nothing</span> <span class="sb-chip sb-core-chip">干了什么</span><span class="sb-core">kills the love for philosophy</span> <span class="sb-chip sb-rest-chip">比谁更快</span><span class="sb-rest">faster than people</span> <span class="sb-chip sb-ins-chip">介绍这些人</span><span class="sb-ins">who think they understand Foucault, Baudrillard, or Confucius better than you</span> <span class="sb-chip sb-rest-chip">补充</span><span class="sb-rest">— and then try to explain them.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读主干：<em>Nothing kills the love for philosophy</em><span class="arrow">→</span>没有什么能扼杀对哲学的热爱……</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>别急着读成否定，接着看比较：<em>faster than people</em><span class="arrow">→</span>……比某些人扼杀得更快。也就是说：这些人最能扼杀热爱</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>再看是哪些人：<em>who think they understand … better than you</em><span class="arrow">→</span>自以为比你更懂傅柯、孔子这些哲学家的人</div></div><div class="sb-step"><span class="sb-step-n">4</span><div>破折号后再补一刀：<em>— and then try to explain them</em><span class="arrow">→</span>还非要给你讲一遍——这才最让人想逃</div></div></div><div class="sb-tip">💡 Nothing + 比较级 + than X = X 是「最……」的，意思其实是肯定的最高级，别读成「没有」。这句是作者在吐槽大学里遇到的人。</div></div>
   </div>
 
   <!-- ── Paragraph 3 ── -->
@@ -477,6 +554,8 @@ body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
     </div>
     <span class="sentence" data-idx="9">This, more than a book about understanding philosophy, is a book about learning to <span class="tip" data-tip="use philosophy to improve a life|用哲学改善生活｜这句话是全文的主题句。哲学不是用来理解（understand）的，而是用来实践（use）的。improve a life = 改善一个人的生活——这个 life 用了不定冠词 a，更有普遍性：每一个人的生活" data-level="拓展">use philosophy to improve a life</span>.</span>
     <div class="translation-inline">Weiner 每章都以一段城市间火车旅途的场景开头，然后以哲学家能帮助我们做更好的一件事为框架，来呈现每位哲学家的思想。最终，这是一本让我们学会像苏格拉底一样惊奇、像梭罗一样观看、像叔本华一样倾听、像尼采一样不留遗憾的书。这不只是一本理解哲学的书，更是一本学习用哲学改善生活的书。</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-core-chip">谁</span><span class="sb-core">Weiner</span> <span class="sb-chip sb-core-chip">干了什么 ①</span><span class="sb-core">starts each chapter</span> <span class="sb-chip sb-rest-chip">用什么开头</span><span class="sb-rest">with a scene on a train ride between cities</span> <span class="sb-chip sb-core-chip">干了什么 ②</span><span class="sb-core">and then frames each philosopher's work</span> <span class="sb-chip sb-rest-chip">怎么讲</span><span class="sb-rest">in the context of one thing they can help us do better.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读两个动作：<em>Weiner starts each chapter … and then frames each philosopher's work</em><span class="arrow">→</span>Weiner 每章先怎样开头，然后再这样讲每位哲学家</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>补上开头是什么：<em>with a scene on a train ride between cities</em><span class="arrow">→</span>用一段坐火车在城市间穿行的场景开头</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>再看怎么讲：<em>in the context of one thing they can help us do better</em><span class="arrow">→</span>围绕「这位哲学家能帮我们把哪件事做得更好」来讲</div></div></div><div class="sb-tip">💡 看到「and then + 动词」，说明同一个人接着又做了一件事，主语还是前面的 Weiner。这句在介绍这本书的结构，问「书是怎么写的」就找这里。</div></div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-core-chip">谁</span><span class="sb-core">The end result</span> <span class="sb-chip sb-core-chip">是什么</span><span class="sb-core">is a read</span> <span class="sb-chip sb-ins-chip">插入 · 先跳过</span><span class="sb-ins">in which we learn to</span> <span class="sb-chip sb-rest-chip">学会四件事</span><span class="sb-rest">wonder like Socrates, see like Thoreau, listen like Schopenhauer, and have no regrets like Nietzsche.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读主干：<em>The end result is a read</em><span class="arrow">→</span>最后得到的是一本书（read 在这里当名词 = 一本读物）</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>in which 就是「在这本书里」：<em>in which we learn to …</em><span class="arrow">→</span>在这本书里，我们学会……</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>最后看四件事：<em>wonder like Socrates, see like Thoreau …</em><span class="arrow">→</span>像苏格拉底那样好奇，像梭罗那样观察，像叔本华那样倾听，像尼采那样不留遗憾</div></div></div><div class="sb-tip">💡 一串「动词 + like + 人名」并列，就是「每位哲学家教你一件事」。第29题问作者为什么列这些哲学家，答案就是帮你理解 Weiner 这本书。</div></div>
   </div>
 
   <!-- ── Paragraph 5 ── -->
@@ -488,6 +567,7 @@ body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
       <p>第二个主句里，by + 动名词短语说明方式——through two things：decoding their messages（解读他们的思想）和 adding his own interpretation（加入自己的诠释）。这就是作者说 Weiner「加入了哲学家队伍」的原因：他不是照搬，是有自己理解的。</p>
     </div>
     <div class="translation-inline">他让哲学思考变成一种有吸引力的活动，提升我们的生活体验质量，而且他以充足的幽默感做到了这一点。Weiner 与历史上最重要的哲学家们展开对话，并在此过程中通过解读他们的思想、加入自己的诠释，成为了这个群体的一份子。</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-core-chip">谁</span><span class="sb-core">Weiner</span> <span class="sb-chip sb-core-chip">干了什么 ①</span><span class="sb-core">enters into conversation with</span> <span class="sb-chip sb-rest-chip">和谁</span><span class="sb-rest">some of the most important philosophers in history,</span> <span class="sb-chip sb-core-chip">结果 ②</span><span class="sb-core">and he becomes part of that crowd</span> <span class="sb-chip sb-rest-chip">怎么做到</span><span class="sb-rest">in the process by decoding their messages and adding his own interpretation.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读第一件事：<em>Weiner enters into conversation with … philosophers</em><span class="arrow">→</span>Weiner 和历史上最重要的哲学家们「对话」</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>再读第二件事：<em>and he becomes part of that crowd</em><span class="arrow">→</span>他自己也成了这群哲学家中的一员</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>by 后面讲怎么做到的：<em>by decoding their messages and adding his own interpretation</em><span class="arrow">→</span>靠解读他们的思想，再加上自己的理解</div></div></div><div class="sb-tip">💡 by + doing = 通过做某事，专门回答「怎么做到的」。这里说明 Weiner 不是照搬，而是有自己的理解。</div></div>
   </div>
 
   <!-- ── Paragraph 6 ── -->
@@ -502,6 +582,7 @@ body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
     <span class="sentence" data-idx="14">I encourage you to <span class="tip" data-tip="take his offer|接受他的邀请｜offer = 提出的机会/邀请，take his offer = 接受他的邀请（指接受 Weiner 的邀请，拿起这本书读）。take an offer / accept an offer 两种说法都有">take his offer</span>.</span>
     <span class="sentence" data-idx="15">It's worth your time, even if time is something we don't have <span class="tip" data-tip="a lot of|很多｜not have a lot of = 没有很多。整句：值得花时间，即便时间是我们并不总是充裕的东西。最后这句收尾很巧妙，说明这本书值得你从忙碌中抽出时间来读">a lot of</span>.</span>
     <div class="translation-inline">《苏格拉底快车》是一本有趣、犀利的书，以其表面上的简洁吸引读者，然后渐渐将他们引向对欲望、孤独和衰老的更深层思考。这份邀请很明确：Weiner 希望你端起一杯咖啡或茶，坐下来阅读这本书。我鼓励你接受他的邀请。即便时间是我们并不充裕的东西，这本书也值得你花时间去读。</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-core-chip">谁</span><span class="sb-core">The Socrates Express</span> <span class="sb-chip sb-core-chip">是什么</span><span class="sb-core">is a fun, sharp book</span> <span class="sb-chip sb-rest-chip">先 · 吸引你</span><span class="sb-rest">that draws readers in with its apparent simplicity</span> <span class="sb-chip sb-rest-chip">再 · 拉深</span><span class="sb-rest">and gradually pulls them in deeper thoughts on desire, loneliness, and aging.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读主干：<em>The Socrates Express is a fun, sharp book</em><span class="arrow">→</span>这本书有趣又犀利</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>that 后面在说这本书怎么样，第一步：<em>draws readers in with its apparent simplicity</em><span class="arrow">→</span>先用看起来简单把你吸引进来</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>第二步：<em>and gradually pulls them in deeper thoughts on …</em><span class="arrow">→</span>再慢慢把你拉向对欲望、孤独、衰老的深层思考</div></div></div><div class="sb-tip">💡 fun, sharp 是作者对全书的评价，第31题问作者怎么看这本书，就盯住这种形容词（有趣、直接）。apparent = 表面上看起来的。</div></div>
   </div>
 </div>
 
@@ -1242,6 +1323,73 @@ function srsInit() {
   srsUpdateBadge();
 }
 srsInit();
+
+function initAnnotations() {
+  document.querySelectorAll('sup.ann-sup, .para-ann').forEach(el => el.remove());
+
+  document.querySelectorAll('.passage .paragraph').forEach(para => {
+    const seen = new Set();
+    const items = [];
+    let idx = 1;
+
+    para.querySelectorAll('.tip').forEach(el => {
+      const tip = el.dataset.tip || '';
+      const parts = tip.split('|');
+      if (parts.length < 2) return;
+      const phrase = parts[0].trim();
+
+      if (seen.has(phrase)) {
+        const prevIdx = items.findIndex(i => i.phrase === phrase) + 1;
+        const sup = document.createElement('sup');
+        sup.className = 'ann-sup';
+        sup.textContent = prevIdx;
+        el.after(sup);
+        return;
+      }
+      seen.add(phrase);
+
+      const sup = document.createElement('sup');
+      sup.className = 'ann-sup';
+      sup.textContent = idx;
+      el.after(sup);
+
+      const contentParts = parts[1].split('｜');
+      const cn = contentParts[0].trim();
+      const det = contentParts.slice(1).map(s => s.replace(/<[^>]+>/g, '').trim()).filter(Boolean);
+      items.push({ num: idx, phrase, cn, det });
+      idx++;
+    });
+
+    if (items.length === 0) return;
+
+    const ann = document.createElement('div');
+    ann.className = 'para-ann';
+    ann.innerHTML = items.map(i =>
+      `<div class="pan-row">
+        <div class="pan-head">
+          <span class="pan-num">${i.num}</span>
+          <span class="pan-en">${i.phrase}</span>
+          <span class="pan-cn">${i.cn}</span>
+        </div>
+        ${i.det.length ? `<div class="pan-det">${i.det.map(d => `<div>${d}</div>`).join('')}</div>` : ''}
+      </div>`
+    ).join('');
+
+    const trans = para.querySelector('.translation-inline');
+    if (trans) trans.after(ann);
+    else para.appendChild(ann);
+  });
+}
+
+function toggleAnnotate() {
+  const on = document.body.classList.toggle('mode-annotate');
+  const btn = document.getElementById('annotate-btn');
+  btn.textContent = on ? '注解 ✓' : '注解';
+  btn.classList.toggle('on', on);
+}
+
+document.addEventListener('DOMContentLoaded', initAnnotations);
+
 </script>
 </body>
 </html>

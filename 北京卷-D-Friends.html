@@ -72,7 +72,8 @@ body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
 .analysis p { margin-bottom: 4px; }
 .analysis b { color: var(--text); font-size: 13px; }
 .translation-inline { display: none; font-family: -apple-system, "PingFang SC", sans-serif; font-size: 14px; color: var(--text-muted); margin: 2px 0 6px 0; text-indent: 0; }
-body.compare-mode .translation-inline { display: block; }
+body.compare-mode .translation-inline,
+body.mode-annotate .translation-inline { display: block; }
 .panel { background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); margin-top: 16px; overflow: hidden; }
 .panel-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; cursor: pointer; user-select: none; font-weight: 600; font-size: 15px; border-bottom: 1px solid transparent; transition: border-color .2s; }
 .panel-header:hover { color: var(--accent); }
@@ -227,6 +228,80 @@ body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
   .tooltip .tip-zh-play { font-size: 14px; }
   #pb-counter, #pb-speed { font-size: 15px; }
 }
+/* 注解模式：上标序号 */
+sup.ann-sup {
+  display: none;
+  font-size: 0.6em; color: var(--accent); font-weight: 700;
+  vertical-align: super; line-height: 0; margin-left: 2px;
+  font-family: system-ui, sans-serif; pointer-events: none;
+}
+body.mode-annotate sup.ann-sup { display: inline; }
+
+/* 注解模式：段后词注块 */
+.para-ann {
+  display: none;
+  margin: 16px 0 28px 0;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 15px; color: #333; text-indent: 0;
+}
+body.mode-annotate .para-ann {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+  gap: 16px 18px;
+  align-items: start;
+}
+.pan-row {
+  background: #fff;
+  border: 1px solid #ece8e0;
+  border-radius: 12px;
+  padding: 16px 20px 18px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+.pan-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pan-num {
+  flex-shrink: 0;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  font-size: 12px; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.pan-en  { font-family: Georgia, serif; font-weight: 700; font-size: 18px; color: #1a1a1a; }
+.pan-cn  { color: var(--accent); font-weight: 600; font-size: 15px; }
+.pan-det { margin: 12px 0 0 32px; color: #666; font-size: 14px; line-height: 1.85; }
+.pan-det div { position: relative; padding-left: 12px; }
+.pan-det div + div { margin-top: 8px; }
+.pan-det div::before { content: ''; position: absolute; left: 0; top: 0.8em; width: 4px; height: 4px; border-radius: 50%; background: #c9c3b8; }
+
+
+body.mode-quiz .para-ann, body.mode-raw .para-ann { display: none !important; }
+body.mode-quiz sup.ann-sup, body.mode-raw sup.ann-sup { display: none !important; }
+#annotate-btn.on { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+
+/* 注解模式：长难句拆解（无音频，替代 .analysis） */
+.sb-block { display: none; }
+body.mode-annotate .sb-block {
+  display: block; margin: 4px 0 28px; padding: 16px 20px 18px;
+  background: #f8f9fa; border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-family: -apple-system, "PingFang SC", sans-serif; text-indent: 0;
+}
+body.mode-annotate .analysis { display: none !important; }
+body.mode-quiz .sb-block, body.mode-raw .sb-block { display: none !important; }
+.sb-title { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: .08em; margin-bottom: 12px; }
+.sb-sent { font-family: Georgia, serif; font-size: 18px; line-height: 2.3; color: #1a1a1a; background: #fff; border: 1px solid #ece8e0; border-radius: 10px; padding: 14px 18px; }
+.sb-chip { display: inline-block; font-family: -apple-system, "PingFang SC", sans-serif; font-size: 11px; font-weight: 700; line-height: 1; padding: 4px 7px; border-radius: 999px; margin-right: 5px; vertical-align: 3px; }
+.sb-core { font-weight: 700; border-bottom: 2.5px solid var(--accent); }
+.sb-core-chip { background: var(--accent); color: #fff; }
+.sb-ins { color: #9a9a9a; background: #eeebe4; border-radius: 4px; padding: 2px 4px; }
+.sb-ins-chip { background: #e4e0d8; color: #777; }
+.sb-rest { border-bottom: 2.5px solid #4caf7a; }
+.sb-rest-chip { background: #4caf7a; color: #fff; }
+.sb-steps { margin-top: 14px; display: grid; gap: 10px; }
+.sb-step { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; font-size: 15px; line-height: 1.75; color: #333; }
+.sb-step-n { width: 24px; height: 24px; border-radius: 50%; background: #1a1a1a; color: #fff; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; margin-top: 2px; }
+.sb-step em { font-style: normal; font-family: Georgia, serif; color: #111; background: #fff; border: 1px solid #ece8e0; padding: 0 5px; border-radius: 4px; }
+.sb-step .arrow { color: #aaa; margin: 0 4px; }
+.sb-tip { margin-top: 14px; font-size: 14px; color: #8a6d1f; background: #fdf6e3; border-radius: 8px; padding: 9px 14px; }
 </style>
 </head>
 <body class="mode-study">
@@ -241,6 +316,7 @@ body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
         <button class="mode-step" data-mode="quiz" onclick="setMode('quiz')">② 做题</button>
         <button class="mode-step" data-mode="raw" onclick="setMode('raw')">③ 原文</button>
       </div>
+      <button class="btn" id="annotate-btn" onclick="toggleAnnotate()" title="显示/隐藏行间注解">注解</button>
       <button class="btn" id="theme-btn" onclick="cycleTheme()" title="切换护眼色">⬜ 默认白</button>
     </div>
   </div>
@@ -261,6 +337,7 @@ body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
       <p><b>后面的分词定语：</b><em>locked in their room after endless family quarrels</em> 是过去分词短语，修饰 teenagers。 = teenagers who are locked in their room...（被关在房间里的那种青少年）。高考阅读里这种「名词 + 分词短语」很常见，别被它割断了对主句的理解。</p>
     </div>
     <div class="translation-inline">和睦的证据在某些家庭里可能不那么明显。但看起来，每五个年轻人中就有四个能和父母和睦相处——这与大众对于青少年的刻板印象恰恰相反：那种吵完架就把自己锁在房间里的不开心的青少年。</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-rest-chip">开头</span><span class="sb-rest">But it seems that</span> <span class="sb-chip sb-core-chip">谁</span><span class="sb-core">four out of five young people now</span> <span class="sb-chip sb-core-chip">干了什么</span><span class="sb-core">get on with their parents,</span> <span class="sb-chip sb-rest-chip">补充</span><span class="sb-rest">which is the opposite of the popularly-held image of unhappy teenagers</span> <span class="sb-chip sb-ins-chip">修饰 · 先跳过</span><span class="sb-ins">locked in their room after endless family quarrels.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读主干：<em>four out of five young people … get on with their parents</em><span class="arrow">→</span>五个年轻人里有四个和父母处得不错</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>补上 which 这段：<em>which is the opposite of the popularly-held image …</em><span class="arrow">→</span>这件事和大家印象里的样子正好相反</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>最后看是什么印象：<em>unhappy teenagers locked in their room after …</em><span class="arrow">→</span>吵完架就把自己关在房间里的不开心的青少年</div></div></div><div class="sb-tip">💡 这里的 which 指的是前面「4/5 的人和父母处得好」这整件事，不是某个单词；four out of five = 五分之四，比例题常考。</div></div>
   </div>
 
   <!-- ── Paragraph 2 ── -->
@@ -289,6 +366,7 @@ body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
     <span class="sentence" data-idx="13">For example, <span class="tip" data-tip="as long as I'd done|只要我做完了...｜as long as + 过去完成时。I'd done = I had done，表示在「被允许出去」之前，「写完作业」这件事必须先完成。这里的顺序：先完成作业 → 才能出去">as long as I'd done</span> all my homework, I could go out on a Saturday night.</span>
     <span class="sentence" data-idx="14">But I think my grandparents were a lot <span class="tip" data-tip="stricter|更严格的｜strict 是「严格的、严厉的」，你肯定见过 a strict teacher（严格的老师）。比较级 stricter = 更严格。Susan 说祖父母对父母比现在的父母对她严多了，说明一代比一代宽松｜搭配：strict with sb 对某人严格，strict rules 严格的规定">stricter</span> with my parents than that."</span>
     <div class="translation-inline">所以，这一代父母似乎比30年前的父母更有可能把孩子当作朋友来对待。"我父母很愿意和我讨论事情，也愿意听我说，"17岁的Daniel Lazall说，"我每次出去夜店都会告诉他们。只要他们知道我在干嘛，他们就没意见。"现年21岁的Susan Crome也表示赞同。"回顾过去10年，有很多可以称之为谈判的东西。比如，只要我把作业都做完了，周六晚上就可以出去。但我觉得祖父母对我父母那一代严多了。"</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-rest-chip">开头</span><span class="sb-rest">So it seems that</span> <span class="sb-chip sb-core-chip">谁</span><span class="sb-core">this generation of parents</span> <span class="sb-chip sb-core-chip">怎么样</span><span class="sb-core">is much more likely</span> <span class="sb-chip sb-ins-chip">比谁 · 先跳过</span><span class="sb-ins">than parents of 30 years ago</span> <span class="sb-chip sb-core-chip">干什么</span><span class="sb-core">to treat their children as friends.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读主干：<em>this generation of parents is … likely to treat their children as friends</em><span class="arrow">→</span>这一代父母更愿意把孩子当朋友</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>回头补上比较对象：<em>much more … than parents of 30 years ago</em><span class="arrow">→</span>比 30 年前的父母要多得多</div></div></div><div class="sb-tip">💡 be likely to do = 很可能做某事；中间夹进来的 than … 只是「跟谁比」，先跳过，把 likely 和 to treat 连起来读。</div></div>
   </div>
 
   <!-- ── Paragraph 4 ── -->
@@ -312,6 +390,8 @@ body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
     </div>
     <span class="sentence" data-idx="19">The normal situation throughout history has been a <span class="tip" data-tip="smooth|光滑的；顺畅的，平稳的｜smooth road 平坦的路，smooth process 顺畅的过程。smooth change = 平稳的变化，没有剧烈反抗｜副词 smoothly：everything went smoothly 一切进展顺利。写作：a smooth transition from... to... 从...到...的平稳过渡">smooth</span> change from <span class="tip" data-tip="helping out with the family business|帮家族生意做事｜help out = 帮忙，出一份力（比 help 更口语）。the family business = 家族生意。从帮着干活 → 到接管生意，这是正常的代际传承">helping out with the family business</span> to <span class="tip" data-tip="taking it over|接管（家业）｜take over = 接管，接手。从 helping out（帮着干）到 taking over（全面接管）——就是子承父业的过程｜搭配：take over a company 接管公司，take over from sb 从某人手中接管">taking it over</span>."</span>
     <div class="translation-inline">也许这种对家庭生活的积极看法不应该让人感到意外。青少年叛逆这个概念可能并没有现实依据。一位研究人员评论道："我们对青少年声称和父母相处融洽感到惊讶，是因为我们社会史上有一个短暂时期，青少年被视为另类。但那种反叛和脱离父母的想法真的只在1960年代那个全民反叛的时代发生过一次。纵观历史，正常的情况一直是从帮助家族生意到接管家族生意的平稳过渡。"</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-rest-chip">谁说的</span><span class="sb-rest">A researcher comments,</span> <span class="sb-chip sb-core-chip">什么</span><span class="sb-core">"Our surprise</span> <span class="sb-chip sb-ins-chip">插入 · 先跳过</span><span class="sb-ins">that teenagers say they get along well with their parents</span> <span class="sb-chip sb-core-chip">怎么样</span><span class="sb-core">comes</span> <span class="sb-chip sb-rest-chip">原因</span><span class="sb-rest">because of a brief period in our social history</span> <span class="sb-chip sb-ins-chip">修饰 · 先跳过</span><span class="sb-ins">when teenagers were regarded as different beings.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读主干：<em>Our surprise … comes because of a brief period</em><span class="arrow">→</span>我们的惊讶来自历史上一段短暂的时期</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>回头看惊讶什么：<em>that teenagers say they get along well …</em><span class="arrow">→</span>青少年说自己和父母处得很好</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>最后看是哪段时期：<em>when teenagers were regarded as different beings</em><span class="arrow">→</span>那时青少年被看成「另类」</div></div></div><div class="sb-tip">💡 名词 surprise / idea / fact 后面紧跟 that…，多半是在说「惊讶的内容」，先跳过，往后找真正的动词（这里是 comes）。</div></div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-rest-chip">转折</span><span class="sb-rest">But</span> <span class="sb-chip sb-core-chip">什么</span><span class="sb-core">that idea</span> <span class="sb-chip sb-ins-chip">插入 · 先跳过</span><span class="sb-ins">of rebelling and breaking away from their parents</span> <span class="sb-chip sb-core-chip">怎么样</span><span class="sb-core">really only happened</span> <span class="sb-chip sb-rest-chip">何时</span><span class="sb-rest">during that one time in the 1960s</span> <span class="sb-chip sb-ins-chip">修饰 · 先跳过</span><span class="sb-ins">when everyone rebelled.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读主干：<em>that idea really only happened during that one time in the 1960s</em><span class="arrow">→</span>那种想法其实只在 60 年代那一次出现过</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>回头看什么想法：<em>of rebelling and breaking away from their parents</em><span class="arrow">→</span>反叛、脱离父母</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>最后看那是什么年代：<em>when everyone rebelled</em><span class="arrow">→</span>人人都在造反的年代</div></div></div><div class="sb-tip">💡 But + really only 是作者在表态：叛逆不是常态，只是特殊时期的事——问作者观点的题，就盯这种句子。</div></div>
   </div>
 </div>
 
@@ -1043,6 +1123,73 @@ function srsInit() {
 
 pbUpdateUI();
 srsInit();
+
+function initAnnotations() {
+  document.querySelectorAll('sup.ann-sup, .para-ann').forEach(el => el.remove());
+
+  document.querySelectorAll('.passage .paragraph').forEach(para => {
+    const seen = new Set();
+    const items = [];
+    let idx = 1;
+
+    para.querySelectorAll('.tip').forEach(el => {
+      const tip = el.dataset.tip || '';
+      const parts = tip.split('|');
+      if (parts.length < 2) return;
+      const phrase = parts[0].trim();
+
+      if (seen.has(phrase)) {
+        const prevIdx = items.findIndex(i => i.phrase === phrase) + 1;
+        const sup = document.createElement('sup');
+        sup.className = 'ann-sup';
+        sup.textContent = prevIdx;
+        el.after(sup);
+        return;
+      }
+      seen.add(phrase);
+
+      const sup = document.createElement('sup');
+      sup.className = 'ann-sup';
+      sup.textContent = idx;
+      el.after(sup);
+
+      const contentParts = parts[1].split('｜');
+      const cn = contentParts[0].trim();
+      const det = contentParts.slice(1).map(s => s.replace(/<[^>]+>/g, '').trim()).filter(Boolean);
+      items.push({ num: idx, phrase, cn, det });
+      idx++;
+    });
+
+    if (items.length === 0) return;
+
+    const ann = document.createElement('div');
+    ann.className = 'para-ann';
+    ann.innerHTML = items.map(i =>
+      `<div class="pan-row">
+        <div class="pan-head">
+          <span class="pan-num">${i.num}</span>
+          <span class="pan-en">${i.phrase}</span>
+          <span class="pan-cn">${i.cn}</span>
+        </div>
+        ${i.det.length ? `<div class="pan-det">${i.det.map(d => `<div>${d}</div>`).join('')}</div>` : ''}
+      </div>`
+    ).join('');
+
+    const trans = para.querySelector('.translation-inline');
+    if (trans) trans.after(ann);
+    else para.appendChild(ann);
+  });
+}
+
+function toggleAnnotate() {
+  const on = document.body.classList.toggle('mode-annotate');
+  const btn = document.getElementById('annotate-btn');
+  btn.textContent = on ? '注解 ✓' : '注解';
+  btn.classList.toggle('on', on);
+}
+
+document.addEventListener('DOMContentLoaded', initAnnotations);
+
 </script>
 </body>
 </html>

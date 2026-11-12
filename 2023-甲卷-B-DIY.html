@@ -207,7 +207,8 @@ body {
   font-size: 14px; color: var(--text-muted);
   margin: 2px 0 6px 0; text-indent: 0;
 }
-body.compare-mode .translation-inline { display: block; }
+body.compare-mode .translation-inline,
+body.mode-annotate .translation-inline { display: block; }
 
 /* ── Panels ── */
 .panel {
@@ -414,6 +415,80 @@ body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
   .tooltip .tip-zh-play { font-size: 14px; }
   #pb-counter, #pb-speed { font-size: 15px; }
 }
+/* 注解模式：上标序号 */
+sup.ann-sup {
+  display: none;
+  font-size: 0.6em; color: var(--accent); font-weight: 700;
+  vertical-align: super; line-height: 0; margin-left: 2px;
+  font-family: system-ui, sans-serif; pointer-events: none;
+}
+body.mode-annotate sup.ann-sup { display: inline; }
+
+/* 注解模式：段后词注块 */
+.para-ann {
+  display: none;
+  margin: 16px 0 28px 0;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 15px; color: #333; text-indent: 0;
+}
+body.mode-annotate .para-ann {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+  gap: 16px 18px;
+  align-items: start;
+}
+.pan-row {
+  background: #fff;
+  border: 1px solid #ece8e0;
+  border-radius: 12px;
+  padding: 16px 20px 18px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+.pan-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pan-num {
+  flex-shrink: 0;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  font-size: 12px; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.pan-en  { font-family: Georgia, serif; font-weight: 700; font-size: 18px; color: #1a1a1a; }
+.pan-cn  { color: var(--accent); font-weight: 600; font-size: 15px; }
+.pan-det { margin: 12px 0 0 32px; color: #666; font-size: 14px; line-height: 1.85; }
+.pan-det div { position: relative; padding-left: 12px; }
+.pan-det div + div { margin-top: 8px; }
+.pan-det div::before { content: ''; position: absolute; left: 0; top: 0.8em; width: 4px; height: 4px; border-radius: 50%; background: #c9c3b8; }
+
+
+body.mode-quiz .para-ann, body.mode-raw .para-ann { display: none !important; }
+body.mode-quiz sup.ann-sup, body.mode-raw sup.ann-sup { display: none !important; }
+#annotate-btn.on { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+
+/* 注解模式：长难句拆解（无音频，替代 .analysis） */
+.sb-block { display: none; }
+body.mode-annotate .sb-block {
+  display: block; margin: 4px 0 28px; padding: 16px 20px 18px;
+  background: #f8f9fa; border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-family: -apple-system, "PingFang SC", sans-serif; text-indent: 0;
+}
+body.mode-annotate .analysis { display: none !important; }
+body.mode-quiz .sb-block, body.mode-raw .sb-block { display: none !important; }
+.sb-title { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: .08em; margin-bottom: 12px; }
+.sb-sent { font-family: Georgia, serif; font-size: 18px; line-height: 2.3; color: #1a1a1a; background: #fff; border: 1px solid #ece8e0; border-radius: 10px; padding: 14px 18px; }
+.sb-chip { display: inline-block; font-family: -apple-system, "PingFang SC", sans-serif; font-size: 11px; font-weight: 700; line-height: 1; padding: 4px 7px; border-radius: 999px; margin-right: 5px; vertical-align: 3px; }
+.sb-core { font-weight: 700; border-bottom: 2.5px solid var(--accent); }
+.sb-core-chip { background: var(--accent); color: #fff; }
+.sb-ins { color: #9a9a9a; background: #eeebe4; border-radius: 4px; padding: 2px 4px; }
+.sb-ins-chip { background: #e4e0d8; color: #777; }
+.sb-rest { border-bottom: 2.5px solid #4caf7a; }
+.sb-rest-chip { background: #4caf7a; color: #fff; }
+.sb-steps { margin-top: 14px; display: grid; gap: 10px; }
+.sb-step { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; font-size: 15px; line-height: 1.75; color: #333; }
+.sb-step-n { width: 24px; height: 24px; border-radius: 50%; background: #1a1a1a; color: #fff; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; margin-top: 2px; }
+.sb-step em { font-style: normal; font-family: Georgia, serif; color: #111; background: #fff; border: 1px solid #ece8e0; padding: 0 5px; border-radius: 4px; }
+.sb-step .arrow { color: #aaa; margin: 0 4px; }
+.sb-tip { margin-top: 14px; font-size: 14px; color: #8a6d1f; background: #fdf6e3; border-radius: 8px; padding: 9px 14px; }
 </style>
 </head>
 <body class="mode-study">
@@ -428,6 +503,7 @@ body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
         <button class="mode-step" data-mode="quiz" onclick="setMode('quiz')">② 做题</button>
         <button class="mode-step" data-mode="raw" onclick="setMode('raw')">③ 原文</button>
       </div>
+      <button class="btn" id="annotate-btn" onclick="toggleAnnotate()" title="显示/隐藏行间注解">注解</button>
       <button class="btn" id="theme-btn" onclick="cycleTheme()" title="切换护眼色">⬜ 默认白</button>
     </div>
   </div>
@@ -447,6 +523,7 @@ body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
       <p>最后 a job she can do herself，中间其实省了个 that — a job <u>that</u> she can do herself，"她自己能搞定的活儿"。高考阅读里 that 经常省掉，别在这卡住。</p>
     </div>
     <div class="translation-inline">Terri Bolton 说到 DIY 可是一把好手。她擅长安装架子和拼装家具，从不花钱请别人做自己能做的事。</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-ins-chip">原因 · 先跳过</span><span class="sb-ins">Skilled at putting up shelves and piecing together furniture,</span> <span class="sb-chip sb-core-chip">谁</span><span class="sb-core">she</span> <span class="sb-chip sb-core-chip">干了什么</span><span class="sb-core">never pays someone else</span> <span class="sb-chip sb-rest-chip">做什么事</span><span class="sb-rest">to do a job she can do herself.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读主干：<em>she never pays someone else</em><span class="arrow">→</span>她从不花钱请别人</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>补上请人干嘛：<em>to do a job she can do herself</em><span class="arrow">→</span>做她自己就能干的活</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>回头看开头：<em>Skilled at putting up shelves …</em><span class="arrow">→</span>因为她很会装架子、拼家具</div></div></div><div class="sb-tip">💡 a job she can do herself 中间省了个 that（a job <u>that</u> she can do），高考阅读里 that 常被省掉，别在这卡住。</div></div>
   </div>
 
   <!-- ── Paragraph 2 ── -->
@@ -463,6 +540,8 @@ body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
     </div>
     <span class="sentence" data-idx="6">It took weeks and was <span class="tip" data-tip="backbreaking|累死人的｜back 是背，breaking 是断裂——背都干断了，多累啊。就是说这活儿特别辛苦，纯体力活" data-level="超纲">backbreaking</span> work, but I know he was <span class="tip" data-tip="proud of|为…感到骄傲｜I'm proud of you 你肯定听过——为你骄傲｜名词 pride：take pride in = be proud of，都是「以…为荣」。pride 还常见于 national pride 民族自豪感">proud of</span> my skills."</span>
     <div class="translation-inline">她把这些技能归功于已故的祖父——建筑工人 Derek Lloyd。从六岁起，现年26岁的 Terri 就在学校放假时跟着 Derek 去工地干活。一天的劳动能换来5英镑零花钱。她说："我确信一开始我帮不了什么大忙，就是给房间刷刷漆，在房子各处铺铺地板。这些活儿干了好几周，累得要命，但我知道他为我的手艺感到骄傲。"</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-rest-chip">何时</span><span class="sb-rest">From the age of six,</span> <span class="sb-chip sb-core-chip">谁</span><span class="sb-core">Terri,</span> <span class="sb-chip sb-ins-chip">插入 · 先跳过</span><span class="sb-ins">now 26,</span> <span class="sb-chip sb-core-chip">干了什么</span><span class="sb-core">accompanied Derek to work</span> <span class="sb-chip sb-rest-chip">何时</span><span class="sb-rest">during her school holidays.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读主干：<em>Terri … accompanied Derek to work</em><span class="arrow">→</span>Terri 跟着 Derek 去干活</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>补上时间：<em>From the age of six … during her school holidays</em><span class="arrow">→</span>从六岁起，每逢学校放假</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>最后看插入：<em>now 26</em><span class="arrow">→</span>她现在 26 岁了（顺便一提）</div></div></div><div class="sb-tip">💡 两个逗号夹住的短小部分（这里是 now 26），多半是顺便补充，先跳过也不影响理解。</div></div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-core-chip">谁 · 说</span><span class="sb-core">She says:</span> <span class="sb-chip sb-core-chip">说了什么</span><span class="sb-core">"I'm sure I wasn't much of a help</span> <span class="sb-chip sb-rest-chip">何时</span><span class="sb-rest">to start with,</span> <span class="sb-chip sb-ins-chip">补充 · 干了啥</span><span class="sb-ins">painting the rooms and putting down the flooring throughout the house.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读主干：<em>I wasn't much of a help</em><span class="arrow">→</span>我算不上什么帮手</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>补上时间：<em>to start with</em><span class="arrow">→</span>一开始的时候</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>再看逗号后面：<em>painting the rooms and putting down the flooring …</em><span class="arrow">→</span>具体干的活：刷墙、在整个房子里铺地板</div></div></div><div class="sb-tip">💡 not much of a help = 帮不上什么忙；逗号后跟 -ing 的一串，多半是在具体说「干了些啥」。</div></div>
   </div>
 
   <!-- ── Paragraph 3 ── -->
@@ -477,6 +556,8 @@ body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
       <p>这句是一条因果链：会填墙洞、会刷漆 → 搬走的时候房间恢复原样 → 不被房东扣钱。开头 it's been useful to know... 先说结论"这技能有用"，后面再说有用在哪。</p>
     </div>
     <div class="translation-inline">现在和朋友在伦敦西南部合租房子的 Terri 说，DIY 还能帮她在租期结束时不损失押金。她补充道："我搬过很多次家，我总是喜欢给房间加上个人风格、挂些照片。所以，知道怎么填补墙洞、重新粉刷房间来避免搬出时被扣钱，一直很有用。"</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-core-chip">谁</span><span class="sb-core">Terri,</span> <span class="sb-chip sb-ins-chip">插入 · 先跳过</span><span class="sb-ins">who now rents a house with friends in Wandsworth, South West London,</span> <span class="sb-chip sb-core-chip">说了什么</span><span class="sb-core">says DIY also saves her from losing any deposit</span> <span class="sb-chip sb-rest-chip">何时</span><span class="sb-rest">when a tenancy comes to an end.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读主干：<em>Terri … says DIY also saves her from losing any deposit</em><span class="arrow">→</span>Terri 说 DIY 还让她不丢押金</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>补上时间：<em>when a tenancy comes to an end</em><span class="arrow">→</span>在租期结束的时候</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>最后回头看插入：<em>who now rents a house …</em><span class="arrow">→</span>她现在和朋友在伦敦西南部合租</div></div></div><div class="sb-tip">💡 看到「逗号 + who」引出一大段，先跳过，往后找真正的动词（这里是 says）。</div></div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-core-chip">是什么</span><span class="sb-core">So, it's been useful</span> <span class="sb-chip sb-core-chip">什么有用</span><span class="sb-core">to know how to cover up holes and repaint a room</span> <span class="sb-chip sb-rest-chip">结果</span><span class="sb-rest">to avoid any charges</span> <span class="sb-chip sb-rest-chip">何时</span><span class="sb-rest">when I've moved out."</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读主干：<em>it's been useful to know how to cover up holes and repaint a room</em><span class="arrow">→</span>会补墙洞、会重新刷墙，一直很有用</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>再看有用在哪：<em>to avoid any charges</em><span class="arrow">→</span>不被（房东）扣钱</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>补上时间：<em>when I've moved out</em><span class="arrow">→</span>在搬走的时候</div></div></div><div class="sb-tip">💡 it's useful to do… 里 it 只是占位，真正「有用的事」在后面 to 那里。</div></div>
   </div>
 
   <!-- ── Paragraph 4 ── -->
@@ -494,6 +575,8 @@ body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
       <p>it is women now leading the charge — 故意把 women 提前强调：不是别人，就是女性。这句也是全段的核心结论，第27题答案就从这来。</p>
     </div>
     <div class="translation-inline">随着数百万人可能在未来几周开展 DIY 项目，新研究表明超过一半的人正计划充分利用漫长温暖的夏日来完成工作。每个项目平均花费约823英镑。三分之二的人希望改善居家舒适度，五分之一的人希望提升房屋价值。尽管 DIY 传统上被视为男性爱好，但研究表明，现在引领这一潮流的是女性。</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-ins-chip">背景 · 先跳过</span><span class="sb-ins">With millions of people likely to take on DIY projects over the coming weeks,</span> <span class="sb-chip sb-core-chip">谁</span><span class="sb-core">new research</span> <span class="sb-chip sb-core-chip">发现了什么</span><span class="sb-core">shows that more than half of people are planning to make the most of the long, warm summer days</span> <span class="sb-chip sb-rest-chip">目的</span><span class="sb-rest">to get jobs done.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读主干：<em>new research shows that more than half of people are planning …</em><span class="arrow">→</span>新研究发现，一半以上的人打算…</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>补上打算干嘛：<em>to make the most of the … summer days to get jobs done</em><span class="arrow">→</span>趁漫长温暖的夏天，把活儿干完</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>回头看开头：<em>With millions of people likely to take on DIY …</em><span class="arrow">→</span>几百万人在接下来几周可能要搞 DIY</div></div></div><div class="sb-tip">💡 碰到 With… 开头的长句，前面只是铺垫，直接往逗号后面找主语（这里是 new research）。</div></div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-ins-chip">背景 · 先跳过</span><span class="sb-ins">Though DIY has traditionally been seen as a male hobby,</span> <span class="sb-chip sb-core-chip">谁</span><span class="sb-core">the research</span> <span class="sb-chip sb-core-chip">发现了什么</span><span class="sb-core">shows it is women</span> <span class="sb-chip sb-rest-chip">怎么样</span><span class="sb-rest">now leading the charge.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读主干：<em>the research shows it is women now leading the charge</em><span class="arrow">→</span>研究发现，现在带头的是女性</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>回头看开头：<em>Though DIY has traditionally been seen as a male hobby</em><span class="arrow">→</span>虽然 DIY 一直被看作男人的爱好</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>连起来：<em>Though …, … women</em><span class="arrow">→</span>以前是男人的事，现在反过来是女人领头</div></div></div><div class="sb-tip">💡 看到 Though/Although 开头，逗号后面要说反话；后半句往往是重点，第27题答案就从这来。</div></div>
   </div>
 </div>
 
@@ -1282,6 +1365,73 @@ function srsInit() {
   srsUpdateBadge();
 }
 srsInit();
+
+function initAnnotations() {
+  document.querySelectorAll('sup.ann-sup, .para-ann').forEach(el => el.remove());
+
+  document.querySelectorAll('.passage .paragraph').forEach(para => {
+    const seen = new Set();
+    const items = [];
+    let idx = 1;
+
+    para.querySelectorAll('.tip').forEach(el => {
+      const tip = el.dataset.tip || '';
+      const parts = tip.split('|');
+      if (parts.length < 2) return;
+      const phrase = parts[0].trim();
+
+      if (seen.has(phrase)) {
+        const prevIdx = items.findIndex(i => i.phrase === phrase) + 1;
+        const sup = document.createElement('sup');
+        sup.className = 'ann-sup';
+        sup.textContent = prevIdx;
+        el.after(sup);
+        return;
+      }
+      seen.add(phrase);
+
+      const sup = document.createElement('sup');
+      sup.className = 'ann-sup';
+      sup.textContent = idx;
+      el.after(sup);
+
+      const contentParts = parts[1].split('｜');
+      const cn = contentParts[0].trim();
+      const det = contentParts.slice(1).map(s => s.replace(/<[^>]+>/g, '').trim()).filter(Boolean);
+      items.push({ num: idx, phrase, cn, det });
+      idx++;
+    });
+
+    if (items.length === 0) return;
+
+    const ann = document.createElement('div');
+    ann.className = 'para-ann';
+    ann.innerHTML = items.map(i =>
+      `<div class="pan-row">
+        <div class="pan-head">
+          <span class="pan-num">${i.num}</span>
+          <span class="pan-en">${i.phrase}</span>
+          <span class="pan-cn">${i.cn}</span>
+        </div>
+        ${i.det.length ? `<div class="pan-det">${i.det.map(d => `<div>${d}</div>`).join('')}</div>` : ''}
+      </div>`
+    ).join('');
+
+    const trans = para.querySelector('.translation-inline');
+    if (trans) trans.after(ann);
+    else para.appendChild(ann);
+  });
+}
+
+function toggleAnnotate() {
+  const on = document.body.classList.toggle('mode-annotate');
+  const btn = document.getElementById('annotate-btn');
+  btn.textContent = on ? '注解 ✓' : '注解';
+  btn.classList.toggle('on', on);
+}
+
+document.addEventListener('DOMContentLoaded', initAnnotations);
+
 </script>
 </body>
 </html>
