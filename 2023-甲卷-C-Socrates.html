@@ -461,7 +461,6 @@ body.mode-annotate .para-ann {
 
 body.mode-quiz .para-ann, body.mode-raw .para-ann { display: none !important; }
 body.mode-quiz sup.ann-sup, body.mode-raw sup.ann-sup { display: none !important; }
-#annotate-btn.on { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
 
 /* 注解模式：长难句拆解（无音频，替代 .analysis） */
 .sb-block { display: none; }
@@ -501,8 +500,8 @@ body.mode-quiz .sb-block, body.mode-raw .sb-block { display: none !important; }
         <button class="mode-step active" data-mode="study" onclick="setMode('study')">① 精读</button>
         <button class="mode-step" data-mode="quiz" onclick="setMode('quiz')">② 做题</button>
         <button class="mode-step" data-mode="raw" onclick="setMode('raw')">③ 原文</button>
+        <button class="mode-step" data-mode="annotate" onclick="setMode('annotate')">④ 讲义</button>
       </div>
-      <button class="btn" id="annotate-btn" onclick="toggleAnnotate()" title="显示/隐藏行间注解">注解</button>
       <button class="btn" id="theme-btn" onclick="cycleTheme()" title="切换护眼色">⬜ 默认白</button>
     </div>
   </div>
@@ -1171,7 +1170,7 @@ function toggleAnalysis(idx) {
 function togglePanel(id) { document.getElementById(id).classList.toggle('open'); }
 
 function setMode(mode) {
-  document.body.classList.remove('mode-raw', 'mode-study', 'mode-quiz');
+  document.body.classList.remove('mode-raw', 'mode-study', 'mode-quiz', 'mode-annotate');
   if (mode !== 'study') document.body.classList.add('mode-' + mode);
   document.querySelectorAll('.mode-step').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.mode === mode);
@@ -1379,13 +1378,6 @@ function initAnnotations() {
     if (trans) trans.after(ann);
     else para.appendChild(ann);
   });
-}
-
-function toggleAnnotate() {
-  const on = document.body.classList.toggle('mode-annotate');
-  const btn = document.getElementById('annotate-btn');
-  btn.textContent = on ? '注解 ✓' : '注解';
-  btn.classList.toggle('on', on);
 }
 
 document.addEventListener('DOMContentLoaded', initAnnotations);
