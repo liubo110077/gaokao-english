@@ -58,6 +58,14 @@ summary::before{content:'＋ '} details[open] summary::before{content:'－ '}
 .lv.core{background:var(--green-l);color:var(--green)} .lv.sel{background:var(--accent-l);color:var(--accent)} .lv.ext{background:var(--orange-l);color:var(--orange)} .lv.out{background:var(--red-l);color:var(--red)}
 @media(max-width:520px){.ch{padding:20px 18px}}
 @media print{body{background:#fff}.theme-btn,.back{display:none}.ch{box-shadow:none}}
+.prompt{background:var(--bg);border-radius:8px;padding:10px 14px;font-size:15px;margin:10px 0}
+.letter{border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:12px 0}
+.letter p.en{font-size:17px;margin:6px 0;line-height:1.8}
+.letter .row{display:flex;gap:10px;align-items:baseline;border-radius:6px;padding:2px 6px;margin:4px -6px}
+.letter .row.hi{background:var(--green-l)}
+.letter .row.hi .chip{background:var(--green);color:#fff}
+.letter .chip{font-size:12px;font-weight:700;padding:0 8px;border-radius:6px;background:var(--accent-l);color:var(--accent);white-space:nowrap;flex-shrink:0}
+.letter u{text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:3px}
 </style>
 </head>
 <body>
@@ -153,24 +161,33 @@ summary::before{content:'＋ '} details[open] summary::before{content:'－ '}
   <!-- 4 -->
   <div class="ch">
     <h2>第二个建议想不出来？就写"开讲座"</h2>
-    <p>北京卷作文常常要你提<b>两个</b>建议或活动。第一个一般好想，第二个经常卡住。</p>
-    <p>老师的办法：第二个<b>不管什么题，都写"请一位有名的教授来开个讲座"</b>，讲座的主题跟着题目换。老师原话："开讲座这个措施，真的非常万能。"</p>
-    <p class="muted">放进 2023 年北京卷"绿色北京"那道题里看：</p>
-    <div class="para before">First, I suggest having a cycling trip around the city, because it is good for both our health and the environment. <span class="new">What's more, a distinguished professor will be invited to give a lecture on protecting the environment, so that we can learn more about how to live a green life.</span></div>
-    <p class="muted">首先，我建议骑车游城，因为这对健康和环境都好。<b>另外，我们会请一位著名教授来做一场关于保护环境的讲座，这样我们就能更多地了解怎样过绿色生活。</b></p>
-    <p>换一道题，只换讲座的主题，其他不动：</p>
+    <p>先看一道真题和一整篇作文。</p>
+    <div class="prompt"><b>2023 年北京卷</b>：你的英国好友 Jim 正在策划一次"绿色北京"主题的社团活动，来信问你的建议。请你回信，内容包括：1. 活动形式；2. 活动内容。</div>
+
+    <div class="letter">
+      <p class="en">Dear Jim,</p>
+      <div class="row"><span class="chip">开头</span><p class="en">I'm glad to hear that you are planning a club activity about "Green Beijing". Here are my suggestions.</p></div>
+      <div class="row"><span class="chip">建议一</span><p class="en">First, I suggest having a cycling trip around the city, because it is good for both our health and the environment. During the trip, members can take photos of the green places in Beijing.</p></div>
+      <div class="row hi"><span class="chip">建议二</span><p class="en">What's more, a distinguished professor will be invited to give a lecture on <u>protecting the environment</u>, so that we can learn more about <u>how to live a green life</u>.</p></div>
+      <div class="row"><span class="chip">结尾</span><p class="en">I hope my suggestions will be helpful.</p></div>
+      <p class="en">Yours,<br>Li Hua</p>
+    </div>
+    <p class="muted">中文：听说你在策划"绿色北京"社团活动，下面是我的建议。首先，我建议骑车游城，因为这对健康和环境都好，路上大家还可以拍北京的绿色景点。<b>另外，我们会请一位著名教授来做一场关于保护环境的讲座，让大家更多地了解怎样过绿色生活。</b>希望我的建议对你有帮助。</p>
+
+    <p>这道题要写两个建议。第一个（骑车游城）好想，<b>第二个经常卡住</b>。</p>
+    <p>老师的办法就是绿色那句：<b>第二个建议，不管什么题，都写"请一位有名的教授来开个讲座"</b>。老师原话："开讲座这个措施，真的非常万能。"</p>
+    <p>换一道题，这句话不用重写，<b>只换下划线的两处</b>：</p>
     <ul>
-      <li>2025 联合国倡议 → <span class="en">give a lecture on <b>saving food</b></span></li>
-      <li>中国文化活动 → <span class="en">give a lecture on <b>Chinese traditional culture</b></span></li>
-      <li>运动、健康 → <span class="en">give a lecture on <b>keeping healthy</b></span></li>
+      <li>中国文化节 → <span class="en">a lecture on <u>Chinese traditional culture</u>, so that we can learn more about <u>our history</u></span></li>
+      <li>健康运动周 → <span class="en">a lecture on <u>keeping healthy</u>, so that we can learn more about <u>how to exercise properly</u></span></li>
+      <li>读书活动 → <span class="en">a lecture on <u>reading</u>, so that we can learn more about <u>how to choose good books</u></span></li>
     </ul>
-    <p>老师喜欢这句，还因为它用了被动语态（<span class="en">will be invited</span>）和 <span class="en">distinguished</span> 这样的词，能显出水平。老师说写出这句"保底加两分"，这是老师的说法，评分标准里没有这样的规定。</p>
-    <div class="key">背下这一句：<span class="en">What's more, a distinguished professor will be invited to give a lecture on ___, so that we can learn more about ___.</span> 第二个建议卡住时，直接拿出来用。</div>
+    <p class="muted">老师还说这句用了被动语态（will be invited）和 distinguished 这样的词，能显出水平，写出来"保底加两分"。这是老师的说法，评分标准里没有这样的规定。</p>
     <details>
       <summary>老师原版（更难，先别背）</summary>
       <div class="inner">
         <div class="shell">What's more, a distinguished professor will be invited to address a lecture themed on <span class="blank"></span>, in which not only can we gain a deeper insight into <span class="blank"></span>, but we can also <span class="blank"></span>.</div>
-        <p>比简单版多了两个难点：一是 <span class="en">not only</span> 放句首要倒装成 <span class="en">can we</span>，二是 <span class="en">address a lecture</span> 这个搭配不太地道（address 是"向……讲话"，后面通常接听众，比如 address the students；"做讲座"一般用 give a lecture）。所以页面上用的是去掉这两处的简单版。</p>
+        <p>比上面的版本多了两个难点：<span class="en">not only</span> 放句首要倒装成 <span class="en">can we</span>；<span class="en">address a lecture</span> 搭配不太地道（"做讲座"一般用 give a lecture）。所以先背上面那句。</p>
       </div>
     </details>
   </div>
