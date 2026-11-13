@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>作文不是答两道题，是写一封信</title>
+<style>
+:root{--bg:#f8f7f4;--surface:#fff;--border:#e5e3de;--text:#1a1917;--muted:#6b6865;--accent:#2563eb;--accent-l:#eff6ff;--green:#16a34a;--green-l:#dcfce7;--orange:#d97706;--orange-l:#fef3c7;--red:#dc2626;--red-l:#fee2e2;--purple:#7e22ce;--purple-l:#fdf4ff;--shadow:0 1px 4px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.06)}
+[data-theme=dark]{--bg:#18181b;--surface:#27272a;--border:#3f3f46;--text:#fafafa;--muted:#a1a1aa;--accent:#60a5fa;--accent-l:#1e3a5f;--green:#4ade80;--green-l:#052e16;--orange:#fbbf24;--orange-l:#451a03;--red:#f87171;--red-l:#450a0a;--purple:#d8b4fe;--purple-l:#2e1a40}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;line-height:1.9}
+.wrapper{max-width:min(720px,92vw);margin:0 auto;padding:32px 0 80px}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin:8px 0 24px}
+h1{font-size:23px}
+.sub{font-size:14px;color:var(--muted)}
+.back{font-size:13px;color:var(--accent);text-decoration:none}
+.theme-btn{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);color:var(--text);font-size:16px;cursor:pointer;flex-shrink:0}
+.ch{background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:26px 28px;margin-bottom:22px}
+.ch h2{font-size:19px;margin-bottom:12px}
+.ch h3{font-size:16px;margin:18px 0 6px}
+.ch p{font-size:17px;margin:10px 0}
+.en{font-family:Georgia,'Times New Roman',serif}
+.muted{color:var(--muted);font-size:14px}
+.key{background:var(--green-l);border-radius:8px;padding:12px 16px;margin:14px 0;font-size:17px}
+.prompt{background:var(--bg);border-radius:8px;padding:10px 14px;font-size:15px;margin:10px 0}
+.say{border-left:3px solid var(--accent);padding:6px 14px;margin:14px 0;font-size:16px}
+
+.letter{border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:10px 0}
+.letter.bad{border-color:var(--red)}
+.letter.good{border-color:var(--green);border-width:2px}
+.letter .cap{font-size:13px;font-weight:700;margin-bottom:4px}
+.letter.bad .cap{color:var(--red)} .letter.good .cap{color:var(--green)}
+.letter p.en{font-size:17px;margin:6px 0;line-height:1.85}
+.row{display:flex;gap:10px;align-items:baseline;margin:5px 0}
+.row p.en{margin:0}
+.chip{font-size:12px;font-weight:700;padding:0 8px;border-radius:6px;white-space:nowrap;flex-shrink:0;min-width:64px;text-align:center}
+.c-open{background:var(--accent-l);color:var(--accent)}
+.c-mid{background:var(--orange-l);color:var(--orange)}
+.c-end{background:var(--purple-l);color:var(--purple)}
+
+.parts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+.parts div{border-radius:8px;padding:12px;text-align:center;font-size:16px}
+.parts b{display:block;font-size:24px}
+.parts small{display:block;color:var(--muted);font-size:13px}
+
+table{width:100%;border-collapse:collapse;font-size:15px;margin:8px 0}
+th,td{border-bottom:1px solid var(--border);padding:7px 6px;text-align:left;vertical-align:top}
+th{color:var(--muted);font-size:12px}
+td.en{font-size:16px}
+ul{padding-left:22px} li{font-size:17px;margin:6px 0}
+details{margin-top:14px;border-top:1px dashed var(--border);padding-top:10px}
+summary{cursor:pointer;color:var(--accent);font-size:15px;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:'＋ '} details[open] summary::before{content:'－ '}
+.inner{margin-top:10px;font-size:15px}
+.inner p{font-size:15px}
+@media(max-width:520px){.ch{padding:20px 18px}.parts{grid-template-columns:1fr}}
+@media print{body{background:#fff}.theme-btn,.back{display:none}.ch{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <a class="back" href="index.html">← 回到首页</a>
+  <header>
+    <div>
+      <h1>作文不是答两道题，是写一封信</h1>
+      <div class="sub">B 站沉香老师一节 10 分钟的课：整篇作文怎么搭</div>
+    </div>
+    <button class="theme-btn" id="themeBtn">☽</button>
+  </header>
+
+  <!-- 1 -->
+  <div class="ch">
+    <h2>老师就讲了一件事</h2>
+    <p>很多同学把作文当成<b>回答题目里的两个问题</b>，两个问题答完就交卷。</p>
+    <p>老师说，北京卷作文是<b>一封信</b>。信是写给人看的，有来有往，所以要有像样的开头和结尾，中间几个点也要排好先后。</p>
+    <p>先看两封信，一眼就明白了。</p>
+  </div>
+
+  <!-- 2 -->
+  <div class="ch">
+    <h2>例子：同一道题，两种写法</h2>
+    <div class="prompt"><b>2024 年北京卷</b>：今年是新中国成立 75 周年，你的外国好友 Jim 打算给校报的 Asia Today 栏目投稿，介绍中国的发展成就，来信问你的建议。请你回信，内容包括：1. 建议投稿内容；2. 简要说明理由。</div>
+
+    <div class="letter bad">
+      <div class="cap">❌ 只答了两道题</div>
+      <p class="en">Dear Jim,</p>
+      <p class="en">You can write about the high-speed railway, because it is very fast. You can also write about paying with phones, because it is very convenient.</p>
+      <p class="en">Yours,<br>Li Hua</p>
+    </div>
+    <p class="muted">两个要点都答了，但读起来像在做问答题：没头没尾，Jim 也不知道你为什么写这封信。</p>
+
+    <div class="letter good">
+      <div class="cap">✅ 像一封信</div>
+      <p class="en">Dear Jim,</p>
+      <div class="row"><span class="chip c-open">问候</span><p class="en">How is everything going?</p></div>
+      <div class="row"><span class="chip c-open">为什么写</span><p class="en">I learned that you are going to write about China's achievements for <i>Asia Today</i>.</p></div>
+      <div class="row"><span class="chip c-open">写信目的</span><p class="en">I'm writing to share some ideas with you.</p></div>
+      <div class="row"><span class="chip c-mid">要点一</span><p class="en">First, you can start with our daily life. Today we can pay for almost everything with a phone, which makes our lives much easier.</p></div>
+      <div class="row"><span class="chip c-mid">要点二</span><p class="en">Then, you can move on to the whole country. High-speed trains now connect cities all over China. It shows how fast our country is developing.</p></div>
+      <div class="row"><span class="chip c-end">再呼应</span><p class="en">I hope these ideas will be helpful.</p></div>
+      <div class="row"><span class="chip c-end">留个"下次"</span><p class="en">I'm looking forward to reading your article, and just let me know if you need any photos!</p></div>
+      <p class="en">Yours,<br>Li Hua</p>
+    </div>
+    <p class="muted">中文：最近怎么样？听说你要给 Asia Today 写中国的发展成就，我写信跟你分享一些想法。首先，你可以从日常生活写起：现在我们用手机几乎什么都能付，生活方便多了。然后，你可以写到整个国家：高铁把全国的城市连在了一起，这说明我们国家发展得多快。希望这些想法对你有帮助。期待读到你的文章，需要照片的话尽管说！</p>
+
+    <p>要点还是那两个（手机支付、高铁），但多了三样东西：</p>
+    <ul>
+      <li><b>开头</b>交代了为什么写这封信</li>
+      <li><b>结尾</b>呼应了开头，还留了"下次再聊"的口子</li>
+      <li><b>两个要点有先后</b>：先写身边的小事，再写整个国家</li>
+    </ul>
+    <p>下面一样一样说。</p>
+  </div>
+
+  <!-- 3 -->
+  <div class="ch">
+    <h2>老师说：20 分里，结构最好拿</h2>
+    <p>老师把北京卷作文的 20 分拆成三块：</p>
+    <div class="parts">
+      <div style="background:var(--orange-l)"><b>8</b>内容<small>写了什么</small></div>
+      <div style="background:var(--accent-l)"><b>8</b>语言<small>词和句子</small></div>
+      <div style="background:var(--green-l)"><b>4</b>结构<small>开头、结尾、先后</small></div>
+    </div>
+    <p>她说大家都盯着语言使劲，可语言写得再好也很难拿满。<b>结构这 4 分反而最容易拿</b>，把开头、结尾、中间衔接做好，就能拿到 3.5 到 4 分。</p>
+    <p>关于语言，她说得很直接：<b>不需要背超纲词</b>，北京高考要求的 3500 个词，加上学过的从句、非谓语，就完全够用。</p>
+    <p class="muted">8+8+4 是老师的说法。北京卷作文的评分细则从来没有公开过，没法核对。</p>
+  </div>
+
+  <!-- 4 -->
+  <div class="ch">
+    <h2>开头写三件事，结尾写两件事</h2>
+    <h3>开头：问候 → 为什么写 → 写信目的</h3>
+    <p>老师说顺序是：先寒暄一句，再说背景（我为什么写这封信），最后说目的。<b>先背景、后目的</b>，不然一上来就"我建议你……"，读着很生硬。</p>
+    <table>
+      <tr><th>哪一步</th><th>可以这样写</th></tr>
+      <tr><td>问候</td><td class="en">How is everything going? / I hope you are doing well.</td></tr>
+      <tr><td>为什么写</td><td class="en">I learned that you are going to … / I'm glad to hear that you …</td></tr>
+      <tr><td>写信目的</td><td class="en">I'm writing to share some ideas with you. / I'm writing to invite you to …</td></tr>
+    </table>
+
+    <h3>结尾：再呼应一次 → 留个"下次"</h3>
+    <p>开头说了来干什么，结尾就再回应一次：建议信说"希望有帮助"，道歉信再说一次"对不起"，感谢信再谢一次。</p>
+    <p>然后留一个"下次"。老师的原话：</p>
+    <div class="say">这封信件是你来我往的，我们两个人肯定还会有沟通、有交流，而不是说我这个文章写完之后，咱俩再也没有交集。</div>
+    <table>
+      <tr><th>哪一步</th><th>可以这样写</th></tr>
+      <tr><td>再呼应</td><td class="en">I hope these ideas will be helpful. / Sorry again. / Thanks again for your help.</td></tr>
+      <tr><td>留个"下次"</td><td class="en">Looking forward to your reply. / Just let me know if you need any help.</td></tr>
+    </table>
+  </div>
+
+  <!-- 5 -->
+  <div class="ch">
+    <h2>中间两个要点，先写哪个？</h2>
+    <p>老师说，很多同学考场上"<b>想到哪写到哪，东一句西一句</b>"，只要跟题目相关就往上写。有的作文没什么好词好句，读起来却很顺，差别就在<b>先写什么、后写什么</b>。</p>
+    <p>她给了三种排法：</p>
+    <table>
+      <tr><th>排法</th><th>意思</th><th>例子</th></tr>
+      <tr><td><b>由低到高</b></td><td>先写个人，再写集体、国家</td><td>上面那封信：先写手机支付（日常生活），再写高铁（整个国家）</td></tr>
+      <tr><td><b>由浅到深</b></td><td>先写看得见的现象，再写背后的原因或影响</td><td>先写"很多食物被浪费"，再写"这对地球意味着什么"</td></tr>
+      <tr><td><b>由抽象到具体</b></td><td>先说一个大道理，再落到具体做法</td><td>先说"保护环境"，再说"离开教室随手关灯"</td></tr>
+    </table>
+    <div class="key">写之前花 10 秒想一下：两个要点，<b>哪个小、哪个大？哪个浅、哪个深？</b>小的、浅的放前面。</div>
+
+    <h3>内容想不出来怎么办</h3>
+    <p>老师说内容分里有一项是"创造力"：大家都写 Congratulations，你能不能想到不一样的点？比如介绍中国的发展，能想到经济、政治、民生、生态好几个方面，就比只想到一个强。</p>
+    <p>这靠平时积累。北京卷常考三类话题，课本里都有：<b>人与自我、人与社会、人与自然</b>。</p>
+  </div>
+
+  <!-- 6 -->
+  <div class="ch">
+    <h2>写完问自己两个问题</h2>
+    <p>老师给的练习方法，每次写完作文都检查一遍：</p>
+    <ul>
+      <li><b>开头和结尾有没有？对不对得上？</b>开头说为什么写，结尾有没有回应、有没有留"下次"？</li>
+      <li><b>两个要点的先后有没有道理？</b>是不是由低到高、由浅到深？</li>
+    </ul>
+    <p>老师说，结构感和先后安排<b>可以刻意练出来</b>，不靠天赋。</p>
+
+    <details>
+      <summary>视频信息</summary>
+      <div class="inner">
+        <p>《北京高考英语作文》，B 站"沉香老师教英语"，10 分 26 秒，<span class="en">https://www.bilibili.com/video/BV1ds3M67EDf/</span></p>
+        <p class="muted">老师在课上用的例子是祝贺信，没有给完整范文。本页两封信是按老师讲的结构写的，用的都是高考词表里的词。</p>
+      </div>
+    </details>
+  </div>
+</div>
+<script>
+const K='theme';function ap(d){document.documentElement.dataset.theme=d?'dark':'light';document.getElementById('themeBtn').textContent=d?'☀︎':'☽'}
+let d=localStorage.getItem(K)==='1'||(localStorage.getItem(K)===null&&matchMedia('(prefers-color-scheme: dark)').matches);ap(d);
+document.getElementById('themeBtn').onclick=()=>{d=!d;ap(d);localStorage.setItem(K,d?'1':'0')};
+addEventListener('beforeprint',()=>document.querySelectorAll('details').forEach(x=>x.open=true));
+</script>
+</body>
+</html>
