@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>作文换个词 · 别总用 good</title>
+<style>
+:root{--bg:#f8f7f4;--surface:#fff;--border:#e5e3de;--text:#1a1917;--muted:#6b6865;--accent:#2563eb;--accent-l:#eff6ff;--green:#16a34a;--green-l:#dcfce7;--orange:#d97706;--orange-l:#fef3c7;--red:#dc2626;--red-l:#fee2e2;--purple:#7e22ce;--purple-l:#fdf4ff;--shadow:0 1px 4px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.06)}
+[data-theme=dark]{--bg:#18181b;--surface:#27272a;--border:#3f3f46;--text:#fafafa;--muted:#a1a1aa;--accent:#60a5fa;--accent-l:#1e3a5f;--green:#4ade80;--green-l:#052e16;--orange:#fbbf24;--orange-l:#451a03;--red:#f87171;--red-l:#450a0a;--purple:#d8b4fe;--purple-l:#2e1a40}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;line-height:1.9}
+.wrapper{max-width:min(720px,92vw);margin:0 auto;padding:32px 0 80px}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin:8px 0 24px}
+h1{font-size:23px}
+.sub{font-size:14px;color:var(--muted)}
+.back{font-size:13px;color:var(--accent);text-decoration:none}
+.theme-btn{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);color:var(--text);font-size:16px;cursor:pointer;flex-shrink:0}
+.ch{background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:26px 28px;margin-bottom:22px}
+.ch h2{font-size:19px;margin-bottom:12px}
+.ch p{font-size:17px;margin:10px 0}
+.en{font-family:Georgia,'Times New Roman',serif}
+.muted{color:var(--muted);font-size:14px}
+
+.para{font-family:Georgia,serif;font-size:18px;line-height:1.9;padding:12px 16px;border-radius:8px;margin:8px 0}
+.para.before{background:var(--bg)}
+.para.after{background:var(--green-l)}
+.label{font-size:13px;font-weight:700;margin-top:14px}
+.old{color:var(--red);font-weight:700;text-decoration:underline wavy;text-underline-offset:4px}
+.new{color:var(--green);font-weight:700}
+
+.say{border-left:3px solid var(--accent);padding:6px 14px;margin:14px 0;font-size:16px}
+.key{background:var(--green-l);border-radius:8px;padding:12px 16px;margin:14px 0;font-size:17px}
+.warn{background:var(--red-l);border-radius:8px;padding:12px 16px;margin:14px 0;font-size:16px}
+
+.swap{border:1px solid var(--border);border-radius:10px;margin:10px 0;overflow:hidden}
+.swap-h{display:flex;align-items:baseline;gap:10px;padding:8px 14px;background:var(--bg);flex-wrap:wrap}
+.swap-h .from{font-family:Georgia,serif;font-size:17px;color:var(--red);text-decoration:line-through;text-decoration-thickness:1px}
+.swap-h .arrow{color:var(--muted)}
+.swap-h .to{font-family:Georgia,serif;font-size:18px;color:var(--green);font-weight:700}
+.swap-h .zh{font-size:14px;color:var(--muted)}
+.swap .ex{padding:8px 14px;font-family:Georgia,serif;font-size:16px}
+.swap .ex small{display:block;font-family:-apple-system,system-ui,sans-serif;font-size:13px;color:var(--muted)}
+.swap .ex b{color:var(--green)}
+.group{font-size:13px;font-weight:700;color:var(--muted);margin:20px 0 4px}
+
+.shell{font-family:Georgia,serif;font-size:17px;background:var(--bg);border-radius:8px;padding:12px 16px;margin:10px 0;line-height:2}
+.blank{display:inline-block;min-width:48px;border-bottom:2px solid var(--accent)}
+ul{padding-left:22px} li{font-size:17px;margin:6px 0}
+
+details{margin-top:14px;border-top:1px dashed var(--border);padding-top:10px}
+summary{cursor:pointer;color:var(--accent);font-size:15px;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:'＋ '} details[open] summary::before{content:'－ '}
+.inner{margin-top:10px;font-size:15px}
+.inner p{font-size:15px}
+.words{font-family:Georgia,serif;font-size:15px;line-height:1.9}
+.lv{display:inline-block;font-size:12px;font-weight:700;padding:0 7px;border-radius:5px;margin-right:6px;font-family:-apple-system,system-ui,sans-serif}
+.lv.core{background:var(--green-l);color:var(--green)} .lv.sel{background:var(--accent-l);color:var(--accent)} .lv.ext{background:var(--orange-l);color:var(--orange)} .lv.out{background:var(--red-l);color:var(--red)}
+@media(max-width:520px){.ch{padding:20px 18px}}
+@media print{body{background:#fff}.theme-btn,.back{display:none}.ch{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <a class="back" href="index.html">← 回到首页</a>
+  <header>
+    <div>
+      <h1>作文换个词，老师就觉得你有水平</h1>
+      <div class="sub">B 站 Wing无印 一节 66 分钟的课，挑出你现在就能用的</div>
+    </div>
+    <button class="theme-btn" id="themeBtn">☽</button>
+  </header>
+
+  <!-- 1 -->
+  <div class="ch">
+    <h2>老师就讲了一件事</h2>
+    <p>作文评分标准里有一条，高分档要求"<b>用了多样的词汇</b>"。</p>
+    <p>可大家写作文，翻来覆去就是 <span class="en">good、important、many、like</span>。阅卷老师一眼扫过去，觉得你只会这几个词。</p>
+    <p>老师的办法很简单：<b>提前背一批"替换词"，写的时候故意换上去。</b>句子不用变，换几个词就行。</p>
+    <p>直接看例子。</p>
+  </div>
+
+  <!-- 2 -->
+  <div class="ch">
+    <h2>例子：同一段话，换 4 个词</h2>
+    <p class="muted">2025 年北京卷：Jim 要参加联合国的倡议活动，问你写什么。下面是中间那段的两句话。</p>
+
+    <div class="label">换之前</div>
+    <div class="para before">I think your proposal can be about saving food, because it is very <span class="old">important</span>. Nowadays <span class="old">many</span> people <span class="old">like</span> eating out, and too much food is wasted. If everyone saves a little, it will be <span class="old">good for</span> the whole world.</div>
+
+    <div class="label">换之后</div>
+    <div class="para after">I think your proposal can be about saving food, because it is <span class="new">significant</span>. Nowadays <span class="new">a growing number of</span> people <span class="new">are fond of</span> eating out, and too much food is wasted. If everyone saves a little, it will be <span class="new">beneficial to</span> the whole world.</div>
+
+    <p>意思一个字没变，句子也没变，只是：</p>
+    <ul>
+      <li><span class="en">important</span> → <span class="en new">significant</span>（重要的）</li>
+      <li><span class="en">many</span> → <span class="en new">a growing number of</span>（越来越多的）</li>
+      <li><span class="en">like</span> → <span class="en new">be fond of</span>（喜欢）</li>
+      <li><span class="en">good for</span> → <span class="en new">beneficial to</span>（对……有好处）</li>
+    </ul>
+    <p>读起来是不是一下子不一样了？这四个词都在高考词表里，不难。</p>
+    <div class="key">一篇作文<b>换 4～5 个词就够了</b>。不用每个词都换，换多了反而容易写错。</div>
+  </div>
+
+  <!-- 3 -->
+  <div class="ch">
+    <h2>先背这 16 组</h2>
+    <p>老师讲了近 300 个词和短语，有四成高考都不要求。下面这些是我挑的：<b>都在高考词表里，而且几乎每篇作文都用得上</b>。</p>
+
+    <div class="group">夸东西</div>
+    <div class="swap"><div class="swap-h"><span class="from">good</span><span class="arrow">→</span><span class="to">beneficial / rewarding</span><span class="zh">有好处的 / 有收获的</span></div>
+      <div class="ex">Reading is <b>beneficial to</b> our health. The trip was really <b>rewarding</b>.<small>读书对健康有好处。这次旅行收获很大。（注意 beneficial 后面跟 to）</small></div></div>
+    <div class="swap"><div class="swap-h"><span class="from">important</span><span class="arrow">→</span><span class="to">significant / crucial</span><span class="zh">重要的 / 至关重要的</span></div>
+      <div class="ex">Sleep is <b>crucial</b> for students.<small>睡眠对学生至关重要。</small></div></div>
+    <div class="swap"><div class="swap-h"><span class="from">interesting</span><span class="arrow">→</span><span class="to">attractive / appealing</span><span class="zh">吸引人的</span></div>
+      <div class="ex">The activity is very <b>attractive</b> to young people.<small>这个活动对年轻人很有吸引力。</small></div></div>
+    <div class="swap"><div class="swap-h"><span class="from">difficult</span><span class="arrow">→</span><span class="to">challenging</span><span class="zh">有挑战性的</span></div>
+      <div class="ex">The race was <b>challenging</b>, but I finished it.<small>比赛很有挑战，但我跑完了。</small></div></div>
+    <div class="swap"><div class="swap-h"><span class="from">famous</span><span class="arrow">→</span><span class="to">celebrated / distinguished</span><span class="zh">著名的</span></div>
+      <div class="ex">A <b>distinguished</b> professor gave us a talk.<small>一位著名教授给我们做了讲座。（distinguished 最常用来形容教授、嘉宾）</small></div></div>
+
+    <div class="group">说"多"</div>
+    <div class="swap"><div class="swap-h"><span class="from">many</span><span class="arrow">→</span><span class="to">a growing number of / numerous</span><span class="zh">越来越多的 / 许多的</span></div>
+      <div class="ex"><b>A growing number of</b> students go to school by bike.<small>越来越多的学生骑车上学。</small></div></div>
+    <div class="swap"><div class="swap-h"><span class="from">many kinds of</span><span class="arrow">→</span><span class="to">a wide range of / a variety of</span><span class="zh">各种各样的</span></div>
+      <div class="ex">The club offers <b>a wide range of</b> activities.<small>这个社团提供各种各样的活动。</small></div></div>
+    <div class="swap"><div class="swap-h"><span class="from">most</span><span class="arrow">→</span><span class="to">the majority of</span><span class="zh">大多数</span></div>
+      <div class="ex"><b>The majority of</b> my classmates enjoyed the trip.<small>我班大多数同学都很喜欢这次出游。</small></div></div>
+
+    <div class="group">说动作</div>
+    <div class="swap"><div class="swap-h"><span class="from">like</span><span class="arrow">→</span><span class="to">be fond of / have a passion for</span><span class="zh">喜欢 / 热爱</span></div>
+      <div class="ex">I <b>have a passion for</b> Chinese painting.<small>我非常喜欢中国画。</small></div></div>
+    <div class="swap"><div class="swap-h"><span class="from">get</span><span class="arrow">→</span><span class="to">gain / obtain</span><span class="zh">获得</span></div>
+      <div class="ex">We can <b>gain</b> a lot of knowledge from the museum.<small>我们能从博物馆学到很多知识。</small></div></div>
+    <div class="swap"><div class="swap-h"><span class="from">solve</span><span class="arrow">→</span><span class="to">deal with / overcome</span><span class="zh">处理 / 克服</span></div>
+      <div class="ex">We <b>overcame</b> many difficulties together.<small>我们一起克服了很多困难。</small></div></div>
+    <div class="swap"><div class="swap-h"><span class="from">cause</span><span class="arrow">→</span><span class="to">lead to / result in</span><span class="zh">导致</span></div>
+      <div class="ex">Too much screen time can <b>lead to</b> eye problems.<small>看屏幕太久会导致眼睛出问题。</small></div></div>
+    <div class="swap"><div class="swap-h"><span class="from">try hard</span><span class="arrow">→</span><span class="to">spare no effort to do</span><span class="zh">不遗余力地做</span></div>
+      <div class="ex">I will <b>spare no effort to</b> help you.<small>我会尽全力帮你。</small></div></div>
+    <div class="swap"><div class="swap-h"><span class="from">show</span><span class="arrow">→</span><span class="to">reveal / demonstrate</span><span class="zh">展现</span></div>
+      <div class="ex">The Spring Festival <b>reveals</b> the beauty of Chinese culture.<small>春节展现了中国文化的美。</small></div></div>
+
+    <div class="group">说"是""有"</div>
+    <div class="swap"><div class="swap-h"><span class="from">is</span><span class="arrow">→</span><span class="to">serve as</span><span class="zh">充当、作为</span></div>
+      <div class="ex">The library <b>serves as</b> a quiet place for students.<small>图书馆是学生们的一个安静去处。</small></div></div>
+    <div class="swap"><div class="swap-h"><span class="from">have</span><span class="arrow">→</span><span class="to">be equipped with</span><span class="zh">配备有、具备</span></div>
+      <div class="ex">Our new lab <b>is equipped with</b> modern computers.<small>我们的新实验室配备了先进的电脑。</small></div></div>
+
+    <p class="muted">每个例句都是我写的，用的词全在高考词表里。</p>
+  </div>
+
+  <!-- 4 -->
+  <div class="ch">
+    <h2>老师最得意的一个句子</h2>
+    <p>题目要你提建议、办活动的时候，老师说第二个建议<b>全都写"请一位著名教授来开讲座"</b>，只换讲座的主题：</p>
+    <div class="say en">What's more, a distinguished professor will be invited to give a lecture on <span class="blank"></span>, so that we can learn more about <span class="blank"></span>.</div>
+    <p class="muted">另外，我们会邀请一位著名教授来做关于______的讲座，这样我们就能更多地了解______。</p>
+    <p>比如"绿色北京"活动，空里填 <span class="en">protecting the environment</span>；中国文化活动，就填 <span class="en">Chinese traditional culture</span>。</p>
+    <details>
+      <summary>老师原版（带倒装，难一些）</summary>
+      <div class="inner">
+        <div class="shell">What's more, a distinguished professor will be invited to address a lecture themed on <span class="blank"></span>, in which not only can we gain a deeper insight into <span class="blank"></span>, but we can also <span class="blank"></span>.</div>
+        <p><span class="en">not only</span> 放在句首，后面要倒装成 <span class="en">can we</span>，<span class="en">but</span> 后面又不倒装。这种地方最容易写错，基础没打牢之前先用上面的简单版。</p>
+        <p>另外，老师写的 <span class="en">address a lecture</span> 不太地道。address 的意思是"向……讲话"，后面一般接听众，比如 <span class="en">address the students</span>。"做讲座"用 <span class="en">give a lecture</span> 更稳妥。</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- 5 -->
+  <div class="ch">
+    <h2>换词别换错</h2>
+    <p>老师自己也提醒了几个容易写错的地方：</p>
+    <ul>
+      <li><span class="en">economic</span> 是"经济的"，<span class="en">economical</span> 是"省钱的、划算的"。老师的记法：economical 多了个"口"，这人抠门。</li>
+      <li><span class="en">beneficial to</span>、<span class="en">be fond of</span> 这类短语，后面跟动词要变成 <span class="en">-ing</span>：<span class="en">be fond of reading</span>。</li>
+      <li><span class="en">had better do</span> 一个字都别改：不用加 -s，不用改成过去式，后面直接跟动词原形。</li>
+    </ul>
+    <div class="warn">最重要的一条：<b>词换得再高级，时态、单复数写错照样扣分。</b>先保证句子写对，再往上换词。拿不准的词，宁可用回 good。</div>
+  </div>
+
+  <!-- 6 -->
+  <div class="ch">
+    <h2>怎么练</h2>
+    <ul>
+      <li>每天背 <b>3 组</b>，一周背完上面 16 组。</li>
+      <li>拿以前写过的作文，<b>找出里面的 good、important、many、like，换掉 4～5 个</b>，再读一遍感受一下。</li>
+      <li>考试写完作文，留一分钟扫一眼：有没有一个 good 都没换？有的话挑一个换掉。</li>
+    </ul>
+  </div>
+
+  <!-- 7 -->
+  <div class="ch">
+    <h2>想细看的</h2>
+    <p class="muted">下面是老师讲的全部词，按高考词表分了级别，给家长或者以后查资料用。</p>
+    <details>
+      <summary>老师讲的全部词，按级别分</summary>
+      <div class="inner">
+        <p class="muted">用项目里的高考词表（课标词表含变形）逐个查的，短语按里面最难的那个词算。一共 289 个：核心 57、选必 41、拓展 66、超纲 125。</p>
+        <p><span class="lv core">核心</span><span class="words">advantageous · enriching · educational · far-reaching · an eye-opener · productive · celebrated · well-informed · considerate · thoughtful · brave · knowledgeable · sociable · enterprising · open-minded · needy · disadvantaged · well-off · costly · rapidly · noticeable · worn-out · proper · wise · advisable · call for · lie in · serve as · act as · lie at the heart of · be supposed to do · had better do · it is advisable to do · numerous · a wealth of · a handful of · a growing number of · be interested in · face · lead to · result in · give rise to · address · deal with · courage · pioneering spirit · richness · friendship</span></p>
+        <p><span class="lv sel">选必</span><span class="words">beneficial · inspiring · first-rate · high-quality · professional · approachable · resourceful · significant · attractive · challenging · tough · effortless · individuals · capability · expertise · on a daily basis · acquire · be determined to do · inspire · represent · function as · attach importance to · be equipped with · feature · spare no effort to do · with the advancement of · various · a variety of · a wide range of · the majority of · an overwhelming majority of · be addicted to · contribute to · approach · reveal · be aimed at · aim to do · cooperation · collective effort</span></p>
+        <p><span class="lv ext">拓展</span><span class="words">rewarding · distinguished · accessible · humble · outgoing · ambitious · composed · dynamic · optimistic · critical · crucial · appealing · engaging · demanding · complex · complicated · straightforward · innovative · novel · economical · apparent · assignment · appropriate · suitable · competence · gain · obtain · secure · purchase · demand · be composed of · approve of · motivate · stimulate · consist in · place emphasis on · give priority to · be fundamental to · be of vital significance · participate in · engage in · be involved in · bury oneself in · diverse · multiple · the vast majority of · a minority of · be fond of · have a passion for · encounter · lay the foundation for · tackle · handle · resolve · overcome · exhibit · demonstrate · solidarity · collective responsibility · leadership · innovation · sustainability</span></p>
+        <p><span class="lv out">超纲</span><span class="words">认得就行，不用会写。比如 ubiquitous · prevalent · conducive · instrumental · paramount · indispensable · pivotal · meticulous · conscientious · assiduous · sanguine · altruistic · resilient · steadfast · benevolent · prestigious · renowned · proliferation · cornerstone · bedrock · imperative · put a premium on · take a toll on · shed light on · a visual feast · the lion's share of · the hustle and bustle……（共 125 个）</span></p>
+      </div>
+    </details>
+    <details>
+      <summary>视频信息</summary>
+      <div class="inner">
+        <p>《高考英语最后十课｜应用文写作·最全语料》第 2 讲，B 站"Wing无印"，66 分 33 秒，<span class="en">https://www.bilibili.com/video/BV1YKSUB7ELo/</span></p>
+        <p class="muted">老师说这一讲只解决"词汇多样"这一项，文章结构和内容放在下一讲。</p>
+      </div>
+    </details>
+  </div>
+</div>
+<script>
+const K='theme';function ap(d){document.documentElement.dataset.theme=d?'dark':'light';document.getElementById('themeBtn').textContent=d?'☀︎':'☽'}
+let d=localStorage.getItem(K)==='1'||(localStorage.getItem(K)===null&&matchMedia('(prefers-color-scheme: dark)').matches);ap(d);
+document.getElementById('themeBtn').onclick=()=>{d=!d;ap(d);localStorage.setItem(K,d?'1':'0')};
+addEventListener('beforeprint',()=>document.querySelectorAll('details').forEach(x=>x.open=true));
+</script>
+</body>
+</html>
