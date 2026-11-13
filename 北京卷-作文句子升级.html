@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>作文里放几个"高级句子"</title>
+<style>
+:root{--bg:#f8f7f4;--surface:#fff;--border:#e5e3de;--text:#1a1917;--muted:#6b6865;--accent:#2563eb;--accent-l:#eff6ff;--green:#16a34a;--green-l:#dcfce7;--orange:#d97706;--orange-l:#fef3c7;--red:#dc2626;--red-l:#fee2e2;--purple:#7e22ce;--purple-l:#fdf4ff;--shadow:0 1px 4px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.06)}
+[data-theme=dark]{--bg:#18181b;--surface:#27272a;--border:#3f3f46;--text:#fafafa;--muted:#a1a1aa;--accent:#60a5fa;--accent-l:#1e3a5f;--green:#4ade80;--green-l:#052e16;--orange:#fbbf24;--orange-l:#451a03;--red:#f87171;--red-l:#450a0a;--purple:#d8b4fe;--purple-l:#2e1a40}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;line-height:1.9}
+.wrapper{max-width:min(720px,92vw);margin:0 auto;padding:32px 0 80px}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin:8px 0 24px}
+h1{font-size:23px}
+.sub{font-size:14px;color:var(--muted)}
+.back{font-size:13px;color:var(--accent);text-decoration:none}
+.theme-btn{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);color:var(--text);font-size:16px;cursor:pointer;flex-shrink:0}
+.ch{background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:26px 28px;margin-bottom:22px}
+.ch h2{font-size:19px;margin-bottom:12px}
+.ch h3{font-size:16px;margin:18px 0 6px}
+.ch p{font-size:17px;margin:10px 0}
+.en{font-family:Georgia,'Times New Roman',serif}
+.muted{color:var(--muted);font-size:14px}
+.key{background:var(--green-l);border-radius:8px;padding:12px 16px;margin:14px 0;font-size:17px}
+.warn{background:var(--red-l);border-radius:8px;padding:10px 14px;margin:10px 0;font-size:15px}
+.prompt{background:var(--bg);border-radius:8px;padding:10px 14px;font-size:15px;margin:10px 0}
+
+.letter{border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:10px 0}
+.letter.up{border-color:var(--green);border-width:2px}
+.letter .cap{font-size:13px;font-weight:700;color:var(--muted);margin-bottom:4px}
+.letter.up .cap{color:var(--green)}
+.letter p{font-family:Georgia,serif;font-size:17px;margin:6px 0;line-height:1.85}
+.plain{background:var(--bg);border-radius:4px;padding:0 3px}
+.hl{background:var(--green-l);border-radius:4px;padding:0 3px}
+.n{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:var(--green);color:#fff;font-size:12px;font-family:-apple-system,system-ui,sans-serif;font-weight:700;margin-right:3px;vertical-align:2px}
+.n.g{background:var(--muted)}
+
+.card{border:1px solid var(--border);border-radius:10px;margin:14px 0;overflow:hidden}
+.card-h{background:var(--bg);padding:10px 14px;font-size:17px;font-weight:700;display:flex;gap:8px;align-items:center}
+.card-b{padding:6px 14px 12px}
+.card-b p{font-size:16px}
+.ba{display:grid;grid-template-columns:44px 1fr;gap:4px 8px;font-family:Georgia,serif;font-size:16px;margin:8px 0;align-items:baseline}
+.ba .l{font-family:-apple-system,system-ui,sans-serif;font-size:12px;font-weight:700;color:var(--muted)}
+.ba .l.g{color:var(--green)}
+.ba b{color:var(--green)}
+.zh{font-size:14px;color:var(--muted)}
+
+ul{padding-left:22px} li{font-size:17px;margin:6px 0}
+details{margin-top:14px;border-top:1px dashed var(--border);padding-top:10px}
+summary{cursor:pointer;color:var(--accent);font-size:15px;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:'＋ '} details[open] summary::before{content:'－ '}
+.inner{margin-top:10px;font-size:15px}
+.inner p{font-size:15px}
+.inner .ex{font-family:Georgia,serif;font-size:15px;background:var(--bg);border-radius:6px;padding:6px 10px;margin:6px 0}
+@media(max-width:520px){.ch{padding:20px 18px}}
+@media print{body{background:#fff}.theme-btn,.back{display:none}.ch{box-shadow:none}details>*{display:block}}
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <a class="back" href="index.html">← 回到首页</a>
+  <header>
+    <div>
+      <h1>作文里放几个"高级句子"</h1>
+      <div class="sub">B 站 Wing无印 一节 55 分钟的课，挑出 3 个最好学的</div>
+    </div>
+    <button class="theme-btn" id="themeBtn">☽</button>
+  </header>
+
+  <!-- 1 -->
+  <div class="ch">
+    <h2>老师就讲了一件事</h2>
+    <p>很多人的作文，每句话都是 <span class="en">I think…、You can…、It is…</span> 这种最简单的句子，意思没错，但读起来一个样。</p>
+    <p>老师讲了 7 种"高级句子"的写法，但第一页就写明了：<b>一篇文章用到 3～4 个就完全足够了。</b></p>
+    <p>不用每句都变，挑两三处换掉就行。直接看例子。</p>
+  </div>
+
+  <!-- 2 -->
+  <div class="ch">
+    <h2>例子：同一封信，改 3 个地方</h2>
+    <div class="prompt"><b>2025 年北京卷</b>：联合国正面向全球青少年征集倡议，你的外国好友 Jim 打算参加，来信问你倡议写什么。请你回信，内容包括：1. 提出的建议；2. 建议的理由。</div>
+
+    <div class="letter">
+      <div class="cap">改之前</div>
+      <p>Dear Jim,</p>
+      <p>I'm glad to hear that you are going to take part in the UN's proposal activity. Here are my suggestions.</p>
+      <p><span class="plain"><span class="n g">1</span>I think your proposal can be about saving food.</span> Every day, a lot of food is wasted, while many people in the world still go hungry. <span class="plain"><span class="n g">2</span>Young people can order only what they can eat, and the problem will become much smaller.</span></p>
+      <p><span class="plain"><span class="n g">3</span>Besides, you can suggest holding a "Clean Plate" activity at school. Students can share their ideas about saving food at the activity.</span></p>
+      <p>I hope my suggestions will be helpful.</p>
+      <p>Yours,<br>Li Hua</p>
+    </div>
+
+    <div class="letter up">
+      <div class="cap">改之后</div>
+      <p>Dear Jim,</p>
+      <p>I'm glad to hear that you are going to take part in the UN's proposal activity. Here are my suggestions.</p>
+      <p><span class="hl"><span class="n">1</span><b>I am firmly convinced that</b> your proposal can be about saving food.</span> Every day, a lot of food is wasted, while many people in the world still go hungry. <span class="hl"><span class="n">2</span>Young people can order only what they can eat, <b>making</b> the problem much smaller.</span></p>
+      <p><span class="hl"><span class="n">3</span>Besides, you can suggest holding a "Clean Plate" activity at school, <b>where</b> students can share their ideas about saving food.</span></p>
+      <p>I hope my suggestions will be helpful.</p>
+      <p>Yours,<br>Li Hua</p>
+    </div>
+    <p class="muted">中文：听说你要参加联合国的倡议活动，下面是我的建议。①我坚信你的倡议可以写节约粮食。每天都有大量食物被浪费，而世界上还有很多人在挨饿。②年轻人可以只点吃得完的饭菜，让这个问题小很多。③另外，你可以建议在学校办一个"光盘行动"，让同学们在活动中分享节约粮食的想法。希望我的建议对你有帮助。</p>
+
+    <p>意思一点没变，只改了三处：</p>
+    <ul>
+      <li><span class="n">1</span><span class="en">I think</span> 换成了 <span class="en"><b>I am firmly convinced that</b></span>（我坚信）</li>
+      <li><span class="n">2</span><span class="en">and the problem will become…</span> 换成了 <span class="en"><b>making</b> the problem…</span></li>
+      <li><span class="n">3</span>两句话用 <span class="en"><b>where</b></span> 合成了一句</li>
+    </ul>
+    <p>下面一个一个说怎么改。</p>
+  </div>
+
+  <!-- 3 -->
+  <div class="ch">
+    <h2>三种改法</h2>
+
+    <div class="card">
+      <div class="card-h"><span class="n">1</span>把 I think 换成 I am firmly convinced that</div>
+      <div class="card-b">
+        <p>最简单的一个：<b>直接替换，后面的句子一个字不用动。</b></p>
+        <div class="ba"><span class="l">改前</span><span>I think reading is good for us.</span><span class="l g">改后</span><span><b>I am firmly convinced that</b> reading is good for us.</span></div>
+        <p class="zh">我坚信读书对我们有好处。</p>
+        <p>老师说，这样写就用上了"宾语从句"。<span class="en">that</span> 后面跟一个完整的句子就行。</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><span class="n">2</span>"所以……"换成 -ing</div>
+      <div class="card-b">
+        <p>前面说了一件事，后面说它<b>带来什么结果</b>，就把后半句的动词改成 <span class="en">-ing</span>，前面加个逗号。</p>
+        <div class="ba"><span class="l">改前</span><span>We planted many trees, and the air became cleaner.</span><span class="l g">改后</span><span>We planted many trees, <b>making</b> the air cleaner.</span></div>
+        <p class="zh">我们种了很多树，让空气变得更干净了。</p>
+        <p>最常用的就是 <span class="en">making…</span>（让……变得）。老师说这是"高阶又比较简单易上手的一种写法"，"闭眼用"。</p>
+        <div class="warn"><span class="en">-ing</span> 后面写的必须是<b>前面那件事带来的结果</b>。种树让空气变干净，可以；种树跟下雨没关系，就不能这么连。</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><span class="n">3</span>两句话用 where 合成一句</div>
+      <div class="card-b">
+        <p>第一句说了一个活动（或者地方），第二句说在那里能干什么，就可以把第二句开头换成 <span class="en">where</span>，接到第一句后面。</p>
+        <div class="ba"><span class="l">改前</span><span>Our school will hold an activity. You can make new friends at the activity.</span><span class="l g">改后</span><span>Our school will hold an activity, <b>where</b> you can make new friends.</span></div>
+        <p class="zh">我们学校会办一个活动，在那里你可以交到新朋友。</p>
+        <p>怎么改：去掉第二句末尾的 <span class="en">at the activity</span>（在那儿），把 <span class="en">where</span> 放到第二句开头。</p>
+        <p>老师特别看重这个，说它比单用 <span class="en">which</span> 高级很多，能加"一点五到两分"。这是老师的说法，评分标准里没有这么具体的规定。</p>
+      </div>
+    </div>
+
+    <div class="key">一篇作文里，这三种<b>各用一次</b>就够了。写之前先想好放在哪几句，别每句都改。</div>
+  </div>
+
+  <!-- 4 -->
+  <div class="ch">
+    <h2>别为了"高级"写错</h2>
+    <p>老师讲的另外几种（倒装、虚拟语气等）更难，语序和时态很容易写错。写错了，老师只会看到一个语法错误。</p>
+    <p>所以先把上面三种练熟，确定能写对了，再看下面的。</p>
+
+    <details>
+      <summary>以后再学：老师讲的另外 4 种</summary>
+      <div class="inner">
+        <p><b>主语从句</b>：用 <span class="en">It is widely believed that…</span>（人们普遍认为）代替 <span class="en">People think…</span>。</p>
+        <div class="ex">It is widely believed that sports are good for our health.</div>
+        <p><b>倒装</b>：<span class="en">Only by + -ing</span> 放句首，后面的 <span class="en">can we</span> 要倒过来。</p>
+        <div class="ex">Only by working together can we solve this problem.　只有一起努力，我们才能解决这个问题。</div>
+        <p><b>虚拟语气</b>：<span class="en">It is high time that…</span>（是时候……了），后面的动词要用<b>过去式</b>。</p>
+        <div class="ex">It is high time that we took action to protect the environment.</div>
+        <p><b>强调句</b>：<span class="en">It is … that …</span> 把想强调的部分夹在中间。把 It is 和 that 去掉，句子还是完整的。</p>
+        <div class="ex">It is hard work that leads to success.　正是努力带来了成功。</div>
+        <p class="muted">例句是我按老师的句型改写的，用的都是高考词表里的词。</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>老师的原版例句（摘自外刊，很难）</summary>
+      <div class="inner">
+        <p>老师讲非谓语时用的例句，出自《经济学人》《麻省理工科技评论》等：</p>
+        <div class="ex">The government has introduced stricter emission standards, forcing automakers to accelerate their transition to electric vehicles.</div>
+        <div class="ex">The advent of artificial intelligence has automated routine tasks, freeing human workers to focus on creative and strategic endeavors.</div>
+        <p>讲 where 时用的：</p>
+        <div class="ex">We have reached a point where immediate action is the only viable solution to curb climate change.</div>
+        <p>讲倒装时用的（老师说适合感谢信开头）：</p>
+        <div class="ex">So grateful am I that I would like to write this letter to convey my cordial appreciation.</div>
+        <p class="muted">句子结构就是上面讲的那几种，只是用词难得多。看懂结构就行，不用背。</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>视频信息</summary>
+      <div class="inner">
+        <p>《高考英语最后十课｜应用文写作·句式升级大全》第 3 讲，B 站"Wing无印"，55 分 25 秒，<span class="en">https://www.bilibili.com/video/BV1rxR1BeEKV/</span></p>
+        <p class="muted">老师讲的 7 种：非谓语、宾语从句、主语从句、定语从句、倒装句、虚拟语气、强调句，外加万能套句。万能套句就是"请一位著名教授来开讲座"那句，见<a href="北京卷-作文换词.html" style="color:var(--accent)">作文换个词</a>那一页。</p>
+      </div>
+    </details>
+  </div>
+</div>
+<script>
+const K='theme';function ap(d){document.documentElement.dataset.theme=d?'dark':'light';document.getElementById('themeBtn').textContent=d?'☀︎':'☽'}
+let d=localStorage.getItem(K)==='1'||(localStorage.getItem(K)===null&&matchMedia('(prefers-color-scheme: dark)').matches);ap(d);
+document.getElementById('themeBtn').onclick=()=>{d=!d;ap(d);localStorage.setItem(K,d?'1':'0')};
+addEventListener('beforeprint',()=>document.querySelectorAll('details').forEach(x=>x.open=true));
+</script>
+</body>
+</html>
