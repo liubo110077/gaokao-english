@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>不同的信，开头结尾怎么换</title>
+<style>
+:root{--bg:#f8f7f4;--surface:#fff;--border:#e5e3de;--text:#1a1917;--muted:#6b6865;--accent:#2563eb;--accent-l:#eff6ff;--green:#16a34a;--green-l:#dcfce7;--orange:#d97706;--orange-l:#fef3c7;--red:#dc2626;--red-l:#fee2e2;--purple:#7e22ce;--purple-l:#fdf4ff;--shadow:0 1px 4px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.06)}
+[data-theme=dark]{--bg:#18181b;--surface:#27272a;--border:#3f3f46;--text:#fafafa;--muted:#a1a1aa;--accent:#60a5fa;--accent-l:#1e3a5f;--green:#4ade80;--green-l:#052e16;--orange:#fbbf24;--orange-l:#451a03;--red:#f87171;--red-l:#450a0a;--purple:#d8b4fe;--purple-l:#2e1a40}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;line-height:1.9}
+.wrapper{max-width:min(720px,92vw);margin:0 auto;padding:32px 0 80px}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin:8px 0 24px}
+h1{font-size:23px}
+.sub{font-size:14px;color:var(--muted)}
+.back{font-size:13px;color:var(--accent);text-decoration:none}
+.theme-btn{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);color:var(--text);font-size:16px;cursor:pointer;flex-shrink:0}
+.ch{background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:26px 28px;margin-bottom:22px}
+.ch h2{font-size:19px;margin-bottom:12px}
+.ch p{font-size:17px;margin:10px 0}
+.en{font-family:Georgia,'Times New Roman',serif}
+.muted{color:var(--muted);font-size:14px}
+.key{background:var(--green-l);border-radius:8px;padding:12px 16px;margin:14px 0;font-size:17px}
+.prompt{background:var(--bg);border-radius:8px;padding:10px 14px;font-size:15px;margin:10px 0}
+.say{border-left:3px solid var(--accent);padding:6px 14px;margin:12px 0;font-size:16px}
+
+.letter{border:2px solid var(--green);border-radius:10px;padding:14px 16px;margin:10px 0}
+.letter p.en{font-size:17px;margin:6px 0;line-height:1.85}
+.row{display:flex;gap:10px;align-items:baseline;margin:6px 0}
+.row p.en{margin:0}
+.chip{font-size:12px;font-weight:700;padding:0 8px;border-radius:6px;white-space:nowrap;flex-shrink:0;min-width:72px;text-align:center}
+.c-open{background:var(--accent-l);color:var(--accent)}
+.c-mid{background:var(--orange-l);color:var(--orange)}
+.c-end{background:var(--purple-l);color:var(--purple)}
+.tip{display:block;font-family:-apple-system,system-ui,sans-serif;font-size:13px;color:var(--green);margin-top:2px}
+mark{background:var(--orange-l);color:inherit;border-radius:3px;padding:0 2px}
+
+.type{border:1px solid var(--border);border-radius:10px;margin:12px 0;overflow:hidden}
+.type-h{background:var(--bg);padding:8px 14px;font-size:16px;font-weight:700;display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.type-h small{font-weight:400;font-size:13px;color:var(--muted)}
+.type-b{padding:6px 14px 10px;display:grid;grid-template-columns:40px 1fr;gap:4px 8px;align-items:baseline}
+.type-b .l{font-size:12px;font-weight:700;color:var(--muted)}
+.type-b .en{font-size:16px}
+.stars{color:var(--orange);letter-spacing:1px}
+
+ul{padding-left:22px} li{font-size:17px;margin:8px 0}
+details{margin-top:14px;border-top:1px dashed var(--border);padding-top:10px}
+summary{cursor:pointer;color:var(--accent);font-size:15px;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:'＋ '} details[open] summary::before{content:'－ '}
+.inner{margin-top:10px;font-size:15px}
+.inner p{font-size:15px}
+@media(max-width:520px){.ch{padding:20px 18px}}
+@media print{body{background:#fff}.theme-btn,.back{display:none}.ch{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <a class="back" href="index.html">← 回到首页</a>
+  <header>
+    <div>
+      <h1>不同的信，开头结尾怎么换</h1>
+      <div class="sub">B 站英语Ella"考前 4 页纸"，26 分钟</div>
+    </div>
+    <button class="theme-btn" id="themeBtn">☽</button>
+  </header>
+
+  <!-- 1 -->
+  <div class="ch">
+    <h2>老师就讲了一件事</h2>
+    <p>北京卷作文就那么几种信。Ella 按考的次数排了个序：</p>
+    <p style="font-size:18px"><b>建议信</b> &gt; 邀请信 &gt; 推荐信 &gt; 道歉信 &gt; 求助信</p>
+    <p>建议信最多，她说"大家写了千八百遍了"，<b>先把建议信练熟</b>。别的几种，<b>中间一样是"两三个要点 + 理由"，只是开头和结尾换几句话。</b></p>
+    <p>建议信前面几页讲过很多了。这页拿北京卷真考过的一封<b>邀请信</b>做例子，看看换了哪些地方。</p>
+  </div>
+
+  <!-- 2 -->
+  <div class="ch">
+    <h2>例子：一封邀请信</h2>
+    <div class="prompt"><b>2022 年北京卷</b>：你打算邀请英国好友 Jim 为你们班做一次关于英语写作的线上经验交流。请你给他写一封邮件，内容包括：1. 建议交流的具体内容及其原因；2. 交流时间和其他相关事项。</div>
+
+    <div class="letter">
+      <p class="en">Dear Jim,</p>
+      <div class="row"><span class="chip c-open">邀请＋时间地点</span><p class="en">I'm writing to invite you to give an online talk on English writing to our class, <mark>which will be held on Tencent Meeting from 4 to 5 pm next Friday</mark>.<span class="tip">👆 Ella：时间、地点在第一段就交代清楚，别拖到中间段才写</span></p></div>
+      <div class="row"><span class="chip c-mid">内容一</span><p class="en"><mark>First</mark>, we hope you can share some tips on how to write a good English email, because many of us find it hard to put our ideas in order.</p></div>
+      <div class="row"><span class="chip c-mid">内容二</span><p class="en"><mark>Then</mark>, it would be great if you could show us some good sentences and tell us how to use them.<span class="tip">👆 Ella：几项内容要分开写，第一个是什么、第二个是什么，别混在一起</span></p></div>
+      <div class="row"><span class="chip c-mid">其他事项</span><p class="en">If possible, please send me your PPT before Thursday.</p></div>
+      <div class="row"><span class="chip c-end">盼你来</span><p class="en">I would be very happy if you could make it. Please let me know at your earliest convenience.</p></div>
+      <p class="en">Yours,<br>Li Hua</p>
+    </div>
+    <p class="muted">中文：我写信是想邀请你给我们班做一次关于英语写作的线上讲座，时间是下周五下午 4 点到 5 点，用腾讯会议。首先，希望你能分享一些写好英文邮件的技巧，因为我们很多人不知道怎么把想法理顺。然后，如果你能给我们看一些好句子、讲讲怎么用就太好了。方便的话请在周四前把 PPT 发给我。如果你能来，我会非常高兴。请尽早告诉我。</p>
+    <p>跟建议信比，<b>中间的写法一模一样</b>（First… Then…，每点带个原因）。变的只是：</p>
+    <ul>
+      <li><b>开头</b>：不是"听说你要……"，而是"我写信邀请你……"，紧跟着就把<b>时间、地点</b>交代了</li>
+      <li><b>结尾</b>：不是"希望建议有用"，而是"盼你能来，请尽快回复"</li>
+    </ul>
+  </div>
+
+  <!-- 3 -->
+  <div class="ch">
+    <h2>五种信，各背一个开头、一个结尾</h2>
+    <p>中间都按"两三个要点 + 理由"写。考试时先看是哪种信，再拿出对应的开头结尾：</p>
+
+    <div class="type"><div class="type-h">建议信 <small><span class="stars">★★★★★</span> 最常考</small></div>
+      <div class="type-b"><span class="l">开头</span><span class="en">I'm glad to hear that you're going to … Here are a few suggestions.</span>
+      <span class="l">结尾</span><span class="en">I hope these suggestions will be of some help. These are just my personal thoughts.</span></div></div>
+
+    <div class="type"><div class="type-h">邀请信 <small><span class="stars">★★★★</span></small></div>
+      <div class="type-b"><span class="l">开头</span><span class="en">I'm writing to invite you to …, which will be held on (时间) at (地点).</span>
+      <span class="l">结尾</span><span class="en">I would be very happy if you could make it. Please let me know at your earliest convenience.</span></div></div>
+
+    <div class="type"><div class="type-h">推荐信 <small><span class="stars">★★★</span></small></div>
+      <div class="type-b"><span class="l">开头</span><span class="en">I'm writing to recommend … to you, which I believe will be a great choice.</span>
+      <span class="l">结尾</span><span class="en">I'm sure you will enjoy it.</span></div></div>
+
+    <div class="type"><div class="type-h">道歉信 <small><span class="stars">★★★</span></small></div>
+      <div class="type-b"><span class="l">开头</span><span class="en">I'm sorry to tell you that I won't be able to …</span>
+      <span class="l">结尾</span><span class="en">I sincerely apologize for any inconvenience caused. Hope you can understand.</span></div></div>
+
+    <div class="type"><div class="type-h">求助信 <small><span class="stars">★★</span></small></div>
+      <div class="type-b"><span class="l">开头</span><span class="en">I was wondering if you could help me with …</span>
+      <span class="l">结尾</span><span class="en">Thank you so much for your time and kindness.</span></div></div>
+
+    <p class="muted">句子取自 Ella 的 4 页纸，挑的是用词都在高考词表里的那几句，个别地方改简单了。</p>
+  </div>
+
+  <!-- 4 -->
+  <div class="ch">
+    <h2>Ella 的几句提醒</h2>
+    <ul>
+      <li><b>建议信结尾要谦虚。</b>她说："你不是去教人家的，你是给人家提供建议，人家采不采纳是人家的事。"所以结尾可以加一句 <span class="en">These are just my personal thoughts.</span>（这只是我个人的想法。）</li>
+      <li><b>举例子就用 for example。</b>4 页纸里列了 <span class="en">namely</span>，但她说"最后一个不推荐大家用，你不要搞那么复杂"。</li>
+      <li><b>拿不准的句子就不写。</b>这句她说了两次："但凡你不确定的东西、闹不清的东西，不要去写……你宁愿稳一点，不要去发挥给搞砸了。"</li>
+      <li><b>event 和 activity 别混。</b>整个大活动叫 event，里面的一个个小活动叫 activity。</li>
+    </ul>
+    <div class="key">这一页记住三件事就够：<b>先认出是哪种信 → 拿出对应的开头结尾 → 中间照常写两三个要点。</b></div>
+  </div>
+
+  <!-- 5 -->
+  <div class="ch">
+    <h2>不同话题，各备一句</h2>
+    <p>4 页纸里还按话题准备了现成的句子。每个话题挑一句最好用的，放在要点后面说"好处"：</p>
+    <ul>
+      <li><b>中国文化</b>：<span class="en">You will not only have fun but also gain a deeper understanding of traditional Chinese culture.</span></li>
+      <li><b>环保</b>：<span class="en">Small actions, when taken by many, can make a big difference to our planet.</span></li>
+      <li><b>校园活动</b>：<span class="en">Taking part in this activity will help you develop valuable skills beyond the classroom.</span></li>
+      <li><b>志愿服务</b>：<span class="en">Through volunteering, we not only help others but also discover our own value.</span></li>
+      <li><b>科技</b>：<span class="en">Technology has changed nearly every part of our daily lives.</span></li>
+    </ul>
+    <p class="muted">中文依次是：你不仅能玩得开心，还能更深入地了解中国传统文化 / 小小的行动，很多人一起做，就能给地球带来大改变 / 参加这个活动能帮你学到课堂以外的本领 / 通过做志愿者，我们不仅帮助了别人，也发现了自己的价值 / 科技几乎改变了我们日常生活的方方面面。</p>
+
+    <details>
+      <summary>视频信息</summary>
+      <div class="inner">
+        <p>《北京高考英语写作抢分模板丨考前4页纸》，B 站"英语Ella"，26 分 28 秒，<span class="en">https://www.bilibili.com/video/BV1vqG86kEvk/</span></p>
+        <p class="muted">原版 4 页纸还有通用框架、过渡词、万能论证句等，和本站其他几页内容重复，这里没有再列。例子里的邀请信是按 Ella 讲的要点写的，不是她的原文。</p>
+      </div>
+    </details>
+  </div>
+</div>
+<script>
+const K='theme';function ap(d){document.documentElement.dataset.theme=d?'dark':'light';document.getElementById('themeBtn').textContent=d?'☀︎':'☽'}
+let d=localStorage.getItem(K)==='1'||(localStorage.getItem(K)===null&&matchMedia('(prefers-color-scheme: dark)').matches);ap(d);
+document.getElementById('themeBtn').onclick=()=>{d=!d;ap(d);localStorage.setItem(K,d?'1':'0')};
+addEventListener('beforeprint',()=>document.querySelectorAll('details').forEach(x=>x.open=true));
+</script>
+</body>
+</html>
