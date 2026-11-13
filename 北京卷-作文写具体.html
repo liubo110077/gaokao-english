@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>把活动写具体：每个活动后面多说一句</title>
+<style>
+:root{--bg:#f8f7f4;--surface:#fff;--border:#e5e3de;--text:#1a1917;--muted:#6b6865;--accent:#2563eb;--accent-l:#eff6ff;--green:#16a34a;--green-l:#dcfce7;--orange:#d97706;--orange-l:#fef3c7;--red:#dc2626;--red-l:#fee2e2;--purple:#7e22ce;--purple-l:#fdf4ff;--shadow:0 1px 4px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.06)}
+[data-theme=dark]{--bg:#18181b;--surface:#27272a;--border:#3f3f46;--text:#fafafa;--muted:#a1a1aa;--accent:#60a5fa;--accent-l:#1e3a5f;--green:#4ade80;--green-l:#052e16;--orange:#fbbf24;--orange-l:#451a03;--red:#f87171;--red-l:#450a0a;--purple:#d8b4fe;--purple-l:#2e1a40}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;line-height:1.9}
+.wrapper{max-width:min(720px,92vw);margin:0 auto;padding:32px 0 80px}
+header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin:8px 0 24px}
+h1{font-size:23px}
+.sub{font-size:14px;color:var(--muted)}
+.back{font-size:13px;color:var(--accent);text-decoration:none}
+.theme-btn{width:34px;height:34px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);color:var(--text);font-size:16px;cursor:pointer;flex-shrink:0}
+.ch{background:var(--surface);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:26px 28px;margin-bottom:22px}
+.ch h2{font-size:19px;margin-bottom:12px}
+.ch p{font-size:17px;margin:10px 0}
+.en{font-family:Georgia,'Times New Roman',serif}
+.muted{color:var(--muted);font-size:14px}
+.key{background:var(--green-l);border-radius:8px;padding:12px 16px;margin:14px 0;font-size:17px}
+.warn{background:var(--orange-l);border-radius:8px;padding:12px 16px;margin:14px 0;font-size:16px}
+.prompt{background:var(--bg);border-radius:8px;padding:10px 14px;font-size:15px;margin:10px 0}
+.say{border-left:3px solid var(--accent);padding:6px 14px;margin:12px 0;font-size:16px}
+
+.letter{border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin:10px 0}
+.letter p.en{font-size:17px;margin:6px 0;line-height:1.85}
+.p2{border-radius:8px;padding:8px 12px;margin:8px 0}
+.p2 .cap{font-size:13px;font-weight:700;margin-bottom:2px}
+.p2.bad{background:var(--red-l)} .p2.bad .cap{color:var(--red)}
+.p2.good{background:var(--green-l)} .p2.good .cap{color:var(--green)}
+.p2 p.en{margin:2px 0}
+.add{color:var(--green);font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+
+.tool{border:1px solid var(--border);border-radius:10px;margin:12px 0;overflow:hidden}
+.tool-h{background:var(--bg);padding:8px 14px;font-size:16px;font-weight:700}
+.tool-b{padding:8px 14px}
+.tool-b .en{font-size:17px}
+.tool-b .zh{font-size:14px;color:var(--muted)}
+.q{color:var(--muted);font-size:14px}
+
+ul{padding-left:22px} li{font-size:17px;margin:8px 0}
+details{margin-top:14px;border-top:1px dashed var(--border);padding-top:10px}
+summary{cursor:pointer;color:var(--accent);font-size:15px;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:'＋ '} details[open] summary::before{content:'－ '}
+.inner{margin-top:10px;font-size:15px}
+.inner p{font-size:15px}
+.inner .ex{font-family:Georgia,serif;font-size:15px;background:var(--bg);border-radius:6px;padding:8px 12px;margin:6px 0;line-height:1.8}
+@media(max-width:520px){.ch{padding:20px 18px}}
+@media print{body{background:#fff}.theme-btn,.back{display:none}.ch{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <a class="back" href="index.html">← 回到首页</a>
+  <header>
+    <div>
+      <h1>把活动写具体：每个活动后面多说一句</h1>
+      <div class="sub">B 站苗sir 一节 29 分钟的课：作文内容怎么写得不空</div>
+    </div>
+    <button class="theme-btn" id="themeBtn">☽</button>
+  </header>
+
+  <!-- 1 -->
+  <div class="ch">
+    <h2>老师就讲了一件事</h2>
+    <p>很多同学写活动，就是列几个名字：有个讲座、有个阅读角、有个讨论。老师说这样写"内容空虚、不具体"，学校老师一定会指出来。</p>
+    <p>他的办法：<b>每写一个活动，后面马上回答一句"什么样的？"</b></p>
+    <p>直接看例子。</p>
+  </div>
+
+  <!-- 2 -->
+  <div class="ch">
+    <h2>例子：同一封信，第二段改一改</h2>
+    <div class="prompt"><b>老师课上的题</b>：你们学校要办一个心理健康活动周，英国好友 Jim 很感兴趣，来信询问。请你回信介绍这个活动。</div>
+
+    <div class="letter">
+      <p class="en">Dear Jim,</p>
+      <p class="en">I'm glad to hear that you are interested in our school's "Mind Care Week". Here is some information about it.</p>
+
+      <div class="p2 bad">
+        <div class="cap">❌ 改前：只列了名字</div>
+        <p class="en">Our school will hold a Mind Care Week to help students stay healthy in mind. During the week, there will be a lecture, a reading corner and group discussions. In addition, some doctors will come to help us.</p>
+      </div>
+      <div class="p2 good">
+        <div class="cap">✅ 改后：每个活动后面都说了"什么样的"</div>
+        <p class="en">To help students stay healthy in mind, our school will hold a Mind Care Week, <span class="add">which will last five days</span>. During the week, there will be a lecture <span class="add">about how to deal with stress</span>, a quiet reading corner <span class="add">full of books on mental health</span>, and group discussions <span class="add">where students can share their worries</span>. In addition, a question box will be set up <span class="add">so that shy students can also ask for help</span>.</p>
+      </div>
+
+      <p class="en">I'm sure the event will be really helpful. Would you like to join us online? Looking forward to your reply.</p>
+      <p class="en">Yours,<br>Li Hua</p>
+    </div>
+    <p class="muted">改后的中文：为了帮助同学们保持心理健康，我们学校将举办"心理关怀周"，<b>为期五天</b>。这一周里会有<b>一场关于如何应对压力的</b>讲座、<b>一个摆满心理健康书籍的安静</b>阅读角，还有<b>大家可以分享烦恼的</b>小组讨论。此外，学校还会设一个提问箱，<b>让害羞的同学也能求助</b>。</p>
+
+    <p>活动还是那几个：讲座、阅读角、讨论、提问箱。只是每一个后面都多了<span class="add">下划线</span>的那一截，Jim 读完就知道它们到底是什么样的了。</p>
+    <p class="muted">老师说，只列名字的写法"大概率也就是十分那个样子"。</p>
+  </div>
+
+  <!-- 3 -->
+  <div class="ch">
+    <h2>三种"多说一句"的办法</h2>
+    <p>老师说：每个活动都是一个名词，名词后面"一定要加上"修饰。最常用的就这三种：</p>
+
+    <div class="tool">
+      <div class="tool-h">① about …　关于……的</div>
+      <div class="tool-b"><span class="q">什么讲座？</span><br><span class="en">a lecture <b>about how to deal with stress</b></span><br><span class="zh">一场关于如何应对压力的讲座</span></div>
+    </div>
+    <div class="tool">
+      <div class="tool-h">② full of … / with …　装满……的、带着……的</div>
+      <div class="tool-b"><span class="q">什么阅读角？</span><br><span class="en">a reading corner <b>full of books on mental health</b></span><br><span class="zh">一个摆满心理健康书籍的阅读角</span></div>
+    </div>
+    <div class="tool">
+      <div class="tool-h">③ where …　在那里……</div>
+      <div class="tool-b"><span class="q">什么讨论？</span><br><span class="en">group discussions <b>where students can share their worries</b></span><br><span class="zh">大家可以分享烦恼的小组讨论</span></div>
+    </div>
+    <p class="muted">where 的用法在"<a href="北京卷-作文句子升级.html" style="color:var(--accent)">作文里放几个高级句子</a>"那页也讲过。</p>
+    <div class="key">写完一个活动的名字，就问自己一句：<b>什么样的？</b>然后用 about / full of / where 接上去。</div>
+  </div>
+
+  <!-- 4 -->
+  <div class="ch">
+    <h2>Jim 想知道的三件事</h2>
+    <p>老师说，内容空，是因为你只写了"活动叫什么、什么形式、为了什么"，没回答收信人真正关心的问题。他把要补的东西叫"<b>细节包</b>"，一共三类：</p>
+    <ul>
+      <li><b>多长时间、讲哪些内容</b>：例子里的 <span class="en">which will last five days</span></li>
+      <li><b>活动里会是什么样子</b>：例子里的 <span class="en">where students can share their worries</span>。老师说这一项"必须得要去搞定，否则你突破不了十五分"。写画面的办法见"<a href="北京卷-作文写出画面.html" style="color:var(--accent)">作文怎么写出画面</a>"</li>
+      <li><b>参加的人能得到什么帮助</b>：例子里的 <span class="en">so that shy students can also ask for help</span></li>
+    </ul>
+    <p>不用每句都加满。老师原话："你都加的话，你卷子根本写不下，你看看你能加上一两个就行。"第一句他建议只加一个时长。</p>
+  </div>
+
+  <!-- 5 -->
+  <div class="ch">
+    <h2>老师要求全班背的一句</h2>
+    <div class="say en">… and a question box will be set up so that shy students can also ask for help.</div>
+    <p class="muted">……还会设一个提问箱，让害羞的同学也能求助。</p>
+    <p>老师说这是他"让班上同学一定要背的"。理由是：</p>
+    <div class="say">那些闪光的学生不需要我们关心，我们需要关心的是那些默默无闻的大多数。</div>
+    <p>写活动时想到那些不爱说话的同学，给他们留一条路，作文一下子就有了温度。介绍学校活动的题，几乎都能用上这句。</p>
+    <p class="muted">老师原句是 an anonymous question box…（匿名提问箱）。anonymous 是超纲词，这里换成了更简单的说法，意思不变。</p>
+  </div>
+
+  <!-- 6 -->
+  <div class="ch">
+    <h2>写多长？按题目来</h2>
+    <div class="warn">老师在课上说"作文一定要写到一百四到一百五之间"。但北京卷题目里写的是"<b>词数 100 左右</b>"。<b>我们按题目来，写 100 词出头就够了。</b>写得越长，出错的地方也越多。</div>
+    <p>上面那封信改后是 110 词左右，已经算具体了。</p>
+  </div>
+
+  <!-- 7 -->
+  <div class="ch">
+    <h2>老师最想让你记住的话</h2>
+    <div class="say">如果你对你的作文没有底的话，你就不要自己写，不要自己现场编。</div>
+    <p>他的意思是：每次都照同一个套路写，写到最后一次，这个套路一定是你写得最好的。所以先背熟例子那一段，考试时照着改：换活动名字，每个活动后面照样"多说一句"。</p>
+    <p>他还说，对一半的同学来说，照模板写就够了；想冲更高分，再按这页补细节。</p>
+
+    <details>
+      <summary>老师原版的第二段（很长，看看就行）</summary>
+      <div class="inner">
+        <div class="ex">In order to raise students' awareness of mental well-being, our school is going to host a weeklong special campaign called "Mind Care Week", which will run for five days and cover topics such as emotional management, pressure relief, self-confidence building and healthy communication.</div>
+        <div class="ex">During the week, carefully designed activities will be carried out, including an interactive lecture where experts will explain common teenage stress with real-life examples, a cozy reading corner filled with science books and short stories about mental health, and small group discussions in which students can talk about their worries, listen to others' experiences and learn practical ways to cope with negative emotions in a warm and trusting atmosphere.</div>
+        <div class="ex">In addition, professional psychologists from a local counseling center will be invited to provide free one-on-one consultations, and an anonymous question box will be set up so that students who feel shy or troubled can still seek help privately, ensuring that the event is both informative and supportive.</div>
+        <p class="muted">老师自己也说第一句"坚决不要写这么长，加一个持续多长时间就行了"。这段是展示能加到什么程度，不是让你照抄。</p>
+      </div>
+    </details>
+    <details>
+      <summary>视频信息</summary>
+      <div class="inner">
+        <p>《北京考生专享：怎样把作文内容写具体》，B 站"苗sir的英语课"，28 分 56 秒，<span class="en">https://www.bilibili.com/video/BV1nNzLBkEVc/</span></p>
+        <p class="muted">本页那封信是按老师的方法写的简化版，用的都是高考词表里的词。</p>
+      </div>
+    </details>
+  </div>
+</div>
+<script>
+const K='theme';function ap(d){document.documentElement.dataset.theme=d?'dark':'light';document.getElementById('themeBtn').textContent=d?'☀︎':'☽'}
+let d=localStorage.getItem(K)==='1'||(localStorage.getItem(K)===null&&matchMedia('(prefers-color-scheme: dark)').matches);ap(d);
+document.getElementById('themeBtn').onclick=()=>{d=!d;ap(d);localStorage.setItem(K,d?'1':'0')};
+addEventListener('beforeprint',()=>document.querySelectorAll('details').forEach(x=>x.open=true));
+</script>
+</body>
+</html>
