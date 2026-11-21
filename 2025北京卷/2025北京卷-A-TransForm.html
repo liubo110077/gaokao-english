@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2025北京卷A篇精读 · TransForm Summer Camp</title>
+<style>
+:root{--bg:#fafaf8;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;--accent:#2563eb;--accent-light:#dbeafe;--complex-bg:#f0f6fc;--border:#e2e2e0;--card-bg:#fff;--hover-bg:#f5f5f4;--shadow:0 1px 3px rgba(0,0,0,.08);--radius:6px;}
+.theme-yellow{--bg:#f5f0e8;--card-bg:#faf6ee;--border:#ddd5bf;--complex-bg:#ece4d4;--hover-bg:#ede7d8;--accent-light:#fde8b8;}
+.theme-green{--bg:#edecea;--card-bg:#f3f2f0;--border:#d6d5d0;--complex-bg:#e5e4e0;--hover-bg:#e8e7e3;--accent-light:#dddcd6;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:60px;}
+.container{max-width:min(1100px,88vw);margin:0 auto;padding:0 20px;}
+.header{background:var(--card-bg);border-bottom:1px solid var(--border);padding:16px 0;position:sticky;top:0;z-index:100;}
+.header .container{display:flex;align-items:center;flex-wrap:wrap;gap:10px;}
+.header h1{font-size:16px;font-weight:600;flex:1;min-width:200px;}
+.header-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card-bg);color:var(--text);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.mode-steps{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.mode-step{padding:6px 12px;border:none;background:var(--card-bg);color:var(--text-secondary);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.mode-step+.mode-step{border-left:1px solid var(--border);}
+.mode-step.active{background:var(--accent);color:#fff;}
+.mode-step:hover:not(.active){background:var(--accent-light);}
+.passage{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:20px;padding:28px 32px;}
+.passage-title{text-align:center;font-family:Georgia,"Times New Roman",serif;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:20px;color:var(--text-secondary);}
+.passage-subtitle{font-family:Georgia,"Times New Roman",serif;font-size:17px;font-weight:700;margin:20px 0 10px 0;color:var(--text);border-bottom:1px solid var(--border);padding-bottom:6px;}
+.paragraph{margin-bottom:4px;text-indent:2em;}
+.req-list{margin:8px 0 4px 2em;list-style:none;}
+.req-list li{margin-bottom:2px;padding-left:1.2em;position:relative;}
+.req-list li::before{content:'•';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.sentence{font-family:Georgia,"Times New Roman",serif;font-size:18px;line-height:1.75;position:relative;transition:background .2s;border-radius:3px;cursor:pointer;}
+.sentence:hover{background:var(--hover-bg);}
+.sentence.playing{background:var(--complex-bg);border-radius:3px;}
+.sentence.complex{border-bottom:1.5px dashed #93c5fd;}
+.sentence.complex.playing{background:var(--complex-bg);}
+.tip{border-bottom:1.5px dashed var(--accent);cursor:pointer;position:relative;transition:background .15s;}
+.tip:hover{background:var(--accent-light);}
+.tip.tip-flash{outline:2px solid var(--accent);border-radius:2px;animation:tipFlash 1.6s ease-out forwards;}
+@keyframes tipFlash{0%{background:var(--accent);color:#fff;}40%{background:var(--accent-light);color:inherit;}100%{background:transparent;}}
+.tooltip{position:fixed;z-index:200;background:var(--text);color:#fff;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;line-height:1.5;padding:8px 14px;border-radius:8px;max-width:min(520px,calc(100vw - 16px));width:max-content;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:auto;animation:tipIn .15s ease-out;}
+.tooltip::after{content:'';position:absolute;bottom:-6px;left:var(--arrow-left,50%);transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text);}
+.tooltip.below::after{bottom:auto;top:-6px;border-top:none;border-bottom:6px solid var(--text);}
+.tooltip .tip-phrase{font-family:Georgia,serif;font-weight:600;color:#93c5fd;margin-bottom:2px;}
+.tooltip .tip-speak{display:inline-block;cursor:pointer;margin-left:6px;font-size:12px;opacity:.7;vertical-align:middle;}
+.tooltip .tip-speak:hover{opacity:1;}
+.level-badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:11px;font-weight:600;margin-left:6px;vertical-align:middle;font-family:-apple-system,"PingFang SC",sans-serif;}
+.badge-超纲{background:rgba(239,68,68,.25);color:#fca5a5;}
+.badge-拓展{background:rgba(251,146,60,.2);color:#fdba74;}
+.badge-选必{background:rgba(96,165,250,.2);color:#93c5fd;}
+.tooltip .tip-zh-play{display:block;margin-top:6px;padding:4px 10px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:4px;color:#93c5fd;font-size:12px;cursor:pointer;text-align:center;}
+.tooltip .tip-zh-play:hover{background:rgba(255,255,255,.25);}
+@keyframes tipIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+.analysis{display:none;margin:8px 0 12px 0;padding:12px 16px;background:#f8f9fa;border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;color:var(--text-secondary);line-height:1.7;text-indent:0;}
+.analysis.open{display:block;}
+.analysis p{margin-bottom:4px;}
+.analysis b{color:var(--text);font-size:13px;}
+.translation-inline{display:none;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;color:var(--text-muted);margin:2px 0 6px 0;text-indent:0;}
+body.compare-mode .translation-inline,body.mode-annotate .translation-inline{display:block;}
+.panel{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:16px;overflow:hidden;}
+.panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;cursor:pointer;user-select:none;font-weight:600;font-size:15px;border-bottom:1px solid transparent;transition:border-color .2s;}
+.panel-header:hover{color:var(--accent);}
+.panel-header .arrow{transition:transform .2s;font-size:12px;color:var(--text-muted);}
+.panel.open .panel-header{border-bottom-color:var(--border);}
+.panel.open .panel-header .arrow{transform:rotate(180deg);}
+.panel-body{display:none;padding:16px 24px;}
+.panel.open .panel-body{display:block;}
+.vocab-card{border-bottom:1px solid #f0f0f0;padding:12px 0;}
+.vocab-card:last-child{border-bottom:none;}
+.vocab-card-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px;}
+.vocab-word{font-family:Georgia,serif;font-weight:600;color:var(--accent);cursor:pointer;font-size:15px;}
+.vocab-word:hover{text-decoration:underline;}
+.vocab-meaning{font-size:14px;color:var(--text);}
+.vocab-extra{font-size:13px;color:var(--text-secondary);margin-top:2px;}
+.vocab-tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:3px;background:#fef3c7;color:#92400e;vertical-align:middle;}
+.vocab-tag.tag-core{background:#dcfce7;color:#166534;}
+.vocab-tag.tag-exam{background:#dbeafe;color:#1e40af;}
+.vocab-tag.tag-beyond{background:#fef3c7;color:#92400e;}
+.vocab-tag.tag-extend{background:#ffedd5;color:#c2410c;}
+.vocab-detail{display:none;margin-top:8px;padding:10px 14px;background:#f8f9fa;border-radius:var(--radius);font-size:13.5px;line-height:1.7;}
+.vocab-detail.open{display:block;}
+.vocab-detail .vd-example{color:var(--text-secondary);padding-left:16px;}
+.vocab-detail .vd-example em{color:var(--text);font-style:normal;font-weight:600;}
+.vocab-expand{font-size:12px;color:var(--accent);cursor:pointer;border:none;background:none;padding:0;margin-left:8px;}
+.vocab-expand:hover{text-decoration:underline;}
+.srs-btns{display:flex;gap:5px;margin-left:auto;}
+.srs-btn{font-size:11px;padding:2px 7px;border-radius:10px;border:1.5px solid;cursor:pointer;transition:all .15s;background:none;white-space:nowrap;}
+.srs-btn-know{border-color:#16a34a;color:#16a34a;}
+.srs-btn-know:hover{background:#dcfce7;}
+.srs-btn-forget{border-color:#dc2626;color:#dc2626;}
+.srs-btn-forget:hover{background:#fee2e2;}
+.srs-badge{font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;background:#fef2f2;color:#dc2626;}
+.srs-badge.all-done{background:#dcfce7;color:#16a34a;}
+.question-item{padding:16px 24px;border-bottom:1px solid #f0f0f0;}
+.question-item:last-child{border-bottom:none;}
+.question-stem{font-weight:600;font-size:15px;margin-bottom:8px;}
+.question-options{display:grid;grid-template-columns:1fr;gap:4px;font-size:14px;margin-bottom:8px;}
+.question-option{padding:2px 0;}
+.show-answer-btn{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--accent);cursor:pointer;background:none;border:none;padding:4px 0;}
+.show-answer-btn:hover{text-decoration:underline;}
+.question-analysis{display:none;margin-top:10px;padding:12px 16px;background:#f8f9fa;border-radius:var(--radius);font-size:14px;color:var(--text-secondary);line-height:1.7;}
+.question-analysis.open{display:block;}
+.question-analysis .answer-line{font-weight:700;color:#16a34a;margin-bottom:6px;font-size:15px;}
+.question-analysis .locate{background:#fef9c3;padding:6px 10px;border-radius:4px;margin:6px 0;font-family:Georgia,serif;font-style:italic;font-size:14px;color:var(--text);}
+.option-list{margin-top:10px;display:flex;flex-direction:column;gap:2px;}
+.option-item{padding:3px 0;font-size:13.5px;line-height:1.5;}
+.option-item.correct .opt-mark{color:#15803d;font-weight:700;}
+.option-item.wrong .opt-mark{color:#b91c1c;font-weight:700;}
+.option-item .opt-why{color:#888;font-size:12.5px;margin-left:4px;}
+.quiz-score{text-align:center;padding:16px;font-size:16px;font-weight:600;color:var(--accent);display:none;}
+.quiz-score.show{display:block;}
+#playbar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:#1a1a1a;color:#fff;display:flex;align-items:center;justify-content:center;gap:16px;padding:10px 20px;height:52px;font-size:14px;box-shadow:0 -2px 12px rgba(0,0,0,.2);}
+#playbar button{background:none;border:none;color:#fff;font-size:18px;cursor:pointer;padding:4px 8px;border-radius:4px;line-height:1;transition:background .15s;}
+#playbar button:hover{background:rgba(255,255,255,.15);}
+#pb-play{font-size:22px;}
+#pb-counter{font-size:13px;color:#aaa;min-width:52px;text-align:center;}
+#pb-speed{background:#333;border:none;color:#fff;font-size:13px;padding:3px 6px;border-radius:4px;cursor:pointer;}
+body.mode-raw .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-raw .tip:hover{background:none;}
+body.mode-raw .analysis,body.mode-raw .translation-inline,body.mode-raw .panel{display:none!important;}
+body.mode-raw .sentence.complex{border-bottom:none;}
+body.mode-raw .sentence{cursor:default;}
+body.mode-raw .sentence:hover{background:none;}
+body.mode-quiz .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-quiz .tip:hover{background:none;}
+body.mode-quiz .analysis,body.mode-quiz .translation-inline,body.mode-quiz #vocabPanel,body.mode-quiz #reviewPanel,body.mode-quiz #tipPanel,body.mode-quiz #writingPanel,body.mode-quiz #playbar{display:none!important;}
+body.mode-quiz .sentence.complex{border-bottom:none;cursor:default;}
+body.mode-quiz .sentence{cursor:default;}
+body.mode-quiz .sentence:hover{background:none;}
+body.mode-annotate .sentence.complex{border-bottom:none;}
+body.mode-annotate .sentence{cursor:default;}
+body.mode-annotate .sentence:hover{background:none;}
+body.mode-quiz #questionsPanel{display:block;}
+body.mode-quiz #questionsPanel .panel-body{display:block;}
+body.mode-quiz .question-analysis{display:none!important;}
+body.mode-quiz .show-answer-btn{display:none;}
+body.mode-quiz .question-option{cursor:pointer;padding:6px 10px;border-radius:var(--radius);border:1.5px solid transparent;transition:all .15s;}
+body.mode-quiz .question-option:hover{background:var(--accent-light);}
+body.mode-quiz .question-option.selected{border-color:var(--accent);background:var(--accent-light);}
+body.mode-quiz .question-option.correct{border-color:#16a34a;background:#dcfce7;}
+body.mode-quiz .question-option.wrong{border-color:#dc2626;background:#fee2e2;}
+.locate[data-goto]{cursor:pointer;transition:background .15s;}
+.locate[data-goto]:hover{background:#fde68a;}
+.locate[data-goto]::after{content:' ↗ 跳到原文';font-size:11px;color:var(--accent);font-family:-apple-system,sans-serif;font-style:normal;}
+.sentence.highlighted{background:#fef08a;border-radius:3px;}
+sup.ann-sup{display:none;font-size:0.6em;color:var(--accent);font-weight:700;vertical-align:super;line-height:0;margin-left:2px;font-family:system-ui,sans-serif;pointer-events:none;}
+body.mode-annotate sup.ann-sup{display:inline;}
+.para-ann{display:none;margin:16px 0 28px 0;font-family:-apple-system,"PingFang SC",sans-serif;font-size:15px;color:#333;text-indent:0;}
+body.mode-annotate .para-ann{display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:16px 18px;align-items:start;}
+.pan-row{background:#fff;border:1px solid #ece8e0;border-radius:12px;padding:16px 20px 18px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.pan-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.pan-num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
+.pan-en{font-family:Georgia,serif;font-weight:700;font-size:18px;color:#1a1a1a;}
+.pan-cn{color:var(--accent);font-weight:600;font-size:15px;}
+.pan-lv{font-size:12px;font-weight:600;padding:2px 8px;border-radius:4px;line-height:1.4;}
+.lv-超纲{background:#fee2e2;color:#b91c1c;}
+.pan-det{margin:12px 0 0 32px;color:#666;font-size:14px;line-height:1.85;}
+.pan-det div{position:relative;padding-left:12px;}
+.pan-det div+div{margin-top:8px;}
+.pan-det div::before{content:'';position:absolute;left:0;top:0.8em;width:4px;height:4px;border-radius:50%;background:#c9c3b8;}
+body.mode-quiz .para-ann,body.mode-raw .para-ann{display:none!important;}
+body.mode-quiz sup.ann-sup,body.mode-raw sup.ann-sup{display:none!important;}
+.sb-block{display:none;}
+body.mode-annotate .sb-block{display:block;margin:4px 0 28px;padding:16px 20px 18px;background:#f8f9fa;border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;font-family:-apple-system,"PingFang SC",sans-serif;text-indent:0;}
+body.mode-annotate .analysis{display:none!important;}
+body.mode-quiz .sb-block,body.mode-raw .sb-block{display:none!important;}
+.sb-title{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.08em;margin-bottom:12px;}
+.sb-sent{font-family:Georgia,serif;font-size:18px;line-height:2.3;color:#1a1a1a;background:#fff;border:1px solid #ece8e0;border-radius:10px;padding:14px 18px;}
+.sb-chip{display:inline-block;font-family:-apple-system,"PingFang SC",sans-serif;font-size:11px;font-weight:700;line-height:1;padding:4px 7px;border-radius:999px;margin-right:5px;vertical-align:3px;}
+.sb-core{font-weight:700;border-bottom:2.5px solid var(--accent);}
+.sb-core-chip{background:var(--accent);color:#fff;}
+.sb-ins{color:#9a9a9a;background:#eeebe4;border-radius:4px;padding:2px 4px;}
+.sb-ins-chip{background:#e4e0d8;color:#777;}
+.sb-rest{border-bottom:2.5px solid #4caf7a;}
+.sb-rest-chip{background:#4caf7a;color:#fff;}
+.sb-steps{margin-top:14px;display:grid;gap:10px;}
+.sb-step{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;font-size:15px;line-height:1.75;color:#333;}
+.sb-step-n{width:24px;height:24px;border-radius:50%;background:#1a1a1a;color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-top:2px;}
+.sb-step em{font-style:normal;font-family:Georgia,serif;color:#111;background:#fff;border:1px solid #ece8e0;padding:0 5px;border-radius:4px;}
+.sb-step .arrow{color:#aaa;margin:0 4px;}
+.sb-tip{margin-top:14px;font-size:14px;color:#8a6d1f;background:#fdf6e3;border-radius:8px;padding:9px 14px;}
+.container{max-width:1400px;width:100%;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right));}
+.header{padding-top:calc(16px + env(safe-area-inset-top));}
+body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
+#playbar{height:calc(52px + env(safe-area-inset-bottom));padding-bottom:calc(10px + env(safe-area-inset-bottom));padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right));}
+.passage{padding:24px 24px;}
+.tooltip .tip-scroll{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
+body.mode-annotate .passage-subtitle{display:none;}
+body.mode-annotate .req-list{display:none;}
+/* Schedule table styles */
+.schedule-table{width:100%;border-collapse:collapse;margin:10px 0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;font-size:14px;text-indent:0;}
+.schedule-table th{background:var(--accent);color:#fff;padding:8px 12px;text-align:left;font-weight:600;font-size:13px;}
+.schedule-table td{padding:6px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+.schedule-table tr:nth-child(even){background:var(--hover-bg);}
+.schedule-table .time-col{white-space:nowrap;font-weight:600;color:var(--accent);min-width:100px;}
+.schedule-table .date-header{background:var(--complex-bg);font-weight:700;color:var(--text);padding:8px 12px;}
+@media(min-width:700px){
+  .header h1{font-size:19px;}.passage-title{font-size:19px;}.header-sub{font-size:14px;}
+  .sentence{font-size:23px;line-height:1.8;}.translation-inline{font-size:18px!important;line-height:1.8;}
+  .passage-subtitle{font-size:21px;}
+  .analysis{font-size:18px;line-height:1.8;}.analysis b{font-size:16px;}.panel-header{font-size:18px;}
+  .vocab-word{font-size:20px;}.vocab-meaning{font-size:18px;}.vocab-extra{font-size:16.5px;line-height:1.7;}
+  .vocab-detail,.vd-example{font-size:16px;}.vocab-tag,.level-badge{font-size:13px;}
+  .vocab-expand,.srs-btn,.srs-badge{font-size:14px;}.question-stem{font-size:19px;}
+  .question-options{font-size:18px;}.show-answer-btn{font-size:15.5px;}
+  .question-analysis .answer-line{font-size:17px;}.option-item{font-size:16.5px;}.option-item .opt-why{font-size:15px;}
+  .tooltip{font-size:17px;line-height:1.55;}.tooltip .tip-phrase{font-size:19px;}
+  #pb-counter,#pb-speed{font-size:15px;}
+  .schedule-table{font-size:16px;}.schedule-table th{font-size:15px;}
+}
+@media(max-width:600px){
+  .passage{padding:18px 14px;}.sentence{font-size:16px;}
+  .panel-header,.question-item{padding-left:16px;padding-right:16px;}.panel-body{padding:12px 16px;}
+  .schedule-table{font-size:13px;}.schedule-table td,.schedule-table th{padding:5px 8px;}
+}
+</style>
+</head>
+<body class="mode-study">
+
+<div class="header">
+  <div class="container">
+    <h1>2025北京卷A篇精读 · TransForm Summer Camp</h1>
+    <div class="header-controls">
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="study" onclick="setMode('study')">① 精读</button>
+        <button class="mode-step" data-mode="quiz" onclick="setMode('quiz')">② 做题</button>
+        <button class="mode-step" data-mode="raw" onclick="setMode('raw')">③ 原文</button>
+        <button class="mode-step" data-mode="annotate" onclick="setMode('annotate')">④ 课本</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()" title="切换护眼色">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="passage" id="passage">
+  <div class="passage-title">A</div>
+
+  <!-- ── Paragraph 1: Intro ── -->
+  <div class="paragraph" id="para-1">
+    <span class="sentence" data-idx="0">Join us for TransForm, the <span class="tip" data-tip="interactive|互动的，交互式的｜inter-（相互）+ act（行动）+ -ive（形容词后缀）= 相互参与的、互动的。interactive summer camp = 互动式夏令营，强调参与者不是被动听讲，而是积极参与｜搭配：interactive learning 互动式学习，interactive game 互动游戏，interactive whiteboard 交互式白板" data-level="选必">interactive</span> summer camp that helps you teens find your <span class="tip" data-tip="passion|热情，激情，热爱的事物｜passion = 强烈的情感或热爱（来自拉丁语 passio = 感受/经历）。find your passion = 找到你热爱的事物。这里指帮助青少年发现自己的兴趣方向｜搭配：have a passion for 对...有热情，follow your passion 追随热爱，passionate（adj.）充满热情的" data-level="选必">passion</span> by participating in various activities and connecting with others.</span>
+    <div class="translation-inline">加入我们的TransForm互动式夏令营吧，它通过各种活动和与他人的互动，帮助青少年们找到自己的热爱。</div>
+  </div>
+
+  <!-- ── Section: Experience TransForm ── -->
+  <div class="passage-subtitle">Experience TransForm</div>
+
+  <div class="paragraph" id="para-2">
+    <span class="sentence complex" data-idx="1">TransForm allows you to get to focus on your chosen track through subject matter talks, <span class="tip" data-tip="hands-on|亲身实践的，动手操作的｜hands-on = 亲自动手的（hand = 手，on = 在上面 → 把手放上去亲自做）。hands-on workshops = 动手实践的研讨会/工坊，强调参与者亲自操作而非旁观。这是21题答案D的关键词｜搭配：hands-on experience 实践经验，hands-on training 实操培训。反义：theoretical（理论的）" data-level="选必">hands-on</span> workshops, and off-site experiences.</span>
+    <div class="analysis" id="analysis-1">
+      <p><b>句子结构：</b>主干是 <em>TransForm allows you to focus on your chosen track</em>（TransForm 让你专注于你选择的方向）。</p>
+      <p><b>through... 方式状语：</b>通过三种方式——subject matter talks（专题讲座）, hands-on workshops（动手实践工坊）, off-site experiences（外出体验活动）。</p>
+      <p><b>与21题的关系：</b>21题问 TransForm allows the teens to ________。答案 D（attend hands-on sessions）直接来自这句话中的 "hands-on workshops"。</p>
+    </div>
+    <span class="sentence" data-idx="2">However, if you are unsure what track you want, you still get to explore any workshop you want as part of our Explore Workshops.</span>
+    <span class="sentence" data-idx="3">Besides, your parents will also be able to participate in workshops selected just for them to learn about <span class="tip" data-tip="cutting-edge|最前沿的，尖端的｜cutting edge = 刀刃（切割的最前端）→ 引申为某领域的最前沿。cutting-edge science = 尖端科学、前沿科学。注意连字符：作定语时用 cutting-edge｜搭配：cutting-edge technology 尖端技术，cutting-edge research 前沿研究。= state-of-the-art, leading-edge" data-level="选必">cutting-edge</span> science.</span>
+    <div class="translation-inline">TransForm让你通过专题讲座、动手实践工坊和外出体验活动，专注于你选择的方向。不过，如果你不确定想选什么方向，你仍然可以在"探索工坊"中自由探索任何你感兴趣的工坊。此外，你的家长也能参加专门为他们准备的工坊，了解前沿科学。</div>
+    <div class="sb-block">
+      <div class="sb-title">长难句拆解</div>
+      <div class="sb-sent">
+        <span class="sb-chip sb-core-chip">主干</span><span class="sb-core">TransForm allows you to get to focus on your chosen track</span>
+        <span class="sb-chip sb-rest-chip">方式</span><span class="sb-rest">through subject matter talks, hands-on workshops, and off-site experiences.</span>
+      </div>
+      <div class="sb-steps">
+        <div class="sb-step"><span class="sb-step-n">1</span><div>主干：<em>TransForm allows you to focus on your chosen track</em><span class="arrow">→</span>让你专注于你选择的学习方向</div></div>
+        <div class="sb-step"><span class="sb-step-n">2</span><div>through 方式状语：通过三种活动形式 — 讲座、动手工坊、外出体验</div></div>
+        <div class="sb-step"><span class="sb-step-n">3</span><div>21题：TransForm 允许青少年做什么？→ attend hands-on sessions（参加动手实践活动）</div></div>
+      </div>
+      <div class="sb-tip">💡 hands-on workshops = 动手实践工坊。21题D选项 "attend hands-on sessions" 是对原文的同义替换。</div>
+    </div>
+  </div>
+
+  <!-- ── Section: Schedule of Programming ── -->
+  <div class="passage-subtitle">Schedule of Programming</div>
+
+  <div class="paragraph" id="para-3" style="text-indent:0;">
+    <table class="schedule-table">
+      <thead>
+        <tr><th>Date</th><th>Time</th><th>Activity</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="date-header" colspan="3"><b>17 July</b></td></tr>
+        <tr><td></td><td class="time-col">14:00–15:00</td><td><span class="sentence" data-idx="4">Lead to Change Kick-off</span></td></tr>
+        <tr><td></td><td class="time-col">15:00–16:30</td><td><span class="sentence" data-idx="5">Programme Showcase</span></td></tr>
+        <tr><td></td><td class="time-col">16:30–18:00</td><td><span class="sentence" data-idx="6">Track Workshops</span></td></tr>
+        <tr><td class="date-header" colspan="3"><b>18 July</b></td></tr>
+        <tr><td></td><td class="time-col">9:30–11:00</td><td><span class="sentence" data-idx="7">Career Fireside Chats</span></td></tr>
+        <tr><td></td><td class="time-col">13:00–14:15</td><td><span class="sentence" data-idx="8">Youth Panel</span></td></tr>
+        <tr><td></td><td class="time-col">14:15–16:20</td><td><span class="sentence" data-idx="9">Track <span class="tip" data-tip="keynote|主题演讲，主旨发言｜keynote = 基调、主旨（key = 关键，note = 音符/要点）。keynote speech / keynote address = 主旨演讲（通常由重要人物发表，定下活动基调）。Track Keynotes = 各方向的主题演讲｜搭配：deliver a keynote 发表主题演讲，keynote speaker 主旨演讲人" data-level="拓展">Keynotes</span></span></td></tr>
+        <tr><td class="date-header" colspan="3"><b>19 July</b></td></tr>
+        <tr><td></td><td class="time-col">8:00–12:00</td><td><span class="sentence" data-idx="10">Off-site Experiences</span></td></tr>
+        <tr><td></td><td class="time-col">13:00–15:00</td><td><span class="sentence" data-idx="11">Gallery Viewing</span></td></tr>
+        <tr><td></td><td class="time-col">15:15–16:45</td><td><span class="sentence" data-idx="12">Adult Workshops</span></td></tr>
+        <tr><td class="date-header" colspan="3"><b>20 July</b></td></tr>
+        <tr><td></td><td class="time-col">9:00–11:15</td><td><span class="sentence" data-idx="13">Explore Workshops</span></td></tr>
+        <tr><td></td><td class="time-col">13:30–16:00</td><td><span class="sentence" data-idx="14"><span class="tip" data-tip="keynote|主题演讲，主旨发言｜同上：keynote = 基调/主旨。Keynote Speech = 主旨演讲，通常安排在活动接近尾声时，由重量级嘉宾做总结性的主题发言｜注意：22题A选项说 Keynote Speech on 17 July，但日程表中 Keynote Speech 在20 July，时间错误" data-level="拓展">Keynote</span> Speech</span></td></tr>
+        <tr><td></td><td class="time-col">16:15–17:00</td><td><span class="sentence" data-idx="15">Celebration</span></td></tr>
+      </tbody>
+    </table>
+    <div class="translation-inline">活动日程安排：7月17日——"引领变革"开幕式、项目展示、方向工坊；7月18日——职业炉边谈话、青年座谈、方向主题演讲；7月19日——外出体验、画廊参观、家长工坊；7月20日——探索工坊、主旨演讲、庆典。</div>
+  </div>
+
+  <!-- ── Section: Programming Tracks ── -->
+  <div class="passage-subtitle">Programming Tracks</div>
+
+  <div class="paragraph" id="para-4" style="text-indent:0;">
+    <ul class="req-list">
+      <li><span class="sentence" data-idx="16"><b>Agricultural Science:</b> Introducing you to areas such as biology, urban farming, and environmental science so that you can explore the field of agriculture</span></li>
+      <li><span class="sentence" data-idx="17"><b>Community Booster:</b> Guiding you to develop <span class="tip" data-tip="innovative|创新的，新颖的｜innovate = 创新（in- = 进入，nov = 新 → 引入新的东西）。innovative = 有创新性的、新颖的。innovative solutions = 创新性的解决方案｜搭配：innovative ideas 创新想法，innovative approach 创新方法，innovation（n.）创新" data-level="选必">innovative</span> solutions for real-world challenges and create <span class="tip" data-tip="transformative|变革性的，带来深刻改变的｜transform = 转变、改变（trans- = 跨越/变化，form = 形态）。transformative = 能带来根本性变化的。transformative progress = 变革性的进步｜搭配：transformative experience 改变人生的经历，transformative power 变革力量，transformation（n.）转变" data-level="拓展">transformative</span> progress to benefit all communities</span></li>
+      <li><span class="sentence" data-idx="18"><b>Healthy Living:</b> Empowering you to make healthy decisions in such areas as <span class="tip" data-tip="nutrition|营养，营养学｜nutrition = 身体获取和利用食物养分的过程（nutri- = 滋养/喂养，-tion = 名词后缀）。nutrition 这里指营养健康方面｜搭配：nutrition plan 营养计划，good nutrition 良好营养，nutritious（adj.）有营养的" data-level="选必">nutrition</span> and emotional <span class="tip" data-tip="well-being|健康，幸福，身心安康｜well（好）+ being（存在状态）= 良好的存在状态 → 身心健康、幸福。emotional well-being = 情绪/心理健康。这是23题答案C的关键信息来源（learn about healthy living）｜搭配：physical well-being 身体健康，mental well-being 心理健康，promote well-being 促进健康" data-level="选必">well-being</span>, and lead healthy lifestyles</span></li>
+      <li><span class="sentence" data-idx="19"><b>Science Lab:</b> Leading you to explore the skills you need to succeed in life in key areas like computer science, <span class="tip" data-tip="robotics|机器人学，机器人技术｜robot（机器人）+ -ics（...学科）= robotics（机器人学/机器人技术）。类似 physics（物理学），electronics（电子学）。Science Lab 方向涵盖计算机科学、机器人技术和物理等关键领域｜搭配：robotics engineering 机器人工程，robotics competition 机器人竞赛" data-level="拓展">robotics</span>, and physics</span></li>
+    </ul>
+    <div class="translation-inline">活动方向：· 农业科学：带你了解生物学、城市农业和环境科学等领域，探索农业领域；· 社区推动者：引导你为现实世界的挑战开发创新解决方案，创造有利于所有社区的变革性进步；· 健康生活：赋能你在营养和情绪健康等方面做出健康决定，引领健康生活方式；· 科学实验室：引领你探索在计算机科学、机器人技术和物理等关键领域取得成功所需的技能。</div>
+  </div>
+
+</div><!-- /passage -->
+
+<!-- ══════ Vocabulary ══════ -->
+<div class="panel" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')">
+    <span>生词与短语（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="vocab-list">
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('interactive')">interactive</span>
+          <span class="vocab-meaning">互动的，交互式的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>inter-（相互）+ act（行动）+ -ive（形容词后缀）= 相互参与的、互动的。强调双向参与而非单向灌输。</div>
+          <div class="vd-example">the <em>interactive</em> summer camp that helps you teens find your passion. （课文）</div>
+          <div class="vd-example">作文：<em>Interactive</em> learning helps students stay engaged. 互动式学习有助于学生保持专注。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('passion')">passion</span>
+          <span class="vocab-meaning">热情，激情，热爱的事物</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>passion = 强烈的热爱或情感。find your passion = 找到你热爱的事物。派生：passionate（adj.）充满热情的。</div>
+          <div class="vd-example">helps you teens find your <em>passion</em>. （课文）</div>
+          <div class="vd-example">作文：Follow your <em>passion</em> and you will never work a day in your life. 追随热爱，你将永远不会觉得在工作。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('hands-on')">hands-on</span>
+          <span class="vocab-meaning">亲身实践的，动手操作的</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>hands（手）+ on（在上面）= 亲自动手的。hands-on workshops = 动手实践的工坊。反义：theoretical（理论的）。</div>
+          <div class="vd-example">through subject matter talks, <em>hands-on</em> workshops, and off-site experiences. （课文）</div>
+          <div class="vd-example"><em>hands-on</em> experience 实践经验；<em>hands-on</em> training 实操培训</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('cutting-edge')">cutting-edge</span>
+          <span class="vocab-meaning">最前沿的，尖端的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>cutting edge = 刀刃（切割的最前端）→ 引申为某领域的最前沿。同义：state-of-the-art, leading-edge。</div>
+          <div class="vd-example">learn about <em>cutting-edge</em> science. （课文）</div>
+          <div class="vd-example">作文：We should keep up with <em>cutting-edge</em> technology. 我们应该紧跟尖端技术。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('keynote')">keynote</span>
+          <span class="vocab-meaning">主题演讲，主旨发言</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>key（关键）+ note（音符/要点）= 基调/主旨。keynote speech = 主旨演讲，通常由重要人物发表。</div>
+          <div class="vd-example">Track <em>Keynotes</em>; <em>Keynote</em> Speech. （课文日程表）</div>
+          <div class="vd-example">deliver a <em>keynote</em> 发表主题演讲；<em>keynote</em> speaker 主旨演讲人</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('innovative')">innovative</span>
+          <span class="vocab-meaning">创新的，新颖的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>innovate（创新）→ innovative（有创新性的）。in-（进入）+ nov（新）= 引入新的东西。派生：innovation（n.）创新。</div>
+          <div class="vd-example">develop <em>innovative</em> solutions for real-world challenges. （课文）</div>
+          <div class="vd-example">作文：We need <em>innovative</em> approaches to solve environmental problems. 我们需要创新方法来解决环境问题。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('transformative')">transformative</span>
+          <span class="vocab-meaning">变革性的，带来深刻改变的</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>transform（转变）+ -ative（形容词后缀）= 能带来根本性变化的。trans-（跨越/变化）+ form（形态）= 改变形态。</div>
+          <div class="vd-example">create <em>transformative</em> progress to benefit all communities. （课文）</div>
+          <div class="vd-example">a <em>transformative</em> experience 改变人生的经历；<em>transformative</em> power 变革力量</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('nutrition')">nutrition</span>
+          <span class="vocab-meaning">营养，营养学</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>nutri-（滋养/喂养）+ -tion（名词后缀）= 营养。派生：nutritious（adj.）有营养的，nutrient（n.）营养素。</div>
+          <div class="vd-example">make healthy decisions in such areas as <em>nutrition</em> and emotional well-being. （课文）</div>
+          <div class="vd-example">good <em>nutrition</em> 良好营养；<em>nutrition</em> plan 营养计划；<em>nutritious</em> food 有营养的食物</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('well-being')">well-being</span>
+          <span class="vocab-meaning">健康，幸福，身心安康</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>well（好）+ being（存在状态）= 良好的存在状态，身心健康。常指身体和心理两方面的健康。</div>
+          <div class="vd-example">emotional <em>well-being</em>. （课文）</div>
+          <div class="vd-example">作文：We should pay more attention to our mental <em>well-being</em>. 我们应该更加关注心理健康。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('robotics')">robotics</span>
+          <span class="vocab-meaning">机器人学，机器人技术</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>robot（机器人）+ -ics（...学科）= 机器人学/机器人技术。类似：physics（物理学），electronics（电子学）。</div>
+          <div class="vd-example">key areas like computer science, <em>robotics</em>, and physics. （课文）</div>
+          <div class="vd-example"><em>robotics</em> engineering 机器人工程；<em>robotics</em> competition 机器人竞赛</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Questions ══════ -->
+<div class="panel" id="questionsPanel">
+  <div class="panel-header" onclick="togglePanel('questionsPanel')">
+    <span>题目解析（3题，21—23）</span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+
+    <!-- Q21 -->
+    <div class="question-item" data-answer="D">
+      <div class="question-stem">21. TransForm allows the teens to _________.</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. select workshops for their parents</div>
+        <div class="question-option" data-key="B">B. prepare track topics for the camp</div>
+        <div class="question-option" data-key="C">C. design programme activities</div>
+        <div class="question-option" data-key="D">D. attend hands-on sessions</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：D</div>
+        <div class="locate" data-goto="1" onclick="gotoSentence(1)">"TransForm allows you to get to focus on your chosen track through subject matter talks, hands-on workshops, and off-site experiences."</div>
+        <p>细节题。题目问 TransForm 允许青少年做什么。定位到 Experience TransForm 部分第一句：通过 "hands-on workshops"（动手实践工坊）让青少年参与。选项 D "attend hands-on sessions" 是对原文 "hands-on workshops" 的同义替换。选 <b>D</b>。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— select workshops for their parents：课文说家长的工坊是 "selected just for them"（专门为家长挑选的），不是由青少年来选。主体混淆。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ B</span><span class="opt-why">— prepare track topics for the camp：课文说青少年可以 "focus on your chosen track"（专注于你选择的方向），是选方向参与，不是准备方向的主题。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ C</span><span class="opt-why">— design programme activities：课文没有说青少年可以设计活动，他们是参与者而非活动设计者。无中生有。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ D</span><span class="opt-why">— attend hands-on sessions：与课文 "hands-on workshops" 直接对应。hands-on sessions = hands-on workshops（同义替换）。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q22 -->
+    <div class="question-item" data-answer="B">
+      <div class="question-stem">22. According to the schedule, which activity can the teens participate in?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. Keynote Speech on 17 July.</div>
+        <div class="question-option" data-key="B">B. Youth Panel on 18 July.</div>
+        <div class="question-option" data-key="C">C. Celebration on 19 July.</div>
+        <div class="question-option" data-key="D">D. Programme Showcase on 20 July.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：B</div>
+        <div class="locate" data-goto="8" onclick="gotoSentence(8)">Schedule: 18 July, 13:00–14:15 — Youth Panel</div>
+        <p>细节题，查表对照日期与活动名称。直接查日程表即可：Youth Panel 安排在 18 July 13:00–14:15，与选项 B 完全吻合。选 <b>B</b>。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— Keynote Speech on 17 July：Keynote Speech 在日程表中安排在 20 July（不是17 July）。17 July 的活动是 Kick-off、Programme Showcase 和 Track Workshops。日期张冠李戴。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ B</span><span class="opt-why">— Youth Panel on 18 July：日程表显示 18 July 13:00–14:15 就是 Youth Panel。活动名称和日期完全匹配。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ C</span><span class="opt-why">— Celebration on 19 July：Celebration 在日程表中安排在 20 July（不是19 July）。19 July 的活动是 Off-site Experiences、Gallery Viewing 和 Adult Workshops。日期错误。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— Programme Showcase on 20 July：Programme Showcase 在日程表中安排在 17 July（不是20 July）。20 July 的活动是 Explore Workshops、Keynote Speech 和 Celebration。日期错误。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q23 -->
+    <div class="question-item" data-answer="C">
+      <div class="question-stem">23. What can the teens do in the Programming Tracks?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. Build urban communities.</div>
+        <div class="question-option" data-key="B">B. Serve as guides on a farm.</div>
+        <div class="question-option" data-key="C">C. Learn about healthy living.</div>
+        <div class="question-option" data-key="D">D. Volunteer in a science lab.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：C</div>
+        <div class="locate" data-goto="18" onclick="gotoSentence(18)">"Healthy Living: Empowering you to make healthy decisions in such areas as nutrition and emotional well-being, and lead healthy lifestyles"</div>
+        <p>细节题，定位到 Programming Tracks 部分。Healthy Living 方向明确写道：赋能你在营养和情绪健康等方面做出健康决定，引领健康生活方式。选项 C "Learn about healthy living" 是对这一方向的准确概括。选 <b>C</b>。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— Build urban communities：Community Booster 方向是 "develop innovative solutions for real-world challenges"（开发创新解决方案），不是"建设城市社区"。偷换概念。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ B</span><span class="opt-why">— Serve as guides on a farm：Agricultural Science 方向是 "Introducing you to areas such as biology, urban farming..."（介绍相关领域），是让你了解农业，不是在农场当导游。曲解原意。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ C</span><span class="opt-why">— Learn about healthy living：Healthy Living 方向的内容就是关于营养和情绪健康，"learn about healthy living" 准确概括了这个方向。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— Volunteer in a science lab：Science Lab 方向是 "explore the skills you need to succeed in life"（探索成功所需技能），不是去科学实验室做志愿者。无中生有。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-score" id="quizScore"></div>
+  </div>
+</div>
+
+<!-- ══════ Review ══════ -->
+<div class="panel" id="reviewPanel">
+  <div class="panel-header" onclick="togglePanel('reviewPanel')">阅读原文<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-family:Georgia,serif;font-size:16px;line-height:2;">
+    <p style="text-indent:2em">Join us for TransForm, the interactive summer camp that helps you teens find your passion by participating in various activities and connecting with others.</p>
+    <p style="font-weight:700;margin:12px 0 4px 0;">Experience TransForm</p>
+    <p style="text-indent:2em">TransForm allows you to get to focus on your chosen track through subject matter talks, hands-on workshops, and off-site experiences. However, if you are unsure what track you want, you still get to explore any workshop you want as part of our Explore Workshops. Besides, your parents will also be able to participate in workshops selected just for them to learn about cutting-edge science.</p>
+    <p style="font-weight:700;margin:12px 0 4px 0;">Schedule of Programming</p>
+    <table style="width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;">
+      <tr style="background:#eee;"><td style="padding:4px 8px;" colspan="3"><b>17 July</b></td></tr>
+      <tr><td style="padding:3px 8px;width:40px;"></td><td style="padding:3px 8px;white-space:nowrap;">14:00–15:00</td><td style="padding:3px 8px;">Lead to Change Kick-off</td></tr>
+      <tr><td></td><td style="padding:3px 8px;">15:00–16:30</td><td style="padding:3px 8px;">Programme Showcase</td></tr>
+      <tr><td></td><td style="padding:3px 8px;">16:30–18:00</td><td style="padding:3px 8px;">Track Workshops</td></tr>
+      <tr style="background:#eee;"><td style="padding:4px 8px;" colspan="3"><b>18 July</b></td></tr>
+      <tr><td></td><td style="padding:3px 8px;">9:30–11:00</td><td style="padding:3px 8px;">Career Fireside Chats</td></tr>
+      <tr><td></td><td style="padding:3px 8px;">13:00–14:15</td><td style="padding:3px 8px;">Youth Panel</td></tr>
+      <tr><td></td><td style="padding:3px 8px;">14:15–16:20</td><td style="padding:3px 8px;">Track Keynotes</td></tr>
+      <tr style="background:#eee;"><td style="padding:4px 8px;" colspan="3"><b>19 July</b></td></tr>
+      <tr><td></td><td style="padding:3px 8px;">8:00–12:00</td><td style="padding:3px 8px;">Off-site Experiences</td></tr>
+      <tr><td></td><td style="padding:3px 8px;">13:00–15:00</td><td style="padding:3px 8px;">Gallery Viewing</td></tr>
+      <tr><td></td><td style="padding:3px 8px;">15:15–16:45</td><td style="padding:3px 8px;">Adult Workshops</td></tr>
+      <tr style="background:#eee;"><td style="padding:4px 8px;" colspan="3"><b>20 July</b></td></tr>
+      <tr><td></td><td style="padding:3px 8px;">9:00–11:15</td><td style="padding:3px 8px;">Explore Workshops</td></tr>
+      <tr><td></td><td style="padding:3px 8px;">13:30–16:00</td><td style="padding:3px 8px;">Keynote Speech</td></tr>
+      <tr><td></td><td style="padding:3px 8px;">16:15–17:00</td><td style="padding:3px 8px;">Celebration</td></tr>
+    </table>
+    <p style="font-weight:700;margin:12px 0 4px 0;">Programming Tracks</p>
+    <ul style="margin-left:1.5em;line-height:2;">
+      <li><b>Agricultural Science:</b> Introducing you to areas such as biology, urban farming, and environmental science so that you can explore the field of agriculture</li>
+      <li><b>Community Booster:</b> Guiding you to develop innovative solutions for real-world challenges and create transformative progress to benefit all communities</li>
+      <li><b>Healthy Living:</b> Empowering you to make healthy decisions in such areas as nutrition and emotional well-being, and lead healthy lifestyles</li>
+      <li><b>Science Lab:</b> Leading you to explore the skills you need to succeed in life in key areas like computer science, robotics, and physics</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════ 阅读技巧 ══════ -->
+<div class="panel" id="tipPanel">
+  <div class="panel-header" onclick="togglePanel('tipPanel')">阅读技巧<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-size:15px;line-height:1.8;">
+    <p><b>告示/活动介绍类文章读法（A篇是此类文章的典型）：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li><b>第一步：看标题和分段标题。</b>本文有三个小标题："Experience TransForm"、"Schedule of Programming"和"Programming Tracks"。先扫描这些标题，知道文章分几部分、每部分讲什么。</li>
+      <li><b>第二步：看题目，带着问题读。</b>21题问"TransForm allows teens to..."，定位到 Experience TransForm 部分；22题问日程表，定位到 Schedule 部分；23题问"Programming Tracks能做什么"，定位到最后部分。</li>
+      <li><b>第三步：查表题要逐项核对。</b>22题需要逐一对照选项中的活动名称和日期，与日程表中的信息是否吻合。四个选项中只有B的活动和日期完全匹配。</li>
+    </ul>
+    <p style="margin-top:12px"><b>常见陷阱（本篇三道题都有）：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li><b>同义替换：</b>21题D选项 "hands-on sessions" 替换原文 "hands-on workshops"，意思相同。</li>
+      <li><b>日期张冠李戴：</b>22题ACD三个选项的活动名称都在日程表中出现过，但日期全部对不上。做查表题时务必同时核对活动名称和日期。</li>
+      <li><b>偷换概念：</b>23题A把 "innovative solutions for communities" 曲解为 "build urban communities"；B把 "introducing you to urban farming" 曲解为 "serve as guides on a farm"。</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════ 作文拓展 ══════ -->
+<div class="panel" id="writingPanel">
+  <div class="panel-header" onclick="togglePanel('writingPanel')">作文拓展：好句式 &amp; 好短语<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-size:15px;line-height:1.9;">
+    <p><b>可以直接用进作文的高频表达：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li><em>find one's passion</em>（找到热爱）—— The summer camp helped me <em>find my passion</em> for science.</li>
+      <li><em>hands-on experience</em>（实践经验）—— Students need more <em>hands-on experience</em> outside the classroom.</li>
+      <li><em>cutting-edge technology</em>（尖端技术）—— <em>Cutting-edge technology</em> is changing the way we learn.</li>
+      <li><em>innovative solutions</em>（创新解决方案）—— We should develop <em>innovative solutions</em> to environmental challenges.</li>
+      <li><em>well-being</em>（身心健康）—— Schools should pay more attention to students' mental <em>well-being</em>.</li>
+    </ul>
+    <p style="margin-top:10px"><b>活动介绍类写作结构（如果考作文也是通知/活动类）：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li>开头：介绍活动名称与目的（Join us for... / We are excited to announce...）</li>
+      <li>中间：分条说明活动内容/日程/方向（The programme includes... / You will have the opportunity to...）</li>
+      <li>结尾：号召参加（Don't miss this opportunity! / We look forward to seeing you there!）</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div id="playbar">
+  <button onclick="pbPrev()" title="上一句">⏮</button>
+  <button id="pb-play" onclick="pbToggle()">▶</button>
+  <button onclick="pbNext()" title="下一句">⏭</button>
+  <span id="pb-counter">— / 20</span>
+  <select id="pb-speed" onchange="pbSetSpeed(this.value)">
+    <option value="0.8">0.8×</option>
+    <option value="1" selected>1.0×</option>
+    <option value="1.2">1.2×</option>
+  </select>
+</div>
+
+<script>
+const THEMES=['yellow','green'];
+const THEME_LABELS={yellow:'📄 书本黄',green:'🌿 护眼绿'};
+let themeIdx=parseInt(localStorage.getItem('theme')||'0');
+function applyTheme(){document.body.classList.remove('theme-yellow','theme-green');const t=THEMES[themeIdx%THEMES.length];document.body.classList.add('theme-'+t);const btn=document.getElementById('theme-btn');if(btn)btn.textContent=THEME_LABELS[t];}
+function cycleTheme(){themeIdx=(themeIdx+1)%THEMES.length;localStorage.setItem('theme',themeIdx);applyTheme();}
+applyTheme();
+
+const sentences=[
+  "Join us for TransForm, the interactive summer camp that helps you teens find your passion by participating in various activities and connecting with others.",
+  "TransForm allows you to get to focus on your chosen track through subject matter talks, hands-on workshops, and off-site experiences.",
+  "However, if you are unsure what track you want, you still get to explore any workshop you want as part of our Explore Workshops.",
+  "Besides, your parents will also be able to participate in workshops selected just for them to learn about cutting-edge science.",
+  "Lead to Change Kick-off",
+  "Programme Showcase",
+  "Track Workshops",
+  "Career Fireside Chats",
+  "Youth Panel",
+  "Track Keynotes",
+  "Off-site Experiences",
+  "Gallery Viewing",
+  "Adult Workshops",
+  "Explore Workshops",
+  "Keynote Speech",
+  "Celebration",
+  "Agricultural Science: Introducing you to areas such as biology, urban farming, and environmental science so that you can explore the field of agriculture",
+  "Community Booster: Guiding you to develop innovative solutions for real-world challenges and create transformative progress to benefit all communities",
+  "Healthy Living: Empowering you to make healthy decisions in such areas as nutrition and emotional well-being, and lead healthy lifestyles",
+  "Science Lab: Leading you to explore the skills you need to succeed in life in key areas like computer science, robotics, and physics"
+];
+
+let activeTooltip=null;
+const ZH_AUDIO={};
+let zhPlayer=null;
+
+function phraseToSlug(phrase){return phrase.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+function playZhAudio(slug,btn){if(zhPlayer){zhPlayer.pause();zhPlayer=null;btn.textContent='🔊 听讲解';return;}const src=ZH_AUDIO[slug];if(!src)return;zhPlayer=new Audio(src);btn.textContent='⏹ 停止';zhPlayer.onended=()=>{btn.textContent='🔊 听讲解';zhPlayer=null;};zhPlayer.play();}
+
+function showTooltip(tipEl){
+  hideTooltip();
+  const raw=tipEl.getAttribute('data-tip');const[phrase,explain]=raw.split('|');const parts=explain.split('｜');
+  const slug=phraseToSlug(phrase);const hasAudio=ZH_AUDIO[slug];
+  const tooltip=document.createElement('div');tooltip.className='tooltip';
+  tooltip.innerHTML='<div class="tip-scroll">'+
+    `<div class="tip-phrase">${phrase}${tipEl.dataset.level?`<span class="level-badge badge-${tipEl.dataset.level}">${tipEl.dataset.level}</span>`:''}<span class="tip-speak" onclick="speakWord('${phrase.replace(/'/g,"\\'")}')">&#9654;</span></div>`+
+    parts.map(p=>`<div>${p.trim()}</div>`).join('')+(hasAudio?`<button class="tip-zh-play" onclick="playZhAudio('${slug}',this)">🔊 听讲解</button>`:'')+
+    '</div>';
+  document.body.appendChild(tooltip);activeTooltip=tooltip;tooltip._tip=tipEl;positionTooltip();if(!activeTooltip)return;speakWord(phrase);
+}
+
+let _safeProbe=null;
+function tooltipFrame(){
+  if(!_safeProbe){_safeProbe=document.createElement('div');_safeProbe.style.cssText='position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)';document.body.appendChild(_safeProbe);}
+  const cs=getComputedStyle(_safeProbe);const M=8;const vw=document.documentElement.clientWidth,vh=window.innerHeight;
+  let minY=M+(parseFloat(cs.paddingTop)||0);let maxY=vh-M-(parseFloat(cs.paddingBottom)||0);
+  const hdr=document.querySelector('.header');if(hdr){const b=hdr.getBoundingClientRect().bottom;if(b>0)minY=Math.max(minY,b+4);}
+  const pb=document.getElementById('playbar');if(pb&&getComputedStyle(pb).display!=='none'){maxY=Math.min(maxY,pb.getBoundingClientRect().top-4);}
+  return{minX:M+(parseFloat(cs.paddingLeft)||0),maxX:vw-M-(parseFloat(cs.paddingRight)||0),minY,maxY};
+}
+function positionTooltip(){
+  const tooltip=activeTooltip;if(!tooltip)return;const tipEl=tooltip._tip;const rects=tipEl.getClientRects();const f=tooltipFrame();
+  if(!rects.length){hideTooltip();return;}const first=rects[0],last=rects[rects.length-1];
+  if(last.bottom<f.minY-4||first.top>f.maxY+4){hideTooltip();return;}
+  const GAP=10,PAD=16;const body=tooltip.firstElementChild;
+  tooltip.style.maxWidth=Math.max(120,Math.min(520,f.maxX-f.minX))+'px';body.style.maxHeight='none';tooltip.style.left='0px';tooltip.style.top='0px';
+  const tw=tooltip.offsetWidth,naturalH=tooltip.offsetHeight;const spaceAbove=first.top-f.minY-GAP;const spaceBelow=f.maxY-last.bottom-GAP;
+  let below;if(naturalH<=spaceAbove)below=false;else if(naturalH<=spaceBelow)below=true;else below=spaceBelow>spaceAbove;
+  const avail=Math.max(60,below?spaceBelow:spaceAbove);if(naturalH>avail)body.style.maxHeight=Math.max(30,avail-PAD)+'px';
+  const r=below?last:first;const cx=r.left+r.width/2;const left=Math.max(f.minX,Math.min(cx-tw/2,f.maxX-tw));
+  let top=below?last.bottom+GAP:first.top-GAP-tooltip.offsetHeight;top=Math.max(f.minY,Math.min(top,f.maxY-tooltip.offsetHeight));
+  tooltip.classList.toggle('below',below);tooltip.style.setProperty('--arrow-left',Math.max(14,Math.min(cx-left,tw-14))+'px');tooltip.style.left=left+'px';tooltip.style.top=top+'px';
+}
+(function(){let raf=0;const re=()=>{if(!activeTooltip||raf)return;raf=requestAnimationFrame(()=>{raf=0;positionTooltip();});};
+window.addEventListener('scroll',re,{passive:true});window.addEventListener('resize',re);window.addEventListener('orientationchange',re);
+if(window.visualViewport){visualViewport.addEventListener('resize',re);visualViewport.addEventListener('scroll',re);}})();
+
+function hideTooltip(){if(zhPlayer){zhPlayer.pause();zhPlayer=null;}if(activeTooltip){activeTooltip.remove();activeTooltip=null;}}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.sentence.highlighted')&&!e.target.closest('.locate')){document.querySelectorAll('.sentence.highlighted').forEach(s=>s.classList.remove('highlighted'));}
+  const tipEl=e.target.closest('.tip');
+  if(tipEl){e.stopPropagation();if(activeTooltip&&activeTooltip._source===tipEl){hideTooltip();}else{showTooltip(tipEl);if(activeTooltip)activeTooltip._source=tipEl;}return;}
+  if(e.target.closest('.tooltip'))return;hideTooltip();
+});
+
+let pbCurrent=null,pbPlaying=false,pbSpeed=1,enPlayer=null;
+function pbStop(){if(enPlayer){enPlayer.pause();enPlayer=null;}pbPlaying=false;}
+function highlightSentence(idx){
+  document.querySelectorAll('.sentence').forEach(el=>el.classList.remove('playing'));
+  if(idx!==null&&idx>=0&&idx<sentences.length){const el=document.querySelector(`.sentence[data-idx="${idx}"]`);if(el){el.classList.add('playing');el.scrollIntoView({behavior:'smooth',block:'center'});}}
+}
+function pbUpdateUI(){document.getElementById('pb-play').textContent=pbPlaying?'⏸':'▶';document.getElementById('pb-counter').textContent=pbCurrent!==null?`${pbCurrent+1} / ${sentences.length}`:`— / ${sentences.length}`;}
+function pbPlayCurrent(){
+  pbStop();if(pbCurrent===null){pbUpdateUI();return;}
+  const src=`audio/2025北京卷-A/en-s${String(pbCurrent).padStart(2,'0')}.mp3`;
+  enPlayer=new Audio(src);enPlayer.playbackRate=pbSpeed;pbPlaying=true;highlightSentence(pbCurrent);pbUpdateUI();
+  enPlayer.onerror=()=>{const utter=new SpeechSynthesisUtterance(sentences[pbCurrent]);const voices=speechSynthesis.getVoices();utter.voice=voices.find(v=>v.lang==='en-GB')||voices.find(v=>v.lang.startsWith('en'))||null;utter.rate=pbSpeed*0.85;utter.onend=()=>{if(pbPlaying){if(pbCurrent<sentences.length-1){pbCurrent++;pbPlayCurrent();}else{pbPlaying=false;highlightSentence(null);pbUpdateUI();}}};speechSynthesis.speak(utter);enPlayer=null;};
+  enPlayer.onended=()=>{if(pbPlaying){if(pbCurrent<sentences.length-1){pbCurrent++;pbPlayCurrent();}else{pbPlaying=false;highlightSentence(null);pbUpdateUI();}}};enPlayer.play();
+}
+function pbToggle(){if(pbCurrent===null){pbCurrent=0;pbPlayCurrent();return;}if(pbPlaying){pbStop();highlightSentence(pbCurrent);pbUpdateUI();}else{pbPlayCurrent();}}
+function pbPrev(){if(pbCurrent===null)pbCurrent=0;else if(pbCurrent>0)pbCurrent--;pbPlayCurrent();}
+function pbNext(){if(pbCurrent===null)pbCurrent=0;else if(pbCurrent<sentences.length-1)pbCurrent++;pbPlayCurrent();}
+function pbSetSpeed(v){pbSpeed=parseFloat(v);if(enPlayer)enPlayer.playbackRate=pbSpeed;}
+
+document.addEventListener('click',function(e){if(e.target.closest('.tip')||e.target.closest('.tooltip'))return;const sentence=e.target.closest('.sentence.complex');if(sentence)toggleAnalysis(parseInt(sentence.dataset.idx));});
+
+function speakWord(word){
+  if(enPlayer){enPlayer.pause();enPlayer=null;}
+  const slug='en-word-'+word.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const src='audio/2025北京卷-A/'+slug+'.mp3';
+  enPlayer=new Audio(src);
+  enPlayer.onerror=function(){const utter=new SpeechSynthesisUtterance(word);const voices=speechSynthesis.getVoices();utter.voice=voices.find(v=>v.lang==='en-GB')||voices.find(v=>v.lang.startsWith('en'))||voices[0];utter.rate=0.8;speechSynthesis.speak(utter);};
+  enPlayer.play();
+}
+
+const ANALYSIS_AUDIO={};let analysisPlayer=null,analysisBtn=null;
+function playAnalysis(id,btn){if(analysisPlayer){analysisPlayer.pause();analysisPlayer=null;if(analysisBtn){analysisBtn.textContent='🔊 听讲解';analysisBtn.classList.remove('playing');}if(analysisBtn===btn){analysisBtn=null;return;}}const src=ANALYSIS_AUDIO[id];if(!src)return;analysisPlayer=new Audio(src);analysisBtn=btn;btn.textContent='⏹ 停止';btn.classList.add('playing');analysisPlayer.onended=()=>{btn.textContent='🔊 听讲解';btn.classList.remove('playing');analysisPlayer=null;analysisBtn=null;};analysisPlayer.play();}
+
+function toggleAnalysis(idx){const el=document.getElementById('analysis-'+idx);if(el)el.classList.toggle('open');}
+function togglePanel(id){document.getElementById(id).classList.toggle('open');}
+function setMode(mode){document.body.classList.remove('mode-raw','mode-study','mode-quiz','mode-annotate');if(mode!=='study')document.body.classList.add('mode-'+mode);document.querySelectorAll('.mode-step').forEach(btn=>btn.classList.toggle('active',btn.dataset.mode===mode));hideTooltip();if(mode==='quiz'){pbStop();highlightSentence(null);pbUpdateUI();resetQuiz();}}
+function resetQuiz(){document.querySelectorAll('.question-option').forEach(opt=>opt.classList.remove('selected','correct','wrong'));document.querySelectorAll('.question-item').forEach(q=>q.dataset.answered='');const score=document.getElementById('quizScore');if(score)score.classList.remove('show');}
+document.addEventListener('click',function(e){if(!document.body.classList.contains('mode-quiz'))return;const opt=e.target.closest('.question-option');if(!opt)return;const item=opt.closest('.question-item');if(item.dataset.answered)return;item.dataset.answered='true';const picked=opt.dataset.key;const correct=item.dataset.answer;if(picked===correct){opt.classList.add('correct');}else{opt.classList.add('wrong');item.querySelector(`.question-option[data-key="${correct}"]`).classList.add('correct');}const total=document.querySelectorAll('.question-item[data-answer]').length;const done=document.querySelectorAll('.question-item[data-answered="true"]').length;if(done===total)showQuizScore();});
+function showQuizScore(){const total=document.querySelectorAll('.question-item[data-answer]').length;const wrong=document.querySelectorAll('.question-option.wrong').length;const score=document.getElementById('quizScore');score.textContent=`得分：${total-wrong} / ${total}`;score.classList.add('show');}
+function gotoSentence(idx){const el=document.querySelector(`.sentence[data-idx="${idx}"]`);if(!el)return;setMode('study');document.querySelectorAll('.sentence.highlighted').forEach(s=>s.classList.remove('highlighted'));el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('highlighted');}
+function toggleQuestionAnalysis(btn){const analysis=btn.nextElementSibling;analysis.classList.toggle('open');btn.textContent=analysis.classList.contains('open')?'收起解析':'🔍 查看解析';}
+
+const SRS_PREFIX='srs_beijing_2025_A_';const SRS_INTERVALS=[1,3,7,14,30];
+function srsLoad(word){const raw=localStorage.getItem(SRS_PREFIX+word);return raw?JSON.parse(raw):null;}
+function srsSave(word,knew){const state=srsLoad(word)||{streak:0};if(knew){state.streak=(state.streak||0)+1;state.interval=SRS_INTERVALS[Math.min(state.streak-1,SRS_INTERVALS.length-1)];}else{state.streak=0;state.interval=1;}state.nextReview=Date.now()+state.interval*86400000;localStorage.setItem(SRS_PREFIX+word,JSON.stringify(state));return state;}
+function srsIsDue(state){return!state||Date.now()>=state.nextReview;}
+function srsUpdateCard(card){const state=srsLoad(card.dataset.srsWord);card.classList.remove('srs-due','srs-known');if(!state)return;card.classList.add(srsIsDue(state)?'srs-due':'srs-known');}
+function srsUpdateBadge(){const badge=document.getElementById('srs-badge');if(!badge)return;const cards=document.querySelectorAll('.vocab-card[data-srs-word]');let due=0;cards.forEach(c=>{if(srsIsDue(srsLoad(c.dataset.srsWord)))due++;});if(due===0){badge.textContent='全掌握 ✓';badge.className='srs-badge all-done';}else{badge.textContent=due+'个待复习';badge.className='srs-badge';}}
+function srsClick(word,knew,btn){srsSave(word,knew);const card=btn.closest('.vocab-card');srsUpdateCard(card);srsUpdateBadge();btn.style.opacity='0.4';setTimeout(()=>btn.style.opacity='',600);}
+function srsInit(){document.querySelectorAll('.vocab-card').forEach(card=>{const wordEl=card.querySelector('.vocab-word');if(!wordEl)return;const word=wordEl.textContent.trim();card.dataset.srsWord=word;const btns=document.createElement('div');btns.className='srs-btns';const esc=word.replace(/\\/g,'\\\\').replace(/'/g,"\\'");btns.innerHTML=`<button class="srs-btn srs-btn-know" onclick="srsClick('${esc}',true,this)">认识 ✓</button>`+`<button class="srs-btn srs-btn-forget" onclick="srsClick('${esc}',false,this)">还不会 ✗</button>`;card.querySelector('.vocab-card-head').appendChild(btns);srsUpdateCard(card);});srsUpdateBadge();}
+
+function vocabClick(word){speakWord(word);}
+
+function initAnnotations(){
+  document.querySelectorAll('sup.ann-sup,.para-ann').forEach(el=>el.remove());
+  document.querySelectorAll('.passage .paragraph').forEach(para=>{
+    const seen=new Set();const items=[];let idx=1;
+    para.querySelectorAll('.tip').forEach(el=>{const tip=el.dataset.tip||'';const parts=tip.split('|');if(parts.length<2)return;const phrase=parts[0].trim();if(seen.has(phrase)){const prevIdx=items.findIndex(i=>i.phrase===phrase)+1;const sup=document.createElement('sup');sup.className='ann-sup';sup.textContent=prevIdx;el.after(sup);return;}seen.add(phrase);const sup=document.createElement('sup');sup.className='ann-sup';sup.textContent=idx;el.after(sup);const contentParts=parts[1].split('｜');const cn=contentParts[0].trim();const det=contentParts.slice(1).map(s=>s.replace(/<[^>]+>/g,'').trim()).filter(Boolean);items.push({num:idx,phrase,cn,det,level:el.dataset.level==='超纲'?'超纲':''});idx++;});
+    if(items.length===0)return;const ann=document.createElement('div');ann.className='para-ann';ann.innerHTML=items.map(i=>`<div class="pan-row"><div class="pan-head"><span class="pan-num">${i.num}</span><span class="pan-en">${i.phrase}</span><span class="pan-cn">${i.cn}</span>${i.level?`<span class="pan-lv lv-${i.level}">${i.level}</span>`:''}</div>${i.det.length?`<div class="pan-det">${i.det.map(d=>`<div>${d}</div>`).join('')}</div>`:''}</div>`).join('');
+    const trans=para.querySelector('.translation-inline');if(trans)trans.after(ann);else para.appendChild(ann);
+  });
+}
+
+pbUpdateUI();srsInit();
+document.addEventListener('DOMContentLoaded',initAnnotations);
+</script>
+</body>
+</html>

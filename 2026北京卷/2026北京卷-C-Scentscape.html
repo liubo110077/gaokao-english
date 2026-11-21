@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2026北京卷·C篇精读 · Scentscapes &amp; Climate Change</title>
+<style>
+:root {
+  --bg: #fafaf8;
+  --text: #1a1a1a;
+  --text-secondary: #555;
+  --text-muted: #888;
+  --accent: #2563eb;
+  --accent-light: #dbeafe;
+  --complex-bg: #f0f6fc;
+  --border: #e2e2e0;
+  --card-bg: #fff;
+  --hover-bg: #f5f5f4;
+  --shadow: 0 1px 3px rgba(0,0,0,.08);
+  --radius: 6px;
+}
+.theme-yellow {
+  --bg: #f5f0e8;
+  --card-bg: #faf6ee;
+  --border: #ddd5bf;
+  --complex-bg: #ece4d4;
+  --hover-bg: #ede7d8;
+  --accent-light: #fde8b8;
+}
+.theme-green {
+  --bg: #edecea;
+  --card-bg: #f3f2f0;
+  --border: #d6d5d0;
+  --complex-bg: #e5e4e0;
+  --hover-bg: #e8e7e3;
+  --accent-light: #dddcd6;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  padding-bottom: 60px;
+}
+.container { max-width: min(1100px, 88vw); margin: 0 auto; padding: 0 20px; }
+
+/* ── Header ── */
+.header {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header .container { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.header h1 { font-size: 16px; font-weight: 600; flex: 1; min-width: 200px; }
+.header-sub { font-size: 12px; color: var(--accent); font-weight: 500; background: var(--accent-light); padding: 2px 8px; border-radius: 10px; }
+.header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 6px 14px; border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--card-bg); color: var(--text); font-size: 13px;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ── Mode steps ── */
+.mode-steps { display: flex; gap: 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.mode-step {
+  padding: 6px 12px; border: none; background: var(--card-bg); color: var(--text-secondary);
+  font-size: 13px; cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.mode-step + .mode-step { border-left: 1px solid var(--border); }
+.mode-step.active { background: var(--accent); color: #fff; }
+.mode-step:hover:not(.active) { background: var(--accent-light); }
+
+/* ── Passage ── */
+.passage {
+  background: var(--card-bg); border-radius: var(--radius);
+  box-shadow: var(--shadow); margin-top: 20px; padding: 28px 32px;
+}
+.passage-title {
+  text-align: center; font-family: Georgia, "Times New Roman", serif;
+  font-size: 15px; font-weight: 700; letter-spacing: .5px;
+  margin-bottom: 20px; color: var(--text-secondary);
+}
+.passage-subtitle {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px; font-weight: 700; text-align: center;
+  margin-bottom: 16px; color: var(--text);
+}
+.restaurant-name {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700; font-size: 16px;
+  margin: 18px 0 6px 0; color: var(--text);
+}
+.paragraph { margin-bottom: 4px; text-indent: 2em; }
+.sentence {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px; line-height: 1.75;
+  position: relative; transition: background .2s; border-radius: 3px;
+  cursor: pointer;
+}
+.sentence:hover { background: var(--hover-bg); }
+.sentence.playing { background: var(--complex-bg); border-radius: 3px; }
+.sentence.complex { border-bottom: 1.5px dashed #93c5fd; }
+.sentence.complex.playing { background: var(--complex-bg); }
+
+/* ── Phrase tips ── */
+.tip {
+  border-bottom: 1.5px dashed var(--accent);
+  cursor: pointer;
+  position: relative;
+  transition: background .15s;
+}
+.tip:hover { background: var(--accent-light); }
+.tip.tip-flash { outline: 2px solid var(--accent); border-radius: 2px; animation: tipFlash 1.6s ease-out forwards; }
+@keyframes tipFlash { 0%{background:var(--accent);color:#fff;} 40%{background:var(--accent-light);color:inherit;} 100%{background:transparent;} }
+/* 注解模式：上标序号 */
+sup.ann-sup {
+  display: none;
+  font-size: 0.6em; color: var(--accent); font-weight: 700;
+  vertical-align: super; line-height: 0; margin-left: 2px;
+  font-family: system-ui, sans-serif; pointer-events: none;
+}
+body.mode-annotate sup.ann-sup { display: inline; }
+
+/* 注解模式：段后词注块 */
+.para-ann {
+  display: none;
+  margin: 16px 0 28px 0;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 15px; color: #333; text-indent: 0;
+}
+body.mode-annotate .para-ann {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+  gap: 16px 18px;
+  align-items: start;
+}
+.pan-row {
+  background: #fff;
+  border: 1px solid #ece8e0;
+  border-radius: 12px;
+  padding: 16px 20px 18px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+.pan-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pan-num {
+  flex-shrink: 0;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  font-size: 12px; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.pan-en  { font-family: Georgia, serif; font-weight: 700; font-size: 18px; color: #1a1a1a; }
+.pan-cn  { color: var(--accent); font-weight: 600; font-size: 15px; }
+.pan-lv { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 4px; line-height: 1.4; }
+.lv-超纲 { background: #fee2e2; color: #b91c1c; }
+.pan-det { margin: 12px 0 0 32px; color: #666; font-size: 14px; line-height: 1.85; }
+.pan-det div { position: relative; padding-left: 12px; }
+.pan-det div + div { margin-top: 8px; }
+.pan-det div::before { content: ''; position: absolute; left: 0; top: 0.8em; width: 4px; height: 4px; border-radius: 50%; background: #c9c3b8; }
+
+
+body.mode-quiz .para-ann, body.mode-raw .para-ann { display: none !important; }
+body.mode-quiz sup.ann-sup, body.mode-raw sup.ann-sup { display: none !important; }
+
+/* Tooltip bubble */
+.tooltip {
+  position: fixed;
+  z-index: 200;
+  background: var(--text);
+  color: #fff;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 8px 14px;
+  border-radius: 8px;
+  max-width: min(520px, calc(100vw - 16px));
+  width: max-content;
+  box-shadow: 0 4px 20px rgba(0,0,0,.25);
+  pointer-events: auto;
+  animation: tipIn .15s ease-out;
+}
+.tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: var(--arrow-left, 50%);
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid var(--text);
+}
+.tooltip.below::after {
+  bottom: auto; top: -6px;
+  border-top: none;
+  border-bottom: 6px solid var(--text);
+}
+.tooltip .tip-phrase {
+  font-family: Georgia, serif;
+  font-weight: 600;
+  color: #93c5fd;
+  margin-bottom: 2px;
+}
+.tooltip .tip-speak {
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 6px;
+  font-size: 12px;
+  opacity: .7;
+  vertical-align: middle;
+}
+.tooltip .tip-speak:hover { opacity: 1; }
+.level-badge { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 11px; font-weight: 600; margin-left: 6px; vertical-align: middle; font-family: -apple-system, "PingFang SC", sans-serif; }
+.badge-超纲 { background: rgba(239,68,68,.25); color: #fca5a5; }
+.badge-拓展 { background: rgba(251,146,60,.2); color: #fdba74; }
+.badge-选必 { background: rgba(96,165,250,.2); color: #93c5fd; }
+.tooltip .tip-zh-play {
+  display: block;
+  margin-top: 6px;
+  padding: 4px 10px;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 4px;
+  color: #93c5fd;
+  font-size: 12px;
+  cursor: pointer;
+  text-align: center;
+}
+.tooltip .tip-zh-play:hover { background: rgba(255,255,255,.25); }
+@keyframes tipIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Expandable analysis ── */
+.analysis {
+  display: none; margin: 8px 0 12px 0; padding: 12px 16px;
+  background: #f8f9fa; border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 14px; color: var(--text-secondary); line-height: 1.7; text-indent: 0;
+}
+.analysis.open { display: block; }
+.analysis p { margin-bottom: 4px; }
+.analysis b { color: var(--text); font-size: 13px; }
+.analysis-play {
+  float: right; margin-left: 8px;
+  background: none; border: 1px solid var(--border); border-radius: 4px;
+  font-size: 12px; padding: 2px 8px; cursor: pointer; color: var(--accent);
+  transition: all .15s;
+}
+.analysis-play:hover { background: var(--accent-light); border-color: var(--accent); }
+.analysis-play.playing { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ── Translation ── */
+.translation-inline {
+  display: none;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 14px; color: var(--text-muted);
+  margin: 2px 0 6px 0; text-indent: 0;
+}
+body.compare-mode .translation-inline,
+body.mode-annotate .translation-inline { display: block; }
+
+/* ── Panels ── */
+.panel {
+  background: var(--card-bg); border-radius: var(--radius);
+  box-shadow: var(--shadow); margin-top: 16px; overflow: hidden;
+}
+.panel-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px; cursor: pointer; user-select: none;
+  font-weight: 600; font-size: 15px;
+  border-bottom: 1px solid transparent; transition: border-color .2s;
+}
+.panel-header:hover { color: var(--accent); }
+.panel-header .arrow { transition: transform .2s; font-size: 12px; color: var(--text-muted); }
+.panel.open .panel-header { border-bottom-color: var(--border); }
+.panel.open .panel-header .arrow { transform: rotate(180deg); }
+.panel-body { display: none; padding: 16px 24px; }
+.panel.open .panel-body { display: block; }
+
+/* Vocab cards */
+.vocab-card { border-bottom: 1px solid #f0f0f0; padding: 12px 0; }
+.vocab-card:last-child { border-bottom: none; }
+.vocab-card-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 12px; }
+.vocab-word { font-family: Georgia, serif; font-weight: 600; color: var(--accent); cursor: pointer; font-size: 15px; }
+.vocab-word:hover { text-decoration: underline; }
+.vocab-meaning { font-size: 14px; color: var(--text); }
+.vocab-extra { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+.vocab-tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 3px; background: #fef3c7; color: #92400e; vertical-align: middle; }
+.vocab-tag.tag-core { background: #dcfce7; color: #166534; }
+.vocab-tag.tag-exam { background: #dbeafe; color: #1e40af; }
+.vocab-tag.tag-beyond { background: #fef3c7; color: #92400e; }
+.vocab-tag.tag-extend { background: #ffedd5; color: #c2410c; }
+.vocab-detail { display: none; margin-top: 8px; padding: 10px 14px; background: #f8f9fa; border-radius: var(--radius); font-size: 13.5px; line-height: 1.7; }
+.vocab-detail.open { display: block; }
+.vocab-detail .vd-section { margin-bottom: 6px; }
+.vocab-detail .vd-label { font-weight: 600; color: var(--accent); margin-right: 4px; }
+.vocab-detail .vd-example { color: var(--text-secondary); padding-left: 16px; }
+.vocab-detail .vd-example em { color: var(--text); font-style: normal; font-weight: 600; }
+.vocab-expand { font-size: 12px; color: var(--accent); cursor: pointer; border: none; background: none; padding: 0; margin-left: 8px; }
+.vocab-expand:hover { text-decoration: underline; }
+
+/* ── SRS review buttons ── */
+.srs-btns { display: flex; gap: 5px; margin-left: auto; }
+.srs-btn { font-size: 11px; padding: 2px 7px; border-radius: 10px; border: 1.5px solid; cursor: pointer; transition: all .15s; background: none; white-space: nowrap; }
+.srs-btn-know  { border-color: #16a34a; color: #16a34a; }
+.srs-btn-know:hover  { background: #dcfce7; }
+.srs-btn-forget { border-color: #dc2626; color: #dc2626; }
+.srs-btn-forget:hover { background: #fee2e2; }
+.vocab-card.srs-due  .vocab-word::after { content: ' 📌'; font-size: 10px; }
+.vocab-card.srs-known .vocab-word::after { content: ' ✓';  font-size: 11px; color: #16a34a; }
+.srs-badge { font-size: 12px; font-weight: 600; padding: 1px 8px; border-radius: 10px; background: #fef2f2; color: #dc2626; }
+.srs-badge.all-done { background: #dcfce7; color: #16a34a; }
+
+/* ── Questions ── */
+.question-item { padding: 16px 24px; border-bottom: 1px solid #f0f0f0; }
+.question-item:last-child { border-bottom: none; }
+.question-stem { font-weight: 600; font-size: 15px; margin-bottom: 8px; }
+.question-options { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 24px; font-size: 14px; margin-bottom: 8px; }
+.question-option { padding: 2px 0; }
+.show-answer-btn { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; color: var(--accent); cursor: pointer; background: none; border: none; padding: 4px 0; }
+.show-answer-btn:hover { text-decoration: underline; }
+.question-analysis { display: none; margin-top: 10px; padding: 12px 16px; background: #f8f9fa; border-radius: var(--radius); font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+.question-analysis.open { display: block; }
+.question-analysis .answer-line { font-weight: 700; color: #16a34a; margin-bottom: 6px; font-size: 15px; }
+.question-analysis .locate { background: #fef9c3; padding: 6px 10px; border-radius: 4px; margin: 6px 0; font-family: Georgia, serif; font-style: italic; font-size: 14px; color: var(--text); }
+.option-list { margin-top: 10px; display: flex; flex-direction: column; gap: 2px; }
+.option-item { padding: 3px 0; font-size: 13.5px; line-height: 1.5; }
+.option-item .opt-letter { font-weight: 700; }
+.option-item .opt-mark { font-weight: 700; }
+.option-item.correct .opt-mark { color: #15803d; }
+.option-item.wrong .opt-mark { color: #b91c1c; }
+.option-item .opt-why { color: #888; font-size: 12.5px; margin-left: 4px; }
+
+/* ── Writing panel ── */
+.writing-block { margin-bottom: 20px; }
+.writing-block:last-child { margin-bottom: 0; }
+.writing-block-title { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: .04em; text-transform: uppercase; margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+.writing-phrase-list { display: flex; flex-direction: column; gap: 0; }
+.writing-phrase { padding: 10px 0; border-bottom: 1px solid #f3f3f3; font-size: 14px; }
+.writing-phrase:last-child { border-bottom: none; }
+.writing-phrase-en { font-family: Georgia, serif; font-weight: 600; color: var(--text); font-size: 15px; }
+.writing-phrase-cn { color: var(--text-secondary); font-size: 13px; margin: 2px 0; }
+.writing-phrase-src { font-size: 12px; color: #aaa; font-style: italic; }
+.writing-phrase-src em { color: var(--accent); font-style: normal; }
+.writing-phrase-use { font-size: 13px; color: #555; margin-top: 4px; padding: 5px 10px; background: var(--hover-bg); border-radius: 4px; border-left: 2px solid var(--accent); }
+.conn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+@media (max-width: 600px) { .conn-grid { grid-template-columns: 1fr; } }
+.conn-card { padding: 10px 12px; border-radius: var(--radius); background: var(--hover-bg); font-size: 13.5px; }
+.conn-card-title { font-weight: 700; font-size: 12px; letter-spacing: .04em; margin-bottom: 6px; }
+.conn-card.c-add .conn-card-title { color: #0369a1; }
+.conn-card.c-contrast .conn-card-title { color: #b45309; }
+.conn-card.c-result .conn-card-title { color: #15803d; }
+.conn-card.c-example .conn-card-title { color: #7c3aed; }
+.conn-card.c-conclude .conn-card-title { color: #be185d; }
+.conn-item { display: inline-block; margin: 2px 3px 2px 0; padding: 2px 7px; border-radius: 10px; font-size: 12.5px; font-family: Georgia, serif; }
+.conn-card.c-add .conn-item { background: #e0f2fe; color: #0369a1; }
+.conn-card.c-contrast .conn-item { background: #fef3c7; color: #92400e; }
+.conn-card.c-result .conn-item { background: #dcfce7; color: #15803d; }
+.conn-card.c-example .conn-item { background: #ede9fe; color: #6d28d9; }
+.conn-card.c-conclude .conn-item { background: #fce7f3; color: #9d174d; }
+.conn-note { font-size: 12px; color: #888; margin-top: 5px; }
+
+/* ── Review ── */
+.review-section { padding: 20px 24px; }
+.review-section h3 { font-size: 15px; margin-bottom: 12px; }
+.review-checks { display: flex; flex-wrap: wrap; gap: 12px; font-size: 14px; }
+.review-checks label { display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 6px 12px; border: 1px solid var(--border); border-radius: var(--radius); transition: all .15s; }
+.review-checks label:has(input:checked) { background: var(--accent-light); border-color: var(--accent); }
+.review-checks input { accent-color: var(--accent); }
+
+/* ── Raw mode ── */
+body.mode-raw .tip { border-bottom: none; cursor: default; pointer-events: none; }
+body.mode-raw .tip:hover { background: none; }
+body.mode-raw .analysis,
+body.mode-raw .translation-inline,
+body.mode-raw .panel { display: none !important; }
+body.mode-raw .sentence.complex { border-bottom: none; }
+body.mode-raw .sentence { cursor: default; }
+body.mode-raw .sentence:hover { background: none; }
+
+/* ── Quiz mode ── */
+body.mode-quiz .tip { border-bottom: none; cursor: default; pointer-events: none; }
+body.mode-quiz .tip:hover { background: none; }
+body.mode-quiz .analysis,
+body.mode-quiz .translation-inline,
+body.mode-quiz #vocabPanel,
+body.mode-quiz #reviewPanel,
+body.mode-quiz #tipPanel,
+body.mode-quiz #writingPanel,
+body.mode-quiz #playbar { display: none !important; }
+body.mode-quiz .sentence.complex { border-bottom: none; cursor: default; }
+body.mode-quiz .sentence { cursor: default; }
+body.mode-quiz .sentence:hover { background: none; }
+body.mode-annotate .sentence.complex { border-bottom: none; }
+body.mode-annotate .sentence { cursor: default; }
+body.mode-annotate .sentence:hover { background: none; }
+body.mode-quiz #questionsPanel { display: block; }
+body.mode-quiz #questionsPanel .panel-body { display: block; }
+body.mode-quiz .question-analysis { display: none !important; }
+body.mode-quiz .show-answer-btn { display: none; }
+body.mode-quiz .question-option { cursor: pointer; padding: 6px 10px; border-radius: var(--radius); border: 1.5px solid transparent; transition: all .15s; }
+body.mode-quiz .question-option:hover { background: var(--accent-light); }
+body.mode-quiz .question-option.selected { border-color: var(--accent); background: var(--accent-light); }
+body.mode-quiz .question-option.correct { border-color: #16a34a; background: #dcfce7; }
+body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2e2; }
+.quiz-score { text-align: center; padding: 16px; font-size: 16px; font-weight: 600; color: var(--accent); display: none; }
+.quiz-score.show { display: block; }
+
+/* ── Bottom Playbar ── */
+#playbar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+  background: #1a1a1a; color: #fff;
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  padding: 10px 20px; height: 52px;
+  font-size: 14px;
+  box-shadow: 0 -2px 12px rgba(0,0,0,.2);
+}
+#playbar button {
+  background: none; border: none; color: #fff; font-size: 18px;
+  cursor: pointer; padding: 4px 8px; border-radius: 4px; line-height: 1;
+  transition: background .15s;
+}
+#playbar button:hover { background: rgba(255,255,255,.15); }
+#pb-play { font-size: 22px; }
+#pb-counter { font-size: 13px; color: #aaa; min-width: 52px; text-align: center; }
+#pb-speed {
+  background: #333; border: none; color: #fff; font-size: 13px;
+  padding: 3px 6px; border-radius: 4px; cursor: pointer;
+}
+
+/* ── Responsive ── */
+.sentence.highlighted { background: #fef08a; border-radius: 3px; }
+@media (max-width: 600px) {
+  .passage { padding: 20px 16px; }
+  .sentence { font-size: 16px; }
+  .question-options { grid-template-columns: 1fr; }
+  .panel-header, .question-item, .review-section { padding-left: 16px; padding-right: 16px; }
+  .panel-body { padding: 12px 16px; }
+}
+
+/* ── Full-width layout + safe areas (iPad / iPhone / home-screen app) ── */
+.container {
+  max-width: 1400px; width: 100%;
+  padding-left: max(12px, env(safe-area-inset-left));
+  padding-right: max(12px, env(safe-area-inset-right));
+}
+.header { padding-top: calc(16px + env(safe-area-inset-top)); }
+body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
+#playbar {
+  height: calc(52px + env(safe-area-inset-bottom));
+  padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  padding-left: max(20px, env(safe-area-inset-left));
+  padding-right: max(20px, env(safe-area-inset-right));
+}
+.passage { padding: 24px 24px; }
+@media (max-width: 600px) {
+  .passage { padding: 18px 14px; }
+  .panel-header, .question-item, .review-section { padding-left: 14px; padding-right: 14px; }
+  .panel-body { padding: 12px 14px; }
+}
+/* Tooltip: arrow stays outside the scroll area; only the body scrolls */
+.tooltip .tip-scroll { overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+
+/* ── Larger type for iPad / desktop (>=700px). Phones keep the compact sizes. ── */
+@media (min-width: 700px) {
+  .header h1 { font-size: 19px; }
+  .passage-title { font-size: 19px; }
+  .restaurant-name { font-size: 20px; }
+  .passage h2, .passage h3 { font-size: 20px; }
+  .header-sub { font-size: 14px; }
+  .sentence { font-size: 23px; line-height: 1.8; }
+  .translation-inline { font-size: 18px !important; line-height: 1.8; }
+  .analysis { font-size: 18px; line-height: 1.8; }
+  .analysis b { font-size: 16px; }
+  .panel-header { font-size: 18px; }
+  .vocab-word { font-size: 20px; }
+  .vocab-meaning { font-size: 18px; }
+  .vocab-extra { font-size: 16.5px; line-height: 1.7; }
+  .vocab-detail, .vd-example { font-size: 16px; }
+  .vocab-tag, .level-badge { font-size: 13px; }
+  .vocab-expand, .srs-btn, .srs-badge { font-size: 14px; }
+  .question-stem { font-size: 19px; }
+  .question-options { font-size: 18px; }
+  .show-answer-btn { font-size: 15.5px; }
+  .question-analysis .answer-line { font-size: 17px; }
+  .option-item { font-size: 16.5px; }
+  .option-item .opt-why { font-size: 15px; }
+  .writing-phrase, .writing-phrase-en { font-size: 18px; }
+  .writing-phrase-cn, .writing-phrase-use { font-size: 16px; }
+  .conn-card { font-size: 16px; } .conn-item { font-size: 15px; }
+  .review-section h3 { font-size: 17px; } .review-checks { font-size: 17px; }
+  .panel-body[style] { font-size: 17px !important; }
+  .tooltip { font-size: 17px; line-height: 1.55; }
+  .tooltip .tip-phrase { font-size: 19px; }
+  .tooltip .tip-zh-play { font-size: 14px; }
+  #pb-counter, #pb-speed { font-size: 15px; }
+}
+
+/* 注解模式：长难句拆解（无音频，替代 .analysis） */
+.sb-block { display: none; }
+body.mode-annotate .sb-block {
+  display: block; margin: 4px 0 28px; padding: 16px 20px 18px;
+  background: #f8f9fa; border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-family: -apple-system, "PingFang SC", sans-serif; text-indent: 0;
+}
+body.mode-annotate .analysis { display: none !important; }
+body.mode-quiz .sb-block, body.mode-raw .sb-block { display: none !important; }
+.sb-title { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: .08em; margin-bottom: 12px; }
+.sb-sent { font-family: Georgia, serif; font-size: 18px; line-height: 2.3; color: #1a1a1a; background: #fff; border: 1px solid #ece8e0; border-radius: 10px; padding: 14px 18px; }
+.sb-chip { display: inline-block; font-family: -apple-system, "PingFang SC", sans-serif; font-size: 11px; font-weight: 700; line-height: 1; padding: 4px 7px; border-radius: 999px; margin-right: 5px; vertical-align: 3px; }
+.sb-core { font-weight: 700; border-bottom: 2.5px solid var(--accent); }
+.sb-core-chip { background: var(--accent); color: #fff; }
+.sb-ins { color: #9a9a9a; background: #eeebe4; border-radius: 4px; padding: 2px 4px; }
+.sb-ins-chip { background: #e4e0d8; color: #777; }
+.sb-rest { border-bottom: 2.5px solid #4caf7a; }
+.sb-rest-chip { background: #4caf7a; color: #fff; }
+.sb-steps { margin-top: 14px; display: grid; gap: 10px; }
+.sb-step { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; font-size: 15px; line-height: 1.75; color: #333; }
+.sb-step-n { width: 24px; height: 24px; border-radius: 50%; background: #1a1a1a; color: #fff; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; margin-top: 2px; }
+.sb-step em { font-style: normal; font-family: Georgia, serif; color: #111; background: #fff; border: 1px solid #ece8e0; padding: 0 5px; border-radius: 4px; }
+.sb-step .arrow { color: #aaa; margin: 0 4px; }
+.sb-tip { margin-top: 14px; font-size: 14px; color: #8a6d1f; background: #fdf6e3; border-radius: 8px; padding: 9px 14px; }
+
+/* 打印：只印正文区（课本模式最完整），去掉导航/播放条/面板，卡片不跨页 */
+@media print {
+  @page { size: A4; margin: 14mm 12mm; }
+  html, body { background: #fff !important; }
+  body { padding: 0 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .header, #playbar, .panel, .tooltip { display: none !important; }
+  .passage { box-shadow: none !important; border: none !important; background: #fff !important; padding: 0 !important; margin: 0 !important; max-width: none !important; }
+  .sentence { font-size: 15px !important; line-height: 1.85 !important; }
+  .translation-inline { font-size: 12.5px !important; break-inside: avoid; }
+  body.mode-annotate .para-ann { grid-template-columns: 1fr 1fr; gap: 8px 10px; margin: 8px 0 14px; }
+  .pan-row { box-shadow: none; padding: 9px 12px 10px; break-inside: avoid; }
+  .pan-en { font-size: 14px; }
+  .pan-cn { font-size: 12.5px; }
+  .pan-det { margin: 6px 0 0 30px; font-size: 11.5px; line-height: 1.6; }
+  .pan-det div + div { margin-top: 3px; }
+  body.mode-annotate .sb-block { break-inside: avoid; padding: 12px 14px; margin: 4px 0 16px; }
+  .sb-sent { font-size: 14px; line-height: 2.1; padding: 10px 12px; }
+  .sb-step { font-size: 12.5px; line-height: 1.6; }
+  .sb-tip { font-size: 12px; }
+  .restaurant-name, h2, h3 { break-after: avoid; }
+}
+</style>
+</head>
+<body class="mode-study">
+
+<!-- ══════ Header ══════ -->
+<div class="header">
+  <div class="container">
+    <h1>C篇精读 · Scentscapes &amp; Climate Change</h1>
+    <div class="header-controls">
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="study" onclick="setMode('study')">① 精读</button>
+        <button class="mode-step" data-mode="quiz" onclick="setMode('quiz')">② 做题</button>
+        <button class="mode-step" data-mode="raw" onclick="setMode('raw')">③ 原文</button>
+        <button class="mode-step" data-mode="annotate" onclick="setMode('annotate')">④ 课本</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()" title="切换护眼色">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Passage ══════ -->
+<div class="container">
+<div class="passage" id="passage">
+  <div class="passage-title">C</div>
+  <div class="passage-subtitle">Scentscapes &amp; Climate Change</div>
+
+  <!-- ── Para 1 ── -->
+  <div class="paragraph" id="para-1">
+    <span class="sentence" data-idx="0">Smells are all around us.</span>
+    <span class="sentence" data-idx="1">What we know as a <span class="tip" data-tip="scent|气味｜scent = 气味，通常指比较好闻的、自然的气味。也可泛指任何气味｜近义：smell, odor, aroma（芳香）" data-level="选必">scent</span> (气味) is a collection of natural or artificial <span class="tip" data-tip="airborne|空气中的，空气传播的｜air = 空气，borne = 被…携带的（bear 的过去分词）。airborne chemicals = 在空气中传播的化学物质｜搭配：airborne disease 空气传播的疾病" data-level="拓展">airborne</span> chemicals released from objects.</span>
+    <span class="sentence" data-idx="2">But smell is often <span class="tip" data-tip="overlooked|被忽视的｜over- = 越过，look = 看。overlook = 看过去了 = 忽视。smell is often overlooked = 气味经常被忽视｜搭配：easily overlooked 容易被忽视" data-level="选必">overlooked</span> and <span class="tip" data-tip="undervalued|被低估的｜under- = 低于/不足，valued = 被重视的。undervalued = 没有被充分重视/低估了价值｜反义：overvalued 被高估的" data-level="拓展">undervalued</span>.</span>
+    <span class="sentence" data-idx="3">So, as climate change and <span class="tip" data-tip="biodiversity|生物多样性｜bio- = 生命，diversity = 多样性。biodiversity = 生物多样性，指一个生态系统中物种的丰富程度｜搭配：biodiversity loss 生物多样性丧失" data-level="选必">biodiversity</span> loss threaten natural scents, many people may not even notice.</span>
+    <div class="translation-inline">气味无处不在。我们所说的"气味"是从物体释放出来的天然或人造空气传播化学物质的集合。但是气味经常被忽视和低估。因此，当气候变化和生物多样性丧失威胁到自然气味时，许多人甚至可能不会注意到。</div>
+  </div>
+
+  <!-- ── Para 2 ── -->
+  <div class="paragraph" id="para-2">
+    <span class="sentence" data-idx="4">Whether or not we pay attention to the world's "<span class="tip" data-tip="scentscape|气味景观｜scent = 气味 + landscape 的后缀 -scape = 景观。scentscape = 气味景观，指一个地方整体的气味环境｜类似构词：landscape 风景，soundscape 声景" data-level="超纲">scentscape</span>", heat and pollution are causing it to shift.</span>
+    <span class="sentence" data-idx="5">As temperatures rise, man-made substances release more scent <span class="tip" data-tip="molecules|分子｜molecule = 分子，物质的最小单位之一。scent molecules = 气味分子——携带气味的微小化学颗粒｜搭配：water molecules 水分子" data-level="选必">molecules</span> (分子), and biodiversity loss due to climate change threatens the plants that scent the environment.</span>
+    <span class="sentence complex" data-idx="6">"If you go to a forest, you have a given environment and temperature. If that temperature goes a little bit high, the profile of the chemical <span class="tip" data-tip="components|成分，组成部分｜component = 组成部分/成分。the chemical components in the air = 空气中的化学成分。profile of the chemical components = 化学成分的组成比例｜搭配：key component 关键成分" data-level="选必">components</span> in the air changes," since temperature can affect the amount of smell-carrying gas particles (粒子) released from substances, explains John Smith, a chemical engineer. "And therefore, the <span class="tip" data-tip="perception|感知，认知｜perceive = 感知/察觉，perception = 感知/认知。the perception of how the forest smells = 对森林气味的感知。指我们闻到/感受到的气味｜搭配：change perception 改变感知" data-level="选必">perception</span> of how the forest smells changes."</span>
+    <div class="analysis" id="analysis-6"><button class="analysis-play" onclick="playAnalysis('analysis-6', this)" title="听讲解">🔊 听讲解</button>
+      <p>这是一个复杂的引语句。主干结构是：John Smith explains + 两段引语。中间插入了 since 引导的原因状语从句：since temperature can affect the amount of smell-carrying gas particles released from substances（因为温度会影响物质释放的携带气味的气体粒子的量）。</p>
+      <p>两个条件句 If you go to a forest... If that temperature goes a little bit high... 层层递进，说明温度变化如何改变空气中的化学成分，从而改变我们对森林气味的感知。</p>
+    </div>
+    <div class="translation-inline">无论我们是否关注世界的"气味景观"，高温和污染正在使其发生变化。随着气温上升，人造物质释放出更多的气味分子，而气候变化造成的生物多样性丧失则威胁着那些为环境增添气味的植物。"如果你去一片森林，你有一个特定的环境和温度。如果温度稍微升高，空气中化学成分的组成比例就会改变，"化学工程师约翰·史密斯解释说，因为温度会影响物质释放的携带气味的气体粒子的量。"因此，对森林气味的感知也会改变。"</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-core-chip">引语1·条件</span><span class="sb-core">"If you go to a forest, you have a given environment and temperature. If that temperature goes a little bit high, the profile of the chemical components in the air changes,"</span> <span class="sb-chip sb-ins-chip">原因 · since</span><span class="sb-ins">since temperature can affect the amount of smell-carrying gas particles released from substances,</span> <span class="sb-chip sb-rest-chip">主句 · 谁说的</span><span class="sb-rest">explains John Smith, a chemical engineer.</span> <span class="sb-chip sb-core-chip">引语2·结论</span><span class="sb-core">"And therefore, the perception of how the forest smells changes."</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先找主干：<em>John Smith explains ...</em><span class="arrow">→</span>约翰·史密斯解释说……</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>引语中的条件链：<em>If temperature goes high → chemical components change → perception changes</em><span class="arrow">→</span>温度升高 → 化学成分变 → 感知变</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>since 原因从句：<em>since temperature can affect the amount of ... particles</em><span class="arrow">→</span>因为温度影响气体粒子释放量</div></div></div><div class="sb-tip">💡 长引语中间插入 since 从句是高考常见的干扰结构。先跳过 since 部分，把引号内的话连起来读，理解就清晰了。</div></div>
+  </div>
+
+  <!-- ── Para 3 ── -->
+  <div class="paragraph" id="para-3">
+    <span class="sentence" data-idx="7">That effect extends beyond forests.</span>
+    <span class="sentence" data-idx="8">Snow—already threatened by a warming climate—absorbs different chemicals from the atmosphere as temperatures rise, which changes its cold-clean scent.</span>
+    <span class="sentence" data-idx="9">Warmer conditions can <span class="tip" data-tip="intensify|加剧，加强｜intense = 强烈的，intensify = 使加剧/加强。Warmer conditions can intensify smells = 更温暖的条件会使气味加剧｜搭配：intensify efforts 加大力度" data-level="选必">intensify</span> smells, leading the snow to smell more unpleasant and potentially gather more <span class="tip" data-tip="pollutants|污染物｜pollute = 污染，pollutant = 污染物。gather more pollutants = 聚集更多污染物｜搭配：air pollutants 空气污染物，water pollutants 水污染物" data-level="选必">pollutants</span>.</span>
+    <div class="translation-inline">这种影响不仅限于森林。雪——已经受到气候变暖的威胁——随着温度升高会从大气中吸收不同的化学物质，从而改变其清冷的气味。更温暖的条件会加剧气味，使雪闻起来更难闻，并可能聚集更多的污染物。</div>
+  </div>
+
+  <!-- ── Para 4 ── -->
+  <div class="paragraph" id="para-4">
+    <span class="sentence" data-idx="10">Climate change is also quickening the loss of biodiversity, threatening to erase certain smells entirely.</span>
+    <span class="sentence" data-idx="11">When plants disappear, their scents become more difficult to produce.</span>
+    <div class="translation-inline">气候变化也在加速生物多样性的丧失，威胁着彻底抹去某些气味。当植物消失时，它们的气味就变得更难产生了。</div>
+  </div>
+
+  <!-- ── Para 5 ── -->
+  <div class="paragraph" id="para-5">
+    <span class="sentence" data-idx="12">Some scents are linked to cultural <span class="tip" data-tip="heritage|遗产，文化传承｜heritage = 遗产，既指物质遗产也指文化/精神遗产。cultural heritage = 文化遗产｜搭配：world heritage 世界遗产，heritage site 遗产地" data-level="选必">heritage</span>.</span>
+    <span class="sentence" data-idx="13">A recent study reported that native communities in Peru noticed a change in the smell of the Amazon River due to industrial pollution.</span>
+    <span class="sentence complex" data-idx="14">Over generations, communities became <span class="tip" data-tip="desensitised|变得不敏感的，脱敏的｜de- = 去除，sensitise = 使敏感。desensitised = 去除了敏感 = 变得不敏感。became desensitised to = 对…变得不敏感了（习以为常了）｜搭配：desensitised to violence 对暴力麻木" data-level="拓展">desensitised</span> to increasingly smelly rivers, a sign of broader ecosystem <span class="tip" data-tip="degradation|退化，恶化｜degrade = 退化/降解，degradation = 退化/恶化。ecosystem degradation = 生态系统退化｜搭配：environmental degradation 环境退化，land degradation 土地退化" data-level="拓展">degradation</span>.</span>
+    <div class="analysis" id="analysis-14"><button class="analysis-play" onclick="playAnalysis('analysis-14', this)" title="听讲解">🔊 听讲解</button>
+      <p>这句的核心结构是：communities became desensitised to ... rivers。Over generations 是时间状语（经过好几代人）。句末 a sign of broader ecosystem degradation 是同位语，补充说明前面整件事——社区对臭河水习以为常这件事本身就是更大范围生态退化的一个标志。</p>
+      <p>desensitised to 是关键搭配：对…变得不敏感/麻木。这里的意思是：河水越来越臭，但人们慢慢习惯了，不再觉得异常。</p>
+    </div>
+    <span class="sentence" data-idx="15">At the same time, in some Amazonian belief systems, declining water quality and the unpleasant smells will lead to the <span class="tip" data-tip="dispersal|消散，散去｜disperse = 分散/消散，dispersal = 散去/消散。the dispersal of the river's spiritual beings = 河流精灵的消散（离去）｜搭配：seed dispersal 种子传播" data-level="拓展">dispersal</span> (消散) of the river's spiritual beings.</span>
+    <span class="sentence" data-idx="16">The damage to the scentscape could result in harm to both health and spiritual practice.</span>
+    <div class="translation-inline">有些气味与文化遗产相关。最近一项研究报告说，秘鲁的原住民社区注意到亚马孙河的气味因工业污染而发生了变化。经过好几代人，社区对越来越臭的河流变得不敏感了，这是更大范围生态退化的一个标志。与此同时，在一些亚马孙信仰体系中，水质下降和难闻的气味将导致河流精灵的消散。对气味景观的破坏可能会同时损害健康和精神活动。</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-ins-chip">时间状语</span><span class="sb-ins">Over generations,</span> <span class="sb-chip sb-core-chip">主语 + 谓语</span><span class="sb-core">communities became desensitised to increasingly smelly rivers,</span> <span class="sb-chip sb-rest-chip">同位语 · 补充说明</span><span class="sb-rest">a sign of broader ecosystem degradation.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读主干：<em>communities became desensitised to ... rivers</em><span class="arrow">→</span>社区对…河流变得不敏感了</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>时间状语：<em>Over generations</em><span class="arrow">→</span>经过好几代人（说明过程很缓慢）</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>同位语：<em>a sign of broader ecosystem degradation</em><span class="arrow">→</span>（这件事是）更大范围生态退化的一个标志</div></div></div><div class="sb-tip">💡 同位语用逗号隔开，对前面整件事做补充说明。desensitised to = 对…变得不敏感，高考阅读中常考的搭配。</div></div>
+  </div>
+
+  <!-- ── Para 6 ── -->
+  <div class="paragraph" id="para-6">
+    <span class="sentence" data-idx="17">Even though we have other valuable things endangered by climate change, like food access, there is also an element of cultural identity, cultural survival, and history.</span>
+    <span class="sentence" data-idx="18">If we don't look at it, we lose all the richness behind it.</span>
+    <div class="translation-inline">尽管气候变化还危及着其他有价值的东西，比如食物获取，但其中也有文化认同、文化存续和历史的因素。如果我们不关注它，我们就会失去它背后所有的丰富内涵。</div>
+  </div>
+</div>
+
+<!-- ══════ Vocabulary ══════ -->
+<div class="panel" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')">
+    <span>生词与短语（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="vocab-list">
+      <!-- ── 考纲内 ── -->
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('scent')">scent</span>
+          <span class="vocab-meaning">气味</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">scent = 气味，通常指比较好闻的、自然的气味，也可泛指任何气味。<br>近义：smell, odor, aroma（芳香）</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('molecules')">molecules</span>
+          <span class="vocab-meaning">分子</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">molecule = 分子，物质的最小单位之一。scent <em>molecules</em> = 气味分子。<br>water <em>molecules</em> 水分子 &nbsp;·&nbsp; <em>molecule</em> structure 分子结构</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('perception')">perception</span>
+          <span class="vocab-meaning">感知，认知</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">perceive = 感知/察觉，<em>perception</em> = 感知/认知。the <em>perception</em> of how the forest smells = 对森林气味的感知。<br>change <em>perception</em> 改变感知 &nbsp;·&nbsp; public <em>perception</em> 公众认知</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('intensify')">intensify</span>
+          <span class="vocab-meaning">加剧，加强</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">intense = 强烈的，<em>intensify</em> = 使加剧/加强。Warmer conditions can <em>intensify</em> smells = 更暖的条件会加剧气味。<br><em>intensify</em> efforts 加大力度 &nbsp;·&nbsp; the storm <em>intensified</em> 风暴加剧了</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('pollutants')">pollutants</span>
+          <span class="vocab-meaning">污染物</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">pollute = 污染，<em>pollutant</em> = 污染物。gather more <em>pollutants</em> = 聚集更多污染物。<br>air <em>pollutants</em> 空气污染物 &nbsp;·&nbsp; water <em>pollutants</em> 水污染物</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('biodiversity')">biodiversity</span>
+          <span class="vocab-meaning">生物多样性</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">bio- = 生命，diversity = 多样性。<em>biodiversity</em> = 生物多样性，指一个生态系统中物种的丰富程度。<br><em>biodiversity</em> loss 生物多样性丧失 &nbsp;·&nbsp; protect <em>biodiversity</em> 保护生物多样性</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('heritage')">heritage</span>
+          <span class="vocab-meaning">遗产，文化传承</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra"><em>heritage</em> = 遗产，既指物质遗产也指文化/精神遗产。cultural <em>heritage</em> = 文化遗产。<br>world <em>heritage</em> 世界遗产 &nbsp;·&nbsp; <em>heritage</em> site 遗产地</div>
+      </div>
+      <!-- ── 拓展 ── -->
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('airborne')">airborne</span>
+          <span class="vocab-meaning">空气中的，空气传播的</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">air = 空气，borne = 被…携带的（bear 的过去分词）。<em>airborne</em> chemicals = 空气中传播的化学物质。<br><em>airborne</em> disease 空气传播的疾病 &nbsp;·&nbsp; <em>airborne</em> particles 空气中的微粒</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('desensitised')">desensitised</span>
+          <span class="vocab-meaning">变得不敏感的，脱敏的</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">de- = 去除，sensitise = 使敏感。<em>desensitised</em> = 变得不敏感。became <em>desensitised</em> to = 对…变得不敏感了。<br><em>desensitised</em> to violence 对暴力麻木 &nbsp;·&nbsp; gradually <em>desensitised</em> 逐渐脱敏</div>
+      </div>
+      <!-- ── 超纲 ── -->
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('scentscape')">scentscape</span>
+          <span class="vocab-meaning">气味景观</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
+        </div>
+        <div class="vocab-extra">scent = 气味 + landscape 的后缀 -scape = 景观。<em>scentscape</em> = 气味景观，指一个地方整体的气味环境。<br>类似构词：landscape 风景，soundscape 声景，cityscape 城市景观</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Questions ══════ -->
+<div class="panel" id="questionsPanel">
+  <div class="panel-header" onclick="togglePanel('questionsPanel')">
+    题目解析（3题，28—30）
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="question-item" data-answer="A">
+      <div class="question-stem">28. The author mentions "snow" in order to________.</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. illustrate a point</div>
+        <div class="question-option" data-key="B">B. contrast approaches</div>
+        <div class="question-option" data-key="C">C. classify objects</div>
+        <div class="question-option" data-key="D">D. define a concept</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：A</div>
+        <div class="locate" data-goto="7" onclick="gotoSentence(7)">"That effect extends beyond forests. Snow—already threatened by a warming climate—absorbs different chemicals from the atmosphere as temperatures rise, which changes its cold-clean scent."</div>
+        <p style="margin-top:8px"><b>解题思路：</b>作者提到"雪"是为了什么？第3段开头说 "That effect extends beyond forests"（这种影响不仅限于森林），然后举雪为例来<b>说明（illustrate）</b>气候变化改变气味这个观点——从森林扩展到雪，都在说明同一个论点。</p>
+        <div class="option-list">
+          <div class="option-item correct"><span class="opt-letter">A.</span> illustrate a point <span class="opt-mark">✓</span><span class="opt-why">雪的例子是为了说明"气候变化改变气味"这个观点，从森林延伸到雪</span></div>
+          <div class="option-item wrong"><span class="opt-letter">B.</span> contrast approaches <span class="opt-mark">✗</span><span class="opt-why">文中没有对比不同的方法/方式</span></div>
+          <div class="option-item wrong"><span class="opt-letter">C.</span> classify objects <span class="opt-mark">✗</span><span class="opt-why">不是在分类，是在举例说明同一个效应</span></div>
+          <div class="option-item wrong"><span class="opt-letter">D.</span> define a concept <span class="opt-mark">✗</span><span class="opt-why">不是在定义概念，而是在举例说明</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="question-item" data-answer="D">
+      <div class="question-stem">29. What can we learn from this passage?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. Biodiversity tends to be overlooked.</div>
+        <div class="question-option" data-key="B">B. Snow is intensified by a warming climate.</div>
+        <div class="question-option" data-key="C">C. Forest smell is likely to be changed by perception.</div>
+        <div class="question-option" data-key="D">D. Disappearance of the Earth's smells can be a cultural loss.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：D</div>
+        <div class="locate" data-goto="12" onclick="gotoSentence(12)">"Some scents are linked to cultural heritage." + "Even though we have other valuable things endangered by climate change... there is also an element of cultural identity, cultural survival, and history."</div>
+        <p style="margin-top:8px"><b>解题思路：</b>第5段明确说气味与文化遗产相关（cultural heritage），第6段进一步说这涉及文化认同、文化存续和历史。因此气味消失 = 文化损失，对应选项 D。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-letter">A.</span> Biodiversity tends to be overlooked <span class="opt-mark">✗</span><span class="opt-why">原文说被忽视的是 smell（气味），不是 biodiversity（生物多样性）</span></div>
+          <div class="option-item wrong"><span class="opt-letter">B.</span> Snow is intensified by a warming climate <span class="opt-mark">✗</span><span class="opt-why">张冠李戴：原文说的是 smells 被 intensify（加剧），不是 snow 被 intensify</span></div>
+          <div class="option-item wrong"><span class="opt-letter">C.</span> Forest smell is likely to be changed by perception <span class="opt-mark">✗</span><span class="opt-why">因果倒置：原文说温度变化改变了气味，从而改变了感知；不是感知改变了气味</span></div>
+          <div class="option-item correct"><span class="opt-letter">D.</span> Disappearance of the Earth's smells can be a cultural loss <span class="opt-mark">✓</span><span class="opt-why">第5-6段明确说气味与文化遗产相关，气味消失意味着文化损失</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="question-item" data-answer="D">
+      <div class="question-stem">30. What is implied in this passage?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. Loss of smells can lead to natural disasters.</div>
+        <div class="question-option" data-key="B">B. Damages of scentscapes can be artificially repaired.</div>
+        <div class="question-option" data-key="C">C. Scents of the missing plants are preserved in the atmosphere.</div>
+        <div class="question-option" data-key="D">D. Smell changes of forest and snow share a common underlying cause.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：D</div>
+        <div class="locate" data-goto="6" onclick="gotoSentence(6)">"If that temperature goes a little bit high, the profile of the chemical components in the air changes." + "Snow—already threatened by a warming climate—absorbs different chemicals from the atmosphere as temperatures rise."</div>
+        <p style="margin-top:8px"><b>解题思路：</b>推断题。第2段说森林气味变化是因为温度升高（temperature goes high），第3段说雪的气味变化也是因为温度升高（as temperatures rise）。两者的共同根本原因都是气候变暖（climate change / warming），对应选项 D。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-letter">A.</span> Loss of smells can lead to natural disasters <span class="opt-mark">✗</span><span class="opt-why">原文没有提到气味消失会导致自然灾害</span></div>
+          <div class="option-item wrong"><span class="opt-letter">B.</span> Damages of scentscapes can be artificially repaired <span class="opt-mark">✗</span><span class="opt-why">原文没有提到人工修复气味景观的可能性</span></div>
+          <div class="option-item wrong"><span class="opt-letter">C.</span> Scents of the missing plants are preserved in the atmosphere <span class="opt-mark">✗</span><span class="opt-why">原文说植物消失后气味更难产生，没说气味被保存在大气中</span></div>
+          <div class="option-item correct"><span class="opt-letter">D.</span> Smell changes of forest and snow share a common underlying cause <span class="opt-mark">✓</span><span class="opt-why">森林和雪的气味变化都由同一根本原因造成——气温升高（气候变化）</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="quiz-score" id="quizScore"></div>
+  </div>
+</div>
+
+<!-- ══════ Review ══════ -->
+<div class="panel" id="reviewPanel">
+  <div class="panel-header" onclick="togglePanel('reviewPanel')">
+    本篇复盘
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="review-section">
+      <h3>我这篇的卡点：</h3>
+      <div class="review-checks">
+        <label><input type="checkbox" id="rev1"> 长难句看不懂</label>
+        <label><input type="checkbox" id="rev2"> 找不到原文证据</label>
+        <label><input type="checkbox" id="rev3"> 脑补推理</label>
+        <label><input type="checkbox" id="rev4"> 生词太多</label>
+      </div>
+      <h3 style="margin-top:16px">标记：</h3>
+      <div class="review-checks">
+        <label><input type="checkbox" id="rev5"> 待复习</label>
+        <label><input type="checkbox" id="rev6"> 已掌握</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ 阅读技巧 ══════ -->
+<div class="panel" id="tipPanel">
+  <div class="panel-header" onclick="togglePanel('tipPanel')">
+    阅读技巧：科学说明文怎么读
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body" style="font-size:15px; line-height:1.8;">
+    <p style="margin-bottom:14px;">C篇常考"科学说明/议论类"——作者围绕一个科学现象展开说明，题目考你能不能<strong>理清因果链条和举例论证逻辑</strong>。有3个核心策略：</p>
+
+    <p style="margin-bottom:6px;"><strong>① 找主题句，顺着因果链读</strong></p>
+    <p style="margin-bottom:14px; padding-left:16px; color:#555;">
+      科学说明文的核心逻辑通常是因果链：温度升高 → 化学成分变化 → 气味改变。本文第2段就建立了这条因果链，后面的段落都在延伸这条链。做题时先抓住因果链，选项中把因果颠倒的（如Q29选项C）就可以排除。
+    </p>
+
+    <p style="margin-bottom:6px;"><strong>② 举例是为了说明什么？往前看一句</strong></p>
+    <p style="margin-bottom:14px; padding-left:16px; color:#555;">
+      Q28考"提到雪是为了什么"。答题技巧：看例子前面那句话——<em>"That effect extends beyond forests."</em>（这种影响不仅限于森林）。雪就是"beyond forests"的例子，用来说明这个效应的普遍性。做"举例目的题"时，永远往前看一句找论点。
+    </p>
+
+    <p style="margin-bottom:6px;"><strong>③ 注意"偷换主语"的干扰项</strong></p>
+    <p style="margin-bottom:0; padding-left:16px; color:#555;">
+      Q29选项A说 "Biodiversity tends to be overlooked"——但原文说的是 <em>"smell is often overlooked"</em>（被忽视的是气味，不是生物多样性）。选项B说 "Snow is intensified"——但原文说的是 <em>"Warmer conditions can intensify smells"</em>（被加剧的是气味，不是雪）。高考经常通过偷换主语来设置干扰项，一定要看清"谁做了什么"。
+    </p>
+  </div>
+</div>
+
+<!-- ══════ 作文拓展 ══════ -->
+<div class="panel" id="writingPanel">
+  <div class="panel-header" onclick="togglePanel('writingPanel')">
+    作文拓展：好句式 &amp; 连接词速查
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body" style="font-size:15px; line-height:1.8;">
+
+    <!-- 好句式 -->
+    <div class="writing-block">
+      <div class="writing-block-title">从文章偷来的好句式</div>
+      <div class="writing-phrase-list">
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">Whether or not ..., ... is causing it to ...</div>
+          <div class="writing-phrase-cn">无论是否...，...正在使其...</div>
+          <div class="writing-phrase-src">原句：<em>Whether or not we pay attention to the world's "scentscape", heat and pollution are causing it to shift.</em></div>
+          <div class="writing-phrase-use">作文套用：<em>Whether or not</em> we realize it, technology <em>is</em> already <em>causing</em> our lifestyles <em>to</em> change dramatically. 用 Whether or not 引出一个不以人的意志为转移的事实，很有说服力。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">That effect extends beyond ...</div>
+          <div class="writing-phrase-cn">这种影响不仅限于...</div>
+          <div class="writing-phrase-src">原句：<em>That effect extends beyond forests.</em></div>
+          <div class="writing-phrase-use">作文套用：<em>That effect extends beyond</em> the classroom and into every aspect of our daily lives. 从一个具体领域扩展到更广范围时使用，过渡自然。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">... is linked to ...</div>
+          <div class="writing-phrase-cn">...与...相关联</div>
+          <div class="writing-phrase-src">原句：<em>Some scents are linked to cultural heritage.</em></div>
+          <div class="writing-phrase-use">作文套用：Traditional food <em>is closely linked to</em> cultural identity. 建立两件事之间的关联时非常好用，比 "is related to" 更正式。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">Even though ..., there is also an element of ...</div>
+          <div class="writing-phrase-cn">尽管...，但其中也有...的因素</div>
+          <div class="writing-phrase-src">原句：<em>Even though we have other valuable things endangered by climate change, like food access, there is also an element of cultural identity, cultural survival, and history.</em></div>
+          <div class="writing-phrase-use">作文套用：<em>Even though</em> academic performance matters, <em>there is also an element of</em> creativity and teamwork that we should value. 先承认一个观点，再补充另一个角度，很有辩证思维。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">If we don't look at it, we lose all the richness behind it.</div>
+          <div class="writing-phrase-cn">如果我们不关注它，我们就会失去它背后所有的丰富内涵。</div>
+          <div class="writing-phrase-src">原句：<em>If we don't look at it, we lose all the richness behind it.</em></div>
+          <div class="writing-phrase-use">作文套用：<em>If we don't look at</em> traditional culture, <em>we lose all the richness behind it.</em> 结尾呼吁时使用，简洁有力，发人深省。</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 连接词速查 -->
+    <div class="writing-block">
+      <div class="writing-block-title">连接词速查（按功能分）</div>
+      <div class="conn-grid">
+
+        <div class="conn-card c-add">
+          <div class="conn-card-title">递进 / 补充</div>
+          <span class="conn-item">furthermore</span>
+          <span class="conn-item">moreover</span>
+          <span class="conn-item">in addition</span>
+          <span class="conn-item">what's more</span>
+          <span class="conn-item">not only...but also</span>
+          <div class="conn-note">比 "also" 和 "and" 正式，议论文首选</div>
+        </div>
+
+        <div class="conn-card c-contrast">
+          <div class="conn-card-title">转折 / 对比</div>
+          <span class="conn-item">however</span>
+          <span class="conn-item">yet</span>
+          <span class="conn-item">while</span>
+          <span class="conn-item">by contrast</span>
+          <span class="conn-item">rather than</span>
+          <div class="conn-note">yet 用在句中；however 另起；by contrast 对比两个对象</div>
+        </div>
+
+        <div class="conn-card c-result">
+          <div class="conn-card-title">结果 / 因此</div>
+          <span class="conn-item">as a result</span>
+          <span class="conn-item">therefore</span>
+          <span class="conn-item">consequently</span>
+          <span class="conn-item">thus</span>
+          <div class="conn-note">thus 最简洁，thus + 分词短语直接高分</div>
+        </div>
+
+        <div class="conn-card c-example">
+          <div class="conn-card-title">举例说明</div>
+          <span class="conn-item">for instance</span>
+          <span class="conn-item">for example</span>
+          <span class="conn-item">take...for example</span>
+          <span class="conn-item">such as</span>
+          <div class="conn-note">for instance 比 for example 更口语化一点点，两者都可用</div>
+        </div>
+
+        <div class="conn-card c-conclude">
+          <div class="conn-card-title">总结 / 结尾</div>
+          <span class="conn-item">in conclusion</span>
+          <span class="conn-item">to sum up</span>
+          <span class="conn-item">in short</span>
+          <span class="conn-item">overall</span>
+          <span class="conn-item">in a word</span>
+          <div class="conn-note">结尾段第一句用，考官扫一眼就知道你会写结论</div>
+        </div>
+
+        <div class="conn-card c-add">
+          <div class="conn-card-title">顺序 / 衔接</div>
+          <span class="conn-item">first of all</span>
+          <span class="conn-item">secondly</span>
+          <span class="conn-item">finally</span>
+          <span class="conn-item">meanwhile</span>
+          <span class="conn-item">at the same time</span>
+          <div class="conn-note">列举多个原因/步骤时用，让文章结构清晰</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- .container -->
+
+<!-- ══════ Bottom Playbar ══════ -->
+<div id="playbar">
+  <button id="pb-prev" onclick="pbPrev()" title="上一句">⏮</button>
+  <button id="pb-play" onclick="pbToggle()" title="播放/暂停">▶</button>
+  <button id="pb-next" onclick="pbNext()" title="下一句">⏭</button>
+  <span id="pb-counter">— / 19</span>
+  <select id="pb-speed" onchange="pbSetSpeed(this.value)" title="播放速度">
+    <option value="0.8">0.8x</option>
+    <option value="1" selected>1.0x</option>
+    <option value="1.2">1.2x</option>
+  </select>
+</div>
+
+<script>
+// ── Theme toggle ──
+const THEMES = ['yellow', 'green'];
+const THEME_LABELS = { yellow: '📄 书本黄', green: '🌿 护眼绿' };
+let themeIdx = parseInt(localStorage.getItem('theme') || '0');
+function applyTheme() {
+  document.body.classList.remove('theme-yellow', 'theme-green');
+  const t = THEMES[themeIdx % THEMES.length];
+  document.body.classList.add('theme-' + t);
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.textContent = THEME_LABELS[t];
+}
+function cycleTheme() {
+  themeIdx = (themeIdx + 1) % THEMES.length;
+  localStorage.setItem('theme', themeIdx);
+  applyTheme();
+}
+applyTheme();
+
+const sentences = [
+  "Smells are all around us.",
+  "What we know as a scent is a collection of natural or artificial airborne chemicals released from objects.",
+  "But smell is often overlooked and undervalued.",
+  "So, as climate change and biodiversity loss threaten natural scents, many people may not even notice.",
+  "Whether or not we pay attention to the world's \"scentscape\", heat and pollution are causing it to shift.",
+  "As temperatures rise, man-made substances release more scent molecules, and biodiversity loss due to climate change threatens the plants that scent the environment.",
+  "\"If you go to a forest, you have a given environment and temperature. If that temperature goes a little bit high, the profile of the chemical components in the air changes,\" since temperature can affect the amount of smell-carrying gas particles released from substances, explains John Smith, a chemical engineer. \"And therefore, the perception of how the forest smells changes.\"",
+  "That effect extends beyond forests.",
+  "Snow—already threatened by a warming climate—absorbs different chemicals from the atmosphere as temperatures rise, which changes its cold-clean scent.",
+  "Warmer conditions can intensify smells, leading the snow to smell more unpleasant and potentially gather more pollutants.",
+  "Climate change is also quickening the loss of biodiversity, threatening to erase certain smells entirely.",
+  "When plants disappear, their scents become more difficult to produce.",
+  "Some scents are linked to cultural heritage.",
+  "A recent study reported that native communities in Peru noticed a change in the smell of the Amazon River due to industrial pollution.",
+  "Over generations, communities became desensitised to increasingly smelly rivers, a sign of broader ecosystem degradation.",
+  "At the same time, in some Amazonian belief systems, declining water quality and the unpleasant smells will lead to the dispersal of the river's spiritual beings.",
+  "The damage to the scentscape could result in harm to both health and spiritual practice.",
+  "Even though we have other valuable things endangered by climate change, like food access, there is also an element of cultural identity, cultural survival, and history.",
+  "If we don't look at it, we lose all the richness behind it."
+];
+
+// ── Tooltip system ──
+let activeTooltip = null;
+
+const ANALYSIS_AUDIO = {
+  "analysis-6":  "audio/2026北京卷-C/analysis-6.mp3",
+  "analysis-14": "audio/2026北京卷-C/analysis-14.mp3",
+};
+let analysisPlayer = null;
+let analysisBtn = null;
+
+function playAnalysis(id, btn) {
+  if (analysisPlayer) {
+    analysisPlayer.pause();
+    analysisPlayer = null;
+    if (analysisBtn) { analysisBtn.textContent = '🔊 听讲解'; analysisBtn.classList.remove('playing'); }
+    if (analysisBtn === btn) { analysisBtn = null; return; }
+  }
+  const src = ANALYSIS_AUDIO[id];
+  if (!src) return;
+  analysisPlayer = new Audio(src);
+  analysisBtn = btn;
+  btn.textContent = '⏹ 停止';
+  btn.classList.add('playing');
+  analysisPlayer.onended = () => { btn.textContent = '🔊 听讲解'; btn.classList.remove('playing'); analysisPlayer = null; analysisBtn = null; };
+  analysisPlayer.play();
+}
+
+const ZH_AUDIO = {};
+let zhPlayer = null;
+
+function phraseToSlug(phrase) {
+  return phrase.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function playZhAudio(slug, btn) {
+  if (zhPlayer) {
+    zhPlayer.pause();
+    zhPlayer = null;
+    btn.textContent = '🔊 听讲解';
+    return;
+  }
+  const src = ZH_AUDIO[slug];
+  if (!src) return;
+  zhPlayer = new Audio(src);
+  btn.textContent = '⏹ 停止';
+  zhPlayer.onended = () => { btn.textContent = '🔊 听讲解'; zhPlayer = null; };
+  zhPlayer.play();
+}
+
+function showTooltip(tipEl) {
+  hideTooltip();
+  const raw = tipEl.getAttribute('data-tip');
+  const [phrase, explain] = raw.split('|');
+  const parts = explain.split('｜');
+  const slug = phraseToSlug(phrase);
+  const hasAudio = ZH_AUDIO[slug];
+
+  const tooltip = document.createElement('div');
+  tooltip.className = 'tooltip';
+  tooltip.innerHTML = '<div class="tip-scroll">' +
+    `<div class="tip-phrase">${phrase}${tipEl.dataset.level ? `<span class="level-badge badge-${tipEl.dataset.level}">${tipEl.dataset.level}</span>` : ''}<span class="tip-speak" onclick="speakWord('${phrase}')">&#9654;</span></div>` +
+    parts.map(p => `<div>${p.trim()}</div>`).join('') +
+    (hasAudio ? `<button class="tip-zh-play" onclick="playZhAudio('${slug}', this)">🔊 听讲解</button>` : '') + '</div>';
+  document.body.appendChild(tooltip);
+  activeTooltip = tooltip;
+  tooltip._tip = tipEl;
+  positionTooltip();
+  if (!activeTooltip) return;
+  speakWord(phrase);
+}
+
+// Visible frame for tooltips: viewport minus safe areas, sticky header and fixed playbar.
+let _safeProbe = null;
+function tooltipFrame() {
+  if (!_safeProbe) {
+    _safeProbe = document.createElement('div');
+    _safeProbe.style.cssText = 'position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;pointer-events:none;' +
+      'padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)';
+    document.body.appendChild(_safeProbe);
+  }
+  const cs = getComputedStyle(_safeProbe);
+  const M = 8;
+  const vw = document.documentElement.clientWidth, vh = window.innerHeight;
+  let minY = M + (parseFloat(cs.paddingTop) || 0);
+  let maxY = vh - M - (parseFloat(cs.paddingBottom) || 0);
+  const hdr = document.querySelector('.header');
+  if (hdr) { const b = hdr.getBoundingClientRect().bottom; if (b > 0) minY = Math.max(minY, b + 4); }
+  const pb = document.getElementById('playbar');
+  if (pb && getComputedStyle(pb).display !== 'none') { maxY = Math.min(maxY, pb.getBoundingClientRect().top - 4); }
+  return { minX: M + (parseFloat(cs.paddingLeft) || 0), maxX: vw - M - (parseFloat(cs.paddingRight) || 0), minY, maxY };
+}
+
+function positionTooltip() {
+  const tooltip = activeTooltip;
+  if (!tooltip) return;
+  const tipEl = tooltip._tip;
+  const rects = tipEl.getClientRects();
+  const f = tooltipFrame();
+  if (!rects.length) { hideTooltip(); return; }
+  const first = rects[0], last = rects[rects.length - 1];
+  // Anchor gone (scrolled out of the visible band): close instead of floating in the wrong place.
+  if (last.bottom < f.minY - 4 || first.top > f.maxY + 4) { hideTooltip(); return; }
+
+  const GAP = 10, PAD = 16;           // arrow + gap; tooltip vertical padding
+  const body = tooltip.firstElementChild;
+  tooltip.style.maxWidth = Math.max(120, Math.min(520, f.maxX - f.minX)) + 'px';
+  body.style.maxHeight = 'none';
+  tooltip.style.left = '0px'; tooltip.style.top = '0px';
+  const tw = tooltip.offsetWidth, naturalH = tooltip.offsetHeight;
+  const spaceAbove = first.top - f.minY - GAP;
+  const spaceBelow = f.maxY - last.bottom - GAP;
+  let below;
+  if (naturalH <= spaceAbove) below = false;
+  else if (naturalH <= spaceBelow) below = true;
+  else below = spaceBelow > spaceAbove;
+  const avail = Math.max(60, below ? spaceBelow : spaceAbove);
+  const th = Math.min(naturalH, avail);
+  if (naturalH > avail) body.style.maxHeight = Math.max(30, avail - PAD) + 'px';
+
+  const r = below ? last : first;
+  const cx = r.left + r.width / 2;
+  const left = Math.max(f.minX, Math.min(cx - tw / 2, f.maxX - tw));
+  let top = below ? last.bottom + GAP : first.top - GAP - tooltip.offsetHeight;
+  top = Math.max(f.minY, Math.min(top, f.maxY - tooltip.offsetHeight));
+  tooltip.classList.toggle('below', below);
+  tooltip.style.setProperty('--arrow-left', Math.max(14, Math.min(cx - left, tw - 14)) + 'px');
+  tooltip.style.left = left + 'px';
+  tooltip.style.top = top + 'px';
+}
+(function () {
+  let raf = 0;
+  const re = () => { if (!activeTooltip || raf) return; raf = requestAnimationFrame(() => { raf = 0; positionTooltip(); }); };
+  window.addEventListener('scroll', re, { passive: true });
+  window.addEventListener('resize', re);
+  window.addEventListener('orientationchange', re);
+  if (window.visualViewport) { visualViewport.addEventListener('resize', re); visualViewport.addEventListener('scroll', re); }
+})();
+
+function hideTooltip() {
+  if (zhPlayer) { zhPlayer.pause(); zhPlayer = null; }
+  if (activeTooltip) { activeTooltip.remove(); activeTooltip = null; }
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.sentence.highlighted') && !e.target.closest('.locate')) {
+    document.querySelectorAll('.sentence.highlighted').forEach(s => s.classList.remove('highlighted'));
+  }
+  const tipEl = e.target.closest('.tip');
+  if (tipEl) {
+    e.stopPropagation();
+    if (activeTooltip && activeTooltip._source === tipEl) {
+      hideTooltip();
+    } else {
+      showTooltip(tipEl);
+      if (activeTooltip) activeTooltip._source = tipEl;
+    }
+    return;
+  }
+  if (e.target.closest('.tooltip')) return;
+  hideTooltip();
+});
+
+// ── Playbar ──
+let pbCurrent = null;
+let pbPlaying = false;
+let pbSpeed = 1;
+let enPlayer = null;
+
+function pbStop() {
+  if (enPlayer) { enPlayer.pause(); enPlayer = null; }
+  pbPlaying = false;
+}
+
+function highlightSentence(idx) {
+  document.querySelectorAll('.sentence').forEach(el => el.classList.remove('playing'));
+  if (idx !== null && idx >= 0 && idx < sentences.length) {
+    const el = document.querySelector(`.sentence[data-idx="${idx}"]`);
+    if (el) {
+      el.classList.add('playing');
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+}
+
+function pbUpdateUI() {
+  const playBtn = document.getElementById('pb-play');
+  const counter = document.getElementById('pb-counter');
+  playBtn.textContent = pbPlaying ? '⏸' : '▶';
+  counter.textContent = pbCurrent !== null ? `${pbCurrent + 1} / ${sentences.length}` : `— / ${sentences.length}`;
+}
+
+function pbPlayCurrent() {
+  pbStop();
+  if (pbCurrent === null) { pbUpdateUI(); return; }
+  const src = `audio/2026北京卷-C/en-s${String(pbCurrent).padStart(2,'0')}.mp3`;
+  enPlayer = new Audio(src);
+  enPlayer.playbackRate = pbSpeed;
+  pbPlaying = true;
+  highlightSentence(pbCurrent);
+  pbUpdateUI();
+  enPlayer.onended = () => {
+    if (pbPlaying) {
+      if (pbCurrent < sentences.length - 1) {
+        pbCurrent++;
+        pbPlayCurrent();
+      } else {
+        pbPlaying = false;
+        highlightSentence(null);
+        pbUpdateUI();
+      }
+    }
+  };
+  enPlayer.onerror = () => {
+    pbPlaying = false;
+    highlightSentence(null);
+    pbUpdateUI();
+  };
+  enPlayer.play();
+}
+
+function pbToggle() {
+  if (pbCurrent === null) {
+    pbCurrent = 0;
+    pbPlayCurrent();
+    return;
+  }
+  if (pbPlaying) {
+    pbStop();
+    highlightSentence(pbCurrent);
+    pbUpdateUI();
+  } else {
+    pbPlayCurrent();
+  }
+}
+
+function pbPrev() {
+  if (pbCurrent === null) pbCurrent = 0;
+  else if (pbCurrent > 0) pbCurrent--;
+  pbPlayCurrent();
+}
+
+function pbNext() {
+  if (pbCurrent === null) pbCurrent = 0;
+  else if (pbCurrent < sentences.length - 1) pbCurrent++;
+  pbPlayCurrent();
+}
+
+function pbSetSpeed(v) {
+  pbSpeed = parseFloat(v);
+  if (enPlayer) enPlayer.playbackRate = pbSpeed;
+}
+
+function pbJumpTo(idx) {
+  pbStop();
+  pbCurrent = idx;
+  highlightSentence(idx);
+  pbUpdateUI();
+}
+
+document.addEventListener('click', function(e) {
+  if (e.target.closest('.tip') || e.target.closest('.tooltip')) return;
+  const sentence = e.target.closest('.sentence.complex');
+  if (sentence) toggleAnalysis(parseInt(sentence.dataset.idx));
+});
+
+// ── Other UI ──
+function speakWord(word) {
+  if (enPlayer) { enPlayer.pause(); enPlayer = null; }
+  const slug = 'en-word-' + word.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const src = 'audio/2026北京卷-C/' + slug + '.mp3';
+  enPlayer = new Audio(src);
+  enPlayer.onerror = function() {
+    const utter = new SpeechSynthesisUtterance(word);
+    const voices = speechSynthesis.getVoices();
+    utter.voice = voices.find(v => v.lang === 'en-GB') || voices.find(v => v.lang.startsWith('en')) || voices[0];
+    utter.rate = 0.8;
+    speechSynthesis.speak(utter);
+  };
+  enPlayer.play();
+}
+
+function highlightWord(phrase) {
+  const tips = document.querySelectorAll('.tip');
+  const matches = [];
+  const lc = phrase.toLowerCase();
+  tips.forEach(el => {
+    const tipPhrase = (el.dataset.tip || '').split('|')[0].toLowerCase();
+    if (tipPhrase === lc) matches.push(el);
+  });
+  if (!matches.length) return;
+  matches.forEach(el => {
+    el.classList.remove('tip-flash');
+    void el.offsetWidth;
+    el.classList.add('tip-flash');
+    setTimeout(() => el.classList.remove('tip-flash'), 1700);
+  });
+  matches[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function vocabClick(phrase) {
+  speakWord(phrase);
+}
+
+function initAnnotations() {
+  document.querySelectorAll('sup.ann-sup, .para-ann').forEach(el => el.remove());
+
+  document.querySelectorAll('.passage .paragraph').forEach(para => {
+    const seen = new Set();
+    const items = [];
+    let idx = 1;
+
+    para.querySelectorAll('.tip').forEach(el => {
+      const tip = el.dataset.tip || '';
+      const parts = tip.split('|');
+      if (parts.length < 2) return;
+      const phrase = parts[0].trim();
+
+      if (seen.has(phrase)) {
+        const prevIdx = items.findIndex(i => i.phrase === phrase) + 1;
+        const sup = document.createElement('sup');
+        sup.className = 'ann-sup';
+        sup.textContent = prevIdx;
+        el.after(sup);
+        return;
+      }
+      seen.add(phrase);
+
+      const sup = document.createElement('sup');
+      sup.className = 'ann-sup';
+      sup.textContent = idx;
+      el.after(sup);
+
+      const contentParts = parts[1].split('｜');
+      const cn = contentParts[0].trim();
+      const det = contentParts.slice(1).map(s => s.replace(/<[^>]+>/g, '').trim()).filter(Boolean);
+      items.push({ num: idx, phrase, cn, det, level: el.dataset.level === '超纲' ? '超纲' : '' });
+      idx++;
+    });
+
+    if (items.length === 0) return;
+
+    const ann = document.createElement('div');
+    ann.className = 'para-ann';
+    ann.innerHTML = items.map(i =>
+      `<div class="pan-row">
+        <div class="pan-head">
+          <span class="pan-num">${i.num}</span>
+          <span class="pan-en">${i.phrase}</span>
+          <span class="pan-cn">${i.cn}</span>
+          ${i.level ? `<span class="pan-lv lv-${i.level}">${i.level}</span>` : ''}
+        </div>
+        ${i.det.length ? `<div class="pan-det">${i.det.map(d => `<div>${d}</div>`).join('')}</div>` : ''}
+      </div>`
+    ).join('');
+
+    const trans = para.querySelector('.translation-inline');
+    if (trans) trans.after(ann);
+    else para.appendChild(ann);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initAnnotations);
+
+function toggleAnalysis(idx) {
+  const el = document.getElementById('analysis-' + idx);
+  if (el) el.classList.toggle('open');
+}
+
+function togglePanel(id) { document.getElementById(id).classList.toggle('open'); }
+
+function setMode(mode) {
+  document.body.classList.remove('mode-raw', 'mode-study', 'mode-quiz', 'mode-annotate');
+  if (mode !== 'study') document.body.classList.add('mode-' + mode);
+  document.querySelectorAll('.mode-step').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.mode === mode);
+  });
+  hideTooltip();
+  if (mode === 'quiz') { pbStop(); highlightSentence(null); pbUpdateUI(); resetQuiz(); }
+}
+
+// ── Quiz ──
+function resetQuiz() {
+  document.querySelectorAll('.question-option').forEach(opt => opt.classList.remove('selected','correct','wrong'));
+  document.querySelectorAll('.question-item').forEach(q => q.dataset.answered = '');
+  const score = document.getElementById('quizScore');
+  if (score) score.classList.remove('show');
+}
+
+document.addEventListener('click', function(e) {
+  if (!document.body.classList.contains('mode-quiz')) return;
+  const opt = e.target.closest('.question-option');
+  if (!opt) return;
+  const item = opt.closest('.question-item');
+  if (item.dataset.answered) return;
+  item.dataset.answered = 'true';
+  const picked = opt.dataset.key;
+  const correct = item.dataset.answer;
+  if (picked === correct) {
+    opt.classList.add('correct');
+  } else {
+    opt.classList.add('wrong');
+    item.querySelector(`.question-option[data-key="${correct}"]`).classList.add('correct');
+  }
+  const total = document.querySelectorAll('.question-item[data-answer]').length;
+  const done = document.querySelectorAll('.question-item[data-answered="true"]').length;
+  if (done === total) showQuizScore();
+});
+
+function showQuizScore() {
+  const total = document.querySelectorAll('.question-item[data-answer]').length;
+  const wrong = document.querySelectorAll('.question-option.wrong').length;
+  const score = document.getElementById('quizScore');
+  score.textContent = `得分：${total - wrong} / ${total}`;
+  score.classList.add('show');
+}
+
+function gotoSentence(idx) {
+  const el = document.querySelector(`.sentence[data-idx="${idx}"]`);
+  if (!el) return;
+  setMode('study');
+  document.querySelectorAll('.sentence.highlighted').forEach(s => s.classList.remove('highlighted'));
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  el.classList.add('highlighted');
+}
+
+function toggleQuestionAnalysis(btn) {
+  const analysis = btn.nextElementSibling;
+  analysis.classList.toggle('open');
+  btn.textContent = analysis.classList.contains('open') ? '收起解析' : '\u{1F50D} 查看解析';
+}
+
+// ── LocalStorage review ──
+function saveReview() {
+  const state = {};
+  document.querySelectorAll('.review-checks input').forEach(cb => { state[cb.id] = cb.checked; });
+  localStorage.setItem('review-beijing-2026-C', JSON.stringify(state));
+}
+function loadReview() {
+  try {
+    const state = JSON.parse(localStorage.getItem('review-beijing-2026-C'));
+    if (state) Object.keys(state).forEach(id => { const cb = document.getElementById(id); if (cb) cb.checked = state[id]; });
+  } catch(e) {}
+}
+document.querySelectorAll('.review-checks input').forEach(cb => cb.addEventListener('change', saveReview));
+loadReview();
+pbUpdateUI();
+
+// ── Spaced Repetition (SRS) ──
+const SRS_PREFIX = 'srs_beijing_2026_C_';
+const SRS_INTERVALS = [1, 3, 7, 14, 30];
+
+function srsLoad(word) {
+  const raw = localStorage.getItem(SRS_PREFIX + word);
+  return raw ? JSON.parse(raw) : null;
+}
+
+function srsSave(word, knew) {
+  const state = srsLoad(word) || { streak: 0 };
+  if (knew) {
+    state.streak = (state.streak || 0) + 1;
+    state.interval = SRS_INTERVALS[Math.min(state.streak - 1, SRS_INTERVALS.length - 1)];
+  } else {
+    state.streak = 0;
+    state.interval = 1;
+  }
+  state.nextReview = Date.now() + state.interval * 86400000;
+  localStorage.setItem(SRS_PREFIX + word, JSON.stringify(state));
+  return state;
+}
+
+function srsIsDue(state) {
+  return !state || Date.now() >= state.nextReview;
+}
+
+function srsUpdateCard(card) {
+  const state = srsLoad(card.dataset.srsWord);
+  card.classList.remove('srs-due', 'srs-known');
+  if (!state) return;
+  card.classList.add(srsIsDue(state) ? 'srs-due' : 'srs-known');
+}
+
+function srsUpdateBadge() {
+  const badge = document.getElementById('srs-badge');
+  if (!badge) return;
+  const cards = document.querySelectorAll('.vocab-card[data-srs-word]');
+  let due = 0;
+  cards.forEach(c => { if (srsIsDue(srsLoad(c.dataset.srsWord))) due++; });
+  if (due === 0) {
+    badge.textContent = '全掌握 ✓';
+    badge.className = 'srs-badge all-done';
+  } else {
+    badge.textContent = due + '个待复习';
+    badge.className = 'srs-badge';
+  }
+}
+
+function srsClick(word, knew, btn) {
+  srsSave(word, knew);
+  const card = btn.closest('.vocab-card');
+  srsUpdateCard(card);
+  srsUpdateBadge();
+  btn.style.opacity = '0.4';
+  setTimeout(() => btn.style.opacity = '', 600);
+}
+
+function srsInit() {
+  document.querySelectorAll('.vocab-card').forEach(card => {
+    const wordEl = card.querySelector('.vocab-word');
+    if (!wordEl) return;
+    const word = wordEl.textContent.trim();
+    card.dataset.srsWord = word;
+    const btns = document.createElement('div');
+    btns.className = 'srs-btns';
+    const esc = word.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    btns.innerHTML =
+      `<button class="srs-btn srs-btn-know"   onclick="srsClick('${esc}',true,this)">认识 ✓</button>` +
+      `<button class="srs-btn srs-btn-forget" onclick="srsClick('${esc}',false,this)">还不会 ✗</button>`;
+    card.querySelector('.vocab-card-head').appendChild(btns);
+    srsUpdateCard(card);
+  });
+  srsUpdateBadge();
+}
+srsInit();
+</script>
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2025北京卷七选五 · What Is Adulthood?</title>
+<style>
+:root{--bg:#fafaf8;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;--accent:#2563eb;--accent-light:#dbeafe;--complex-bg:#f0f6fc;--border:#e2e2e0;--card-bg:#fff;--hover-bg:#f5f5f4;--shadow:0 1px 3px rgba(0,0,0,.08);--radius:6px;}
+.theme-yellow{--bg:#f5f0e8;--card-bg:#faf6ee;--border:#ddd5bf;--hover-bg:#ede7d8;--accent-light:#fde8b8;}
+.theme-green{--bg:#edecea;--card-bg:#f3f2f0;--border:#d6d5d0;--hover-bg:#e8e7e3;--accent-light:#dddcd6;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:60px;}
+.container{max-width:1400px;width:100%;margin:0 auto;padding:0 max(12px,env(safe-area-inset-left)) 0 max(12px,env(safe-area-inset-right));}
+.header{background:var(--card-bg);border-bottom:1px solid var(--border);padding:16px 0;padding-top:calc(16px + env(safe-area-inset-top));position:sticky;top:0;z-index:100;}
+.header .container{display:flex;align-items:center;flex-wrap:wrap;gap:10px;}
+.header h1{font-size:16px;font-weight:600;flex:1;min-width:200px;}
+.header-sub{font-size:12px;color:var(--accent);font-weight:500;background:var(--accent-light);padding:2px 8px;border-radius:10px;}
+.header-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card-bg);color:var(--text);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.mode-steps{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.mode-step{padding:6px 12px;border:none;background:var(--card-bg);color:var(--text-secondary);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.mode-step+.mode-step{border-left:1px solid var(--border);}
+.mode-step.active{background:var(--accent);color:#fff;}
+.mode-step:hover:not(.active){background:var(--accent-light);}
+.passage{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:20px;padding:28px 32px;}
+.passage-title{text-align:center;font-family:Georgia,serif;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;color:var(--text-secondary);}
+.passage-subtitle{text-align:center;font-family:-apple-system,sans-serif;font-size:13px;margin-bottom:20px;color:var(--text-muted);}
+.paragraph{margin-bottom:16px;font-family:Georgia,serif;font-size:18px;line-height:1.9;text-indent:2em;}
+.cloze-select{font-family:Georgia,serif;font-size:inherit;border:2px solid var(--accent);border-radius:4px;padding:2px 6px;background:var(--accent-light);color:var(--accent);cursor:pointer;min-width:60px;vertical-align:middle;}
+.cloze-select.sel-correct{border-color:#16a34a;background:#dcfce7;color:#15803d;}
+.cloze-select.sel-wrong{border-color:#dc2626;background:#fee2e2;color:#b91c1c;}
+.cloze-answer{font-family:Georgia,serif;font-weight:700;color:#16a34a;background:#dcfce7;padding:1px 10px;border-radius:4px;border:1.5px solid #16a34a;}
+.blank-num{font-size:12px;font-weight:700;color:var(--accent);margin-right:3px;font-family:-apple-system,sans-serif;vertical-align:middle;}
+body.mode-quiz .blank-quiz{display:inline;}
+body.mode-quiz .blank-ans{display:none;}
+body.mode-analysis .blank-quiz{display:none;}
+body.mode-analysis .blank-ans{display:inline;}
+.panel{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:16px;overflow:hidden;}
+.panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;cursor:pointer;user-select:none;font-weight:600;font-size:15px;border-bottom:1px solid transparent;transition:border-color .2s;}
+.panel-header:hover{color:var(--accent);}
+.panel-header .arrow{transition:transform .2s;font-size:12px;color:var(--text-muted);}
+.panel.open .panel-header{border-bottom-color:var(--border);}
+.panel.open .panel-header .arrow{transform:rotate(180deg);}
+.panel-body{display:none;padding:16px 24px;}
+.panel.open .panel-body{display:block;}
+.quiz-score{text-align:center;padding:16px;font-size:16px;font-weight:600;color:var(--accent);display:none;margin-top:12px;background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);}
+.quiz-score.show{display:block;}
+.opt-cards{display:flex;flex-direction:column;gap:8px;margin-top:12px;}
+.opt-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;font-family:Georgia,serif;font-size:17px;line-height:1.7;}
+.opt-key{font-weight:700;color:var(--accent);margin-right:8px;}
+body.mode-analysis .opt-card.opt-used{opacity:0.4;}
+.analysis-item{padding:16px 24px;border-bottom:1px solid #f0f0f0;}
+.analysis-item:last-child{border-bottom:none;}
+.analysis-answer{font-weight:700;color:#16a34a;font-size:15px;margin-bottom:6px;}
+.analysis-logic{font-size:14px;color:var(--text-secondary);line-height:1.75;margin-top:6px;}
+.analysis-logic b{color:var(--text);}
+.locate-quote{background:#fef9c3;padding:6px 10px;border-radius:4px;margin:6px 0;font-family:Georgia,serif;font-style:italic;font-size:14px;color:var(--text);}
+body.mode-quiz .analysis-panel{display:none!important;}
+body.mode-analysis .analysis-panel{display:block;}
+.quiz-btn{display:block;width:100%;padding:11px;border-radius:var(--radius);border:none;font-size:15px;font-weight:600;cursor:pointer;text-align:center;background:var(--accent);color:#fff;margin-top:16px;transition:opacity .15s;}
+.quiz-btn:hover{opacity:.9;}
+body.mode-analysis .quiz-actions{display:none;}
+.opt-label{font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin:16px 0 8px;font-family:-apple-system,sans-serif;}
+.tip-box{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:16px;padding:20px 24px;font-size:14px;line-height:1.9;color:var(--text-secondary);}
+.tip-box h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:10px;}
+.tip-box ul{margin-left:20px;}
+.tip-box li{margin-bottom:6px;}
+.tip-box b{color:var(--text);}
+@media(min-width:700px){
+  .header h1{font-size:19px;}.header-sub{font-size:14px;}
+  .paragraph{font-size:23px;line-height:1.9;}
+  .opt-card{font-size:21px;}.panel-header{font-size:18px;}
+  .analysis-answer{font-size:17px;}.analysis-logic{font-size:17px;}
+  .locate-quote{font-size:17px;}.quiz-btn{font-size:17px;}
+}
+@media(max-width:600px){
+  .passage{padding:18px 14px;}.paragraph{font-size:16px;}
+  .panel-header,.analysis-item{padding-left:16px;padding-right:16px;}.panel-body{padding:12px 16px;}
+}
+.vocab-card{border-bottom:1px solid #f0f0f0;padding:12px 0;}
+.vocab-card:last-child{border-bottom:none;}
+.vocab-card-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px;}
+.vocab-word{font-family:Georgia,serif;font-weight:600;color:var(--accent);cursor:pointer;font-size:15px;}
+.vocab-word:hover{text-decoration:underline;}
+.vocab-meaning{font-size:14px;color:var(--text);}
+.vocab-extra{font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.75;}
+.vocab-tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:3px;background:#fef3c7;color:#92400e;vertical-align:middle;}
+.vocab-tag.tag-core{background:#dcfce7;color:#166534;}
+.vocab-tag.tag-exam{background:#dbeafe;color:#1e40af;}
+.vocab-tag.tag-extend{background:#ffedd5;color:#c2410c;}
+.tip{border-bottom:1.5px dashed var(--accent);cursor:pointer;position:relative;transition:background .15s;}
+.tip:hover{background:var(--accent-light);}
+.tooltip{position:fixed;z-index:200;background:var(--text);color:#fff;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;line-height:1.5;padding:8px 14px;border-radius:8px;max-width:min(520px,calc(100vw - 16px));width:max-content;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:auto;animation:tipIn .15s ease-out;}
+.tooltip::after{content:'';position:absolute;bottom:-6px;left:var(--arrow-left,50%);transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text);}
+.tooltip.below::after{bottom:auto;top:-6px;border-top:none;border-bottom:6px solid var(--text);}
+.tooltip .tip-phrase{font-family:Georgia,serif;font-weight:600;color:#93c5fd;margin-bottom:2px;}
+.tooltip .tip-speak{display:inline-block;cursor:pointer;margin-left:6px;font-size:12px;opacity:.7;vertical-align:middle;}
+.tooltip .tip-speak:hover{opacity:1;}
+@keyframes tipIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+body.mode-quiz .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-quiz .tip:hover{background:none;}
+.srs-btns{display:flex;gap:5px;margin-left:auto;}
+.srs-btn{font-size:11px;padding:2px 7px;border-radius:10px;border:1.5px solid;cursor:pointer;transition:all .15s;background:none;white-space:nowrap;}
+.srs-btn-know{border-color:#16a34a;color:#16a34a;}
+.srs-btn-know:hover{background:#dcfce7;}
+.srs-btn-forget{border-color:#dc2626;color:#dc2626;}
+.srs-btn-forget:hover{background:#fee2e2;}
+.vocab-card.srs-due .vocab-word::after{content:' 📌';font-size:10px;}
+.vocab-card.srs-known .vocab-word::after{content:' ✓';font-size:11px;color:#16a34a;}
+.srs-badge{font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;background:#fef2f2;color:#dc2626;}
+.srs-badge.all-done{background:#dcfce7;color:#16a34a;}
+body.mode-quiz #vocabPanel{display:none!important;}
+@media(min-width:700px){
+  .vocab-word{font-size:20px;}.vocab-meaning{font-size:18px;}.vocab-extra{font-size:16.5px;line-height:1.75;}
+  .vocab-tag{font-size:13px;}.srs-btn,.srs-badge{font-size:14px;}
+  .tooltip{font-size:17px;line-height:1.55;}.tooltip .tip-phrase{font-size:19px;}
+}
+</style>
+</head>
+<body class="mode-quiz">
+<div class="header">
+  <div class="container">
+    <h1>2025北京卷七选五 · What Is Adulthood?</h1>
+    <div class="header-controls">
+      <span class="header-sub">Q35–39</span>
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="quiz" onclick="setMode('quiz')">① 做题</button>
+        <button class="mode-step" data-mode="analysis" onclick="setMode('analysis')">② 解析</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+<div class="container">
+<div class="passage">
+  <div class="passage-title">七选五阅读理解</div>
+  <div class="passage-subtitle">根据短文内容，从短文后的选项中选出能填入空白处的最佳选项。选项中有两项为多余选项。</div>
+  <div class="paragraph">What is <span class="tip" data-tip="adulthood|成年期｜adult n. 成年人 → adulthood n. 成年期｜the concept of adulthood = 成年的概念">adulthood</span>? Societies all over the world view the concept of an adult as <span class="tip" data-tip="self-supporting|自给自足的｜self-（自我）+ supporting（支撑）= 自己养活自己｜self-supporting and self-directed = 自给自足且自我导向的">self-supporting</span> and <span class="tip" data-tip="self-directed|自我导向的｜self-（自我）+ directed（引导的）= 自己指导自己的行为｜a self-directed adult = 一个自我导向的成年人">self-directed</span>, because it identifies a point in the life cycle.</div>
+  <div class="paragraph">As Alice Black points out, today's parents' fear of letting kids do more housework has added to their inability to feel <span class="tip" data-tip="competent|有能力的，胜任的｜competence n. 能力 → competent adj.｜feel competent = 感到自己有能力｜反义词：incompetent 无能的">competent</span> and, thus, confident in themselves. Psychologist Robert Turner wrote about this in his book, <em>The Life Cycle</em>, mentioning a stage when kids learn self-direction and <span class="tip" data-tip="mastery|精通，掌握｜master v. 精通 → mastery n.｜learn mastery = 学会掌控/精通某事｜mastery of a skill = 对某项技能的精通">mastery</span>. <span class="blank-num">[35]</span><span class="blank-quiz"><select class="cloze-select" id="blank35"><option value="">— 选 —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select></span><span class="blank-ans"><span class="cloze-answer">G</span></span></div>
+  <div class="paragraph">But Turner's other cycles are just as important. <span class="blank-num">[36]</span><span class="blank-quiz"><select class="cloze-select" id="blank36"><option value="">— 选 —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select></span><span class="blank-ans"><span class="cloze-answer">E</span></span> If these life cycles are delayed, interrupted, or denied, you feel <span class="tip" data-tip="incapable|无能力的｜in-（否定前缀）+ capable（有能力的）= 无能力的｜feel incapable of = 感到无法做到…">incapable</span> of accessing your states of self, controlling unpleasant feelings, and <span class="tip" data-tip="manipulating|操控，控制｜manipulate v. 操控、熟练使用｜manipulating the energy = 操控/调节（内心的）能量｜也有贬义：manipulate others 操纵他人">manipulating</span> (操控) the energy that puts together the fabric of your inner world.</div>
+  <div class="paragraph">Turner wisely said that "doing well" psychologically is being able to roll with the flow of emotions, manage them, communicate clearly and well with others, and master various skills. This requires an internal <span class="tip" data-tip="locus|核心，中心｜拉丁语 locus = 位置/中心｜locus of control = 控制核心（心理学术语）｜an internal locus of control = 内在控制核心（相信自己掌控命运）">locus</span> (核心) of control, which implies self-control of your thoughts, feelings, and actions. <span class="blank-num">[37]</span><span class="blank-quiz"><select class="cloze-select" id="blank37"><option value="">— 选 —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select></span><span class="blank-ans"><span class="cloze-answer">D</span></span> You're self-directed and not <span class="tip" data-tip="reliant|依赖的｜rely v. 依赖 → reliant adj.｜not reliant on = 不依赖于…｜self-reliant = 自力更生的">reliant</span> on the world to tell you who you are. And you know who you are within all this.</div>
+  <div class="paragraph">So, being an adult isn't just holding a job. Being an adult is about having a rooted sense of self while being capable of identifying and managing your emotions and actions. <span class="blank-num">[38]</span><span class="blank-quiz"><select class="cloze-select" id="blank38"><option value="">— 选 —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select></span><span class="blank-ans"><span class="cloze-answer">C</span></span> We are a social species, so this is important.</div>
+  <div class="paragraph">While raising an adult is a parent's job, it's also our responsibility as a society to ensure that we support schools that <span class="tip" data-tip="nurture|滋养，培育｜nurture v./n. 培养、滋养｜nurture emotional development = 滋养情感发展｜nature vs. nurture 先天与后天">nurture</span> (滋养) emotional and identity development. <span class="blank-num">[39]</span><span class="blank-quiz"><select class="cloze-select" id="blank39"><option value="">— 选 —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select></span><span class="blank-ans"><span class="cloze-answer">A</span></span></div>
+  <div class="opt-label">选项 A–G（有两项多余）</div>
+  <div class="opt-cards">
+    <div class="opt-card" id="optA"><span class="opt-key">A.</span>It's also our job to support adults who need help repairing incomplete life cycles.</div>
+    <div class="opt-card" id="optB"><span class="opt-key">B.</span>They talk about someone's inability to support themselves through work.</div>
+    <div class="opt-card" id="optC"><span class="opt-key">C.</span>It's being able to show understanding when communicating with others.</div>
+    <div class="opt-card" id="optD"><span class="opt-key">D.</span>In other words, you're playing the game of life — life isn't playing you.</div>
+    <div class="opt-card" id="optE"><span class="opt-key">E.</span>They teach emotional awareness and management as well as identity.</div>
+    <div class="opt-card" id="optF"><span class="opt-key">F.</span>You feel like an 18-year old, especially when playing 80s music.</div>
+    <div class="opt-card" id="optG"><span class="opt-key">G.</span>When this stage is denied it creates a sense of <span class="tip" data-tip="insecurity|不安全感｜in-（否定）+ security（安全）= 不安全感｜a sense of insecurity = 一种不安全感">insecurity</span>.</div>
+  </div>
+  <div class="quiz-actions">
+    <button class="quiz-btn" onclick="checkAnswers()">查看得分</button>
+  </div>
+  <div class="quiz-score" id="quizScore"></div>
+</div>
+<div class="panel analysis-panel open" id="analysisPanel">
+  <div class="panel-header" onclick="togglePanel('analysisPanel')"><span>答案解析（35—39题）</span><span class="arrow">&#9660;</span></div>
+  <div class="panel-body">
+    <div class="analysis-item">
+      <div class="analysis-answer">35题 答案：G — When this stage is denied it creates a sense of insecurity.</div>
+      <div class="locate-quote">上文：mentioning a stage when kids learn self-direction and mastery.</div>
+      <div class="analysis-logic"><b>逻辑：</b>上文提到Turner描述的一个孩子学习 self-direction 和 mastery 的阶段，G 句说如果这个阶段被否定/缺失，就会产生不安全感。<b>this stage</b> 回指上文提到的那个阶段，代词衔接紧密。<br><b>排除 B/F：</b>B 说"谈论某人无法通过工作养活自己"与此处语境无关；F 说"感觉像18岁"是干扰项，与学术论述语气不符。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">36题 答案：E — They teach emotional awareness and management as well as identity.</div>
+      <div class="locate-quote">上文：But Turner's other cycles are just as important.</div>
+      <div class="analysis-logic"><b>逻辑：</b>上文说Turner的其他 cycles 也很重要，E 句说它们教授情感意识、管理以及身份认同。<b>They</b> 指代上文的 other cycles。下文接着说如果这些 life cycles 被延误/中断就会有问题，逻辑通顺。<br><b>排除 B：</b>B 的 They 指代不明，且内容与"其他cycles的重要性"无关。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">37题 答案：D — In other words, you're playing the game of life — life isn't playing you.</div>
+      <div class="locate-quote">上文：This requires an internal locus of control, which implies self-control of your thoughts, feelings, and actions.</div>
+      <div class="analysis-logic"><b>逻辑：</b>上文说自我控制意味着控制自己的思想、情感和行为，D 句用 <b>In other words</b> 承接，换一种方式解释：你在玩人生的游戏——而不是人生在玩你。生动形象地诠释了"内在控制核心"的含义。下文"You're self-directed"继续呼应。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">38题 答案：C — It's being able to show understanding when communicating with others.</div>
+      <div class="locate-quote">上文：Being an adult is about having a rooted sense of self while being capable of identifying and managing your emotions and actions.</div>
+      <div class="analysis-logic"><b>逻辑：</b>上文说成年是有自我意识并能管理情绪和行为，C 句补充成年的社会性维度——在与他人沟通时能表现出理解。<b>It's</b> 承接上文对"成年"的定义，与下文"We are a social species, so this is important"（我们是社会物种）紧密呼应。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">39题 答案：A — It's also our job to support adults who need help repairing incomplete life cycles.</div>
+      <div class="locate-quote">上文：it's also our responsibility as a society to ensure that we support schools that nurture emotional and identity development.</div>
+      <div class="analysis-logic"><b>逻辑：</b>上文说社会有责任支持学校的情感与身份认同教育，A 句说同样，我们也有责任帮助需要修复不完整生命周期的成年人。<b>It's also our job...</b> 与上文 <b>it's also our responsibility</b> 形成并列递进，从支持学校扩展到支持成年人。</div>
+    </div>
+  </div>
+</div>
+<div class="tip-box">
+  <h3>七选五做题技巧</h3>
+  <ul>
+    <li><b>看衔接词：</b>In other words / But / While / It's also 等是关键线索，直接锁定逻辑关系（转折/递进/因果/解释）。</li>
+    <li><b>找代词呼应：</b>代词（they / this / it）必须指向上文某个具体名词；代词能对上，选项通常就对了。</li>
+    <li><b>读前后句：</b>空格填进去后，上下句必须"话题连贯"——前句话题收尾，所选句承接，下句继续展开。</li>
+    <li><b>排除法最有效：</b>先排除话题不符或逻辑矛盾的选项（B 与上下文语境无关；F 语气不符学术论述）。</li>
+  </ul>
+</div>
+<!-- Vocab panel -->
+<div class="panel" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')">
+    <span>重点词汇（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="vocab-list">
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('adulthood')">adulthood</span>
+          <span class="vocab-meaning">成年期</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">adult n. 成年人 → adulthood n. 成年期。<em>What is adulthood?</em> = 什么是成年？<br>reach <em>adulthood</em> 到达成年期 &nbsp;·&nbsp; childhood / adulthood / old age 人生三阶段</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('self-directed')">self-directed</span>
+          <span class="vocab-meaning">自我导向的</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">self-（自我）+ directed（引导的）= 自己指导自己行为的。<br>a <em>self-directed</em> learner 自主学习者 &nbsp;·&nbsp; 相关词：self-supporting 自给自足的、self-reliant 自力更生的</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('competent')">competent</span>
+          <span class="vocab-meaning">有能力的</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">competence n. 能力 → competent adj. 有能力的、胜任的。<br>feel <em>competent</em> = 感到自己有能力 &nbsp;·&nbsp; 反义词：incompetent 无能的 &nbsp;·&nbsp; a <em>competent</em> teacher 称职的教师</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('mastery')">mastery</span>
+          <span class="vocab-meaning">精通，掌握</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">master v. 精通 → mastery n. 精通/掌控。<br>learn <em>mastery</em> = 学会掌控 &nbsp;·&nbsp; <em>mastery</em> of a skill 对某项技能的精通 &nbsp;·&nbsp; achieve <em>mastery</em> 达到精通</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('incapable')">incapable</span>
+          <span class="vocab-meaning">无能力的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">in-（否定前缀）+ capable（有能力的）= 无能力的。<br>feel <em>incapable</em> of doing sth = 感到无法做某事 &nbsp;·&nbsp; 反义词：capable 有能力的</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('manipulating')">manipulating</span>
+          <span class="vocab-meaning">操控，控制</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">manipulate v. 操控 → manipulating（现在分词/动名词）。本文指操控/调节内心能量（中性义）。<br>也有贬义：<em>manipulate</em> others 操纵他人 &nbsp;·&nbsp; manipulation n. 操控</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('locus')">locus</span>
+          <span class="vocab-meaning">核心，中心</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">拉丁语词，意为"位置/中心"。心理学术语：<em>locus</em> of control = 控制核心。<br>internal <em>locus</em> of control 内在控制核心（相信自己掌控命运）&nbsp;·&nbsp; external <em>locus</em> of control 外在控制核心</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('reliant')">reliant</span>
+          <span class="vocab-meaning">依赖的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">rely v. 依赖 → reliant adj. 依赖的 → reliance n. 依赖。<br>not <em>reliant</em> on = 不依赖于… &nbsp;·&nbsp; self-<em>reliant</em> = 自力更生的 &nbsp;·&nbsp; heavily <em>reliant</em> on 严重依赖</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('nurture')">nurture</span>
+          <span class="vocab-meaning">滋养，培育</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">nurture v./n. 培养、滋养。<em>nurture</em> emotional development = 滋养情感发展。<br>nature vs. <em>nurture</em> 先天与后天（经典辩题）&nbsp;·&nbsp; <em>nurture</em> talent 培养人才</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('insecurity')">insecurity</span>
+          <span class="vocab-meaning">不安全感</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">in-（否定）+ security（安全）= 不安全/不安全感。<br>a sense of <em>insecurity</em> = 一种不安全感 &nbsp;·&nbsp; 反义词：security 安全感 &nbsp;·&nbsp; <em>insecure</em> adj. 不安全的</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+const THEMES=['yellow','green'];
+const THEME_LABELS={yellow:'📄 书本黄',green:'🌿 护眼绿'};
+let themeIdx=parseInt(localStorage.getItem('theme')||'0');
+function applyTheme(){document.body.classList.remove('theme-yellow','theme-green');const t=THEMES[themeIdx%THEMES.length];document.body.classList.add('theme-'+t);const btn=document.getElementById('theme-btn');if(btn)btn.textContent=THEME_LABELS[t];}
+function cycleTheme(){themeIdx=(themeIdx+1)%THEMES.length;localStorage.setItem('theme',themeIdx);applyTheme();}
+applyTheme();
+const ANSWERS={35:'G',36:'E',37:'D',38:'C',39:'A'};
+const USED={'G':true,'E':true,'D':true,'C':true,'A':true};
+function checkAnswers(){
+  let correct=0;
+  for(const[num,ans]of Object.entries(ANSWERS)){
+    const sel=document.getElementById('blank'+num);if(!sel)continue;
+    const val=sel.value;sel.classList.remove('sel-correct','sel-wrong');
+    if(!val)continue;
+    if(val===ans){sel.classList.add('sel-correct');correct++;}else sel.classList.add('sel-wrong');
+  }
+  const sc=document.getElementById('quizScore');sc.textContent='得分：'+correct+' / 5';sc.classList.add('show');
+}
+function setMode(mode){
+  document.body.classList.remove('mode-quiz','mode-analysis');
+  document.body.classList.add('mode-'+mode);
+  document.querySelectorAll('.mode-step').forEach(btn=>btn.classList.toggle('active',btn.dataset.mode===mode));
+  if(mode==='analysis'){
+    Object.keys(USED).forEach(l=>{const el=document.getElementById('opt'+l);if(el)el.classList.add('opt-used');});
+    document.getElementById('analysisPanel').classList.add('open');
+  }else{
+    document.querySelectorAll('.opt-card').forEach(c=>c.classList.remove('opt-used'));
+    for(const num of[35,36,37,38,39]){const s=document.getElementById('blank'+num);if(s){s.value='';s.classList.remove('sel-correct','sel-wrong');}}
+    document.getElementById('quizScore').classList.remove('show');
+  }
+}
+function togglePanel(id){document.getElementById(id).classList.toggle('open');}
+let enPlayer=null;
+function speakWord(word){
+  if(enPlayer){enPlayer.pause();enPlayer=null;}
+  const slug='en-word-'+word.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const src='audio/2025北京卷-七选五/'+slug+'.mp3';
+  enPlayer=new Audio(src);
+  enPlayer.onerror=function(){const u=new SpeechSynthesisUtterance(word);const vs=speechSynthesis.getVoices();u.voice=vs.find(v=>v.lang==='en-GB')||vs.find(v=>v.lang.startsWith('en'))||vs[0];u.rate=0.8;speechSynthesis.speak(u);};
+  enPlayer.play();
+}
+function vocabClick(phrase){speakWord(phrase);}
+const SRS_PREFIX='srs_beijing_2025_75_';
+const SRS_INTERVALS=[1,3,7,14,30];
+function srsLoad(w){const r=localStorage.getItem(SRS_PREFIX+w);return r?JSON.parse(r):null;}
+function srsSave(w,knew){const s=srsLoad(w)||{streak:0};if(knew){s.streak=(s.streak||0)+1;s.interval=SRS_INTERVALS[Math.min(s.streak-1,SRS_INTERVALS.length-1)];}else{s.streak=0;s.interval=1;}s.nextReview=Date.now()+s.interval*86400000;localStorage.setItem(SRS_PREFIX+w,JSON.stringify(s));return s;}
+function srsIsDue(s){return!s||Date.now()>=s.nextReview;}
+function srsUpdateCard(card){const s=srsLoad(card.dataset.srsWord);card.classList.remove('srs-due','srs-known');if(!s)return;card.classList.add(srsIsDue(s)?'srs-due':'srs-known');}
+function srsUpdateBadge(){const badge=document.getElementById('srs-badge');if(!badge)return;const cards=document.querySelectorAll('.vocab-card[data-srs-word]');let due=0;cards.forEach(c=>{if(srsIsDue(srsLoad(c.dataset.srsWord)))due++;});if(due===0){badge.textContent='全掌握 ✓';badge.className='srs-badge all-done';}else{badge.textContent=due+'个待复习';badge.className='srs-badge';}}
+function srsClick(word,knew,btn){srsSave(word,knew);const card=btn.closest('.vocab-card');srsUpdateCard(card);srsUpdateBadge();btn.style.opacity='0.4';setTimeout(()=>btn.style.opacity='',600);}
+function srsInit(){document.querySelectorAll('.vocab-card').forEach(card=>{const wordEl=card.querySelector('.vocab-word');if(!wordEl)return;const word=wordEl.textContent.trim();card.dataset.srsWord=word;const btns=document.createElement('div');btns.className='srs-btns';const esc=word.replace(/\\/g,'\\\\').replace(/'/g,"\\'");btns.innerHTML='<button class="srs-btn srs-btn-know" onclick="srsClick(\''+esc+'\',true,this)">认识 ✓</button>'+'<button class="srs-btn srs-btn-forget" onclick="srsClick(\''+esc+'\',false,this)">还不会 ✗</button>';card.querySelector('.vocab-card-head').appendChild(btns);srsUpdateCard(card);});srsUpdateBadge();}
+srsInit();
+/* ── Tooltip ── */
+let tooltipEl=null;
+function showTooltip(tipEl){
+  hideTooltip();
+  const raw=tipEl.getAttribute('data-tip');
+  const[phrase,...rest]=raw.split('|');
+  const explain=rest.join('|');
+  const parts=explain.split('｜');
+  tooltipEl=document.createElement('div');
+  tooltipEl.className='tooltip';
+  let html='<div class="tip-phrase">'+phrase+' <span class="tip-speak" onclick="speakWord(\''+phrase.replace(/'/g,"\\'")+'\')">🔊</span></div>';
+  parts.forEach(p=>{html+='<div>'+p+'</div>';});
+  tooltipEl.innerHTML=html;
+  document.body.appendChild(tooltipEl);
+  speakWord(phrase);
+  const tr=tipEl.getBoundingClientRect();
+  const tt=tooltipEl.getBoundingClientRect();
+  let left=tr.left+tr.width/2-tt.width/2;
+  if(left<4)left=4;if(left+tt.width>window.innerWidth-4)left=window.innerWidth-4-tt.width;
+  let top=tr.top-tt.height-8;
+  if(top<4){top=tr.bottom+8;tooltipEl.classList.add('below');}
+  tooltipEl.style.left=left+'px';tooltipEl.style.top=top+'px';
+  const arrowLeft=tr.left+tr.width/2-left;
+  tooltipEl.style.setProperty('--arrow-left',arrowLeft+'px');
+}
+function hideTooltip(){if(tooltipEl){tooltipEl.remove();tooltipEl=null;}}
+document.addEventListener('click',function(e){
+  const tip=e.target.closest('.tip');
+  if(tip){e.stopPropagation();showTooltip(tip);return;}
+  hideTooltip();
+});
+</script>
+</body>
+</html>

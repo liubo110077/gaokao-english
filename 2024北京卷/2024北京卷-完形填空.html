@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2024北京卷完形填空 · The Musical Audition</title>
+<style>
+:root{--bg:#fafaf8;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;--accent:#2563eb;--accent-light:#dbeafe;--border:#e2e2e0;--card-bg:#fff;--hover-bg:#f5f5f4;--shadow:0 1px 3px rgba(0,0,0,.08);--radius:6px;}
+.theme-yellow{--bg:#f5f0e8;--card-bg:#faf6ee;--border:#ddd5bf;--hover-bg:#ede7d8;--accent-light:#fde8b8;}
+.theme-green{--bg:#edecea;--card-bg:#f3f2f0;--border:#d6d5d0;--hover-bg:#e8e7e3;--accent-light:#dddcd6;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:60px;}
+.container{max-width:1400px;width:100%;margin:0 auto;padding:0 max(12px,env(safe-area-inset-left)) 0 max(12px,env(safe-area-inset-right));}
+.header{background:var(--card-bg);border-bottom:1px solid var(--border);padding:16px 0;padding-top:calc(16px + env(safe-area-inset-top));position:sticky;top:0;z-index:100;}
+.header .container{display:flex;align-items:center;flex-wrap:wrap;gap:10px;}
+.header h1{font-size:16px;font-weight:600;flex:1;min-width:200px;}
+.header-sub{font-size:12px;color:var(--accent);font-weight:500;background:var(--accent-light);padding:2px 8px;border-radius:10px;}
+.header-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card-bg);color:var(--text);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.mode-steps{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.mode-step{padding:6px 12px;border:none;background:var(--card-bg);color:var(--text-secondary);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.mode-step+.mode-step{border-left:1px solid var(--border);}
+.mode-step.active{background:var(--accent);color:#fff;}
+.mode-step:hover:not(.active){background:var(--accent-light);}
+.passage{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:20px;padding:28px 32px;}
+.passage-title{text-align:center;font-family:Georgia,serif;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;color:var(--text-secondary);}
+.passage-subtitle{text-align:center;font-size:13px;margin-bottom:20px;color:var(--text-muted);}
+.paragraph{margin-bottom:14px;font-family:Georgia,serif;font-size:18px;line-height:1.9;text-indent:2em;}
+.cloze-select{font-family:Georgia,serif;font-size:15px;border:2px solid var(--accent);border-radius:4px;padding:2px 4px;background:var(--accent-light);color:var(--accent);cursor:pointer;min-width:110px;vertical-align:middle;}
+.cloze-select.sel-correct{border-color:#16a34a;background:#dcfce7;color:#15803d;}
+.cloze-select.sel-wrong{border-color:#dc2626;background:#fee2e2;color:#b91c1c;}
+.cloze-answer{font-family:Georgia,serif;font-weight:700;color:#16a34a;background:#dcfce7;padding:1px 10px;border-radius:4px;border:1.5px solid #16a34a;}
+.blank-num{font-size:12px;font-weight:700;color:var(--text-muted);margin-right:3px;font-family:-apple-system,sans-serif;vertical-align:middle;}
+body.mode-quiz .blank-quiz{display:inline;}
+body.mode-quiz .blank-ans{display:none;}
+body.mode-analysis .blank-quiz{display:none;}
+body.mode-analysis .blank-ans{display:inline;}
+.quiz-btn{display:block;width:100%;padding:11px;border-radius:var(--radius);border:none;font-size:15px;font-weight:600;cursor:pointer;text-align:center;background:var(--accent);color:#fff;margin-top:16px;transition:opacity .15s;}
+.quiz-btn:hover{opacity:.9;}
+body.mode-analysis .quiz-actions{display:none;}
+.quiz-score{text-align:center;padding:16px;font-size:16px;font-weight:600;color:var(--accent);display:none;margin-top:12px;background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);}
+.quiz-score.show{display:block;}
+.panel{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:16px;overflow:hidden;}
+.panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;cursor:pointer;user-select:none;font-weight:600;font-size:15px;border-bottom:1px solid transparent;transition:border-color .2s;}
+.panel-header:hover{color:var(--accent);}
+.panel-header .arrow{transition:transform .2s;font-size:12px;color:var(--text-muted);}
+.panel.open .panel-header{border-bottom-color:var(--border);}
+.panel.open .panel-header .arrow{transform:rotate(180deg);}
+.panel-body{display:none;padding:16px 24px;}
+.panel.open .panel-body{display:block;}
+.vocab-card{border-bottom:1px solid #f0f0f0;padding:12px 0;}
+.vocab-card:last-child{border-bottom:none;}
+.vocab-card-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px;}
+.vocab-word{font-family:Georgia,serif;font-weight:600;color:var(--accent);cursor:pointer;font-size:15px;}
+.vocab-word:hover{text-decoration:underline;}
+.vocab-meaning{font-size:14px;color:var(--text);}
+.vocab-tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:3px;background:#fef3c7;color:#92400e;vertical-align:middle;}
+.vocab-tag.tag-core{background:#dcfce7;color:#166534;}
+.vocab-tag.tag-exam{background:#dbeafe;color:#1e40af;}
+.vocab-tag.tag-extend{background:#ffedd5;color:#c2410c;}
+.vocab-extra{font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.75;}
+.vocab-extra .vd-example{color:var(--text-secondary);padding-left:16px;}
+.vocab-extra .vd-example em{color:var(--text);font-style:normal;font-weight:600;}
+.vocab-card.srs-due .vocab-word::after{content:' 📌';font-size:10px;}
+.vocab-card.srs-known .vocab-word::after{content:' ✓';font-size:11px;color:#16a34a;}
+body.mode-quiz #vocabPanel{display:none!important;}
+.tip{border-bottom:1.5px dashed var(--accent);cursor:pointer;position:relative;transition:background .15s;}
+.tip:hover{background:var(--accent-light);}
+.tooltip{position:fixed;z-index:200;background:var(--text);color:#fff;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;line-height:1.5;padding:8px 14px;border-radius:8px;max-width:min(520px,calc(100vw - 16px));width:max-content;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:auto;animation:tipIn .15s ease-out;}
+.tooltip::after{content:'';position:absolute;bottom:-6px;left:var(--arrow-left,50%);transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text);}
+.tooltip.below::after{bottom:auto;top:-6px;border-top:none;border-bottom:6px solid var(--text);}
+.tooltip .tip-phrase{font-family:Georgia,serif;font-weight:600;color:#93c5fd;margin-bottom:2px;}
+.tooltip .tip-speak{display:inline-block;cursor:pointer;margin-left:6px;font-size:12px;opacity:.7;vertical-align:middle;}
+.tooltip .tip-speak:hover{opacity:1;}
+@keyframes tipIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+body.mode-quiz .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-quiz .tip:hover{background:none;}
+.srs-btns{display:flex;gap:5px;margin-left:auto;}
+.srs-btn{font-size:11px;padding:2px 7px;border-radius:10px;border:1.5px solid;cursor:pointer;transition:all .15s;background:none;white-space:nowrap;}
+.srs-btn-know{border-color:#16a34a;color:#16a34a;}
+.srs-btn-know:hover{background:#dcfce7;}
+.srs-btn-forget{border-color:#dc2626;color:#dc2626;}
+.srs-btn-forget:hover{background:#fee2e2;}
+.srs-badge{font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;background:#fef2f2;color:#dc2626;}
+.srs-badge.all-done{background:#dcfce7;color:#16a34a;}
+.analysis-item{padding:16px 24px;border-bottom:1px solid #f0f0f0;}
+.analysis-item:last-child{border-bottom:none;}
+.analysis-answer{font-weight:700;color:#16a34a;font-size:15px;margin-bottom:6px;}
+.analysis-logic{font-size:14px;color:var(--text-secondary);line-height:1.75;margin-top:4px;}
+.analysis-logic b{color:var(--text);}
+body.mode-quiz .analysis-panel{display:none!important;}
+@media(min-width:700px){
+  .header h1{font-size:19px;}.paragraph{font-size:23px;line-height:1.9;}
+  .cloze-select{font-size:18px;min-width:140px;}.panel-header{font-size:18px;}
+  .vocab-word{font-size:20px;}.vocab-meaning{font-size:18px;}.vocab-extra,.vd-example{font-size:16px;line-height:1.75;}
+  .vocab-tag{font-size:13px;}.srs-btn,.srs-badge{font-size:14px;}
+  .analysis-answer{font-size:17px;}.analysis-logic{font-size:17px;}.quiz-btn{font-size:17px;}
+  .tooltip{font-size:17px;line-height:1.55;}.tooltip .tip-phrase{font-size:19px;}
+}
+@media(max-width:600px){
+  .passage{padding:18px 14px;}.paragraph{font-size:16px;}
+  .panel-header,.analysis-item{padding-left:16px;padding-right:16px;}.panel-body{padding:12px 16px;}
+}
+</style>
+</head>
+<body class="mode-quiz">
+<div class="header">
+  <div class="container">
+    <h1>2024北京卷完形填空 · The Musical Audition</h1>
+    <div class="header-controls">
+      <span class="header-sub">Q1–10</span>
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="quiz" onclick="setMode('quiz')">① 做题</button>
+        <button class="mode-step" data-mode="analysis" onclick="setMode('analysis')">② 解析</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+<div class="container">
+<div class="passage">
+  <div class="passage-title">完形填空（共10题，每题1.5分）</div>
+  <div class="passage-subtitle">阅读下面短文，从短文后各题所给的四个选项（A、B、C和D）中，选出可以填入空白处的最佳选项。</div>
+
+  <div class="paragraph">I'd just arrived at school, ready for another school day. I was reading a book in the classroom when there was an
+    <span class="blank-num">(1)</span><span class="blank-quiz"><select class="cloze-select" id="b1"><option value="">— 选 —</option><option value="A">A. assignment</option><option value="B">B. initiative</option><option value="C">C. announcement</option><option value="D">D. interview</option></select></span><span class="blank-ans"><span class="cloze-answer"><span class="tip" data-tip="announcement|宣布，通告｜announce v. 宣布 → announcement n. 通知/公告｜There was an announcement over the speaker. 广播里发出了一条通知">announcement</span></span></span>.
+    "Today at 1:10 there will be <span class="tip" data-tip="auditions|面试，试镜｜audition = 为角色进行的面试/试演｜audition for a role 为一个角色试镜｜There will be auditions for a musical. 将有一场音乐剧的面试">auditions</span> (面试) for a musical." My friends all jumped up in excitement and asked me, "Will you be going, Amy?" "Sure," I said. I had no
+    <span class="blank-num">(2)</span><span class="blank-quiz"><select class="cloze-select" id="b2"><option value="">— 选 —</option><option value="A">A. hesitancy</option><option value="B">B. interest</option><option value="C">C. worry</option><option value="D">D. regret</option></select></span><span class="blank-ans"><span class="cloze-answer">interest</span></span>
+    in drama, but I'd try out because my friends were doing it.</div>
+
+  <div class="paragraph">At 1:10, there was a
+    <span class="blank-num">(3)</span><span class="blank-quiz"><select class="cloze-select" id="b3"><option value="">— 选 —</option><option value="A">A. game</option><option value="B">B. show</option><option value="C">C. play</option><option value="D">D. line</option></select></span><span class="blank-ans"><span class="cloze-answer">line</span></span>
+    outside the drama room. Everyone looked <span class="tip" data-tip="energetic|精力充沛的，充满活力的｜energy n. 能量 → energetic adj. 精力旺盛的｜Everyone looked energetic. 每个人看起来都精力充沛">energetic</span>. I hadn't expected I'd be standing there that morning. But now that I was doing it, I
+    <span class="blank-num">(4)</span><span class="blank-quiz"><select class="cloze-select" id="b4"><option value="">— 选 —</option><option value="A">A. suddenly</option><option value="B">B. continuously</option><option value="C">C. originally</option><option value="D">D. generally</option></select></span><span class="blank-ans"><span class="cloze-answer">suddenly</span></span>
+    felt nervous. What if I wasn't any good?</div>
+
+  <div class="paragraph">I entered the room and the teachers made me say some lines from the musical. They then
+    <span class="blank-num">(5)</span><span class="blank-quiz"><select class="cloze-select" id="b5"><option value="">— 选 —</option><option value="A">A. advertised</option><option value="B">B. tested</option><option value="C">C. challenged</option><option value="D">D. polished</option></select></span><span class="blank-ans"><span class="cloze-answer">tested</span></span>
+    my singing skills and asked what role I wanted to play. The teachers were smiling and <span class="tip" data-tip="praising|表扬，赞美｜praise v./n. 表扬、赞美｜praise sb for sth 因某事表扬某人｜The teachers were praising me. 老师们在表扬我">praising</span> me. I felt like I had a
+    <span class="blank-num">(6)</span><span class="blank-quiz"><select class="cloze-select" id="b6"><option value="">— 选 —</option><option value="A">A. demand</option><option value="B">B. credit</option><option value="C">C. dream</option><option value="D">D. chance</option></select></span><span class="blank-ans"><span class="cloze-answer">chance</span></span>,
+    so I said, "A big role." They said they'd look into it. I started getting really nervous. What if I didn't get a main role?</div>
+
+  <div class="paragraph">Soon, the <span class="tip" data-tip="cast list|演员名单｜cast = 全体演员，cast list = 演员表/选角名单｜The cast list was posted. 演员名单被张贴出来了">cast list</span> was
+    <span class="blank-num">(7)</span><span class="blank-quiz"><select class="cloze-select" id="b7"><option value="">— 选 —</option><option value="A">A. traded</option><option value="B">B. posted</option><option value="C">C. questioned</option><option value="D">D. claimed</option></select></span><span class="blank-ans"><span class="cloze-answer">posted</span></span>.
+    My friends checked and came back shouting, "Amy, you got the main role!" Sure enough, my name was at the top. I just stared at it and started to
+    <span class="blank-num">(8)</span><span class="blank-quiz"><select class="cloze-select" id="b8"><option value="">— 选 —</option><option value="A">A. well up</option><option value="B">B. roll in</option><option value="C">C. stand out</option><option value="D">D. go off</option></select></span><span class="blank-ans"><span class="cloze-answer"><span class="tip" data-tip="well up|（眼泪）涌出，热泪盈眶｜well 作动词表示"涌出"｜well up = 泪水涌上来｜I started to well up. 我开始热泪盈眶">well up</span></span></span>.
+    I was so happy.</div>
+
+  <div class="paragraph">After two months we were all prepared and ready to go on stage. It was fun. And when people started
+    <span class="blank-num">(9)</span><span class="blank-quiz"><select class="cloze-select" id="b9"><option value="">— 选 —</option><option value="A">A. whispering</option><option value="B">B. arguing</option><option value="C">C. clapping</option><option value="D">D. stretching</option></select></span><span class="blank-ans"><span class="cloze-answer">clapping</span></span>,
+    that gave me a <span class="tip" data-tip="boost|提升，增强（名词/动词）｜boost = 推动力、提升｜a boost of confidence 信心的提升｜That gave me a boost of confidence. 那给了我信心的提升">boost</span> of <span class="tip" data-tip="confidence|信心，自信｜confident adj. 自信的 → confidence n. 信心｜a boost of confidence 一股信心的力量">confidence</span>. It stayed with me and made me feel
+    <span class="blank-num">(10)</span><span class="blank-quiz"><select class="cloze-select" id="b10"><option value="">— 选 —</option><option value="A">A. funnier</option><option value="B">B. fairer</option><option value="C">C. cleverer</option><option value="D">D. braver</option></select></span><span class="blank-ans"><span class="cloze-answer">braver</span></span>.
+    I realised that by trying something new, I can have fun — even if it means <span class="tip" data-tip="stepping out|走出（舒适区）｜step out of = 走出、迈出｜stepping out of my comfort zone = 走出舒适区｜尝试新事物就是走出舒适区的表现">stepping out</span> of my <span class="tip" data-tip="comfort zone|舒适区｜comfort = 舒适，zone = 区域｜comfort zone = 让人感到安全、不需要冒险的状态｜step out of one's comfort zone 走出舒适区">comfort zone</span>.</div>
+
+  <div class="quiz-actions">
+    <button class="quiz-btn" onclick="checkAnswers()">查看得分</button>
+  </div>
+  <div class="quiz-score" id="quizScore"></div>
+</div>
+
+<!-- Analysis panel -->
+<div class="panel analysis-panel" id="analysisPanel">
+  <div class="panel-header" onclick="togglePanel('analysisPanel')"><span>答案解析（1—10题）</span><span class="arrow">&#9660;</span></div>
+  <div class="panel-body">
+    <div class="analysis-item">
+      <div class="analysis-answer">1. C — announcement （通知，宣布）</div>
+      <div class="analysis-logic">教室里传来广播<b>通知</b>，说1:10有音乐剧面试。announcement = 公告/广播通知，与后面引号中的广播内容呼应。assignment（作业）/ initiative（倡议）/ interview（面试）均与"广播里听到消息"的场景不符。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">2. B — interest （兴趣）</div>
+      <div class="analysis-logic">I had no <b>interest</b> in drama（对戏剧没有兴趣），but I'd try out because my friends were doing it——虽然没兴趣，但因为朋友们都去才跟着去。have no interest in = 对…没有兴趣。hesitancy（犹豫）/ worry（担心）/ regret（后悔）均与"因朋友才去参加"的转折逻辑不匹配。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">3. D — line （排队的人）</div>
+      <div class="analysis-logic">1:10到了，戏剧教室外面排了<b>一队人</b>。a line = 一排/一队人（排队）。Everyone looked energetic 说明有很多人在等候。game（游戏）/ show（表演）/ play（戏剧）均不能描述"教室门外的队伍"。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">4. A — suddenly （突然地）</div>
+      <div class="analysis-logic">我早上根本没想到自己会站在这里，但既然来了，我<b>突然</b>感到紧张。suddenly 强调紧张感来得突然、出乎意料。continuously（持续地）/ originally（最初）/ generally（通常）都不能表达"意外产生紧张感"的意思。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">5. B — tested （测试）</div>
+      <div class="analysis-logic">老师让"我"念台词后，又<b>测试</b>了"我"的歌唱技巧。tested my singing skills = 测试我的歌唱能力，符合面试流程。advertised（宣传）/ challenged（挑战）/ polished（磨练）均与面试中老师评估考生的语境不符。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">6. D — chance （机会）</div>
+      <div class="analysis-logic">老师们面带微笑地表扬我，我觉得自己<b>有机会</b>（had a chance），所以才敢说"给我一个大角色"。demand（要求）/ credit（信用）/ dream（梦想）均不能表达"觉得自己可能被选上"的意思。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">7. B — posted （张贴）</div>
+      <div class="analysis-logic">不久后，演员名单被<b>张贴</b>出来了。the cast list was posted = 名单被公布/贴出来了。posted 是公布名单最常见的搭配。traded（交易）/ questioned（质疑）/ claimed（声称）均不能与 cast list 搭配。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">8. A — well up （眼泪涌出）</div>
+      <div class="analysis-logic">看到名字在名单最顶端，"我"开始<b>热泪盈眶</b>。well up = 泪水涌出，表示极度开心时的感动。后面"I was so happy"也印证了是喜极而泣。roll in（大量涌入）/ stand out（突出）/ go off（响起/离开）均不符合"看到结果后感动落泪"的语境。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">9. C — clapping （鼓掌）</div>
+      <div class="analysis-logic">演出时，观众开始<b>鼓掌</b>（clapping），这给了"我"信心。clapping 与 a boost of confidence 呼应，观众的掌声是对表演的肯定。whispering（窃窃私语）/ arguing（争论）/ stretching（伸展）均不能给表演者带来信心鼓舞。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">10. D — braver （更勇敢的）</div>
+      <div class="analysis-logic">掌声带给"我"信心，让"我"觉得自己更<b>勇敢</b>了。全文主题是"走出舒适区"（stepping out of my comfort zone），braver 与这一主题完美呼应——从没兴趣到尝试，从紧张到自信，最终变得更勇敢。funnier（更滑稽）/ fairer（更公平）/ cleverer（更聪明）均与"走出舒适区"的主题不符。</div>
+    </div>
+  </div>
+</div>
+
+<!-- Vocab panel -->
+<div class="panel" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')"><span>重点词汇（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span><span class="arrow">&#9660;</span></div>
+  <div class="panel-body">
+    <div class="vocab-list">
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('audition')">auditions</span>
+          <span class="vocab-meaning">面试，试镜</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">
+          <div>audition = 为获得演出角色而进行的面试/试演。常用于表演、音乐等场景。</div>
+          <div class="vd-example">There will be <em>auditions</em> for a musical. （课文）</div>
+          <div class="vd-example">She <em>auditioned</em> for the lead role in the play. 她为这部戏的主角试镜。</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('energetic')">energetic</span>
+          <span class="vocab-meaning">精力充沛的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">
+          <div>energetic = 精力旺盛的、充满活力的。energy n. 能量/精力 → energetic adj.</div>
+          <div class="vd-example">Everyone looked <em>energetic</em>. （课文）</div>
+          <div class="vd-example">He is an <em>energetic</em> young man who loves sports. 他是个精力充沛、热爱运动的年轻人。</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('praise')">praise</span>
+          <span class="vocab-meaning">表扬，赞美</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">
+          <div>praise = 表扬、赞美（既可作动词也可作名词）。praise sb for sth = 因某事表扬某人。</div>
+          <div class="vd-example">The teachers were smiling and <em>praising</em> me. （课文）</div>
+          <div class="vd-example">The teacher <em>praised</em> her for her hard work. 老师表扬了她的努力。</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('cast list')">cast list</span>
+          <span class="vocab-meaning">演员名单</span>
+          <span class="vocab-tag">课文</span>
+        </div>
+        <div class="vocab-extra">
+          <div>cast = 全体演员/阵容，cast list = 选角名单/演员表。post the cast list = 张贴演员名单。</div>
+          <div class="vd-example">Soon, the <em>cast list</em> was posted. （课文）</div>
+          <div class="vd-example">I checked the <em>cast list</em> to see if I got a role. 我查看了演员名单看自己是否入选。</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('boost')">boost</span>
+          <span class="vocab-meaning">提升，增强</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">
+          <div>boost = 提升、增强（名词/动词）。a boost of confidence = 信心的提升/一股信心。</div>
+          <div class="vd-example">That gave me a <em>boost</em> of confidence. （课文）</div>
+          <div class="vd-example">The good news <em>boosted</em> his spirits. 好消息提振了他的精神。</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('confidence')">confidence</span>
+          <span class="vocab-meaning">信心，自信</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">
+          <div>confidence = 信心、自信。confident adj. 自信的。with confidence = 自信地。</div>
+          <div class="vd-example">That gave me a boost of <em>confidence</em>. （课文）</div>
+          <div class="vd-example">She spoke with great <em>confidence</em>. 她说话非常自信。</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('comfort zone')">comfort zone</span>
+          <span class="vocab-meaning">舒适区</span>
+          <span class="vocab-tag">高频</span>
+        </div>
+        <div class="vocab-extra">
+          <div>comfort zone = 舒适区，指让人感到安全、不需要冒险的状态。step/get out of one's comfort zone = 走出舒适区。</div>
+          <div class="vd-example">Even if it means stepping out of my <em>comfort zone</em>. （课文）</div>
+          <div class="vd-example">Growth happens when you leave your <em>comfort zone</em>. 成长发生在你走出舒适区的时候。</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('stepping out')">stepping out</span>
+          <span class="vocab-meaning">走出（舒适区）</span>
+          <span class="vocab-tag">课文</span>
+        </div>
+        <div class="vocab-extra">
+          <div>step out of = 走出、迈出（某个范围或状态）。stepping out of my comfort zone = 走出舒适区。</div>
+          <div class="vd-example">Even if it means <em>stepping out</em> of my comfort zone. （课文）</div>
+          <div class="vd-example">It takes courage to <em>step out</em> of your comfort zone. 走出舒适区需要勇气。</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('well up')">well up</span>
+          <span class="vocab-meaning">（眼泪）涌出</span>
+          <span class="vocab-tag">课文</span>
+        </div>
+        <div class="vocab-extra">
+          <div>well up = 泪水涌出、热泪盈眶。well 作动词表示液体"涌出、冒出"。</div>
+          <div class="vd-example">I just stared at it and started to <em>well up</em>. （课文）</div>
+          <div class="vd-example">Tears <em>welled up</em> in her eyes when she heard the news. 听到消息时她热泪盈眶。</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('announcement')">announcement</span>
+          <span class="vocab-meaning">宣布，通告</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">
+          <div>announcement = 公告、通知。announce v. 宣布 → announcement n.。make an announcement = 发布通知。</div>
+          <div class="vd-example">There was an <em>announcement</em>. （课文）</div>
+          <div class="vd-example">The principal made an <em>announcement</em> over the loudspeaker. 校长通过广播发布了一条通知。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+const THEMES=['yellow','green'];
+const THEME_LABELS={yellow:'📄 书本黄',green:'🌿 护眼绿'};
+let themeIdx=parseInt(localStorage.getItem('theme')||'0');
+function applyTheme(){document.body.classList.remove('theme-yellow','theme-green');const t=THEMES[themeIdx%THEMES.length];document.body.classList.add('theme-'+t);const btn=document.getElementById('theme-btn');if(btn)btn.textContent=THEME_LABELS[t];}
+function cycleTheme(){themeIdx=(themeIdx+1)%THEMES.length;localStorage.setItem('theme',themeIdx);applyTheme();}
+applyTheme();
+const CLOZE_ANSWERS={b1:'C',b2:'B',b3:'D',b4:'A',b5:'B',b6:'D',b7:'B',b8:'A',b9:'C',b10:'D'};
+function checkAnswers(){
+  let correct=0,answered=0;
+  for(const[id,ans]of Object.entries(CLOZE_ANSWERS)){
+    const sel=document.getElementById(id);if(!sel)continue;
+    const val=sel.value;sel.classList.remove('sel-correct','sel-wrong');
+    if(!val)continue;answered++;
+    if(val===ans){sel.classList.add('sel-correct');correct++;}else sel.classList.add('sel-wrong');
+  }
+  const sc=document.getElementById('quizScore');
+  sc.textContent='得分：'+correct+' / 10'+(answered<10?' （还有'+(10-answered)+'题未作）':'');
+  sc.classList.add('show');
+}
+function setMode(mode){
+  document.body.classList.remove('mode-quiz','mode-analysis');
+  document.body.classList.add('mode-'+mode);
+  document.querySelectorAll('.mode-step').forEach(btn=>btn.classList.toggle('active',btn.dataset.mode===mode));
+  if(mode==='analysis'){document.getElementById('analysisPanel').classList.add('open');}
+  else{
+    for(const id of Object.keys(CLOZE_ANSWERS)){const s=document.getElementById(id);if(s){s.value='';s.classList.remove('sel-correct','sel-wrong');}}
+    document.getElementById('quizScore').classList.remove('show');
+  }
+}
+function togglePanel(id){document.getElementById(id).classList.toggle('open');}
+function speakWord(word){
+  const slug='en-word-'+word.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const src='audio/2024北京卷-完形/'+slug+'.mp3';
+  const a=new Audio(src);
+  a.onerror=function(){const u=new SpeechSynthesisUtterance(word);const vs=speechSynthesis.getVoices();u.voice=vs.find(v=>v.lang.startsWith('en'))||null;u.rate=0.8;speechSynthesis.speak(u);};
+  a.play();
+}
+function vocabClick(phrase){speakWord(phrase);}
+const SRS_PREFIX='srs_beijing_2024_cloze_';
+const SRS_INTERVALS=[1,3,7,14,30];
+function srsLoad(w){const r=localStorage.getItem(SRS_PREFIX+w);return r?JSON.parse(r):null;}
+function srsSave(w,knew){const s=srsLoad(w)||{streak:0};if(knew){s.streak=(s.streak||0)+1;s.interval=SRS_INTERVALS[Math.min(s.streak-1,SRS_INTERVALS.length-1)];}else{s.streak=0;s.interval=1;}s.nextReview=Date.now()+s.interval*86400000;localStorage.setItem(SRS_PREFIX+w,JSON.stringify(s));return s;}
+function srsIsDue(s){return!s||Date.now()>=s.nextReview;}
+function srsUpdateBadge(){const badge=document.getElementById('srs-badge');if(!badge)return;const cards=document.querySelectorAll('.vocab-card[data-srs-word]');let due=0;cards.forEach(c=>{if(srsIsDue(srsLoad(c.dataset.srsWord)))due++;});if(due===0){badge.textContent='全掌握 ✓';badge.className='srs-badge all-done';}else{badge.textContent=due+'个待复习';badge.className='srs-badge';}}
+function srsClick(word,knew,btn){srsSave(word,knew);const card=btn.closest('.vocab-card');const s=srsLoad(word);card.classList.remove('srs-due','srs-known');if(s)card.classList.add(srsIsDue(s)?'srs-due':'srs-known');srsUpdateBadge();btn.style.opacity='0.4';setTimeout(()=>btn.style.opacity='',600);}
+function srsInit(){document.querySelectorAll('.vocab-card').forEach(card=>{const wordEl=card.querySelector('.vocab-word');if(!wordEl)return;const word=wordEl.textContent.trim();card.dataset.srsWord=word;const btns=document.createElement('div');btns.className='srs-btns';const esc=word.replace(/'/g,"\\'");btns.innerHTML='<button class="srs-btn srs-btn-know" onclick="srsClick(\''+esc+'\',true,this)">认识 ✓</button>'+'<button class="srs-btn srs-btn-forget" onclick="srsClick(\''+esc+'\',false,this)">还不会 ✗</button>';card.querySelector('.vocab-card-head').appendChild(btns);const s=srsLoad(word);card.classList.remove('srs-due','srs-known');if(s)card.classList.add(srsIsDue(s)?'srs-due':'srs-known');});srsUpdateBadge();}
+srsInit();
+/* ── Tooltip ── */
+let tooltipEl=null;
+function showTooltip(tipEl){
+  hideTooltip();
+  const raw=tipEl.getAttribute('data-tip');
+  const[phrase,...rest]=raw.split('|');
+  const explain=rest.join('|');
+  const parts=explain.split('｜');
+  tooltipEl=document.createElement('div');
+  tooltipEl.className='tooltip';
+  let html='<div class="tip-phrase">'+phrase+' <span class="tip-speak" onclick="speakWord(\''+phrase.replace(/'/g,"\\'")+'\')">🔊</span></div>';
+  parts.forEach(p=>{html+='<div>'+p+'</div>';});
+  tooltipEl.innerHTML=html;
+  document.body.appendChild(tooltipEl);
+  speakWord(phrase);
+  const tr=tipEl.getBoundingClientRect();
+  const tt=tooltipEl.getBoundingClientRect();
+  let left=tr.left+tr.width/2-tt.width/2;
+  if(left<4)left=4;if(left+tt.width>window.innerWidth-4)left=window.innerWidth-4-tt.width;
+  let top=tr.top-tt.height-8;
+  if(top<4){top=tr.bottom+8;tooltipEl.classList.add('below');}
+  tooltipEl.style.left=left+'px';tooltipEl.style.top=top+'px';
+  const arrowLeft=tr.left+tr.width/2-left;
+  tooltipEl.style.setProperty('--arrow-left',arrowLeft+'px');
+}
+function hideTooltip(){if(tooltipEl){tooltipEl.remove();tooltipEl=null;}}
+document.addEventListener('click',function(e){
+  const tip=e.target.closest('.tip');
+  if(tip){e.stopPropagation();showTooltip(tip);return;}
+  hideTooltip();
+});
+</script>
+</body>
+</html>

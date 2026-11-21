@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2025北京卷语法填空 · 三篇短文</title>
+<style>
+:root{--bg:#fafaf8;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;--accent:#2563eb;--accent-light:#dbeafe;--border:#e2e2e0;--card-bg:#fff;--hover-bg:#f5f5f4;--shadow:0 1px 3px rgba(0,0,0,.08);--radius:6px;}
+.theme-yellow{--bg:#f5f0e8;--card-bg:#faf6ee;--border:#ddd5bf;--hover-bg:#ede7d8;--accent-light:#fde8b8;}
+.theme-green{--bg:#edecea;--card-bg:#f3f2f0;--border:#d6d5d0;--hover-bg:#e8e7e3;--accent-light:#dddcd6;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:60px;}
+.container{max-width:1400px;width:100%;margin:0 auto;padding:0 max(12px,env(safe-area-inset-left)) 0 max(12px,env(safe-area-inset-right));}
+.header{background:var(--card-bg);border-bottom:1px solid var(--border);padding:16px 0;padding-top:calc(16px + env(safe-area-inset-top));position:sticky;top:0;z-index:100;}
+.header .container{display:flex;align-items:center;flex-wrap:wrap;gap:10px;}
+.header h1{font-size:16px;font-weight:600;flex:1;min-width:200px;}
+.header-sub{font-size:12px;color:var(--accent);font-weight:500;background:var(--accent-light);padding:2px 8px;border-radius:10px;}
+.header-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card-bg);color:var(--text);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.mode-steps{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.mode-step{padding:6px 12px;border:none;background:var(--card-bg);color:var(--text-secondary);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.mode-step+.mode-step{border-left:1px solid var(--border);}
+.mode-step.active{background:var(--accent);color:#fff;}
+.mode-step:hover:not(.active){background:var(--accent-light);}
+.section{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:20px;padding:24px 32px;}
+.section-title{font-size:14px;font-weight:700;color:var(--accent);letter-spacing:.05em;margin-bottom:14px;text-transform:uppercase;font-family:-apple-system,sans-serif;}
+.passage-label{font-size:13px;font-weight:600;color:var(--text-secondary);margin-bottom:10px;font-family:-apple-system,sans-serif;}
+.paragraph{margin-bottom:14px;font-family:Georgia,serif;font-size:18px;line-height:1.9;}
+.blank-wrap{display:inline-block;vertical-align:middle;position:relative;}
+.blank-num{font-size:11px;font-weight:700;color:var(--text-muted);font-family:-apple-system,sans-serif;position:absolute;top:-12px;left:0;white-space:nowrap;}
+.gram-input{font-family:Georgia,serif;font-size:16px;border:2px solid var(--accent);border-radius:4px;padding:2px 8px;background:var(--accent-light);color:var(--text);min-width:120px;outline:none;vertical-align:middle;margin:0 2px;}
+.gram-input.inp-correct{border-color:#16a34a;background:#dcfce7;color:#15803d;}
+.gram-input.inp-wrong{border-color:#dc2626;background:#fee2e2;color:#b91c1c;}
+.gram-answer{font-family:Georgia,serif;font-weight:700;color:#16a34a;background:#dcfce7;padding:1px 10px;border-radius:4px;border:1.5px solid #16a34a;vertical-align:middle;margin:0 2px;}
+body.mode-quiz .blank-quiz{display:inline;}
+body.mode-quiz .blank-ans{display:none;}
+body.mode-analysis .blank-quiz{display:none;}
+body.mode-analysis .blank-ans{display:inline;}
+.quiz-btn{display:block;width:100%;padding:11px;border-radius:var(--radius);border:none;font-size:15px;font-weight:600;cursor:pointer;text-align:center;background:var(--accent);color:#fff;margin-top:16px;transition:opacity .15s;}
+.quiz-btn:hover{opacity:.9;}
+body.mode-analysis .quiz-actions{display:none;}
+.quiz-score{text-align:center;padding:16px;font-size:16px;font-weight:600;color:var(--accent);display:none;margin-top:12px;background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);}
+.quiz-score.show{display:block;}
+.panel{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:16px;overflow:hidden;}
+.panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;cursor:pointer;user-select:none;font-weight:600;font-size:15px;border-bottom:1px solid transparent;transition:border-color .2s;}
+.panel-header:hover{color:var(--accent);}
+.panel-header .arrow{transition:transform .2s;font-size:12px;color:var(--text-muted);}
+.panel.open .panel-header{border-bottom-color:var(--border);}
+.panel.open .panel-header .arrow{transform:rotate(180deg);}
+.panel-body{display:none;padding:16px 24px;}
+.panel.open .panel-body{display:block;}
+.gram-item{padding:14px 24px;border-bottom:1px solid #f0f0f0;}
+.gram-item:last-child{border-bottom:none;}
+.gram-answer-line{font-weight:700;color:#16a34a;font-size:15px;margin-bottom:6px;}
+.gram-point{font-size:14px;color:var(--text-secondary);line-height:1.75;}
+.gram-point b{color:var(--text);}
+.gram-formula{display:inline-block;background:#f0f6fc;border:1px solid #bfdbfe;border-radius:4px;padding:3px 10px;font-family:Georgia,serif;font-size:14px;color:#1e40af;margin:4px 0;}
+body.mode-quiz .analysis-panel{display:none!important;}
+@media(min-width:700px){
+  .header h1{font-size:19px;}.paragraph{font-size:23px;line-height:1.9;}
+  .gram-input{font-size:20px;min-width:160px;}.panel-header{font-size:18px;}
+  .gram-answer-line{font-size:17px;}.gram-point{font-size:17px;}.gram-formula{font-size:16px;}
+  .quiz-btn{font-size:17px;}
+}
+@media(max-width:600px){
+  .section{padding:18px 14px;}.paragraph{font-size:16px;}
+  .gram-input{font-size:14px;min-width:100px;}
+  .panel-header,.gram-item{padding-left:16px;padding-right:16px;}.panel-body{padding:12px 16px;}
+}
+.vocab-card{border-bottom:1px solid #f0f0f0;padding:12px 0;}
+.vocab-card:last-child{border-bottom:none;}
+.vocab-card-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px;}
+.vocab-word{font-family:Georgia,serif;font-weight:600;color:var(--accent);cursor:pointer;font-size:15px;}
+.vocab-word:hover{text-decoration:underline;}
+.vocab-meaning{font-size:14px;color:var(--text);}
+.vocab-extra{font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.75;}
+.vocab-tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:3px;background:#fef3c7;color:#92400e;vertical-align:middle;}
+.vocab-tag.tag-core{background:#dcfce7;color:#166534;}
+.vocab-tag.tag-exam{background:#dbeafe;color:#1e40af;}
+.vocab-tag.tag-extend{background:#ffedd5;color:#c2410c;}
+.tip{border-bottom:1.5px dashed var(--accent);cursor:pointer;position:relative;transition:background .15s;}
+.tip:hover{background:var(--accent-light);}
+.tooltip{position:fixed;z-index:200;background:var(--text);color:#fff;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;line-height:1.5;padding:8px 14px;border-radius:8px;max-width:min(520px,calc(100vw - 16px));width:max-content;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:auto;animation:tipIn .15s ease-out;}
+.tooltip::after{content:'';position:absolute;bottom:-6px;left:var(--arrow-left,50%);transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text);}
+.tooltip.below::after{bottom:auto;top:-6px;border-top:none;border-bottom:6px solid var(--text);}
+.tooltip .tip-phrase{font-family:Georgia,serif;font-weight:600;color:#93c5fd;margin-bottom:2px;}
+.tooltip .tip-speak{display:inline-block;cursor:pointer;margin-left:6px;font-size:12px;opacity:.7;vertical-align:middle;}
+.tooltip .tip-speak:hover{opacity:1;}
+@keyframes tipIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+body.mode-quiz .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-quiz .tip:hover{background:none;}
+.srs-btns{display:flex;gap:5px;margin-left:auto;}
+.srs-btn{font-size:11px;padding:2px 7px;border-radius:10px;border:1.5px solid;cursor:pointer;transition:all .15s;background:none;white-space:nowrap;}
+.srs-btn-know{border-color:#16a34a;color:#16a34a;}
+.srs-btn-know:hover{background:#dcfce7;}
+.srs-btn-forget{border-color:#dc2626;color:#dc2626;}
+.srs-btn-forget:hover{background:#fee2e2;}
+.vocab-card.srs-due .vocab-word::after{content:' 📌';font-size:10px;}
+.vocab-card.srs-known .vocab-word::after{content:' ✓';font-size:11px;color:#16a34a;}
+.srs-badge{font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;background:#fef2f2;color:#dc2626;}
+.srs-badge.all-done{background:#dcfce7;color:#16a34a;}
+body.mode-quiz #vocabPanel{display:none!important;}
+@media(min-width:700px){
+  .vocab-word{font-size:20px;}.vocab-meaning{font-size:18px;}.vocab-extra{font-size:16.5px;line-height:1.75;}
+  .vocab-tag{font-size:13px;}.srs-btn,.srs-badge{font-size:14px;}
+  .tooltip{font-size:17px;line-height:1.55;}.tooltip .tip-phrase{font-size:19px;}
+}
+</style>
+</head>
+<body class="mode-quiz">
+<div class="header">
+  <div class="container">
+    <h1>2025北京卷语法填空 · 三篇短文</h1>
+    <div class="header-controls">
+      <span class="header-sub">Q11–20</span>
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="quiz" onclick="setMode('quiz')">① 做题</button>
+        <button class="mode-step" data-mode="analysis" onclick="setMode('analysis')">② 解析</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+<div class="container">
+
+<!-- Passage A -->
+<div class="section">
+  <div class="section-title">语法填空（共10题，每题1.5分）</div>
+  <div class="passage-label">A篇（第11—13题）· Walking with Nick</div>
+  <div class="paragraph">Most days after school, I love walking in the forest with my dog Nick. It's
+    <span class="blank-wrap"><span class="blank-num">(11)</span><span class="blank-quiz"><input class="gram-input" id="g11" placeholder="peace的正确形式" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">peaceful</span></span></span>
+    , especially around <span class="tip" data-tip="sunset|日落｜sun 太阳 + set 落下 → sunset 日落｜around sunset = 日落时分｜反义词：sunrise 日出">sunset</span>. Nick has a fun time smelling the leaves and running after rabbits. When Nick runs ahead, I hear him barking excitedly. I sometimes call him back, worried that he might have someone
+    <span class="blank-wrap"><span class="blank-num">(12)</span><span class="blank-quiz"><input class="gram-input" id="g12" placeholder="scare的正确形式" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">scared</span></span></span>
+    . The truth, though, is
+    <span class="blank-wrap"><span class="blank-num">(13)</span><span class="blank-quiz"><input class="gram-input" id="g13" placeholder="填连接词" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">what</span></span></span>
+    could be guessed — there's never anyone else here. Just me, Nick, and the quiet forest.</div>
+</div>
+
+<!-- Passage B -->
+<div class="section">
+  <div class="passage-label">B篇（第14—16题）· Making Choices</div>
+  <div class="paragraph">When was the last time you took on a tough choice? Maybe this morning you <span class="tip" data-tip="debated|考虑，权衡｜debate v. 辩论/考虑 → debated 过去式｜debated whether to... = 考虑是否…｜名词：a heated debate 激烈的辩论">debated</span> whether to get up or stay in bed slightly
+    <span class="blank-wrap"><span class="blank-num">(14)</span><span class="blank-quiz"><input class="gram-input" id="g14" placeholder="long的正确形式" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">longer</span></span></span>
+    . Making choices is part of life. By the time you brushed your teeth, you
+    <span class="blank-wrap"><span class="blank-num">(15)</span><span class="blank-quiz"><input class="gram-input" id="g15" placeholder="make的正确形式" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">had made</span></span></span>
+    several decisions even without noticing. Some choices are quick, while others take more thought. Usually, better <span class="tip" data-tip="outcomes|结果｜outcome n. 结果，结局｜out + come = 出来的东西 → 结果｜better outcomes = 更好的结果｜常见搭配：positive/negative outcome">outcomes</span>
+    <span class="blank-wrap"><span class="blank-num">(16)</span><span class="blank-quiz"><input class="gram-input" id="g16" placeholder="achieve的正确形式" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">are achieved</span></span></span>
+    through a <span class="tip" data-tip="thorough|彻底的，全面的｜注意发音 /ˈθʌrə/｜a thorough understanding = 全面的理解｜区分：thorough（彻底的）vs through（通过）vs though（虽然）">thorough</span> understanding of strategies like risk <span class="tip" data-tip="tolerance|容忍，耐受｜tolerate v. 容忍 → tolerance n.｜risk tolerance = 风险承受能力｜zero tolerance 零容忍">tolerance</span>.</div>
+</div>
+
+<!-- Passage C -->
+<div class="section">
+  <div class="passage-label">C篇（第17—20题）· Travel and Food Waste</div>
+  <div class="paragraph">When
+    <span class="blank-wrap"><span class="blank-num">(17)</span><span class="blank-quiz"><input class="gram-input" id="g17" placeholder="travel的正确形式" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">travelling</span></span></span>
+    , we engage with cultures and experiences. However, according to a report by the World Wildlife Fund, tourists
+    <span class="blank-wrap"><span class="blank-num">(18)</span><span class="blank-quiz"><input class="gram-input" id="g18" placeholder="leave的正确形式" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">left</span></span></span>
+    over 1.3 billion tons of food waste last year,
+    <span class="blank-wrap"><span class="blank-num">(19)</span><span class="blank-quiz"><input class="gram-input" id="g19" placeholder="填关系词" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">which</span></span></span>
+    <span class="tip" data-tip="accounted for|占（比例）｜account for = 占…比例/解释原因｜accounted for about 8% = 占了大约8%｜account n. 账户/描述 → account for 占比/解释">accounted for</span> about 8% of the total global gas release in 2024. To reduce our impact, we can take simple steps: empty the fridge before heading out, and choose <span class="tip" data-tip="sustainable|可持续的｜sustain v. 维持 → sustainable adj.｜sustainable dining options = 可持续的用餐选择｜sustainable development 可持续发展">sustainable</span> dining options. These efforts help us travel more <span class="tip" data-tip="responsibly|负责任地｜responsible adj. 负责的 → responsibly adv.｜travel more responsibly = 更负责任地旅行｜act responsibly 负责任地行事">responsibly</span>. After all, exploring the world shouldn't come
+    <span class="blank-wrap"><span class="blank-num">(20)</span><span class="blank-quiz"><input class="gram-input" id="g20" placeholder="填介词" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">at</span></span></span>
+    the planet's <span class="tip" data-tip="expense|代价，费用｜at one's expense = 以…为代价（固定搭配）｜at the planet's expense = 以地球为代价｜travel expenses 旅行费用">expense</span>.</div>
+
+  <div class="quiz-actions">
+    <button class="quiz-btn" onclick="checkAnswers()">查看得分</button>
+  </div>
+  <div class="quiz-score" id="quizScore"></div>
+</div>
+
+<!-- Analysis panel -->
+<div class="panel analysis-panel" id="analysisPanel">
+  <div class="panel-header" onclick="togglePanel('analysisPanel')"><span>答案解析（11—20题）</span><span class="arrow">&#9660;</span></div>
+  <div class="panel-body">
+
+    <div class="gram-item">
+      <div class="gram-answer-line">11. peaceful</div>
+      <div class="gram-point">
+        <b>考点：词性转换（名词→形容词）</b><br>
+        It's ___，be动词后接形容词作表语。<span class="gram-formula">peace（名词）→ peaceful（形容词）</span>，表示"宁静的"。<br>
+        类似构词：hope → hopeful, care → careful, beauty → beautiful。
+      </div>
+    </div>
+
+    <div class="gram-item">
+      <div class="gram-answer-line">12. scared</div>
+      <div class="gram-point">
+        <b>考点：have sb done 结构</b><br>
+        <span class="gram-formula">have someone scared</span> = 让某人被吓到。someone 与 scare 之间是被动关系（某人"被"吓到），所以用过去分词 scared。<br>
+        have sb done 表示"使某人被..."，区分 have sb do（让某人做...，主动）和 have sb doing（让某人一直做...）。
+      </div>
+    </div>
+
+    <div class="gram-item">
+      <div class="gram-answer-line">13. what</div>
+      <div class="gram-point">
+        <b>考点：表语从句引导词</b><br>
+        The truth is ___ could be guessed。is 后面是表语从句，从句中缺少主语（什么东西能被猜到），用 <span class="gram-formula">what</span> 引导表语从句，what 在从句中作主语。<br>
+        区分：that（引导完整从句，不充当成分）vs what（= the thing that，在从句中作主/宾语）。
+      </div>
+    </div>
+
+    <div class="gram-item">
+      <div class="gram-answer-line">14. longer</div>
+      <div class="gram-point">
+        <b>考点：比较级</b><br>
+        slightly ___ 修饰比较级，表示"稍微更久一点"。<span class="gram-formula">long → longer</span>，slightly longer = 稍微久一点。<br>
+        slightly, a bit, a little, much, far, even 等常用来修饰比较级。
+      </div>
+    </div>
+
+    <div class="gram-item">
+      <div class="gram-answer-line">15. had made</div>
+      <div class="gram-point">
+        <b>考点：过去完成时</b><br>
+        时间状语 <em>By the time you brushed your teeth</em>（当你刷牙的时候），by the time + 过去时 → 主句用过去完成时：<span class="gram-formula">had + 过去分词</span>。<br>
+        表示"在刷牙之前，你已经做了好几个决定了"，强调动作发生在过去某一时间点之前。
+      </div>
+    </div>
+
+    <div class="gram-item">
+      <div class="gram-answer-line">16. are achieved</div>
+      <div class="gram-point">
+        <b>考点：一般现在时被动语态</b><br>
+        主语 <em>better outcomes</em>（更好的结果）是"被实现"的，与 achieve 是被动关系。此句描述一般性规律，用一般现在时被动：<span class="gram-formula">are + 过去分词（achieved）</span>。<br>
+        outcomes 是复数，故用 are achieved，不是 is achieved。
+      </div>
+    </div>
+
+    <div class="gram-item">
+      <div class="gram-answer-line">17. travelling</div>
+      <div class="gram-point">
+        <b>考点：省略主语的时间状语从句</b><br>
+        完整形式为 <em>When we are travelling</em>，当从句主语与主句主语一致时，可省略"主语 + be"，简化为：<span class="gram-formula">When travelling = When (we are) travelling</span>。<br>
+        类似：While studying = While (I was) studying。注意 travelling 英式双写 l。
+      </div>
+    </div>
+
+    <div class="gram-item">
+      <div class="gram-answer-line">18. left</div>
+      <div class="gram-point">
+        <b>考点：一般过去时</b><br>
+        时间标志词 <em>last year</em>（去年）表示过去某一确定时间，用一般过去时。<span class="gram-formula">leave → left</span>（过去式）。<br>
+        last year / yesterday / in 2024 等明确过去时间 → 一般过去时。
+      </div>
+    </div>
+
+    <div class="gram-item">
+      <div class="gram-answer-line">19. which</div>
+      <div class="gram-point">
+        <b>考点：非限制性定语从句</b><br>
+        逗号后接定语从句，<span class="gram-formula">which</span> 指代前面整个事实（游客留下了13亿多吨食物垃圾），which 在从句中作主语。<br>
+        非限制性定语从句中不能用 that，只能用 which。which 指代整件事时，翻译为"这件事（占了...）"。
+      </div>
+    </div>
+
+    <div class="gram-item">
+      <div class="gram-answer-line">20. at</div>
+      <div class="gram-point">
+        <b>考点：固定搭配 at one's expense</b><br>
+        <span class="gram-formula">at one's expense</span> = 以...为代价（固定搭配）。come at the planet's expense = 以地球为代价。<br>
+        类似搭配：at the cost of, at the price of。注意：expense 也可表示"费用"，如 travel expenses 旅行费用。
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Tips panel -->
+<div class="panel" id="tipsPanel">
+  <div class="panel-header" onclick="togglePanel('tipsPanel')"><span>语法填空答题技巧</span><span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-size:14px;line-height:1.9;color:var(--text-secondary);">
+    <p><b>四步解题法：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li><b>第一步，判断词性：</b>空格在句中是名词/动词/形容词/副词位置？名词位置看单复数；动词位置看时态/语态/非谓语；副词位置找程度词。</li>
+      <li><b>第二步，找时间状语：</b>in recent years → 现在完成时；by the time + 过去 → 过去完成时；yesterday / last year → 过去时。</li>
+      <li><b>第三步，判断主动/被动：</b>主语是动作的发出者 → 主动；主语是动作的承受者 → 被动（be done / being done）。</li>
+      <li><b>第四步，查固定搭配：</b>at one's expense / account for / come at 等介词搭配要牢记，注意介词选择。</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Vocab panel -->
+<div class="panel" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')">
+    <span>重点词汇（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="vocab-list">
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('peaceful')">peaceful</span>
+          <span class="vocab-meaning">和平的，宁静的</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">peace n. 和平 → <em>peaceful</em> adj. 宁静的，和平的。It's <em>peaceful</em>, especially around sunset. = 这里很宁静，尤其是日落时分。<br>a <em>peaceful</em> life 宁静的生活 &nbsp;·&nbsp; <em>peaceful</em> protest 和平抗议 &nbsp;·&nbsp; peacefully adv. 平静地</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('sunset')">sunset</span>
+          <span class="vocab-meaning">日落</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">sun 太阳 + set 落下 → <em>sunset</em> 日落。around <em>sunset</em> = 日落时分。<br>反义：sunrise 日出 &nbsp;·&nbsp; a beautiful <em>sunset</em> 美丽的日落 &nbsp;·&nbsp; at <em>sunset</em> 在日落时</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('debated')">debated</span>
+          <span class="vocab-meaning">考虑，权衡</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">debate v. 辩论/考虑 → <em>debated</em> whether to... = 考虑是否要...<br>a heated <em>debate</em> 激烈的辩论 &nbsp;·&nbsp; <em>debate</em> over/about sth 关于某事的辩论 &nbsp;·&nbsp; debatable adj. 有争议的</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('outcomes')">outcomes</span>
+          <span class="vocab-meaning">结果</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">outcome n. 结果，结局（out + come）。better <em>outcomes</em> = 更好的结果。<br>positive/negative <em>outcome</em> 正面/负面结果 &nbsp;·&nbsp; the <em>outcome</em> of the election 选举结果 &nbsp;·&nbsp; 近义词：result, consequence</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('thorough')">thorough</span>
+          <span class="vocab-meaning">彻底的，全面的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">注意发音 /ˈθʌrə/。a <em>thorough</em> understanding = 全面的理解。<br>区分：<em>thorough</em>（彻底的）vs through（通过）vs though（虽然）vs thought（想法）<br>thoroughly adv. 彻底地</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('tolerance')">tolerance</span>
+          <span class="vocab-meaning">容忍，耐受</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">tolerate v. 容忍 → tolerance n. 容忍/耐受度。risk <em>tolerance</em> = 风险承受能力。<br>zero <em>tolerance</em> 零容忍 &nbsp;·&nbsp; tolerant adj. 宽容的 &nbsp;·&nbsp; be tolerant of 对…宽容</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('sustainable')">sustainable</span>
+          <span class="vocab-meaning">可持续的</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">sustain v. 维持 → <em>sustainable</em> adj. 可持续的。<em>sustainable</em> dining options = 可持续的用餐选择。<br><em>sustainable</em> development 可持续发展 &nbsp;·&nbsp; sustainability n. 可持续性 &nbsp;·&nbsp; 反义：unsustainable</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('responsibly')">responsibly</span>
+          <span class="vocab-meaning">负责任地</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">responsible adj. 负责的 → <em>responsibly</em> adv. 负责任地。travel more <em>responsibly</em> = 更负责任地旅行。<br>act <em>responsibly</em> 负责任地行事 &nbsp;·&nbsp; responsibility n. 责任 &nbsp;·&nbsp; 反义：irresponsibly</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('accounted for')">accounted for</span>
+          <span class="vocab-meaning">占（比例）</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">account for = 占…比例/解释原因。<em>accounted for</em> about 8% = 占了大约8%。<br>account n. 账户/描述 &nbsp;·&nbsp; take sth into account 将…考虑在内 &nbsp;·&nbsp; on account of 因为</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('expense')">expense</span>
+          <span class="vocab-meaning">代价，费用</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">at one's <em>expense</em> = 以…为代价（固定搭配）。at the planet's <em>expense</em> = 以地球为代价。<br>travel <em>expenses</em> 旅行费用 &nbsp;·&nbsp; at the <em>expense</em> of 以…为代价 &nbsp;·&nbsp; expensive adj. 昂贵的</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+const THEMES=['yellow','green'];
+const THEME_LABELS={yellow:'📄 书本黄',green:'🌿 护眼绿'};
+let themeIdx=parseInt(localStorage.getItem('theme')||'0');
+function applyTheme(){document.body.classList.remove('theme-yellow','theme-green');const t=THEMES[themeIdx%THEMES.length];document.body.classList.add('theme-'+t);const btn=document.getElementById('theme-btn');if(btn)btn.textContent=THEME_LABELS[t];}
+function cycleTheme(){themeIdx=(themeIdx+1)%THEMES.length;localStorage.setItem('theme',themeIdx);applyTheme();}
+applyTheme();
+
+const GRAM_ANSWERS={
+  g11:'peaceful',g12:'scared',g13:'what',g14:'longer',
+  g15:'had made',g16:'are achieved',g17:'travelling',
+  g18:'left',g19:'which',g20:'at'
+};
+
+function normalize(s){return s.trim().toLowerCase().replace(/\s+/g,' ');}
+
+function checkAnswers(){
+  let correct=0,answered=0;
+  for(const[id,ans]of Object.entries(GRAM_ANSWERS)){
+    const inp=document.getElementById(id);if(!inp)continue;
+    const val=inp.value;inp.classList.remove('inp-correct','inp-wrong');
+    if(!val.trim())continue;answered++;
+    if(normalize(val)===normalize(ans)){inp.classList.add('inp-correct');correct++;}
+    else inp.classList.add('inp-wrong');
+  }
+  const sc=document.getElementById('quizScore');
+  sc.textContent='得分：'+correct+' / 10'+(answered<10?' （还有'+(10-answered)+'题未填）':'');
+  sc.classList.add('show');
+}
+
+function setMode(mode){
+  document.body.classList.remove('mode-quiz','mode-analysis');
+  document.body.classList.add('mode-'+mode);
+  document.querySelectorAll('.mode-step').forEach(btn=>btn.classList.toggle('active',btn.dataset.mode===mode));
+  if(mode==='analysis'){document.getElementById('analysisPanel').classList.add('open');}
+  else{
+    for(const id of Object.keys(GRAM_ANSWERS)){const inp=document.getElementById(id);if(inp){inp.value='';inp.classList.remove('inp-correct','inp-wrong');}}
+    document.getElementById('quizScore').classList.remove('show');
+  }
+}
+
+function togglePanel(id){document.getElementById(id).classList.toggle('open');}
+let enPlayer=null;
+function speakWord(word){
+  if(enPlayer){enPlayer.pause();enPlayer=null;}
+  const slug='en-word-'+word.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const src='audio/2025北京卷-语法填空/'+slug+'.mp3';
+  enPlayer=new Audio(src);
+  enPlayer.onerror=function(){const u=new SpeechSynthesisUtterance(word);const vs=speechSynthesis.getVoices();u.voice=vs.find(v=>v.lang==='en-GB')||vs.find(v=>v.lang.startsWith('en'))||vs[0];u.rate=0.8;speechSynthesis.speak(u);};
+  enPlayer.play();
+}
+function vocabClick(phrase){speakWord(phrase);}
+const SRS_PREFIX='srs_beijing_2025_gram_';
+const SRS_INTERVALS=[1,3,7,14,30];
+function srsLoad(w){const r=localStorage.getItem(SRS_PREFIX+w);return r?JSON.parse(r):null;}
+function srsSave(w,knew){const s=srsLoad(w)||{streak:0};if(knew){s.streak=(s.streak||0)+1;s.interval=SRS_INTERVALS[Math.min(s.streak-1,SRS_INTERVALS.length-1)];}else{s.streak=0;s.interval=1;}s.nextReview=Date.now()+s.interval*86400000;localStorage.setItem(SRS_PREFIX+w,JSON.stringify(s));return s;}
+function srsIsDue(s){return!s||Date.now()>=s.nextReview;}
+function srsUpdateCard(card){const s=srsLoad(card.dataset.srsWord);card.classList.remove('srs-due','srs-known');if(!s)return;card.classList.add(srsIsDue(s)?'srs-due':'srs-known');}
+function srsUpdateBadge(){const badge=document.getElementById('srs-badge');if(!badge)return;const cards=document.querySelectorAll('.vocab-card[data-srs-word]');let due=0;cards.forEach(c=>{if(srsIsDue(srsLoad(c.dataset.srsWord)))due++;});if(due===0){badge.textContent='全掌握 ✓';badge.className='srs-badge all-done';}else{badge.textContent=due+'个待复习';badge.className='srs-badge';}}
+function srsClick(word,knew,btn){srsSave(word,knew);const card=btn.closest('.vocab-card');srsUpdateCard(card);srsUpdateBadge();btn.style.opacity='0.4';setTimeout(()=>btn.style.opacity='',600);}
+function srsInit(){document.querySelectorAll('.vocab-card').forEach(card=>{const wordEl=card.querySelector('.vocab-word');if(!wordEl)return;const word=wordEl.textContent.trim();card.dataset.srsWord=word;const btns=document.createElement('div');btns.className='srs-btns';const esc=word.replace(/\\/g,'\\\\').replace(/'/g,"\\'");btns.innerHTML='<button class="srs-btn srs-btn-know" onclick="srsClick(\''+esc+'\',true,this)">认识 ✓</button>'+'<button class="srs-btn srs-btn-forget" onclick="srsClick(\''+esc+'\',false,this)">还不会 ✗</button>';card.querySelector('.vocab-card-head').appendChild(btns);srsUpdateCard(card);});srsUpdateBadge();}
+srsInit();
+/* ── Tooltip ── */
+let tooltipEl=null;
+function showTooltip(tipEl){
+  hideTooltip();
+  const raw=tipEl.getAttribute('data-tip');
+  const[phrase,...rest]=raw.split('|');
+  const explain=rest.join('|');
+  const parts=explain.split('｜');
+  tooltipEl=document.createElement('div');
+  tooltipEl.className='tooltip';
+  let html='<div class="tip-phrase">'+phrase+' <span class="tip-speak" onclick="speakWord(\''+phrase.replace(/'/g,"\\'")+'\')">🔊</span></div>';
+  parts.forEach(p=>{html+='<div>'+p+'</div>';});
+  tooltipEl.innerHTML=html;
+  document.body.appendChild(tooltipEl);
+  speakWord(phrase);
+  const tr=tipEl.getBoundingClientRect();
+  const tt=tooltipEl.getBoundingClientRect();
+  let left=tr.left+tr.width/2-tt.width/2;
+  if(left<4)left=4;if(left+tt.width>window.innerWidth-4)left=window.innerWidth-4-tt.width;
+  let top=tr.top-tt.height-8;
+  if(top<4){top=tr.bottom+8;tooltipEl.classList.add('below');}
+  tooltipEl.style.left=left+'px';tooltipEl.style.top=top+'px';
+  const arrowLeft=tr.left+tr.width/2-left;
+  tooltipEl.style.setProperty('--arrow-left',arrowLeft+'px');
+}
+function hideTooltip(){if(tooltipEl){tooltipEl.remove();tooltipEl=null;}}
+document.addEventListener('click',function(e){
+  const tip=e.target.closest('.tip');
+  if(tip){e.stopPropagation();showTooltip(tip);return;}
+  hideTooltip();
+});
+</script>
+</body>
+</html>

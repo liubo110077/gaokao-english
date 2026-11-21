@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2025北京卷书面表达 · 想象力与创新</title>
+<style>
+:root{--bg:#fafaf8;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;--accent:#2563eb;--accent-light:#dbeafe;--border:#e2e2e0;--card-bg:#fff;--hover-bg:#f5f5f4;--shadow:0 1px 3px rgba(0,0,0,.08);--radius:6px;}
+.theme-yellow{--bg:#f5f0e8;--card-bg:#faf6ee;--border:#ddd5bf;--hover-bg:#ede7d8;--accent-light:#fde8b8;}
+.theme-green{--bg:#edecea;--card-bg:#f3f2f0;--border:#d6d5d0;--hover-bg:#e8e7e3;--accent-light:#dddcd6;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:60px;}
+.container{max-width:1400px;width:100%;margin:0 auto;padding:0 max(12px,env(safe-area-inset-left)) 0 max(12px,env(safe-area-inset-right));}
+.header{background:var(--card-bg);border-bottom:1px solid var(--border);padding:16px 0;padding-top:calc(16px + env(safe-area-inset-top));position:sticky;top:0;z-index:100;}
+.header .container{display:flex;align-items:center;flex-wrap:wrap;gap:10px;}
+.header h1{font-size:16px;font-weight:600;flex:1;min-width:200px;}
+.header-sub{font-size:12px;color:var(--accent);font-weight:500;background:var(--accent-light);padding:2px 8px;border-radius:10px;}
+.header-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card-bg);color:var(--text);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.mode-steps{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.mode-step{padding:6px 12px;border:none;background:var(--card-bg);color:var(--text-secondary);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.mode-step+.mode-step{border-left:1px solid var(--border);}
+.mode-step.active{background:var(--accent);color:#fff;}
+.mode-step:hover:not(.active){background:var(--accent-light);}
+.section{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:20px;padding:24px 32px;}
+.section-title{font-size:14px;font-weight:700;color:var(--accent);letter-spacing:.05em;margin-bottom:14px;text-transform:uppercase;font-family:-apple-system,sans-serif;}
+.section-desc{font-size:13px;color:var(--text-muted);margin-bottom:16px;}
+.reading-passage{background:#fafaf8;border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:20px;}
+.reading-passage p{font-family:Georgia,serif;font-size:17px;line-height:1.9;margin-bottom:12px;text-indent:2em;}
+.reading-passage p:last-child{margin-bottom:0;}
+.q-item{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid #f0f0f0;}
+.q-item:last-child{border-bottom:none;margin-bottom:0;}
+.q-stem{font-size:15px;font-weight:600;margin-bottom:10px;line-height:1.6;}
+.q-score{font-size:12px;color:var(--accent);font-weight:600;background:var(--accent-light);padding:1px 8px;border-radius:10px;margin-left:8px;}
+.show-btn{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--accent);cursor:pointer;background:none;border:none;padding:4px 0;}
+.show-btn:hover{text-decoration:underline;}
+.answer-box{display:none;margin-top:10px;padding:12px 16px;background:#f8f9fa;border-left:3px solid #16a34a;border-radius:0 var(--radius) var(--radius) 0;font-size:14px;line-height:1.8;}
+.answer-box.open{display:block;}
+.answer-box .ans-label{font-weight:700;color:#16a34a;margin-bottom:6px;font-size:14px;}
+.answer-box .ans-text{font-family:Georgia,serif;font-size:16px;line-height:1.8;}
+.answer-box .ans-note{font-size:13px;color:var(--text-secondary);margin-top:8px;line-height:1.75;}
+.underline-key{text-decoration:underline;text-decoration-color:#dc2626;text-decoration-thickness:2px;font-weight:700;color:#dc2626;}
+.letter-section{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:20px;padding:24px 32px;}
+.letter-task{background:#fef9c3;border:1px solid #fde68a;border-radius:var(--radius);padding:16px 20px;margin-bottom:20px;font-size:14px;line-height:1.8;color:#78350f;}
+.letter-task b{color:#92400e;}
+.model-letter{display:none;background:#f8f9fa;border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;font-family:Georgia,serif;font-size:17px;line-height:1.9;}
+.model-letter.open{display:block;}
+body.mode-answer .model-letter{display:block;}
+body.mode-task .model-letter{display:none!important;}
+.letter-anno{border-bottom:2px solid var(--accent);cursor:default;position:relative;}
+.letter-anno:hover::after{content:attr(data-note);position:absolute;bottom:calc(100% + 6px);left:0;background:#1a1a1a;color:#fff;font-family:-apple-system,sans-serif;font-size:12px;padding:4px 10px;border-radius:6px;white-space:nowrap;z-index:10;pointer-events:none;}
+.letter-p{margin-bottom:12px;text-indent:0;}
+.letter-p.indent{text-indent:2em;}
+.show-model-btn{display:block;width:100%;padding:11px;border-radius:var(--radius);border:none;font-size:15px;font-weight:600;cursor:pointer;text-align:center;background:var(--accent);color:#fff;margin-top:16px;transition:opacity .15s;}
+.show-model-btn:hover{opacity:.9;}
+body.mode-answer .show-btn-wrap{display:none;}
+.scoring-guide{margin-top:16px;padding:14px 18px;background:#f0f6fc;border-radius:var(--radius);font-size:13px;line-height:1.8;color:var(--text-secondary);}
+.scoring-guide b{color:var(--text);}
+@media(min-width:700px){
+  .header h1{font-size:19px;}.reading-passage p{font-size:21px;line-height:1.9;}
+  .q-stem{font-size:19px;}.answer-box{font-size:17px;}.answer-box .ans-text{font-size:20px;}
+  .answer-box .ans-note{font-size:16px;}.model-letter{font-size:21px;}.letter-task{font-size:16px;}
+  .show-model-btn{font-size:17px;}.scoring-guide{font-size:15px;}.show-btn{font-size:15px;}
+}
+@media(max-width:600px){
+  .section,.letter-section{padding:18px 14px;}.reading-passage{padding:14px 16px;}
+  .reading-passage p{font-size:15px;}.q-stem{font-size:14px;}
+}
+.vocab-card{border-bottom:1px solid #f0f0f0;padding:12px 0;}
+.vocab-card:last-child{border-bottom:none;}
+.vocab-card-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px;}
+.vocab-word{font-family:Georgia,serif;font-weight:600;color:var(--accent);cursor:pointer;font-size:15px;}
+.vocab-word:hover{text-decoration:underline;}
+.vocab-meaning{font-size:14px;color:var(--text);}
+.vocab-extra{font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.75;}
+.vocab-tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:3px;background:#fef3c7;color:#92400e;vertical-align:middle;}
+.vocab-tag.tag-core{background:#dcfce7;color:#166534;}
+.vocab-tag.tag-exam{background:#dbeafe;color:#1e40af;}
+.vocab-tag.tag-extend{background:#ffedd5;color:#c2410c;}
+.tip{border-bottom:1.5px dashed var(--accent);cursor:pointer;position:relative;transition:background .15s;}
+.tip:hover{background:var(--accent-light);}
+.tooltip{position:fixed;z-index:200;background:var(--text);color:#fff;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;line-height:1.5;padding:8px 14px;border-radius:8px;max-width:min(520px,calc(100vw - 16px));width:max-content;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:auto;animation:tipIn .15s ease-out;}
+.tooltip::after{content:'';position:absolute;bottom:-6px;left:var(--arrow-left,50%);transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text);}
+.tooltip.below::after{bottom:auto;top:-6px;border-top:none;border-bottom:6px solid var(--text);}
+.tooltip .tip-phrase{font-family:Georgia,serif;font-weight:600;color:#93c5fd;margin-bottom:2px;}
+.tooltip .tip-speak{display:inline-block;cursor:pointer;margin-left:6px;font-size:12px;opacity:.7;vertical-align:middle;}
+.tooltip .tip-speak:hover{opacity:1;}
+@keyframes tipIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+body.mode-task .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-task .tip:hover{background:none;}
+.srs-btns{display:flex;gap:5px;margin-left:auto;}
+.srs-btn{font-size:11px;padding:2px 7px;border-radius:10px;border:1.5px solid;cursor:pointer;transition:all .15s;background:none;white-space:nowrap;}
+.srs-btn-know{border-color:#16a34a;color:#16a34a;}
+.srs-btn-know:hover{background:#dcfce7;}
+.srs-btn-forget{border-color:#dc2626;color:#dc2626;}
+.srs-btn-forget:hover{background:#fee2e2;}
+.vocab-card.srs-due .vocab-word::after{content:' 📌';font-size:10px;}
+.vocab-card.srs-known .vocab-word::after{content:' ✓';font-size:11px;color:#16a34a;}
+.srs-badge{font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;background:#fef2f2;color:#dc2626;}
+.srs-badge.all-done{background:#dcfce7;color:#16a34a;}
+@media(min-width:700px){
+  .vocab-word{font-size:20px;}.vocab-meaning{font-size:18px;}.vocab-extra{font-size:16.5px;line-height:1.75;}
+  .vocab-tag{font-size:13px;}.srs-btn,.srs-badge{font-size:14px;}
+  .tooltip{font-size:17px;line-height:1.55;}.tooltip .tip-phrase{font-size:19px;}
+}
+</style>
+</head>
+<body class="mode-task">
+<div class="header">
+  <div class="container">
+    <h1>2025北京卷书面表达 · 想象力与创新</h1>
+    <div class="header-controls">
+      <span class="header-sub">Q40–44</span>
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="task" onclick="setMode('task')">① 题目</button>
+        <button class="mode-step" data-mode="answer" onclick="setMode('answer')">② 答案</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+<div class="container">
+
+<!-- Section I: Reading comprehension + response -->
+<div class="section">
+  <div class="section-title">第一节（共4题，满分12分）</div>
+  <div class="section-desc">阅读下面短文，根据题目要求用英文回答问题。</div>
+
+  <div class="reading-passage">
+    <p>There's something magical about the way <span class="tip" data-tip="imagination|想象力｜imagine v. 想象 → imagination n. 想象力｜something magical about the way imagination works = 想象力运作的方式有某种神奇之处">imagination</span> works. Around the world, kids are using imagination in ways that were once only found in science fiction.</p>
+    <p>Take the story of Mark Lee. He loved biking around his neighbourhood but grew upset seeing that many plastic bottles littered the parks and sidewalks. Instead of simply complaining, he decided to do something about it. Using an old 3D printer, Mark started <span class="tip" data-tip="experimenting|实验，尝试｜experiment v./n. 实验 → experimenting 现在分词｜started experimenting = 开始做实验/尝试">experimenting</span>. He melted (溶化) plastic bottles down and tried shaping them into small bricks. At first, everything went wrong — the plastic broke, the printer jammed, and the pieces didn't fit together. Friends laughed a little, and even Mark's parents thought he should just give up.</p>
+    <p>But Mark had a different idea. He redesigned the bricks to lock together like puzzle (拼图) pieces and <span class="tip" data-tip="adjusted|调整｜adjust v. 调整，适应 → adjusted 过去式｜adjusted the heating temperature carefully = 仔细调整了加热温度">adjusted</span> the heating temperature carefully. After months of <span class="tip" data-tip="trial and error|反复试验｜trial 试验 + error 错误 → 反复尝试、不断纠错的过程｜after months of trial and error = 经过数月的反复试验">trial and error</span>, he succeeded. With a little help from his school and the local community centre, Mark used his bricks to build a small bike <span class="tip" data-tip="shelter|遮蔽处，庇护所｜shelter n. 遮蔽处，避难所；v. 庇护｜a small bike shelter = 一个小型自行车棚">shelter</span> for his neighbourhood.</p>
+    <p>And he's not alone. Thirteen-year-old Sally Carter loved reading fantasy books. Inspired by magical maps in her stories, she wondered: what if we could build a real-world app that helps people explore hidden places in their own cities? She gathered friends, learned some basic <span class="tip" data-tip="programming|编程｜program n. 程序 → programming n. 编程｜learned some basic programming = 学了一些基础编程">programming</span>, and together they created an app that maps small local parks and gardens few people know about. Their app quickly grew popular in town and even won a local youth <span class="tip" data-tip="innovation|创新｜innovate v. 创新 → innovation n. 创新｜a local youth innovation award = 一个地方青年创新奖">innovation</span> award.</p>
+    <p>Next time you see a young person lost in thought, don't rush to pull them back. They might just be imagining the next great idea.</p>
+  </div>
+
+  <!-- Q40 -->
+  <div class="q-item">
+    <div class="q-stem">40. What upset Mark when he was biking around his neighbourhood? <span class="q-score">2分</span></div>
+    <div class="show-btn-wrap">
+      <button class="show-btn" onclick="toggleAnswer('a40')">🔍 查看答案</button>
+    </div>
+    <div class="answer-box" id="a40">
+      <div class="ans-label">参考答案</div>
+      <div class="ans-text">He was upset seeing that many plastic bottles littered the parks and sidewalks.</div>
+      <div class="ans-note">定位第二段第二句："grew upset seeing that many plastic bottles littered the parks and sidewalks"。直接引用原文关键信息即可。</div>
+    </div>
+  </div>
+
+  <!-- Q41 -->
+  <div class="q-item">
+    <div class="q-stem">41. How does the app created by Sally and her friends help? <span class="q-score">2分</span></div>
+    <div class="show-btn-wrap">
+      <button class="show-btn" onclick="toggleAnswer('a41')">🔍 查看答案</button>
+    </div>
+    <div class="answer-box" id="a41">
+      <div class="ans-label">参考答案</div>
+      <div class="ans-text">It helps people explore hidden places / maps small local parks and gardens few people know about.</div>
+      <div class="ans-note">定位第四段："an app that maps small local parks and gardens few people know about"以及前文"helps people explore hidden places in their own cities"。两种表述均可。</div>
+    </div>
+  </div>
+
+  <!-- Q42 -->
+  <div class="q-item">
+    <div class="q-stem">42. Please decide which part is false in the following statement, then underline it and explain why. <span class="q-score">3分</span></div>
+    <div class="q-stem" style="font-weight:400;font-style:italic;color:var(--text-secondary);margin-top:4px;">"With encouragement from his friends and parents, Mark built a small bike shelter for his neighbourhood after months of trial and error."</div>
+    <div class="show-btn-wrap">
+      <button class="show-btn" onclick="toggleAnswer('a42')">🔍 查看答案</button>
+    </div>
+    <div class="answer-box" id="a42">
+      <div class="ans-label">参考答案</div>
+      <div class="ans-text">下划线标注：<span class="underline-key">encouragement from his friends and parents</span></div>
+      <div class="ans-note">原文说朋友笑话他（"Friends laughed a little"），父母觉得他应该放弃（"even Mark's parents thought he should just give up"）。实际帮助他的是学校和社区中心（"With a little help from his school and the local community centre"）。因此"encouragement from his friends and parents"是错误的。</div>
+    </div>
+  </div>
+
+  <!-- Q43 -->
+  <div class="q-item">
+    <div class="q-stem">43. How can you put your imagination into practice as Mark and Sally did? (In about 40 words) <span class="q-score">5分</span></div>
+    <div class="show-btn-wrap">
+      <button class="show-btn" onclick="toggleAnswer('a43')">🔍 查看答案</button>
+    </div>
+    <div class="answer-box" id="a43">
+      <div class="ans-label">参考答案（开放性，言之有理即可）</div>
+      <div class="ans-text">I would use my imagination to address a real problem in my community. For example, I could design an interactive map of local recycling points using basic coding skills, making it easier for residents to sort and recycle their waste properly.</div>
+      <div class="ans-note">
+        <b>评分要点（5分）：</b><br>
+        ① 提出自己如何将想象力付诸实践（2分）<br>
+        ② 举具体例子说明（2分）<br>
+        ③ 语言表达准确流畅（1分）<br>
+        <b>写作建议：</b>回应文中两个案例（解决实际问题+运用技术手段），结合自身经历，约40词。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section II: Letter writing -->
+<div class="letter-section">
+  <div class="section-title">第二节（满分20分）</div>
+
+  <div class="letter-task">
+    <b>写作任务：</b>假设你是红星中学高三学生李华。联合国正面向全球青少年开展倡议征集活动。你的外国好友Jim打算参加，为此发来邮件，就倡议内容咨询你的建议。请你用英文给他回复，内容包括：<br><br>
+    <b>（1）</b>提出的建议<br>
+    <b>（2）</b>建议的理由<br><br>
+    <b>提示词：</b>倡议 proposal<br>
+    <b>要求：</b>词数100左右。
+  </div>
+
+  <div class="show-btn-wrap" style="margin-bottom:4px;">
+    <button class="show-model-btn" onclick="toggleModel()">查看范文</button>
+  </div>
+
+  <div class="model-letter" id="modelLetter">
+    <div class="letter-p">Dear Jim,</div>
+    <div class="letter-p indent">I'm <span class="letter-anno" data-note="thrilled = 非常高兴，比 happy/glad 更高级">thrilled</span> to hear that you're planning to submit a <span class="tip" data-tip="proposal|提案，建议书｜propose v. 提议 → proposal n. 提案/建议书｜submit a proposal = 提交一份提案">proposal</span> to the United Nations youth <span class="tip" data-tip="initiative|倡议，主动性｜initiate v. 发起 → initiative n. 倡议/主动性｜the United Nations youth initiative = 联合国青年倡议活动">initiative</span>. Here's my suggestion.</div>
+    <div class="letter-p indent">I'd recommend <span class="letter-anno" data-note="recommend proposing = 建议提出…，recommend + doing 结构">proposing a global youth environmental action network</span>. The idea is to connect teenagers from different countries to work together on local environmental projects, such as <span class="letter-anno" data-note="列举具体项目，增强说服力">community clean-ups, tree planting, and waste reduction campaigns</span>. The reason I suggest this topic is that environmental protection is a shared challenge that requires global cooperation, and young people have the energy and creativity to make a real difference. Moreover, such a network would <span class="letter-anno" data-note="promote cross-cultural understanding = 促进跨文化理解，高分表达">promote cross-cultural understanding</span> while <span class="tip" data-tip="tackling|处理，解决｜tackle v. 处理，应对（难题）→ tackling 现在分词｜tackling one of the world's most pressing issues = 解决世界上最紧迫的问题之一">tackling</span> one of the world's most pressing issues.</div>
+    <div class="letter-p indent">I hope this helps! Best of luck with your proposal.</div>
+    <div class="letter-p" style="margin-top:8px;">Yours,<br>Li Hua</div>
+  </div>
+
+  <div class="scoring-guide">
+    <b>评分要点（20分）：</b><br>
+    <b>内容（8分）：</b>明确提出建议（3分），给出充分理由（3分），开头/结尾得体（2分）。<br>
+    <b>语言（8分）：</b>词汇多样（initiative / proposal / tackling / promote）、句式多样（I'd recommend... / The reason I suggest... / Moreover...）、语法准确。<br>
+    <b>格式（4分）：</b>书信格式完整（Dear Jim 开头，Yours 署名），段落清晰，词数100词左右。
+  </div>
+</div>
+
+<!-- Vocab panel -->
+<div class="panel" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')">
+    <span>重点词汇（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="vocab-list">
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('imagination')">imagination</span>
+          <span class="vocab-meaning">想象力</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">imagine v. 想象 → imagination n. 想象力。There's something magical about the way <em>imagination</em> works. = 想象力运作的方式有某种神奇之处。<br><em>imagination</em> runs wild 想象力天马行空 &nbsp;·&nbsp; beyond <em>imagination</em> 超乎想象</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('experimenting')">experimenting</span>
+          <span class="vocab-meaning">实验，尝试</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">experiment v./n. 实验 → experimenting 现在分词。Mark started <em>experimenting</em>. = Mark开始做实验。<br>conduct an <em>experiment</em> 进行实验 &nbsp;·&nbsp; <em>experiment</em> with 尝试/试验</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('adjusted')">adjusted</span>
+          <span class="vocab-meaning">调整</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">adjust v. 调整，适应 → adjusted 过去式/过去分词 → adjustment n. 调整。<br><em>adjusted</em> the heating temperature carefully = 仔细调整了加热温度 &nbsp;·&nbsp; <em>adjust</em> to 适应… &nbsp;·&nbsp; make an <em>adjustment</em> 做出调整</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('trial and error')">trial and error</span>
+          <span class="vocab-meaning">反复试验</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">trial 试验 + error 错误 → 通过不断尝试和纠错来找到解决方法。<br>after months of <em>trial and error</em> = 经过数月的反复试验 &nbsp;·&nbsp; learn by <em>trial and error</em> 在摸索中学习</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('shelter')">shelter</span>
+          <span class="vocab-meaning">遮蔽处，庇护所</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">shelter n. 遮蔽处，避难所；v. 庇护，遮蔽。a small bike <em>shelter</em> = 一个小型自行车棚。<br>take <em>shelter</em> from the rain 躲雨 &nbsp;·&nbsp; animal <em>shelter</em> 动物收容所 &nbsp;·&nbsp; <em>shelter</em> sb from sth 保护某人免受…</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('innovation')">innovation</span>
+          <span class="vocab-meaning">创新</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">innovate v. 创新 → innovation n. 创新 → innovative adj. 创新的。<br>a local youth <em>innovation</em> award = 一个地方青年创新奖 &nbsp;·&nbsp; technological <em>innovation</em> 技术创新 &nbsp;·&nbsp; <em>innovative</em> thinking 创新思维</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('programming')">programming</span>
+          <span class="vocab-meaning">编程</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">program n. 程序 → programming n. 编程。learned some basic <em>programming</em> = 学了一些基础编程。<br>computer <em>programming</em> 计算机编程 &nbsp;·&nbsp; <em>programming</em> language 编程语言 &nbsp;·&nbsp; learn to <em>program</em> 学编程</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('initiative')">initiative</span>
+          <span class="vocab-meaning">倡议，主动性</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">initiate v. 发起 → initiative n. 倡议/主动性。the United Nations youth <em>initiative</em> = 联合国青年倡议活动。<br>take the <em>initiative</em> 采取主动 &nbsp;·&nbsp; on one's own <em>initiative</em> 主动地 &nbsp;·&nbsp; a government <em>initiative</em> 政府倡议</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('proposal')">proposal</span>
+          <span class="vocab-meaning">提案，建议书</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">propose v. 提议 → proposal n. 提案/建议书。submit a <em>proposal</em> = 提交一份提案。<br>put forward a <em>proposal</em> 提出建议 &nbsp;·&nbsp; accept/reject a <em>proposal</em> 接受/拒绝提案 &nbsp;·&nbsp; a research <em>proposal</em> 研究计划书</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('tackling')">tackling</span>
+          <span class="vocab-meaning">处理，解决</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">tackle v. 处理，应对（难题）→ tackling 现在分词。<em>tackling</em> one of the world's most pressing issues = 解决世界上最紧迫的问题之一。<br><em>tackle</em> a problem 处理问题 &nbsp;·&nbsp; <em>tackle</em> challenges 应对挑战</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+const THEMES=['yellow','green'];
+const THEME_LABELS={yellow:'📄 书本黄',green:'🌿 护眼绿'};
+let themeIdx=parseInt(localStorage.getItem('theme')||'0');
+function applyTheme(){document.body.classList.remove('theme-yellow','theme-green');const t=THEMES[themeIdx%THEMES.length];document.body.classList.add('theme-'+t);const btn=document.getElementById('theme-btn');if(btn)btn.textContent=THEME_LABELS[t];}
+function cycleTheme(){themeIdx=(themeIdx+1)%THEMES.length;localStorage.setItem('theme',themeIdx);applyTheme();}
+applyTheme();
+
+function setMode(mode){
+  document.body.classList.remove('mode-task','mode-answer');
+  document.body.classList.add('mode-'+mode);
+  document.querySelectorAll('.mode-step').forEach(btn=>btn.classList.toggle('active',btn.dataset.mode===mode));
+  if(mode==='answer'){
+    document.querySelectorAll('.answer-box').forEach(b=>b.classList.add('open'));
+    document.getElementById('modelLetter').classList.add('open');
+  }else{
+    document.querySelectorAll('.answer-box').forEach(b=>b.classList.remove('open'));
+    document.getElementById('modelLetter').classList.remove('open');
+  }
+}
+
+function toggleAnswer(id){document.getElementById(id).classList.toggle('open');const btn=event.target;btn.textContent=document.getElementById(id).classList.contains('open')?'收起答案':'🔍 查看答案';}
+
+let modelOpen=false;
+function toggleModel(){
+  modelOpen=!modelOpen;
+  const el=document.getElementById('modelLetter');
+  if(modelOpen){el.classList.add('open');event.target.textContent='收起范文';}
+  else{el.classList.remove('open');event.target.textContent='查看范文';}
+}
+function togglePanel(id){document.getElementById(id).classList.toggle('open');}
+let enPlayer=null;
+function speakWord(word){
+  if(enPlayer){enPlayer.pause();enPlayer=null;}
+  const slug='en-word-'+word.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const src='audio/2025北京卷-书面表达/'+slug+'.mp3';
+  enPlayer=new Audio(src);
+  enPlayer.onerror=function(){const u=new SpeechSynthesisUtterance(word);const vs=speechSynthesis.getVoices();u.voice=vs.find(v=>v.lang==='en-GB')||vs.find(v=>v.lang.startsWith('en'))||vs[0];u.rate=0.8;speechSynthesis.speak(u);};
+  enPlayer.play();
+}
+function vocabClick(phrase){speakWord(phrase);}
+const SRS_PREFIX='srs_beijing_2025_writing_';
+const SRS_INTERVALS=[1,3,7,14,30];
+function srsLoad(w){const r=localStorage.getItem(SRS_PREFIX+w);return r?JSON.parse(r):null;}
+function srsSave(w,knew){const s=srsLoad(w)||{streak:0};if(knew){s.streak=(s.streak||0)+1;s.interval=SRS_INTERVALS[Math.min(s.streak-1,SRS_INTERVALS.length-1)];}else{s.streak=0;s.interval=1;}s.nextReview=Date.now()+s.interval*86400000;localStorage.setItem(SRS_PREFIX+w,JSON.stringify(s));return s;}
+function srsIsDue(s){return!s||Date.now()>=s.nextReview;}
+function srsUpdateCard(card){const s=srsLoad(card.dataset.srsWord);card.classList.remove('srs-due','srs-known');if(!s)return;card.classList.add(srsIsDue(s)?'srs-due':'srs-known');}
+function srsUpdateBadge(){const badge=document.getElementById('srs-badge');if(!badge)return;const cards=document.querySelectorAll('.vocab-card[data-srs-word]');let due=0;cards.forEach(c=>{if(srsIsDue(srsLoad(c.dataset.srsWord)))due++;});if(due===0){badge.textContent='全掌握 ✓';badge.className='srs-badge all-done';}else{badge.textContent=due+'个待复习';badge.className='srs-badge';}}
+function srsClick(word,knew,btn){srsSave(word,knew);const card=btn.closest('.vocab-card');srsUpdateCard(card);srsUpdateBadge();btn.style.opacity='0.4';setTimeout(()=>btn.style.opacity='',600);}
+function srsInit(){document.querySelectorAll('.vocab-card').forEach(card=>{const wordEl=card.querySelector('.vocab-word');if(!wordEl)return;const word=wordEl.textContent.trim();card.dataset.srsWord=word;const btns=document.createElement('div');btns.className='srs-btns';const esc=word.replace(/\\/g,'\\\\').replace(/'/g,"\\'");btns.innerHTML='<button class="srs-btn srs-btn-know" onclick="srsClick(\''+esc+'\',true,this)">认识 ✓</button>'+'<button class="srs-btn srs-btn-forget" onclick="srsClick(\''+esc+'\',false,this)">还不会 ✗</button>';card.querySelector('.vocab-card-head').appendChild(btns);srsUpdateCard(card);});srsUpdateBadge();}
+srsInit();
+/* ── Tooltip ── */
+let tooltipEl=null;
+function showTooltip(tipEl){
+  hideTooltip();
+  const raw=tipEl.getAttribute('data-tip');
+  const[phrase,...rest]=raw.split('|');
+  const explain=rest.join('|');
+  const parts=explain.split('｜');
+  tooltipEl=document.createElement('div');
+  tooltipEl.className='tooltip';
+  let html='<div class="tip-phrase">'+phrase+' <span class="tip-speak" onclick="speakWord(\''+phrase.replace(/'/g,"\\'")+'\')">🔊</span></div>';
+  parts.forEach(p=>{html+='<div>'+p+'</div>';});
+  tooltipEl.innerHTML=html;
+  document.body.appendChild(tooltipEl);
+  speakWord(phrase);
+  const tr=tipEl.getBoundingClientRect();
+  const tt=tooltipEl.getBoundingClientRect();
+  let left=tr.left+tr.width/2-tt.width/2;
+  if(left<4)left=4;if(left+tt.width>window.innerWidth-4)left=window.innerWidth-4-tt.width;
+  let top=tr.top-tt.height-8;
+  if(top<4){top=tr.bottom+8;tooltipEl.classList.add('below');}
+  tooltipEl.style.left=left+'px';tooltipEl.style.top=top+'px';
+  const arrowLeft=tr.left+tr.width/2-left;
+  tooltipEl.style.setProperty('--arrow-left',arrowLeft+'px');
+}
+function hideTooltip(){if(tooltipEl){tooltipEl.remove();tooltipEl=null;}}
+document.addEventListener('click',function(e){
+  const tip=e.target.closest('.tip');
+  if(tip){e.stopPropagation();showTooltip(tip);return;}
+  hideTooltip();
+});
+</script>
+</body>
+</html>

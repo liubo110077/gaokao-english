@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2024北京卷C篇精读 · The Simulation Hypothesis</title>
+<style>
+:root{--bg:#fafaf8;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;--accent:#2563eb;--accent-light:#dbeafe;--complex-bg:#f0f6fc;--border:#e2e2e0;--card-bg:#fff;--hover-bg:#f5f5f4;--shadow:0 1px 3px rgba(0,0,0,.08);--radius:6px;}
+.theme-yellow{--bg:#f5f0e8;--card-bg:#faf6ee;--border:#ddd5bf;--complex-bg:#ece4d4;--hover-bg:#ede7d8;--accent-light:#fde8b8;}
+.theme-green{--bg:#edecea;--card-bg:#f3f2f0;--border:#d6d5d0;--complex-bg:#e5e4e0;--hover-bg:#e8e7e3;--accent-light:#dddcd6;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:60px;}
+.container{max-width:min(1100px,88vw);margin:0 auto;padding:0 20px;}
+.header{background:var(--card-bg);border-bottom:1px solid var(--border);padding:16px 0;position:sticky;top:0;z-index:100;}
+.header .container{display:flex;align-items:center;flex-wrap:wrap;gap:10px;}
+.header h1{font-size:16px;font-weight:600;flex:1;min-width:200px;}
+.header-sub{font-size:12px;color:var(--accent);font-weight:500;background:var(--accent-light);padding:2px 8px;border-radius:10px;}
+.header-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card-bg);color:var(--text);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.mode-steps{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.mode-step{padding:6px 12px;border:none;background:var(--card-bg);color:var(--text-secondary);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.mode-step+.mode-step{border-left:1px solid var(--border);}
+.mode-step.active{background:var(--accent);color:#fff;}
+.mode-step:hover:not(.active){background:var(--accent-light);}
+.passage{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:20px;padding:28px 32px;}
+.passage-title{text-align:center;font-family:Georgia,"Times New Roman",serif;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:20px;color:var(--text-secondary);}
+.paragraph{margin-bottom:4px;text-indent:2em;}
+.sentence{font-family:Georgia,"Times New Roman",serif;font-size:18px;line-height:1.75;position:relative;transition:background .2s;border-radius:3px;cursor:pointer;}
+.sentence:hover{background:var(--hover-bg);}
+.sentence.playing{background:var(--complex-bg);border-radius:3px;}
+.sentence.complex{border-bottom:1.5px dashed #93c5fd;}
+.sentence.complex.playing{background:var(--complex-bg);}
+.tip{border-bottom:1.5px dashed var(--accent);cursor:pointer;position:relative;transition:background .15s;}
+.tip:hover{background:var(--accent-light);}
+.tip.tip-flash{outline:2px solid var(--accent);border-radius:2px;animation:tipFlash 1.6s ease-out forwards;}
+@keyframes tipFlash{0%{background:var(--accent);color:#fff;}40%{background:var(--accent-light);color:inherit;}100%{background:transparent;}}
+.tooltip{position:fixed;z-index:200;background:var(--text);color:#fff;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;line-height:1.5;padding:8px 14px;border-radius:8px;max-width:min(520px,calc(100vw - 16px));width:max-content;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:auto;animation:tipIn .15s ease-out;}
+.tooltip::after{content:'';position:absolute;bottom:-6px;left:var(--arrow-left,50%);transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text);}
+.tooltip.below::after{bottom:auto;top:-6px;border-top:none;border-bottom:6px solid var(--text);}
+.tooltip .tip-phrase{font-family:Georgia,serif;font-weight:600;color:#93c5fd;margin-bottom:2px;}
+.tooltip .tip-speak{display:inline-block;cursor:pointer;margin-left:6px;font-size:12px;opacity:.7;vertical-align:middle;}
+.tooltip .tip-speak:hover{opacity:1;}
+.level-badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:11px;font-weight:600;margin-left:6px;vertical-align:middle;font-family:-apple-system,"PingFang SC",sans-serif;}
+.badge-超纲{background:rgba(239,68,68,.25);color:#fca5a5;}
+.badge-拓展{background:rgba(251,146,60,.2);color:#fdba74;}
+.badge-选必{background:rgba(96,165,250,.2);color:#93c5fd;}
+.tooltip .tip-zh-play{display:block;margin-top:6px;padding:4px 10px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:4px;color:#93c5fd;font-size:12px;cursor:pointer;text-align:center;}
+.tooltip .tip-zh-play:hover{background:rgba(255,255,255,.25);}
+@keyframes tipIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+.analysis{display:none;margin:8px 0 12px 0;padding:12px 16px;background:#f8f9fa;border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;color:var(--text-secondary);line-height:1.7;text-indent:0;}
+.analysis.open{display:block;}
+.analysis p{margin-bottom:4px;}
+.analysis b{color:var(--text);font-size:13px;}
+.translation-inline{display:none;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;color:var(--text-muted);margin:2px 0 6px 0;text-indent:0;}
+body.compare-mode .translation-inline,body.mode-annotate .translation-inline{display:block;}
+.panel{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:16px;overflow:hidden;}
+.panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;cursor:pointer;user-select:none;font-weight:600;font-size:15px;border-bottom:1px solid transparent;transition:border-color .2s;}
+.panel-header:hover{color:var(--accent);}
+.panel-header .arrow{transition:transform .2s;font-size:12px;color:var(--text-muted);}
+.panel.open .panel-header{border-bottom-color:var(--border);}
+.panel.open .panel-header .arrow{transform:rotate(180deg);}
+.panel-body{display:none;padding:16px 24px;}
+.panel.open .panel-body{display:block;}
+.vocab-card{border-bottom:1px solid #f0f0f0;padding:12px 0;}
+.vocab-card:last-child{border-bottom:none;}
+.vocab-card-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px;}
+.vocab-word{font-family:Georgia,serif;font-weight:600;color:var(--accent);cursor:pointer;font-size:15px;}
+.vocab-word:hover{text-decoration:underline;}
+.vocab-meaning{font-size:14px;color:var(--text);}
+.vocab-extra{font-size:13px;color:var(--text-secondary);margin-top:2px;}
+.vocab-tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:3px;background:#fef3c7;color:#92400e;vertical-align:middle;}
+.vocab-tag.tag-core{background:#dcfce7;color:#166534;}
+.vocab-tag.tag-exam{background:#dbeafe;color:#1e40af;}
+.vocab-tag.tag-beyond{background:#fef3c7;color:#92400e;}
+.vocab-tag.tag-extend{background:#ffedd5;color:#c2410c;}
+.vocab-detail{display:none;margin-top:8px;padding:10px 14px;background:#f8f9fa;border-radius:var(--radius);font-size:13.5px;line-height:1.7;}
+.vocab-detail.open{display:block;}
+.vocab-detail .vd-example{color:var(--text-secondary);padding-left:16px;}
+.vocab-detail .vd-example em{color:var(--text);font-style:normal;font-weight:600;}
+.vocab-expand{font-size:12px;color:var(--accent);cursor:pointer;border:none;background:none;padding:0;margin-left:8px;}
+.vocab-expand:hover{text-decoration:underline;}
+.srs-btns{display:flex;gap:5px;margin-left:auto;}
+.srs-btn{font-size:11px;padding:2px 7px;border-radius:10px;border:1.5px solid;cursor:pointer;transition:all .15s;background:none;white-space:nowrap;}
+.srs-btn-know{border-color:#16a34a;color:#16a34a;}
+.srs-btn-know:hover{background:#dcfce7;}
+.srs-btn-forget{border-color:#dc2626;color:#dc2626;}
+.srs-btn-forget:hover{background:#fee2e2;}
+.srs-badge{font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;background:#fef2f2;color:#dc2626;}
+.srs-badge.all-done{background:#dcfce7;color:#16a34a;}
+.analysis-play{float:right;margin-left:8px;background:none;border:1px solid var(--border);border-radius:4px;font-size:12px;padding:2px 8px;cursor:pointer;color:var(--accent);transition:all .15s;}
+.analysis-play:hover{background:var(--accent-light);border-color:var(--accent);}
+.analysis-play.playing{background:var(--accent);color:#fff;border-color:var(--accent);}
+.question-item{padding:16px 24px;border-bottom:1px solid #f0f0f0;}
+.question-item:last-child{border-bottom:none;}
+.question-stem{font-weight:600;font-size:15px;margin-bottom:8px;}
+.question-options{display:grid;grid-template-columns:1fr;gap:4px;font-size:14px;margin-bottom:8px;}
+.question-option{padding:2px 0;}
+.show-answer-btn{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--accent);cursor:pointer;background:none;border:none;padding:4px 0;}
+.show-answer-btn:hover{text-decoration:underline;}
+.question-analysis{display:none;margin-top:10px;padding:12px 16px;background:#f8f9fa;border-radius:var(--radius);font-size:14px;color:var(--text-secondary);line-height:1.7;}
+.question-analysis.open{display:block;}
+.question-analysis .answer-line{font-weight:700;color:#16a34a;margin-bottom:6px;font-size:15px;}
+.question-analysis .locate{background:#fef9c3;padding:6px 10px;border-radius:4px;margin:6px 0;font-family:Georgia,serif;font-style:italic;font-size:14px;color:var(--text);}
+.option-list{margin-top:10px;display:flex;flex-direction:column;gap:2px;}
+.option-item{padding:3px 0;font-size:13.5px;line-height:1.5;}
+.option-item .opt-letter{font-weight:700;}
+.option-item.correct .opt-mark{color:#15803d;font-weight:700;}
+.option-item.wrong .opt-mark{color:#b91c1c;font-weight:700;}
+.option-item .opt-why{color:#888;font-size:12.5px;margin-left:4px;}
+.quiz-score{text-align:center;padding:16px;font-size:16px;font-weight:600;color:var(--accent);display:none;}
+.quiz-score.show{display:block;}
+#playbar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:#1a1a1a;color:#fff;display:flex;align-items:center;justify-content:center;gap:16px;padding:10px 20px;height:52px;font-size:14px;box-shadow:0 -2px 12px rgba(0,0,0,.2);}
+#playbar button{background:none;border:none;color:#fff;font-size:18px;cursor:pointer;padding:4px 8px;border-radius:4px;line-height:1;transition:background .15s;}
+#playbar button:hover{background:rgba(255,255,255,.15);}
+#pb-play{font-size:22px;}
+#pb-counter{font-size:13px;color:#aaa;min-width:52px;text-align:center;}
+#pb-speed{background:#333;border:none;color:#fff;font-size:13px;padding:3px 6px;border-radius:4px;cursor:pointer;}
+body.mode-raw .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-raw .tip:hover{background:none;}
+body.mode-raw .analysis,body.mode-raw .translation-inline,body.mode-raw .panel{display:none!important;}
+body.mode-raw .sentence.complex{border-bottom:none;}
+body.mode-raw .sentence{cursor:default;}
+body.mode-raw .sentence:hover{background:none;}
+body.mode-quiz .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-quiz .tip:hover{background:none;}
+body.mode-quiz .analysis,body.mode-quiz .translation-inline,body.mode-quiz #vocabPanel,body.mode-quiz #reviewPanel,body.mode-quiz #tipPanel,body.mode-quiz #writingPanel,body.mode-quiz #playbar{display:none!important;}
+body.mode-quiz .sentence.complex{border-bottom:none;cursor:default;}
+body.mode-quiz .sentence{cursor:default;}
+body.mode-quiz .sentence:hover{background:none;}
+body.mode-annotate .sentence.complex{border-bottom:none;}
+body.mode-annotate .sentence{cursor:default;}
+body.mode-annotate .sentence:hover{background:none;}
+body.mode-quiz #questionsPanel{display:block;}
+body.mode-quiz #questionsPanel .panel-body{display:block;}
+body.mode-quiz .question-analysis{display:none!important;}
+body.mode-quiz .show-answer-btn{display:none;}
+body.mode-quiz .question-option{cursor:pointer;padding:6px 10px;border-radius:var(--radius);border:1.5px solid transparent;transition:all .15s;}
+body.mode-quiz .question-option:hover{background:var(--accent-light);}
+body.mode-quiz .question-option.selected{border-color:var(--accent);background:var(--accent-light);}
+body.mode-quiz .question-option.correct{border-color:#16a34a;background:#dcfce7;}
+body.mode-quiz .question-option.wrong{border-color:#dc2626;background:#fee2e2;}
+.locate[data-goto]{cursor:pointer;transition:background .15s;}
+.locate[data-goto]:hover{background:#fde68a;}
+.locate[data-goto]::after{content:' ↗ 跳到原文';font-size:11px;color:var(--accent);font-family:-apple-system,sans-serif;font-style:normal;}
+.sentence.highlighted{background:#fef08a;border-radius:3px;}
+sup.ann-sup{display:none;font-size:0.6em;color:var(--accent);font-weight:700;vertical-align:super;line-height:0;margin-left:2px;font-family:system-ui,sans-serif;pointer-events:none;}
+body.mode-annotate sup.ann-sup{display:inline;}
+.para-ann{display:none;margin:16px 0 28px 0;font-family:-apple-system,"PingFang SC",sans-serif;font-size:15px;color:#333;text-indent:0;}
+body.mode-annotate .para-ann{display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:16px 18px;align-items:start;}
+.pan-row{background:#fff;border:1px solid #ece8e0;border-radius:12px;padding:16px 20px 18px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.pan-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.pan-num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
+.pan-en{font-family:Georgia,serif;font-weight:700;font-size:18px;color:#1a1a1a;}
+.pan-cn{color:var(--accent);font-weight:600;font-size:15px;}
+.pan-lv{font-size:12px;font-weight:600;padding:2px 8px;border-radius:4px;line-height:1.4;}
+.lv-超纲{background:#fee2e2;color:#b91c1c;}
+.pan-det{margin:12px 0 0 32px;color:#666;font-size:14px;line-height:1.85;}
+.pan-det div{position:relative;padding-left:12px;}
+.pan-det div+div{margin-top:8px;}
+.pan-det div::before{content:'';position:absolute;left:0;top:0.8em;width:4px;height:4px;border-radius:50%;background:#c9c3b8;}
+body.mode-quiz .para-ann,body.mode-raw .para-ann{display:none!important;}
+body.mode-quiz sup.ann-sup,body.mode-raw sup.ann-sup{display:none!important;}
+.sb-block{display:none;}
+body.mode-annotate .sb-block{display:block;margin:4px 0 28px;padding:16px 20px 18px;background:#f8f9fa;border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;font-family:-apple-system,"PingFang SC",sans-serif;text-indent:0;}
+body.mode-annotate .analysis{display:none!important;}
+body.mode-quiz .sb-block,body.mode-raw .sb-block{display:none!important;}
+.sb-title{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.08em;margin-bottom:12px;}
+.sb-sent{font-family:Georgia,serif;font-size:18px;line-height:2.3;color:#1a1a1a;background:#fff;border:1px solid #ece8e0;border-radius:10px;padding:14px 18px;}
+.sb-chip{display:inline-block;font-family:-apple-system,"PingFang SC",sans-serif;font-size:11px;font-weight:700;line-height:1;padding:4px 7px;border-radius:999px;margin-right:5px;vertical-align:3px;}
+.sb-core{font-weight:700;border-bottom:2.5px solid var(--accent);}
+.sb-core-chip{background:var(--accent);color:#fff;}
+.sb-ins{color:#9a9a9a;background:#eeebe4;border-radius:4px;padding:2px 4px;}
+.sb-ins-chip{background:#e4e0d8;color:#777;}
+.sb-rest{border-bottom:2.5px solid #4caf7a;}
+.sb-rest-chip{background:#4caf7a;color:#fff;}
+.sb-steps{margin-top:14px;display:grid;gap:10px;}
+.sb-step{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;font-size:15px;line-height:1.75;color:#333;}
+.sb-step-n{width:24px;height:24px;border-radius:50%;background:#1a1a1a;color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-top:2px;}
+.sb-step em{font-style:normal;font-family:Georgia,serif;color:#111;background:#fff;border:1px solid #ece8e0;padding:0 5px;border-radius:4px;}
+.sb-step .arrow{color:#aaa;margin:0 4px;}
+.sb-tip{margin-top:14px;font-size:14px;color:#8a6d1f;background:#fdf6e3;border-radius:8px;padding:9px 14px;}
+.container{max-width:1400px;width:100%;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right));}
+.header{padding-top:calc(16px + env(safe-area-inset-top));}
+body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
+#playbar{height:calc(52px + env(safe-area-inset-bottom));padding-bottom:calc(10px + env(safe-area-inset-bottom));padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right));}
+.passage{padding:24px 24px;}
+.tooltip .tip-scroll{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
+@media(min-width:700px){
+  .header h1{font-size:19px;}.passage-title{font-size:19px;}.header-sub{font-size:14px;}
+  .sentence{font-size:23px;line-height:1.8;}.translation-inline{font-size:18px!important;line-height:1.8;}
+  .analysis{font-size:18px;line-height:1.8;}.analysis b{font-size:16px;}.panel-header{font-size:18px;}
+  .vocab-word{font-size:20px;}.vocab-meaning{font-size:18px;}.vocab-extra{font-size:16.5px;line-height:1.7;}
+  .vocab-detail,.vd-example{font-size:16px;}.vocab-tag,.level-badge{font-size:13px;}
+  .vocab-expand,.srs-btn,.srs-badge{font-size:14px;}.question-stem{font-size:19px;}
+  .question-options{font-size:18px;}.show-answer-btn{font-size:15.5px;}
+  .question-analysis .answer-line{font-size:17px;}.option-item{font-size:16.5px;}.option-item .opt-why{font-size:15px;}
+  .tooltip{font-size:17px;line-height:1.55;}.tooltip .tip-phrase{font-size:19px;}
+  #pb-counter,#pb-speed{font-size:15px;}
+}
+@media(max-width:600px){
+  .passage{padding:18px 14px;}.sentence{font-size:16px;}
+  .panel-header,.question-item{padding-left:16px;padding-right:16px;}.panel-body{padding:12px 16px;}
+}
+</style>
+</head>
+<body class="mode-study">
+
+<div class="header">
+  <div class="container">
+    <h1>2024北京卷C篇精读 · The Simulation Hypothesis</h1>
+    <div class="header-controls">
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="study" onclick="setMode('study')">① 精读</button>
+        <button class="mode-step" data-mode="quiz" onclick="setMode('quiz')">② 做题</button>
+        <button class="mode-step" data-mode="raw" onclick="setMode('raw')">③ 原文</button>
+        <button class="mode-step" data-mode="annotate" onclick="setMode('annotate')">④ 课本</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()" title="切换护眼色">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="passage" id="passage">
+  <div class="passage-title">C</div>
+
+  <!-- ── Paragraph 1 ── -->
+  <div class="paragraph" id="para-1">
+    <span class="sentence" data-idx="0">The <span class="tip" data-tip="notion|概念，观念，想法｜notion = 一种想法或观念（比 idea 稍正式）。The notion that... = ...这个想法/观念｜搭配：have a notion of 对...有概念，the notion that... ...的观念" data-level="选必">notion</span> that we live in someone else's video game is <span class="tip" data-tip="irresistible|无法抗拒的，极具吸引力的｜ir- = 不，resist = 抵抗，-ible = 能...的。irresistible = 无法抵抗的，让人忍不住想要的。irresistible to many = 对很多人来说极有吸引力｜搭配：an irresistible temptation 不可抗拒的诱惑" data-level="拓展">irresistible</span> to many.</span>
+    <span class="sentence" data-idx="1">Searching the term "<span class="tip" data-tip="simulation hypothesis|模拟假说｜simulate = 模拟（用电脑仿真），simulation = 模拟。hypothesis = 假说/假设（hypo = 下面，thesis = 论点）。simulation hypothesis = 一种假说：认为我们的宇宙是电脑模拟出来的｜搭配：test a hypothesis 检验假说" data-level="拓展">simulation hypothesis</span>" returns numerous results that debate whether the universe is a computer <span class="tip" data-tip="simulation|模拟，仿真｜simulate = 模拟。simulation = 用电脑模拟出来的东西/过程。a computer simulation = 电脑模拟（用程序模仿现实）｜搭配：run a simulation 运行模拟，flight simulation 飞行模拟" data-level="拓展">simulation</span> &mdash; a concept that some scientists actually take seriously.</span>
+    <span class="sentence" data-idx="2">Unfortunately, this is not a scientific question.</span>
+    <span class="sentence" data-idx="3">We will probably never know whether it's true.</span>
+    <span class="sentence complex" data-idx="4">We can, instead, use this idea to <span class="tip" data-tip="advance|推进，促进｜advance = 前进，也表示"推进、促进"（使某事向前发展）。advance scientific knowledge = 推进科学知识的发展｜搭配：advance a theory 推进一个理论，technological advance 技术进步" data-level="选必">advance</span> scientific knowledge.</span>
+    <div class="analysis" id="analysis-4">
+      <p><b>第一段的逻辑：</b>作者先说模拟假说很有吸引力，然后说它不是科学问题、不可证明，但接着话锋一转（instead）给出建议：我们可以用这个想法来推进科学知识。</p>
+      <p><b>与28题的关系：</b>作者挑战（challenge）了模拟假说的科学性，目的不是要否定它，而是提出建议（give a suggestion）——用它来推进科学。</p>
+    </div>
+    <div class="translation-inline">我们生活在别人的电子游戏中这一想法，对很多人来说无法抗拒。搜索"模拟假说"一词会得到大量结果，讨论宇宙是否是一个电脑模拟——这个概念一些科学家还真的认真对待。不幸的是，这不是一个科学问题。我们可能永远不会知道它是否为真。但我们可以用这个想法来推进科学知识。</div>
+  </div>
+
+  <!-- ── Paragraph 2 ── -->
+  <div class="paragraph" id="para-2">
+    <span class="sentence" data-idx="5">The 18th-century philosopher Kant argued that the universe ultimately consists of <span class="tip" data-tip="things-in-themselves|物自体，事物本身｜thing = 事物，in itself = 就其本身而言。things-in-themselves = 康德哲学术语「物自体」，指独立于人的认知而存在的事物本身。康德认为我们永远无法真正认识事物本身，只能认识我们感知到的样子｜哲学术语，了解即可" data-level="超纲">things-in-themselves</span> that are <span class="tip" data-tip="unknowable|不可知的，无法认识的｜un- = 不，know = 知道，-able = 可以...的。unknowable = 不可知的、无法被认识的。things that are unknowable = 不可知的事物。这是康德哲学的核心观点｜反义：knowable 可知的" data-level="拓展">unknowable</span>.</span>
+    <span class="sentence complex" data-idx="6">While he held the <span class="tip" data-tip="notion|概念，观念，想法｜这里 held the notion = 持有...观念，认为...。While he held the notion that objective reality exists = 虽然他认为客观现实存在｜搭配：hold the view/notion that 持有...观点" data-level="选必">notion</span> that objective reality exists, he said our mind plays a necessary role in structuring and shaping our <span class="tip" data-tip="perceptions|感知，看法｜perceive = 感知、察觉。perception = 对事物的感知/看法（percept = 感知 + ion）。our perceptions = 我们对世界的感知。康德说我们的心智塑造了我们的感知｜搭配：public perception 公众认知，visual perception 视觉感知" data-level="选必">perceptions</span>.</span>
+    <div class="analysis" id="analysis-6">
+      <p><b>句子结构：</b>While 引导让步从句，主句是 he said our mind plays a necessary role in...</p>
+      <p><b>While he held the notion that...：</b>虽然他认为客观现实存在...</p>
+      <p><b>our mind plays a necessary role in structuring and shaping our perceptions：</b>我们的心智在构建和塑造我们的感知中起着必要的作用。</p>
+      <p><b>与30题的关系：</b>作者引用康德的观点来支持自己的论点（宇宙不可知），态度是赞赏的（appreciative）。</p>
+    </div>
+    <span class="sentence" data-idx="7">Modern sciences have revealed that our <span class="tip" data-tip="perceptual|感知的，知觉的｜perceive = 感知。perceptual = 与感知有关的（perception 的形容词）。our perceptual experience = 我们的感知体验（通过感官获得的对世界的体验）｜搭配：perceptual ability 感知能力" data-level="拓展">perceptual</span> experience of the world is the result of many stages of processing by sensory systems and <span class="tip" data-tip="cognitive|认知的｜cognit- = 认知（拉丁词根），cognitive = 与认知有关的。cognitive functions = 认知功能（思维、记忆、判断等大脑高级功能）｜搭配：cognitive development 认知发展，cognitive ability 认知能力" data-level="选必">cognitive</span> functions in the brain.</span>
+    <span class="sentence" data-idx="8">No one knows exactly what happens within this <span class="tip" data-tip="black box|黑箱（不知道内部运作机制的系统）｜black box = 黑箱，比喻内部运作不透明、无法看清的系统。这里指大脑是一个黑箱：感知信号进去，结果出来，但中间发生了什么我们不知道｜科技术语，常见比喻" data-level="拓展">black box</span>.</span>
+    <span class="sentence complex" data-idx="9">If <span class="tip" data-tip="empirical|实证的，经验的｜empir- = 经验、实验。empirical = 基于实验和观察的（不是靠猜测的）。empirical experience = 基于实证的经验（通过观察和实验获得的认识）｜搭配：empirical evidence 实证证据，empirical research 实证研究" data-level="拓展">empirical</span> experience fails to reveal reality, reasoning won't reveal reality either since it relies on concepts and words that are <span class="tip" data-tip="contingent on|取决于，依赖于｜contingent = 偶然的、有条件的。contingent on = 取决于/依赖于某事。reasoning relies on concepts that are contingent on our histories = 推理依赖于取决于我们历史的概念。= 推理的概念受制于我们的社会文化背景｜= dependent on, determined by" data-level="拓展">contingent on</span> our social, cultural and psychological histories.</span>
+    <div class="analysis" id="analysis-9">
+      <p><b>句子结构：</b>if A fails, B won't either since... 如果A做不到，B也做不到，因为...</p>
+      <p><b>empirical experience fails to reveal reality：</b>实证经验无法揭示真实（感官体验不能让我们看到真正的现实）。</p>
+      <p><b>reasoning won't reveal reality either：</b>推理也揭示不了真实。</p>
+      <p><b>since it relies on concepts and words that are contingent on...：</b>因为推理依赖于受制于（contingent on）我们的社会、文化、心理历史的概念和词语。</p>
+      <p><b>与29题的关系：</b>contingent on = 取决于/依赖于 = determined by。推理和概念是被我们的历史背景所决定的。</p>
+    </div>
+    <span class="sentence" data-idx="10">Again, a black box.</span>
+    <div class="translation-inline">18世纪的哲学家康德认为，宇宙最终由不可知的"物自体"构成。虽然他认为客观现实存在，但他说我们的心智在构建和塑造我们的感知中起着必要的作用。现代科学揭示，我们对世界的感知体验是大脑中感觉系统和认知功能经过多个阶段处理的结果。没有人确切知道在这个黑箱中发生了什么。如果实证经验无法揭示现实，推理也无法揭示现实，因为推理依赖于取决于我们社会、文化和心理历史的概念和词语。又是一个黑箱。</div>
+    <div class="sb-block">
+      <div class="sb-title">长难句拆解</div>
+      <div class="sb-sent">
+        <span class="sb-chip sb-rest-chip">条件</span><span class="sb-rest">If empirical experience fails to reveal reality,</span>
+        <span class="sb-chip sb-core-chip">主干</span><span class="sb-core">reasoning won't reveal reality either</span>
+        <span class="sb-chip sb-rest-chip">原因</span><span class="sb-rest">since it relies on concepts and words</span>
+        <span class="sb-chip sb-ins-chip">修饰 · 先跳过</span><span class="sb-ins">that are contingent on our social, cultural and psychological histories.</span>
+      </div>
+      <div class="sb-steps">
+        <div class="sb-step"><span class="sb-step-n">1</span><div>主干：<em>reasoning won't reveal reality either</em><span class="arrow">→</span>推理也揭示不了现实</div></div>
+        <div class="sb-step"><span class="sb-step-n">2</span><div>条件：<em>If empirical experience fails to reveal reality</em><span class="arrow">→</span>如果实证经验无法揭示现实</div></div>
+        <div class="sb-step"><span class="sb-step-n">3</span><div>原因：since 后面 + that 定从：推理依赖的概念和词语取决于社会文化心理历史</div></div>
+      </div>
+      <div class="sb-tip">💡 contingent on = determined by = 取决于、依赖于。29题的答案就在这里：B (Determined by)。</div>
+    </div>
+  </div>
+
+  <!-- ── Paragraph 3 ── -->
+  <div class="paragraph" id="para-3">
+    <span class="sentence complex" data-idx="11">So, if we accept that the universe is unknowable, we also accept we will never know if we live in a computer simulation.</span>
+    <div class="analysis" id="analysis-11">
+      <p><b>逻辑过渡：</b>这句话承上启下——既然（根据前文论证）宇宙不可知，那我们也永远不知道是否活在模拟中。接下来作者要提出转向。</p>
+    </div>
+    <span class="sentence" data-idx="12">And then, we can shift our inquiry from "Is the universe a computer simulation?" to "Can we model the universe as a computer simulation?"</span>
+    <span class="sentence" data-idx="13">Modelling reality is what we do.</span>
+    <span class="sentence complex" data-idx="14">To <span class="tip" data-tip="facilitate|促进，使...变容易｜facil = 容易（拉丁语 facilis = easy）。facilitate = 使某事变得更容易、促进。facilitate our comprehension = 帮助我们更容易理解｜搭配：facilitate communication 促进交流，facilitate learning 促进学习" data-level="选必">facilitate</span> our <span class="tip" data-tip="comprehension|理解，理解力｜comprehend = 理解（com = 完全，prehend = 抓住 → 完全抓住 → 理解）。comprehension = 理解力/理解。facilitate our comprehension = 促进我们的理解｜搭配：reading comprehension 阅读理解" data-level="选必">comprehension</span> of the world, we build models based on conceptual <span class="tip" data-tip="metaphors|隐喻，比喻｜meta = 超越，phor = 携带。metaphor = 隐喻，用一个熟悉的事物来描述另一个抽象事物。conceptual metaphors = 概念性隐喻（用熟悉概念帮助理解世界）。比如把宇宙比作钟表就是一种隐喻｜搭配：use a metaphor 使用隐喻" data-level="拓展">metaphors</span> that are familiar to us.</span>
+    <div class="analysis" id="analysis-14">
+      <p><b>句子结构：</b>To facilitate..., we build models based on... 为了促进（理解），我们建立基于...的模型。</p>
+      <p><b>conceptual metaphors that are familiar to us：</b>我们熟悉的概念隐喻——用我们已经熟悉的事物去描述/理解不熟悉的宇宙。</p>
+      <p><b>核心观点：</b>人类一直在做的事就是用"模型"来理解世界，后面会举例（钟表、粒子物理）。</p>
+    </div>
+    <span class="sentence" data-idx="15">In Newton's era, we imagined the universe as a clock.</span>
+    <span class="sentence" data-idx="16">In Einstein's, we uncovered the standard model of particle physics.</span>
+    <div class="translation-inline">所以，如果我们接受宇宙是不可知的，我们也就接受我们永远不会知道我们是否生活在电脑模拟中。接下来，我们可以把探究的问题从"宇宙是电脑模拟吗？"转变为"我们能把宇宙建模为电脑模拟吗？"为现实建模是我们一直在做的事。为了促进我们对世界的理解，我们基于自己熟悉的概念隐喻来建立模型。在牛顿时代，我们把宇宙想象成一个钟表。在爱因斯坦时代，我们发现了粒子物理的标准模型。</div>
+  </div>
+
+  <!-- ── Paragraph 4 ── -->
+  <div class="paragraph" id="para-4">
+    <span class="sentence" data-idx="17">Now that we are in the <span class="tip" data-tip="information age|信息时代｜information = 信息，age = 时代。information age = 信息时代（以计算机和互联网为标志的当代）。Now that we are in the information age = 既然我们已经进入了信息时代｜搭配：the digital age 数字时代" data-level="选必">information age</span>, we have new concepts such as the computer, information processing, virtual reality, and simulation.</span>
+    <span class="sentence" data-idx="18">Unsurprisingly, these new concepts inspire us to build new models of the universe.</span>
+    <span class="sentence" data-idx="19">Models are not the reality, however.</span>
+    <span class="sentence complex" data-idx="20">There is no point in arguing if the universe is a clock, a set of <span class="tip" data-tip="particles|粒子，微粒｜particle = 非常小的物质单位（part = 部分 + icle = 小）。a set of particles = 一组粒子。粒子物理学研究宇宙最基本的组成单元｜搭配：subatomic particles 亚原子粒子" data-level="选必">particles</span> or an output of <span class="tip" data-tip="computation|计算｜compute = 计算（电脑 computer 就是从这个词来的）。computation = 计算/运算。an output of computation = 计算的产物/输出。这里指"宇宙是一台电脑计算出来的结果"这种说法｜搭配：perform computation 进行运算" data-level="拓展">computation</span>.</span>
+    <div class="analysis" id="analysis-20">
+      <p><b>关键句（31题定位）：</b>There is no point in arguing if... 争论...是没有意义的。</p>
+      <p><b>列举三种模型：</b>a clock（钟表）、a set of particles（粒子集合）、an output of computation（计算的产物）——分别对应牛顿时代、爱因斯坦时代、信息时代的模型。</p>
+      <p><b>作者态度：</b>争论宇宙"是"什么模型没意义，因为模型都只是工具。</p>
+    </div>
+    <span class="sentence" data-idx="21">All these models are tools to deal with the unknown and to make discoveries.</span>
+    <span class="sentence" data-idx="22">And the more tools we have, the more effective and <span class="tip" data-tip="insightful|有洞察力的，富有见地的｜insight = 洞察力（in = 向内，sight = 看）。insightful = 有深刻见解的。the more insightful we can become = 我们能变得更有洞察力｜搭配：insightful analysis 有见地的分析，insightful comment 有洞察力的评论" data-level="拓展">insightful</span> we can become.</span>
+    <div class="translation-inline">既然我们已经身处信息时代，我们有了新的概念，比如计算机、信息处理、虚拟现实和模拟。毫不意外，这些新概念激励我们建立宇宙的新模型。然而，模型不是现实。争论宇宙到底是一个钟表、一组粒子还是一次计算的输出，没有任何意义。所有这些模型都是处理未知和进行发现的工具。而我们拥有的工具越多，我们就能变得越有效、越有洞察力。</div>
+    <div class="sb-block">
+      <div class="sb-title">长难句拆解</div>
+      <div class="sb-sent">
+        <span class="sb-chip sb-core-chip">没意义</span><span class="sb-core">There is no point in arguing</span>
+        <span class="sb-chip sb-rest-chip">争论什么</span><span class="sb-rest">if the universe is a clock, a set of particles or an output of computation.</span>
+      </div>
+      <div class="sb-steps">
+        <div class="sb-step"><span class="sb-step-n">1</span><div>主干：<em>There is no point in arguing</em><span class="arrow">→</span>争论没有意义</div></div>
+        <div class="sb-step"><span class="sb-step-n">2</span><div>争论什么：<em>if the universe is a clock, a set of particles or an output of computation</em><span class="arrow">→</span>宇宙到底是钟、粒子还是计算结果</div></div>
+      </div>
+      <div class="sb-tip">💡 31题的答案就藏在这里："There is no point in arguing"——我们应该停止争论宇宙是不是模拟，而是把它当工具来用。选C。</div>
+    </div>
+  </div>
+
+  <!-- ── Paragraph 5 ── -->
+  <div class="paragraph" id="para-5">
+    <span class="sentence complex" data-idx="23">It can be imagined that <span class="tip" data-tip="comparable to|与...相似的，可与...相比的｜compare = 比较。comparable = 可比较的、类似的。comparable to the process of building previous scientific models = 与以前建立科学模型的过程类似｜搭配：comparable in size 大小相当，comparable to sth 可与某物相提并论" data-level="选必">comparable to</span> the process of building previous scientific models, developing the "computer simulation" <span class="tip" data-tip="metaphor-based model|基于隐喻的模型｜metaphor = 隐喻，based = 基于...的。metaphor-based model = 以隐喻为基础构建的模型。这里指把宇宙比作电脑模拟来建立科学模型｜= model built on a metaphor">metaphor-based model</span> will also be a hugely rewarding exercise.</span>
+    <div class="analysis" id="analysis-23">
+      <p><b>结尾总结：</b>作者展望未来——就像以前建立"钟表模型""粒子模型"一样，建立"电脑模拟"隐喻模型也会非常有收获。</p>
+      <p><b>comparable to：</b>与...相似/可比较。comparable to the process of building previous scientific models = 与以前建立科学模型的过程相似。</p>
+      <p><b>hugely rewarding exercise：</b>非常有回报的实践/工作。rewarding = 有价值的、值得做的。</p>
+    </div>
+    <div class="translation-inline">可以想象，与以前建立科学模型的过程类似，发展"电脑模拟"这一基于隐喻的模型也将是一项非常有价值的工作。</div>
+  </div>
+
+</div><!-- /passage -->
+
+<!-- ══════ Vocabulary ══════ -->
+<div class="panel" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')">
+    <span>生词与短语（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="vocab-list">
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('notion')">notion</span>
+          <span class="vocab-meaning">概念，观念，想法</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>notion = 一种想法或观念（比 idea 稍正式）。nota = 标记/记号。</div>
+          <div class="vd-example">The <em>notion</em> that we live in someone else's video game is irresistible to many. （课文）</div>
+          <div class="vd-example">搭配：have a <em>notion</em> of 对...有概念，common <em>notion</em> 常见观念</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('irresistible')">irresistible</span>
+          <span class="vocab-meaning">无法抗拒的，极具吸引力的</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>ir- (= 不) + resist (抵抗) + -ible (能...的) = 无法抵抗的。</div>
+          <div class="vd-example">an <em>irresistible</em> temptation 无法抗拒的诱惑</div>
+          <div class="vd-example">反义：resistible 可以抵抗的</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('hypothesis')">hypothesis</span>
+          <span class="vocab-meaning">假说，假设</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>hypo- (= 下面、不足) + thesis (= 论点) = 还不确定的论点 = 假说、假设。复数：hypotheses。</div>
+          <div class="vd-example">搭配：test a <em>hypothesis</em> 检验假说，put forward a <em>hypothesis</em> 提出假说</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('simulation')">simulation</span>
+          <span class="vocab-meaning">模拟，仿真</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>simulate = 模拟（sim = 相似的 + ulate = 使...化）。simulation = 模拟过程或结果。</div>
+          <div class="vd-example">a computer <em>simulation</em> 电脑模拟；flight <em>simulation</em> 飞行模拟</div>
+          <div class="vd-example">动词：simulate 模拟，形容词：simulated 模拟的</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('perceptual')">perceptual</span>
+          <span class="vocab-meaning">感知的，知觉的</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>perceive (感知) → perception (感知/认知) → perceptual (感知的)。per- = 彻底 + cept = 抓住。</div>
+          <div class="vd-example">our <em>perceptual</em> experience of the world 我们对世界的感知体验（课文）</div>
+          <div class="vd-example">搭配：<em>perceptual</em> ability 感知能力</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('empirical')">empirical</span>
+          <span class="vocab-meaning">实证的，经验的</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>empirical = 基于实验和观察的（不是靠推测的）。源于希腊语 empeiria = 经验。</div>
+          <div class="vd-example"><em>empirical</em> evidence 实证证据；<em>empirical</em> research 实证研究</div>
+          <div class="vd-example">反义：theoretical 理论的</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('contingent')">contingent</span>
+          <span class="vocab-meaning">取决于...的，依赖于...的</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>contingent on = 取决于/依赖于（= dependent on, determined by）。con- = 一起 + tangere = 接触。</div>
+          <div class="vd-example">concepts that are <em>contingent on</em> our social, cultural and psychological histories（课文）</div>
+          <div class="vd-example">= concepts that are <em>determined by</em> our histories 由我们的历史决定的概念</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('facilitate')">facilitate</span>
+          <span class="vocab-meaning">促进，使...变容易</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>facil = 容易（拉丁语 facilis = easy）+ -itate = 使...化。facilitate = 使某事变得更容易。</div>
+          <div class="vd-example">To <em>facilitate</em> our comprehension of the world 为了促进我们对世界的理解（课文）</div>
+          <div class="vd-example">搭配：<em>facilitate</em> communication 促进交流，<em>facilitate</em> learning 促进学习</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('comprehension')">comprehension</span>
+          <span class="vocab-meaning">理解，理解力</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>comprehend = 理解（com = 完全 + prehend = 抓住 → 完全抓住 → 理解）。comprehension = 理解力。</div>
+          <div class="vd-example">reading <em>comprehension</em> 阅读理解；beyond one's <em>comprehension</em> 超出某人理解范围</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('metaphor')">metaphor</span>
+          <span class="vocab-meaning">隐喻，比喻</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>meta (= 超越) + phor (= 携带) = 把意义从一个事物"搬"到另一个事物 = 隐喻。</div>
+          <div class="vd-example">conceptual <em>metaphors</em> that are familiar to us 我们熟悉的概念隐喻（课文）</div>
+          <div class="vd-example">搭配：use a <em>metaphor</em> 使用隐喻，mixed <em>metaphor</em> 混合隐喻</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Questions ══════ -->
+<div class="panel" id="questionsPanel">
+  <div class="panel-header" onclick="togglePanel('questionsPanel')">
+    <span>题目解析（4题，28—31）</span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+
+    <!-- Q28 -->
+    <div class="question-item" data-answer="C">
+      <div class="question-stem">28. What does the author intend to do by challenging a hypothesis?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. Make an assumption.</div>
+        <div class="question-option" data-key="B">B. Illustrate an argument.</div>
+        <div class="question-option" data-key="C">C. Give a suggestion.</div>
+        <div class="question-option" data-key="D">D. Justify a comparison.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：C</div>
+        <div class="locate" data-goto="4" onclick="gotoSentence(4)">"We can, instead, use this idea to advance scientific knowledge."</div>
+        <p>作者先挑战模拟假说（说它不是科学问题、不可证明），但目的不是否定它，而是提出一个建议（suggestion）：我们可以用这个想法来推进科学知识。challenge → suggestion。选 <b>C</b>。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— Make an assumption（做出假设）：作者没有在做假设，而是在提建议。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ B</span><span class="opt-why">— Illustrate an argument（说明一个论点）：作者的目的不是说明论点，而是提出"用模拟假说推进科学"的建议。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ C</span><span class="opt-why">— Give a suggestion（给出建议）：作者说不可证明，但可以用来推进科学——这就是一个建议。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— Justify a comparison（证明一个比较是合理的）：第一段没有在进行比较。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q29 -->
+    <div class="question-item" data-answer="B">
+      <div class="question-stem">29. What does the phrase "contingent on" underlined in Paragraph 2 probably mean?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. Accepted by.</div>
+        <div class="question-option" data-key="B">B. Determined by.</div>
+        <div class="question-option" data-key="C">C. Awakened by.</div>
+        <div class="question-option" data-key="D">D. Discovered by.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：B</div>
+        <div class="locate" data-goto="9" onclick="gotoSentence(9)">"...reasoning won't reveal reality either since it relies on concepts and words that are contingent on our social, cultural and psychological histories."</div>
+        <p>上下文说推理依赖于（relies on）概念和词语，而这些概念和词语又 contingent on 我们的社会、文化、心理历史。根据语境，contingent on = 取决于/受制于 = determined by。选 <b>B</b>。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— Accepted by（被...接受）：concepts accepted by our histories 语义不通。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ B</span><span class="opt-why">— Determined by（被...决定/取决于）：概念和词语受社会文化心理历史的决定/影响，语义通顺。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ C</span><span class="opt-why">— Awakened by（被...唤醒）：concepts awakened by our histories 不合逻辑。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— Discovered by（被...发现）：concepts discovered by our histories 语义不通。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q30 -->
+    <div class="question-item" data-answer="A">
+      <div class="question-stem">30. As for Kant's argument, the author is _________.</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. appreciative</div>
+        <div class="question-option" data-key="B">B. doubtful</div>
+        <div class="question-option" data-key="C">C. unconcerned</div>
+        <div class="question-option" data-key="D">D. disapproving</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：A</div>
+        <div class="locate" data-goto="5" onclick="gotoSentence(5)">"Kant argued that the universe ultimately consists of things-in-themselves that are unknowable."</div>
+        <div class="locate" data-goto="11" onclick="gotoSentence(11)" style="margin-top:4px">"So, if we accept that the universe is unknowable, we also accept..."</div>
+        <p>作者引用康德"宇宙不可知"的观点，后面用 "So, if we accept..." 表明自己接受了这个观点，并以此为基础展开下文的论证。作者的态度是赞赏/认同的（appreciative）。选 <b>A</b>。</p>
+        <div class="option-list">
+          <div class="option-item correct"><span class="opt-mark">✓ A</span><span class="opt-why">— appreciative（赞赏的）：作者采纳了康德的观点作为自己论证的基础，态度是认同和赞赏的。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ B</span><span class="opt-why">— doubtful（怀疑的）：作者没有质疑康德，反而以康德的观点为基础。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ C</span><span class="opt-why">— unconcerned（不关心的）：作者专门引用康德来支撑论点，显然非常关心。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— disapproving（不赞成的）：作者赞同康德的"不可知"观点，不存在不赞成。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q31 -->
+    <div class="question-item" data-answer="C">
+      <div class="question-stem">31. It is implied in this passage that we should _________.</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. compare the current models with the previous ones</div>
+        <div class="question-option" data-key="B">B. continue exploring the classical models in history</div>
+        <div class="question-option" data-key="C">C. stop arguing whether the universe is a simulation</div>
+        <div class="question-option" data-key="D">D. turn simulations of the universe into realities</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：C</div>
+        <div class="locate" data-goto="20" onclick="gotoSentence(20)">"There is no point in arguing if the universe is a clock, a set of particles or an output of computation."</div>
+        <p>作者明确说"争论宇宙是什么没有意义"（There is no point in arguing...），模型都是工具，不是现实本身。所以作者暗示我们应该停止争论宇宙是否是模拟。选 <b>C</b>。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— compare the current models with the previous ones（比较新旧模型）：作者说"no point in arguing"，不是让我们去比较。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ B</span><span class="opt-why">— continue exploring the classical models（继续探索经典模型）：作者说应该拥抱新模型，不是停留在经典模型。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ C</span><span class="opt-why">— stop arguing whether the universe is a simulation（停止争论宇宙是否是模拟）：直接对应原文 "There is no point in arguing"。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— turn simulations into realities（把模拟变成现实）：作者说"models are not the reality"，模型不是现实，不存在"变成现实"。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-score" id="quizScore"></div>
+  </div>
+</div>
+
+<!-- ══════ Review ══════ -->
+<div class="panel" id="reviewPanel">
+  <div class="panel-header" onclick="togglePanel('reviewPanel')">阅读原文<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-family:Georgia,serif;font-size:16px;line-height:2;">
+    <p style="text-indent:2em">The notion that we live in someone else's video game is irresistible to many. Searching the term "simulation hypothesis" returns numerous results that debate whether the universe is a computer simulation &mdash; a concept that some scientists actually take seriously. Unfortunately, this is not a scientific question. We will probably never know whether it's true. We can, instead, use this idea to advance scientific knowledge.</p>
+    <p style="text-indent:2em">The 18th-century philosopher Kant argued that the universe ultimately consists of things-in-themselves that are unknowable. While he held the notion that objective reality exists, he said our mind plays a necessary role in structuring and shaping our perceptions. Modern sciences have revealed that our perceptual experience of the world is the result of many stages of processing by sensory systems and cognitive functions in the brain. No one knows exactly what happens within this black box. If empirical experience fails to reveal reality, reasoning won't reveal reality either since it relies on concepts and words that are contingent on our social, cultural and psychological histories. Again, a black box.</p>
+    <p style="text-indent:2em">So, if we accept that the universe is unknowable, we also accept we will never know if we live in a computer simulation. And then, we can shift our inquiry from "Is the universe a computer simulation?" to "Can we model the universe as a computer simulation?" Modelling reality is what we do. To facilitate our comprehension of the world, we build models based on conceptual metaphors that are familiar to us. In Newton's era, we imagined the universe as a clock. In Einstein's, we uncovered the standard model of particle physics.</p>
+    <p style="text-indent:2em">Now that we are in the information age, we have new concepts such as the computer, information processing, virtual reality, and simulation. Unsurprisingly, these new concepts inspire us to build new models of the universe. Models are not the reality, however. There is no point in arguing if the universe is a clock, a set of particles or an output of computation. All these models are tools to deal with the unknown and to make discoveries. And the more tools we have, the more effective and insightful we can become.</p>
+    <p style="text-indent:2em">It can be imagined that comparable to the process of building previous scientific models, developing the "computer simulation" metaphor-based model will also be a hugely rewarding exercise.</p>
+  </div>
+</div>
+
+<!-- ══════ 阅读技巧 ══════ -->
+<div class="panel" id="tipPanel">
+  <div class="panel-header" onclick="togglePanel('tipPanel')">阅读技巧<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-size:15px;line-height:1.8;">
+    <p><b>议论文的"目的题"解法：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li><b>28题类型：</b>问作者做某事的"意图"（intend to do），需要理解作者的写作目的，而不是表面行为。</li>
+      <li><b>第一步：</b>定位"challenging a hypothesis"——第一段作者说模拟假说不是科学问题（挑战了它的科学性）。</li>
+      <li><b>第二步：</b>看挑战之后作者做了什么——"We can, instead, use this idea to advance scientific knowledge"（提出建议）。</li>
+      <li><b>答案规律：</b>challenge 不是目的本身，challenge 后面的转折（instead/but/however）才是真正的目的。</li>
+    </ul>
+    <p style="margin-top:12px"><b>词义猜测题：</b>29题考 "contingent on"。解题方法：① 看所在句的逻辑（since = 因为，说明推理依赖于概念）；② 看上下文（概念受制于社会文化历史）→ 得出 contingent on = determined by（取决于）。</p>
+    <p style="margin-top:12px"><b>态度题：</b>30题考作者对康德的态度。判断方法：作者引用康德后，说"if we accept..."，用了 accept（接受），并以康德的观点为基础展开全文论证 → 赞赏/认同（appreciative）。</p>
+  </div>
+</div>
+
+<!-- ══════ 作文拓展 ══════ -->
+<div class="panel" id="writingPanel">
+  <div class="panel-header" onclick="togglePanel('writingPanel')">作文拓展：好句式 &amp; 好短语<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-size:15px;line-height:1.9;">
+    <p><b>可以直接用进作文的句式：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li><em>There is no point in arguing...</em>（争论...没有意义）——用于表达"不值得争论"</li>
+      <li><em>To facilitate our comprehension of...</em>（为了促进我们对...的理解）——目的状语开头，高分句式</li>
+      <li><em>The more tools we have, the more effective we can become.</em>（the more...the more... 越...越...）</li>
+      <li>短语：<em>advance knowledge</em>（推进知识），<em>shift from...to...</em>（从...转向...），<em>comparable to</em>（与...相似）</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div id="playbar">
+  <button onclick="pbPrev()" title="上一句">⏮</button>
+  <button id="pb-play" onclick="pbToggle()">▶</button>
+  <button onclick="pbNext()" title="下一句">⏭</button>
+  <span id="pb-counter">— / 24</span>
+  <select id="pb-speed" onchange="pbSetSpeed(this.value)">
+    <option value="0.8">0.8×</option>
+    <option value="1" selected>1.0×</option>
+    <option value="1.2">1.2×</option>
+  </select>
+</div>
+
+<script>
+const THEMES=['yellow','green'];
+const THEME_LABELS={yellow:'📄 书本黄',green:'🌿 护眼绿'};
+let themeIdx=parseInt(localStorage.getItem('theme')||'0');
+function applyTheme(){document.body.classList.remove('theme-yellow','theme-green');const t=THEMES[themeIdx%THEMES.length];document.body.classList.add('theme-'+t);const btn=document.getElementById('theme-btn');if(btn)btn.textContent=THEME_LABELS[t];}
+function cycleTheme(){themeIdx=(themeIdx+1)%THEMES.length;localStorage.setItem('theme',themeIdx);applyTheme();}
+applyTheme();
+
+const sentences=[
+  "The notion that we live in someone else's video game is irresistible to many.",
+  "Searching the term simulation hypothesis returns numerous results that debate whether the universe is a computer simulation, a concept that some scientists actually take seriously.",
+  "Unfortunately, this is not a scientific question.",
+  "We will probably never know whether it's true.",
+  "We can, instead, use this idea to advance scientific knowledge.",
+  "The 18th-century philosopher Kant argued that the universe ultimately consists of things-in-themselves that are unknowable.",
+  "While he held the notion that objective reality exists, he said our mind plays a necessary role in structuring and shaping our perceptions.",
+  "Modern sciences have revealed that our perceptual experience of the world is the result of many stages of processing by sensory systems and cognitive functions in the brain.",
+  "No one knows exactly what happens within this black box.",
+  "If empirical experience fails to reveal reality, reasoning won't reveal reality either since it relies on concepts and words that are contingent on our social, cultural and psychological histories.",
+  "Again, a black box.",
+  "So, if we accept that the universe is unknowable, we also accept we will never know if we live in a computer simulation.",
+  "And then, we can shift our inquiry from Is the universe a computer simulation to Can we model the universe as a computer simulation.",
+  "Modelling reality is what we do.",
+  "To facilitate our comprehension of the world, we build models based on conceptual metaphors that are familiar to us.",
+  "In Newton's era, we imagined the universe as a clock.",
+  "In Einstein's, we uncovered the standard model of particle physics.",
+  "Now that we are in the information age, we have new concepts such as the computer, information processing, virtual reality, and simulation.",
+  "Unsurprisingly, these new concepts inspire us to build new models of the universe.",
+  "Models are not the reality, however.",
+  "There is no point in arguing if the universe is a clock, a set of particles or an output of computation.",
+  "All these models are tools to deal with the unknown and to make discoveries.",
+  "And the more tools we have, the more effective and insightful we can become.",
+  "It can be imagined that comparable to the process of building previous scientific models, developing the computer simulation metaphor-based model will also be a hugely rewarding exercise."
+];
+
+let activeTooltip=null;
+const ZH_AUDIO={};
+let zhPlayer=null;
+
+function phraseToSlug(phrase){return phrase.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+function playZhAudio(slug,btn){if(zhPlayer){zhPlayer.pause();zhPlayer=null;btn.textContent='🔊 听讲解';return;}const src=ZH_AUDIO[slug];if(!src)return;zhPlayer=new Audio(src);btn.textContent='⏹ 停止';zhPlayer.onended=()=>{btn.textContent='🔊 听讲解';zhPlayer=null;};zhPlayer.play();}
+
+function showTooltip(tipEl){
+  hideTooltip();
+  const raw=tipEl.getAttribute('data-tip');const[phrase,explain]=raw.split('|');const parts=explain.split('｜');
+  const slug=phraseToSlug(phrase);const hasAudio=ZH_AUDIO[slug];
+  const tooltip=document.createElement('div');tooltip.className='tooltip';
+  tooltip.innerHTML='<div class="tip-scroll">'+
+    `<div class="tip-phrase">${phrase}${tipEl.dataset.level?`<span class="level-badge badge-${tipEl.dataset.level}">${tipEl.dataset.level}</span>`:''}<span class="tip-speak" onclick="speakWord('${phrase.replace(/'/g,"\\'")}')">&#9654;</span></div>`+
+    parts.map(p=>`<div>${p.trim()}</div>`).join('')+(hasAudio?`<button class="tip-zh-play" onclick="playZhAudio('${slug}',this)">🔊 听讲解</button>`:'')+
+    '</div>';
+  document.body.appendChild(tooltip);activeTooltip=tooltip;tooltip._tip=tipEl;positionTooltip();if(!activeTooltip)return;speakWord(phrase);
+}
+
+let _safeProbe=null;
+function tooltipFrame(){
+  if(!_safeProbe){_safeProbe=document.createElement('div');_safeProbe.style.cssText='position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)';document.body.appendChild(_safeProbe);}
+  const cs=getComputedStyle(_safeProbe);const M=8;const vw=document.documentElement.clientWidth,vh=window.innerHeight;
+  let minY=M+(parseFloat(cs.paddingTop)||0);let maxY=vh-M-(parseFloat(cs.paddingBottom)||0);
+  const hdr=document.querySelector('.header');if(hdr){const b=hdr.getBoundingClientRect().bottom;if(b>0)minY=Math.max(minY,b+4);}
+  const pb=document.getElementById('playbar');if(pb&&getComputedStyle(pb).display!=='none'){maxY=Math.min(maxY,pb.getBoundingClientRect().top-4);}
+  return{minX:M+(parseFloat(cs.paddingLeft)||0),maxX:vw-M-(parseFloat(cs.paddingRight)||0),minY,maxY};
+}
+function positionTooltip(){
+  const tooltip=activeTooltip;if(!tooltip)return;const tipEl=tooltip._tip;const rects=tipEl.getClientRects();const f=tooltipFrame();
+  if(!rects.length){hideTooltip();return;}const first=rects[0],last=rects[rects.length-1];
+  if(last.bottom<f.minY-4||first.top>f.maxY+4){hideTooltip();return;}
+  const GAP=10,PAD=16;const body=tooltip.firstElementChild;
+  tooltip.style.maxWidth=Math.max(120,Math.min(520,f.maxX-f.minX))+'px';body.style.maxHeight='none';tooltip.style.left='0px';tooltip.style.top='0px';
+  const tw=tooltip.offsetWidth,naturalH=tooltip.offsetHeight;const spaceAbove=first.top-f.minY-GAP;const spaceBelow=f.maxY-last.bottom-GAP;
+  let below;if(naturalH<=spaceAbove)below=false;else if(naturalH<=spaceBelow)below=true;else below=spaceBelow>spaceAbove;
+  const avail=Math.max(60,below?spaceBelow:spaceAbove);if(naturalH>avail)body.style.maxHeight=Math.max(30,avail-PAD)+'px';
+  const r=below?last:first;const cx=r.left+r.width/2;const left=Math.max(f.minX,Math.min(cx-tw/2,f.maxX-tw));
+  let top=below?last.bottom+GAP:first.top-GAP-tooltip.offsetHeight;top=Math.max(f.minY,Math.min(top,f.maxY-tooltip.offsetHeight));
+  tooltip.classList.toggle('below',below);tooltip.style.setProperty('--arrow-left',Math.max(14,Math.min(cx-left,tw-14))+'px');tooltip.style.left=left+'px';tooltip.style.top=top+'px';
+}
+(function(){let raf=0;const re=()=>{if(!activeTooltip||raf)return;raf=requestAnimationFrame(()=>{raf=0;positionTooltip();});};
+window.addEventListener('scroll',re,{passive:true});window.addEventListener('resize',re);window.addEventListener('orientationchange',re);
+if(window.visualViewport){visualViewport.addEventListener('resize',re);visualViewport.addEventListener('scroll',re);}})();
+
+function hideTooltip(){if(zhPlayer){zhPlayer.pause();zhPlayer=null;}if(activeTooltip){activeTooltip.remove();activeTooltip=null;}}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.sentence.highlighted')&&!e.target.closest('.locate')){document.querySelectorAll('.sentence.highlighted').forEach(s=>s.classList.remove('highlighted'));}
+  const tipEl=e.target.closest('.tip');
+  if(tipEl){e.stopPropagation();if(activeTooltip&&activeTooltip._source===tipEl){hideTooltip();}else{showTooltip(tipEl);if(activeTooltip)activeTooltip._source=tipEl;}return;}
+  if(e.target.closest('.tooltip'))return;hideTooltip();
+});
+
+let pbCurrent=null,pbPlaying=false,pbSpeed=1,enPlayer=null;
+function pbStop(){if(enPlayer){enPlayer.pause();enPlayer=null;}pbPlaying=false;}
+function highlightSentence(idx){
+  document.querySelectorAll('.sentence').forEach(el=>el.classList.remove('playing'));
+  if(idx!==null&&idx>=0&&idx<sentences.length){const el=document.querySelector(`.sentence[data-idx="${idx}"]`);if(el){el.classList.add('playing');el.scrollIntoView({behavior:'smooth',block:'center'});}}
+}
+function pbUpdateUI(){document.getElementById('pb-play').textContent=pbPlaying?'⏸':'▶';document.getElementById('pb-counter').textContent=pbCurrent!==null?`${pbCurrent+1} / ${sentences.length}`:`— / ${sentences.length}`;}
+function pbPlayCurrent(){
+  pbStop();if(pbCurrent===null){pbUpdateUI();return;}
+  const src=`audio/2024北京卷-C/en-s${String(pbCurrent).padStart(2,'0')}.mp3`;
+  enPlayer=new Audio(src);enPlayer.playbackRate=pbSpeed;pbPlaying=true;highlightSentence(pbCurrent);pbUpdateUI();
+  enPlayer.onerror=()=>{const utter=new SpeechSynthesisUtterance(sentences[pbCurrent]);const voices=speechSynthesis.getVoices();utter.voice=voices.find(v=>v.lang==='en-GB')||voices.find(v=>v.lang.startsWith('en'))||null;utter.rate=pbSpeed*0.85;utter.onend=()=>{if(pbPlaying){if(pbCurrent<sentences.length-1){pbCurrent++;pbPlayCurrent();}else{pbPlaying=false;highlightSentence(null);pbUpdateUI();}}};speechSynthesis.speak(utter);enPlayer=null;};
+  enPlayer.onended=()=>{if(pbPlaying){if(pbCurrent<sentences.length-1){pbCurrent++;pbPlayCurrent();}else{pbPlaying=false;highlightSentence(null);pbUpdateUI();}}};enPlayer.play();
+}
+function pbToggle(){if(pbCurrent===null){pbCurrent=0;pbPlayCurrent();return;}if(pbPlaying){pbStop();highlightSentence(pbCurrent);pbUpdateUI();}else{pbPlayCurrent();}}
+function pbPrev(){if(pbCurrent===null)pbCurrent=0;else if(pbCurrent>0)pbCurrent--;pbPlayCurrent();}
+function pbNext(){if(pbCurrent===null)pbCurrent=0;else if(pbCurrent<sentences.length-1)pbCurrent++;pbPlayCurrent();}
+function pbSetSpeed(v){pbSpeed=parseFloat(v);if(enPlayer)enPlayer.playbackRate=pbSpeed;}
+
+document.addEventListener('click',function(e){if(e.target.closest('.tip')||e.target.closest('.tooltip'))return;const sentence=e.target.closest('.sentence.complex');if(sentence)toggleAnalysis(parseInt(sentence.dataset.idx));});
+
+function speakWord(word){
+  if(enPlayer){enPlayer.pause();enPlayer=null;}
+  const slug='en-word-'+word.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const src='audio/2024北京卷-C/'+slug+'.mp3';
+  enPlayer=new Audio(src);
+  enPlayer.onerror=function(){const utter=new SpeechSynthesisUtterance(word);const voices=speechSynthesis.getVoices();utter.voice=voices.find(v=>v.lang==='en-GB')||voices.find(v=>v.lang.startsWith('en'))||voices[0];utter.rate=0.8;speechSynthesis.speak(utter);};
+  enPlayer.play();
+}
+
+const ANALYSIS_AUDIO={};let analysisPlayer=null,analysisBtn=null;
+function playAnalysis(id,btn){if(analysisPlayer){analysisPlayer.pause();analysisPlayer=null;if(analysisBtn){analysisBtn.textContent='🔊 听讲解';analysisBtn.classList.remove('playing');}if(analysisBtn===btn){analysisBtn=null;return;}}const src=ANALYSIS_AUDIO[id];if(!src)return;analysisPlayer=new Audio(src);analysisBtn=btn;btn.textContent='⏹ 停止';btn.classList.add('playing');analysisPlayer.onended=()=>{btn.textContent='🔊 听讲解';btn.classList.remove('playing');analysisPlayer=null;analysisBtn=null;};analysisPlayer.play();}
+
+function toggleAnalysis(idx){const el=document.getElementById('analysis-'+idx);if(el)el.classList.toggle('open');}
+function togglePanel(id){document.getElementById(id).classList.toggle('open');}
+function setMode(mode){document.body.classList.remove('mode-raw','mode-study','mode-quiz','mode-annotate');if(mode!=='study')document.body.classList.add('mode-'+mode);document.querySelectorAll('.mode-step').forEach(btn=>btn.classList.toggle('active',btn.dataset.mode===mode));hideTooltip();if(mode==='quiz'){pbStop();highlightSentence(null);pbUpdateUI();resetQuiz();}}
+function resetQuiz(){document.querySelectorAll('.question-option').forEach(opt=>opt.classList.remove('selected','correct','wrong'));document.querySelectorAll('.question-item').forEach(q=>q.dataset.answered='');const score=document.getElementById('quizScore');if(score)score.classList.remove('show');}
+document.addEventListener('click',function(e){if(!document.body.classList.contains('mode-quiz'))return;const opt=e.target.closest('.question-option');if(!opt)return;const item=opt.closest('.question-item');if(item.dataset.answered)return;item.dataset.answered='true';const picked=opt.dataset.key;const correct=item.dataset.answer;if(picked===correct){opt.classList.add('correct');}else{opt.classList.add('wrong');item.querySelector(`.question-option[data-key="${correct}"]`).classList.add('correct');}const total=document.querySelectorAll('.question-item[data-answer]').length;const done=document.querySelectorAll('.question-item[data-answered="true"]').length;if(done===total)showQuizScore();});
+function showQuizScore(){const total=document.querySelectorAll('.question-item[data-answer]').length;const wrong=document.querySelectorAll('.question-option.wrong').length;const score=document.getElementById('quizScore');score.textContent=`得分：${total-wrong} / ${total}`;score.classList.add('show');}
+function gotoSentence(idx){const el=document.querySelector(`.sentence[data-idx="${idx}"]`);if(!el)return;setMode('study');document.querySelectorAll('.sentence.highlighted').forEach(s=>s.classList.remove('highlighted'));el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('highlighted');}
+function toggleQuestionAnalysis(btn){const analysis=btn.nextElementSibling;analysis.classList.toggle('open');btn.textContent=analysis.classList.contains('open')?'收起解析':'🔍 查看解析';}
+
+const SRS_PREFIX='srs_beijing_2024_C_';const SRS_INTERVALS=[1,3,7,14,30];
+function srsLoad(word){const raw=localStorage.getItem(SRS_PREFIX+word);return raw?JSON.parse(raw):null;}
+function srsSave(word,knew){const state=srsLoad(word)||{streak:0};if(knew){state.streak=(state.streak||0)+1;state.interval=SRS_INTERVALS[Math.min(state.streak-1,SRS_INTERVALS.length-1)];}else{state.streak=0;state.interval=1;}state.nextReview=Date.now()+state.interval*86400000;localStorage.setItem(SRS_PREFIX+word,JSON.stringify(state));return state;}
+function srsIsDue(state){return!state||Date.now()>=state.nextReview;}
+function srsUpdateCard(card){const state=srsLoad(card.dataset.srsWord);card.classList.remove('srs-due','srs-known');if(!state)return;card.classList.add(srsIsDue(state)?'srs-due':'srs-known');}
+function srsUpdateBadge(){const badge=document.getElementById('srs-badge');if(!badge)return;const cards=document.querySelectorAll('.vocab-card[data-srs-word]');let due=0;cards.forEach(c=>{if(srsIsDue(srsLoad(c.dataset.srsWord)))due++;});if(due===0){badge.textContent='全掌握 ✓';badge.className='srs-badge all-done';}else{badge.textContent=due+'个待复习';badge.className='srs-badge';}}
+function srsClick(word,knew,btn){srsSave(word,knew);const card=btn.closest('.vocab-card');srsUpdateCard(card);srsUpdateBadge();btn.style.opacity='0.4';setTimeout(()=>btn.style.opacity='',600);}
+function srsInit(){document.querySelectorAll('.vocab-card').forEach(card=>{const wordEl=card.querySelector('.vocab-word');if(!wordEl)return;const word=wordEl.textContent.trim();card.dataset.srsWord=word;const btns=document.createElement('div');btns.className='srs-btns';const esc=word.replace(/\\/g,'\\\\').replace(/'/g,"\\'");btns.innerHTML=`<button class="srs-btn srs-btn-know" onclick="srsClick('${esc}',true,this)">认识 ✓</button>`+`<button class="srs-btn srs-btn-forget" onclick="srsClick('${esc}',false,this)">还不会 ✗</button>`;card.querySelector('.vocab-card-head').appendChild(btns);srsUpdateCard(card);});srsUpdateBadge();}
+
+function vocabClick(word){
+  const panel=document.getElementById('vocabPanel');
+  if(!panel.classList.contains('open'))panel.classList.add('open');
+  const cards=panel.querySelectorAll('.vocab-word');
+  for(const c of cards){if(c.textContent.trim()===word){c.scrollIntoView({behavior:'smooth',block:'center'});c.closest('.vocab-card').querySelector('.vocab-detail').classList.add('open');break;}}
+}
+
+function initAnnotations(){
+  document.querySelectorAll('sup.ann-sup,.para-ann').forEach(el=>el.remove());
+  document.querySelectorAll('.passage .paragraph').forEach(para=>{
+    const seen=new Set();const items=[];let idx=1;
+    para.querySelectorAll('.tip').forEach(el=>{const tip=el.dataset.tip||'';const parts=tip.split('|');if(parts.length<2)return;const phrase=parts[0].trim();if(seen.has(phrase)){const prevIdx=items.findIndex(i=>i.phrase===phrase)+1;const sup=document.createElement('sup');sup.className='ann-sup';sup.textContent=prevIdx;el.after(sup);return;}seen.add(phrase);const sup=document.createElement('sup');sup.className='ann-sup';sup.textContent=idx;el.after(sup);const contentParts=parts[1].split('｜');const cn=contentParts[0].trim();const det=contentParts.slice(1).map(s=>s.replace(/<[^>]+>/g,'').trim()).filter(Boolean);items.push({num:idx,phrase,cn,det,level:el.dataset.level==='超纲'?'超纲':''});idx++;});
+    if(items.length===0)return;const ann=document.createElement('div');ann.className='para-ann';ann.innerHTML=items.map(i=>`<div class="pan-row"><div class="pan-head"><span class="pan-num">${i.num}</span><span class="pan-en">${i.phrase}</span><span class="pan-cn">${i.cn}</span>${i.level?`<span class="pan-lv lv-${i.level}">${i.level}</span>`:''}</div>${i.det.length?`<div class="pan-det">${i.det.map(d=>`<div>${d}</div>`).join('')}</div>`:''}</div>`).join('');
+    const trans=para.querySelector('.translation-inline');if(trans)trans.after(ann);else para.appendChild(ann);
+  });
+}
+
+pbUpdateUI();srsInit();
+document.addEventListener('DOMContentLoaded',initAnnotations);
+</script>
+</body>
+</html>

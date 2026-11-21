@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2026北京卷七选五 · Morality & Happiness</title>
+<style>
+:root{--bg:#fafaf8;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;--accent:#2563eb;--accent-light:#dbeafe;--complex-bg:#f0f6fc;--border:#e2e2e0;--card-bg:#fff;--hover-bg:#f5f5f4;--shadow:0 1px 3px rgba(0,0,0,.08);--radius:6px;}
+.theme-yellow{--bg:#f5f0e8;--card-bg:#faf6ee;--border:#ddd5bf;--hover-bg:#ede7d8;--accent-light:#fde8b8;}
+.theme-green{--bg:#edecea;--card-bg:#f3f2f0;--border:#d6d5d0;--hover-bg:#e8e7e3;--accent-light:#dddcd6;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:60px;}
+.container{max-width:1400px;width:100%;margin:0 auto;padding:0 max(12px,env(safe-area-inset-left)) 0 max(12px,env(safe-area-inset-right));}
+.header{background:var(--card-bg);border-bottom:1px solid var(--border);padding:16px 0;padding-top:calc(16px + env(safe-area-inset-top));position:sticky;top:0;z-index:100;}
+.header .container{display:flex;align-items:center;flex-wrap:wrap;gap:10px;}
+.header h1{font-size:16px;font-weight:600;flex:1;min-width:200px;}
+.header-sub{font-size:12px;color:var(--accent);font-weight:500;background:var(--accent-light);padding:2px 8px;border-radius:10px;}
+.header-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card-bg);color:var(--text);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.mode-steps{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.mode-step{padding:6px 12px;border:none;background:var(--card-bg);color:var(--text-secondary);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.mode-step+.mode-step{border-left:1px solid var(--border);}
+.mode-step.active{background:var(--accent);color:#fff;}
+.mode-step:hover:not(.active){background:var(--accent-light);}
+.passage{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:20px;padding:28px 32px;}
+.passage-title{text-align:center;font-family:Georgia,serif;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;color:var(--text-secondary);}
+.passage-subtitle{text-align:center;font-family:-apple-system,sans-serif;font-size:13px;margin-bottom:20px;color:var(--text-muted);}
+.paragraph{margin-bottom:16px;font-family:Georgia,serif;font-size:18px;line-height:1.9;text-indent:2em;}
+.cloze-select{font-family:Georgia,serif;font-size:inherit;border:2px solid var(--accent);border-radius:4px;padding:2px 6px;background:var(--accent-light);color:var(--accent);cursor:pointer;min-width:60px;vertical-align:middle;}
+.cloze-select.sel-correct{border-color:#16a34a;background:#dcfce7;color:#15803d;}
+.cloze-select.sel-wrong{border-color:#dc2626;background:#fee2e2;color:#b91c1c;}
+.cloze-answer{font-family:Georgia,serif;font-weight:700;color:#16a34a;background:#dcfce7;padding:1px 10px;border-radius:4px;border:1.5px solid #16a34a;}
+.blank-num{font-size:12px;font-weight:700;color:var(--accent);margin-right:3px;font-family:-apple-system,sans-serif;vertical-align:middle;}
+body.mode-quiz .blank-quiz{display:inline;}
+body.mode-quiz .blank-ans{display:none;}
+body.mode-analysis .blank-quiz{display:none;}
+body.mode-analysis .blank-ans{display:inline;}
+.panel{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:16px;overflow:hidden;}
+.panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;cursor:pointer;user-select:none;font-weight:600;font-size:15px;border-bottom:1px solid transparent;transition:border-color .2s;}
+.panel-header:hover{color:var(--accent);}
+.panel-header .arrow{transition:transform .2s;font-size:12px;color:var(--text-muted);}
+.panel.open .panel-header{border-bottom-color:var(--border);}
+.panel.open .panel-header .arrow{transform:rotate(180deg);}
+.panel-body{display:none;padding:16px 24px;}
+.panel.open .panel-body{display:block;}
+.quiz-score{text-align:center;padding:16px;font-size:16px;font-weight:600;color:var(--accent);display:none;margin-top:12px;background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);}
+.quiz-score.show{display:block;}
+.opt-cards{display:flex;flex-direction:column;gap:8px;margin-top:12px;}
+.opt-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;font-family:Georgia,serif;font-size:17px;line-height:1.7;}
+.opt-key{font-weight:700;color:var(--accent);margin-right:8px;}
+body.mode-analysis .opt-card.opt-used{opacity:0.4;}
+.analysis-item{padding:16px 24px;border-bottom:1px solid #f0f0f0;}
+.analysis-item:last-child{border-bottom:none;}
+.analysis-answer{font-weight:700;color:#16a34a;font-size:15px;margin-bottom:6px;}
+.analysis-logic{font-size:14px;color:var(--text-secondary);line-height:1.75;margin-top:6px;}
+.analysis-logic b{color:var(--text);}
+.locate-quote{background:#fef9c3;padding:6px 10px;border-radius:4px;margin:6px 0;font-family:Georgia,serif;font-style:italic;font-size:14px;color:var(--text);}
+body.mode-quiz .analysis-panel{display:none!important;}
+body.mode-analysis .analysis-panel{display:block;}
+.quiz-btn{display:block;width:100%;padding:11px;border-radius:var(--radius);border:none;font-size:15px;font-weight:600;cursor:pointer;text-align:center;background:var(--accent);color:#fff;margin-top:16px;transition:opacity .15s;}
+.quiz-btn:hover{opacity:.9;}
+body.mode-analysis .quiz-actions{display:none;}
+.opt-label{font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin:16px 0 8px;font-family:-apple-system,sans-serif;}
+.tip-box{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:16px;padding:20px 24px;font-size:14px;line-height:1.9;color:var(--text-secondary);}
+.tip-box h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:10px;}
+.tip-box ul{margin-left:20px;}
+.tip-box li{margin-bottom:6px;}
+.tip-box b{color:var(--text);}
+@media(min-width:700px){
+  .header h1{font-size:19px;}.header-sub{font-size:14px;}
+  .paragraph{font-size:23px;line-height:1.9;}
+  .opt-card{font-size:21px;}.panel-header{font-size:18px;}
+  .analysis-answer{font-size:17px;}.analysis-logic{font-size:17px;}
+  .locate-quote{font-size:17px;}.quiz-btn{font-size:17px;}
+}
+@media(max-width:600px){
+  .passage{padding:18px 14px;}.paragraph{font-size:16px;}
+  .panel-header,.analysis-item{padding-left:16px;padding-right:16px;}.panel-body{padding:12px 16px;}
+}
+.vocab-card{border-bottom:1px solid #f0f0f0;padding:12px 0;}
+.vocab-card:last-child{border-bottom:none;}
+.vocab-card-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px;}
+.vocab-word{font-family:Georgia,serif;font-weight:600;color:var(--accent);cursor:pointer;font-size:15px;}
+.vocab-word:hover{text-decoration:underline;}
+.vocab-meaning{font-size:14px;color:var(--text);}
+.vocab-extra{font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.75;}
+.vocab-tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:3px;background:#fef3c7;color:#92400e;vertical-align:middle;}
+.vocab-tag.tag-core{background:#dcfce7;color:#166534;}
+.vocab-tag.tag-exam{background:#dbeafe;color:#1e40af;}
+.vocab-tag.tag-extend{background:#ffedd5;color:#c2410c;}
+.tip{border-bottom:1.5px dashed var(--accent);cursor:pointer;position:relative;transition:background .15s;}
+.tip:hover{background:var(--accent-light);}
+.tooltip{position:fixed;z-index:200;background:var(--text);color:#fff;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;line-height:1.5;padding:8px 14px;border-radius:8px;max-width:min(520px,calc(100vw - 16px));width:max-content;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:auto;animation:tipIn .15s ease-out;}
+.tooltip::after{content:'';position:absolute;bottom:-6px;left:var(--arrow-left,50%);transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text);}
+.tooltip.below::after{bottom:auto;top:-6px;border-top:none;border-bottom:6px solid var(--text);}
+.tooltip .tip-phrase{font-family:Georgia,serif;font-weight:600;color:#93c5fd;margin-bottom:2px;}
+.tooltip .tip-speak{display:inline-block;cursor:pointer;margin-left:6px;font-size:12px;opacity:.7;vertical-align:middle;}
+.tooltip .tip-speak:hover{opacity:1;}
+@keyframes tipIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+body.mode-quiz .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-quiz .tip:hover{background:none;}
+.srs-btns{display:flex;gap:5px;margin-left:auto;}
+.srs-btn{font-size:11px;padding:2px 7px;border-radius:10px;border:1.5px solid;cursor:pointer;transition:all .15s;background:none;white-space:nowrap;}
+.srs-btn-know{border-color:#16a34a;color:#16a34a;}
+.srs-btn-know:hover{background:#dcfce7;}
+.srs-btn-forget{border-color:#dc2626;color:#dc2626;}
+.srs-btn-forget:hover{background:#fee2e2;}
+.vocab-card.srs-due .vocab-word::after{content:' \ud83d\udccc';font-size:10px;}
+.vocab-card.srs-known .vocab-word::after{content:' \u2713';font-size:11px;color:#16a34a;}
+.srs-badge{font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;background:#fef2f2;color:#dc2626;}
+.srs-badge.all-done{background:#dcfce7;color:#16a34a;}
+body.mode-quiz #vocabPanel{display:none!important;}
+@media(min-width:700px){
+  .vocab-word{font-size:20px;}.vocab-meaning{font-size:18px;}.vocab-extra{font-size:16.5px;line-height:1.75;}
+  .vocab-tag{font-size:13px;}.srs-btn,.srs-badge{font-size:14px;}
+  .tooltip{font-size:17px;line-height:1.55;}.tooltip .tip-phrase{font-size:19px;}
+}
+</style>
+</head>
+<body class="mode-quiz">
+<div class="header">
+  <div class="container">
+    <h1>2026北京卷七选五 · Morality & Happiness</h1>
+    <div class="header-controls">
+      <span class="header-sub">Q35–39</span>
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="quiz" onclick="setMode('quiz')">① 做题</button>
+        <button class="mode-step" data-mode="analysis" onclick="setMode('analysis')">② 解析</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+<div class="container">
+<div class="passage">
+  <div class="passage-title">七选五阅读理解</div>
+  <div class="passage-subtitle">根据短文内容，从短文后的选项中选出能填入空白处的最佳选项。选项中有两项为多余选项。</div>
+  <div class="paragraph">Most of us have experienced both how good it can feel and how hard it can be to do the right thing. Helping strangers can leave you with a deep sense of satisfaction, but you've likely also felt the stress of showing up for others when you're already <span class="tip" data-tip="stretched thin|分身乏术｜stretch v. 拉伸 → stretched thin 被拉得太薄 = 分身乏术｜when you're already stretched thin = 当你已经分身乏术时">stretched thin</span>. These ordinary moments speak to a <span class="tip" data-tip="philosophical|哲学的｜philosophy n. 哲学 → philosophical adj. 哲学的｜a philosophical puzzle = 一个哲学难题">philosophical</span> puzzle: Are moral people happier? <span class="blank-num">[35]</span><span class="blank-quiz"><select class="cloze-select" id="blank35"><option value="">— 选 —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select></span><span class="blank-ans"><span class="cloze-answer">D</span></span> Others might reason that moral behavior often requires <span class="tip" data-tip="self-sacrifice|自我牺牲｜self-（自我）+ sacrifice（牺牲）= 自我牺牲｜moral behavior often requires self-sacrifice = 道德行为常常需要自我牺牲">self-sacrifice</span>.</div>
+  <div class="paragraph"><span class="blank-num">[36]</span><span class="blank-quiz"><select class="cloze-select" id="blank36"><option value="">— 选 —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select></span><span class="blank-ans"><span class="cloze-answer">A</span></span> Past studies clearly show that people feel good when they perform acts of kindness for others. But researchers had not directly examined if moral character, <span class="tip" data-tip="broadly speaking|广泛地说｜broadly adv. 广泛地 + speaking = 广泛地说｜broadly speaking = 总体而言，广泛地说">broadly speaking</span>, is linked to <span class="tip" data-tip="well-being|幸福感｜well（好）+ being（存在）= 幸福感/健康状态｜is linked to well-being = 与幸福感有关联">well-being</span>. So my team conducted a set of studies to take this challenge seriously.</div>
+  <div class="paragraph">In one of our studies, <span class="tip" data-tip="undergraduate|本科生｜under-（在…之下）+ graduate（毕业生）= 尚未毕业的学生 = 本科生｜undergraduate students = 本科生">undergraduate</span> students reported on their own well-being, rating their happiness as well as their sense of how meaningful their life is. <span class="blank-num">[37]</span><span class="blank-quiz"><select class="cloze-select" id="blank37"><option value="">— 选 —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select></span><span class="blank-ans"><span class="cloze-answer">E</span></span> Then these close others, such as friends and family members, rated the participant's moral character using our <span class="tip" data-tip="questionnaire|调查问卷｜question n. 问题 → questionnaire n. 调查问卷｜using our questionnaire = 使用我们的调查问卷">questionnaire</span> (调查问卷), which asked how much that person had the various characteristics identified as most <span class="tip" data-tip="morally relevant|道德相关的｜morally adv. 道德上 + relevant adj. 相关的 = 道德相关的｜characteristics identified as most morally relevant = 被认定为最具道德相关性的特征">morally relevant</span>. <span class="blank-num">[38]</span><span class="blank-quiz"><select class="cloze-select" id="blank38"><option value="">— 选 —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select></span><span class="blank-ans"><span class="cloze-answer">F</span></span></div>
+  <div class="paragraph">Doing the right thing isn't always easy. <span class="blank-num">[39]</span><span class="blank-quiz"><select class="cloze-select" id="blank39"><option value="">— 选 —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select></span><span class="blank-ans"><span class="cloze-answer">C</span></span> But our findings indicate that, in general, there's no <span class="tip" data-tip="trade-off|权衡/取舍｜trade（交易）+ off = 权衡取舍｜there's no trade-off between morality and well-being = 道德和幸福之间没有取舍关系">trade-off</span> between morality and well-being. Instead, people with stronger moral character tend to experience greater meaning in life and happiness. This suggests that moments of moral effort may be part of a life that, taken as a whole, feels more <span class="tip" data-tip="satisfying|令人满足的｜satisfy v. 使满足 → satisfying adj. 令人满足的｜feels more satisfying = 感觉更令人满足">satisfying</span>.</div>
+  <div class="opt-label">选项 A–G（有两项多余）</div>
+  <div class="opt-cards">
+    <div class="opt-card" id="optA"><span class="opt-key">A.</span>Until recently, scientific evidence had been limited to one aspect of morality: kindness.</div>
+    <div class="opt-card" id="optB"><span class="opt-key">B.</span>Despite various debates, there's no agreement on what it means to be morally good.</div>
+    <div class="opt-card" id="optC"><span class="opt-key">C.</span><span class="tip" data-tip="standing up for|为…挺身而出｜stand up for = 为…挺身而出/维护｜standing up for someone = 为某人挺身而出">Standing up for</span> someone who is being treated unfairly can feel uncomfortable.</div>
+    <div class="opt-card" id="optD"><span class="opt-key">D.</span>Some might assume morality and happiness naturally go together.</div>
+    <div class="opt-card" id="optE"><span class="opt-key">E.</span>They also gave us contact information for people who know them.</div>
+    <div class="opt-card" id="optF"><span class="opt-key">F.</span>We found that those rated as more moral reported a stronger sense of well-being.</div>
+    <div class="opt-card" id="optG"><span class="opt-key">G.</span>This might be in part because of the difficulties of defining and measuring kindness.</div>
+  </div>
+  <div class="quiz-actions">
+    <button class="quiz-btn" onclick="checkAnswers()">查看得分</button>
+  </div>
+  <div class="quiz-score" id="quizScore"></div>
+</div>
+<div class="panel analysis-panel open" id="analysisPanel">
+  <div class="panel-header" onclick="togglePanel('analysisPanel')"><span>答案解析（35—39题）</span><span class="arrow">&#9660;</span></div>
+  <div class="panel-body">
+    <div class="analysis-item">
+      <div class="analysis-answer">35题 答案：D — Some might assume morality and happiness naturally go together.</div>
+      <div class="locate-quote">上文：Are moral people happier? 下文：Others might reason that moral behavior often requires self-sacrifice.</div>
+      <div class="analysis-logic"><b>逻辑：</b>前文提出问题"道德的人更幸福吗？"，后文说"Others might reason that moral behavior requires self-sacrifice"（另一些人认为道德需要自我牺牲）。D说"Some might assume morality and happiness naturally go together"（一些人认为道德和幸福自然相伴），与Others形成对比——一部分人认为相伴，另一部分人认为需要牺牲。<br><b>排除 B/G：</b>B 说"没有共识"与上下文对比结构不符；G 讨论"衡量善良的困难"放在此处语境不通。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">36题 答案：A — Until recently, scientific evidence had been limited to one aspect of morality: kindness.</div>
+      <div class="locate-quote">下文：Past studies clearly show that people feel good when they perform acts of kindness for others. But researchers had not directly examined if moral character broadly speaking is linked to well-being.</div>
+      <div class="analysis-logic"><b>逻辑：</b>后文说"Past studies clearly show that people feel good when they perform acts of kindness"，但"researchers had not directly examined if moral character broadly speaking is linked to well-being"。A说"直到最近，科学证据仅限于道德的一个方面：善良"，承接后文从kindness到broader moral character的研究转变。<br><b>排除 B：</b>B 谈"没有共识"与本段"研究证据"的话题不吻合。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">37题 答案：E — They also gave us contact information for people who know them.</div>
+      <div class="locate-quote">上文：undergraduate students reported on their own well-being. 下文：Then these close others … rated the participant's moral character.</div>
+      <div class="analysis-logic"><b>逻辑：</b>前文说学生报告了自己的幸福感，后文说"Then these close others rated the participant's moral character"。E说"他们还给了我们认识他们的人的联系方式"，逻辑上连接：学生先自评 → 提供联系人 → 联系人再评价他们的道德品质。<b>these close others</b> 回指E中"people who know them"。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">38题 答案：F — We found that those rated as more moral reported a stronger sense of well-being.</div>
+      <div class="locate-quote">上文：which asked how much that person had the various characteristics identified as most morally relevant.</div>
+      <div class="analysis-logic"><b>逻辑：</b>前文描述了研究方法（学生自评幸福 + 他人评价道德），F说"We found that those rated as more moral reported a stronger sense of well-being"——给出了研究结果，是方法段的自然收尾。"those rated as more moral"呼应上文他人评价道德品质，"a stronger sense of well-being"呼应前文学生自评幸福感。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">39题 答案：C — Standing up for someone who is being treated unfairly can feel uncomfortable.</div>
+      <div class="locate-quote">上文：Doing the right thing isn't always easy. 下文：But our findings indicate that, in general, there's no trade-off between morality and well-being.</div>
+      <div class="analysis-logic"><b>逻辑：</b>前文说"Doing the right thing isn't always easy"，后文用But转折说"there's no trade-off between morality and well-being"。C说"Standing up for someone who is being treated unfairly can feel uncomfortable"——举例说明做正确的事不容易，然后But转折表明尽管如此，道德与幸福并不矛盾。<br><b>排除 B/G：</b>B 说"没有共识"与此处具体举例的语境不符；G 谈"衡量善良的困难"与上下文不搭配。</div>
+    </div>
+  </div>
+</div>
+<div class="tip-box">
+  <h3>七选五做题技巧</h3>
+  <ul>
+    <li><b>看衔接词：</b>Some … Others / But / Until recently / Instead 等是关键线索，直接锁定逻辑关系（对比/转折/时间/递进）。</li>
+    <li><b>找代词呼应：</b>代词（they / these close others / those）必须指向上文某个具体名词；代词能对上，选项通常就对了。</li>
+    <li><b>读前后句：</b>空格填进去后，上下句必须"话题连贯"——前句话题收尾，所选句承接，下句继续展开。</li>
+    <li><b>排除法最有效：</b>先排除话题不符或逻辑矛盾的选项（B 与上下文"道德与幸福"主线无关；G 讨论"定义和衡量善良的困难"放在各空均不合适）。</li>
+  </ul>
+</div>
+<!-- Vocab panel -->
+<div class="panel" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')">
+    <span>重点词汇（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="vocab-list">
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('stretched thin')">stretched thin</span>
+          <span class="vocab-meaning">分身乏术</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">stretch v. 拉伸 → stretched thin 被拉得太薄 = 分身乏术、力不从心。<br>when you're already <em>stretched thin</em> = 当你已经分身乏术时 &nbsp;·&nbsp; be <em>stretched thin</em> at work 工作上力不从心</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('philosophical')">philosophical</span>
+          <span class="vocab-meaning">哲学的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">philosophy n. 哲学 → philosophical adj. 哲学的。<br>a <em>philosophical</em> puzzle = 一个哲学难题 &nbsp;·&nbsp; <em>philosophical</em> debate 哲学辩论 &nbsp;·&nbsp; philosopher n. 哲学家</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('self-sacrifice')">self-sacrifice</span>
+          <span class="vocab-meaning">自我牺牲</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">self-（自我）+ sacrifice（牺牲）= 自我牺牲。<br>moral behavior often requires <em>self-sacrifice</em> = 道德行为常常需要自我牺牲 &nbsp;·&nbsp; <em>self-sacrificing</em> adj. 自我牺牲的</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('well-being')">well-being</span>
+          <span class="vocab-meaning">幸福感</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">well（好）+ being（存在）= 幸福感/健康状态。<br>is linked to <em>well-being</em> = 与幸福感有关联 &nbsp;·&nbsp; physical/mental <em>well-being</em> 身体/心理健康 &nbsp;·&nbsp; a sense of <em>well-being</em> 幸福感</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('undergraduate')">undergraduate</span>
+          <span class="vocab-meaning">本科生</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">under-（在…之下）+ graduate（毕业生）= 尚未毕业的学生 = 本科生。<br><em>undergraduate</em> students = 本科生 &nbsp;·&nbsp; 对比：graduate 研究生 / postgraduate 研究生</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('questionnaire')">questionnaire</span>
+          <span class="vocab-meaning">调查问卷</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">question n. 问题 → questionnaire n. 调查问卷。注意拼写：-nn- 双写。<br>fill out a <em>questionnaire</em> = 填写调查问卷 &nbsp;·&nbsp; using our <em>questionnaire</em> 使用我们的调查问卷</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('morally relevant')">morally relevant</span>
+          <span class="vocab-meaning">道德相关的</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">morally adv. 道德上 + relevant adj. 相关的 = 道德相关的。<br>characteristics identified as most <em>morally relevant</em> = 被认定为最具道德相关性的特征 &nbsp;·&nbsp; moral adj. 道德的 → morally adv.</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('trade-off')">trade-off</span>
+          <span class="vocab-meaning">权衡/取舍</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">trade（交易）+ off = 权衡取舍。做名词时常写作 trade-off。<br>there's no <em>trade-off</em> between morality and well-being = 道德和幸福之间没有取舍关系 &nbsp;·&nbsp; face a <em>trade-off</em> 面临取舍</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('satisfying')">satisfying</span>
+          <span class="vocab-meaning">令人满足的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">satisfy v. 使满足 → satisfying adj. 令人满足的 → satisfaction n. 满足感。<br>feels more <em>satisfying</em> = 感觉更令人满足 &nbsp;·&nbsp; a <em>satisfying</em> result 令人满意的结果 &nbsp;·&nbsp; 对比：satisfied 感到满足的（修饰人）</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('standing up for')">standing up for</span>
+          <span class="vocab-meaning">为...挺身而出</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">stand up for = 为…挺身而出/维护/支持。<br><em>standing up for</em> someone who is being treated unfairly = 为被不公平对待的人挺身而出 &nbsp;·&nbsp; <em>stand up for</em> your rights 维护你的权利</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+const THEMES=['yellow','green'];
+const THEME_LABELS={yellow:'\ud83d\udcc4 书本黄',green:'\ud83c\udf3f 护眼绿'};
+let themeIdx=parseInt(localStorage.getItem('theme')||'0');
+function applyTheme(){document.body.classList.remove('theme-yellow','theme-green');const t=THEMES[themeIdx%THEMES.length];document.body.classList.add('theme-'+t);const btn=document.getElementById('theme-btn');if(btn)btn.textContent=THEME_LABELS[t];}
+function cycleTheme(){themeIdx=(themeIdx+1)%THEMES.length;localStorage.setItem('theme',themeIdx);applyTheme();}
+applyTheme();
+const ANSWERS={35:'D',36:'A',37:'E',38:'F',39:'C'};
+const USED={'D':true,'A':true,'E':true,'F':true,'C':true};
+function checkAnswers(){
+  let correct=0;
+  for(const[num,ans]of Object.entries(ANSWERS)){
+    const sel=document.getElementById('blank'+num);if(!sel)continue;
+    const val=sel.value;sel.classList.remove('sel-correct','sel-wrong');
+    if(!val)continue;
+    if(val===ans){sel.classList.add('sel-correct');correct++;}else sel.classList.add('sel-wrong');
+  }
+  const sc=document.getElementById('quizScore');sc.textContent='得分：'+correct+' / 5';sc.classList.add('show');
+}
+function setMode(mode){
+  document.body.classList.remove('mode-quiz','mode-analysis');
+  document.body.classList.add('mode-'+mode);
+  document.querySelectorAll('.mode-step').forEach(btn=>btn.classList.toggle('active',btn.dataset.mode===mode));
+  if(mode==='analysis'){
+    Object.keys(USED).forEach(l=>{const el=document.getElementById('opt'+l);if(el)el.classList.add('opt-used');});
+    document.getElementById('analysisPanel').classList.add('open');
+  }else{
+    document.querySelectorAll('.opt-card').forEach(c=>c.classList.remove('opt-used'));
+    for(const num of[35,36,37,38,39]){const s=document.getElementById('blank'+num);if(s){s.value='';s.classList.remove('sel-correct','sel-wrong');}}
+    document.getElementById('quizScore').classList.remove('show');
+  }
+}
+function togglePanel(id){document.getElementById(id).classList.toggle('open');}
+let enPlayer=null;
+function speakWord(word){
+  if(enPlayer){enPlayer.pause();enPlayer=null;}
+  const slug='en-word-'+word.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const src='audio/2026北京卷-七选五/'+slug+'.mp3';
+  enPlayer=new Audio(src);
+  enPlayer.onerror=function(){const u=new SpeechSynthesisUtterance(word);const vs=speechSynthesis.getVoices();u.voice=vs.find(v=>v.lang==='en-GB')||vs.find(v=>v.lang.startsWith('en'))||vs[0];u.rate=0.8;speechSynthesis.speak(u);};
+  enPlayer.play();
+}
+function vocabClick(phrase){speakWord(phrase);}
+const SRS_PREFIX='srs_beijing_2026_75_';
+const SRS_INTERVALS=[1,3,7,14,30];
+function srsLoad(w){const r=localStorage.getItem(SRS_PREFIX+w);return r?JSON.parse(r):null;}
+function srsSave(w,knew){const s=srsLoad(w)||{streak:0};if(knew){s.streak=(s.streak||0)+1;s.interval=SRS_INTERVALS[Math.min(s.streak-1,SRS_INTERVALS.length-1)];}else{s.streak=0;s.interval=1;}s.nextReview=Date.now()+s.interval*86400000;localStorage.setItem(SRS_PREFIX+w,JSON.stringify(s));return s;}
+function srsIsDue(s){return!s||Date.now()>=s.nextReview;}
+function srsUpdateCard(card){const s=srsLoad(card.dataset.srsWord);card.classList.remove('srs-due','srs-known');if(!s)return;card.classList.add(srsIsDue(s)?'srs-due':'srs-known');}
+function srsUpdateBadge(){const badge=document.getElementById('srs-badge');if(!badge)return;const cards=document.querySelectorAll('.vocab-card[data-srs-word]');let due=0;cards.forEach(c=>{if(srsIsDue(srsLoad(c.dataset.srsWord)))due++;});if(due===0){badge.textContent='全掌握 ✓';badge.className='srs-badge all-done';}else{badge.textContent=due+'个待复习';badge.className='srs-badge';}}
+function srsClick(word,knew,btn){srsSave(word,knew);const card=btn.closest('.vocab-card');srsUpdateCard(card);srsUpdateBadge();btn.style.opacity='0.4';setTimeout(()=>btn.style.opacity='',600);}
+function srsInit(){document.querySelectorAll('.vocab-card').forEach(card=>{const wordEl=card.querySelector('.vocab-word');if(!wordEl)return;const word=wordEl.textContent.trim();card.dataset.srsWord=word;const btns=document.createElement('div');btns.className='srs-btns';const esc=word.replace(/\\/g,'\\\\').replace(/'/g,"\\'");btns.innerHTML='<button class="srs-btn srs-btn-know" onclick="srsClick(\''+esc+'\',true,this)">认识 ✓</button>'+'<button class="srs-btn srs-btn-forget" onclick="srsClick(\''+esc+'\',false,this)">还不会 ✗</button>';card.querySelector('.vocab-card-head').appendChild(btns);srsUpdateCard(card);});srsUpdateBadge();}
+srsInit();
+/* ── Tooltip ── */
+let tooltipEl=null;
+function showTooltip(tipEl){
+  hideTooltip();
+  const raw=tipEl.getAttribute('data-tip');
+  const[phrase,...rest]=raw.split('|');
+  const explain=rest.join('|');
+  const parts=explain.split('｜');
+  tooltipEl=document.createElement('div');
+  tooltipEl.className='tooltip';
+  let html='<div class="tip-phrase">'+phrase+' <span class="tip-speak" onclick="speakWord(\''+phrase.replace(/'/g,"\\'")+'\')">🔊</span></div>';
+  parts.forEach(p=>{html+='<div>'+p+'</div>';});
+  tooltipEl.innerHTML=html;
+  document.body.appendChild(tooltipEl);
+  speakWord(phrase);
+  const tr=tipEl.getBoundingClientRect();
+  const tt=tooltipEl.getBoundingClientRect();
+  let left=tr.left+tr.width/2-tt.width/2;
+  if(left<4)left=4;if(left+tt.width>window.innerWidth-4)left=window.innerWidth-4-tt.width;
+  let top=tr.top-tt.height-8;
+  if(top<4){top=tr.bottom+8;tooltipEl.classList.add('below');}
+  tooltipEl.style.left=left+'px';tooltipEl.style.top=top+'px';
+  const arrowLeft=tr.left+tr.width/2-left;
+  tooltipEl.style.setProperty('--arrow-left',arrowLeft+'px');
+}
+function hideTooltip(){if(tooltipEl){tooltipEl.remove();tooltipEl=null;}}
+document.addEventListener('click',function(e){
+  const tip=e.target.closest('.tip');
+  if(tip){e.stopPropagation();showTooltip(tip);return;}
+  hideTooltip();
+});
+</script>
+</body>
+</html>

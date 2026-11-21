@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2025北京卷·D篇精读 · Life Stories & Identity</title>
+<style>
+:root {
+  --bg: #fafaf8;
+  --text: #1a1a1a;
+  --text-secondary: #555;
+  --text-muted: #888;
+  --accent: #2563eb;
+  --accent-light: #dbeafe;
+  --complex-bg: #f0f6fc;
+  --border: #e2e2e0;
+  --card-bg: #fff;
+  --hover-bg: #f5f5f4;
+  --shadow: 0 1px 3px rgba(0,0,0,.08);
+  --radius: 6px;
+}
+.theme-yellow {
+  --bg: #f5f0e8;
+  --card-bg: #faf6ee;
+  --border: #ddd5bf;
+  --complex-bg: #ece4d4;
+  --hover-bg: #ede7d8;
+  --accent-light: #fde8b8;
+}
+.theme-green {
+  --bg: #edecea;
+  --card-bg: #f3f2f0;
+  --border: #d6d5d0;
+  --complex-bg: #e5e4e0;
+  --hover-bg: #e8e7e3;
+  --accent-light: #dddcd6;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  padding-bottom: 60px;
+}
+.container { max-width: min(1100px, 88vw); margin: 0 auto; padding: 0 20px; }
+
+/* ── Header ── */
+.header {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header .container { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.header h1 { font-size: 16px; font-weight: 600; flex: 1; min-width: 200px; }
+.header-sub { font-size: 12px; color: var(--accent); font-weight: 500; background: var(--accent-light); padding: 2px 8px; border-radius: 10px; }
+.header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 6px 14px; border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--card-bg); color: var(--text); font-size: 13px;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ── Mode steps ── */
+.mode-steps { display: flex; gap: 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.mode-step {
+  padding: 6px 12px; border: none; background: var(--card-bg); color: var(--text-secondary);
+  font-size: 13px; cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.mode-step + .mode-step { border-left: 1px solid var(--border); }
+.mode-step.active { background: var(--accent); color: #fff; }
+.mode-step:hover:not(.active) { background: var(--accent-light); }
+
+/* ── Passage ── */
+.passage {
+  background: var(--card-bg); border-radius: var(--radius);
+  box-shadow: var(--shadow); margin-top: 20px; padding: 28px 32px;
+}
+.passage-title {
+  text-align: center; font-family: Georgia, "Times New Roman", serif;
+  font-size: 15px; font-weight: 700; letter-spacing: .5px;
+  margin-bottom: 20px; color: var(--text-secondary);
+}
+.passage-subtitle {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px; font-weight: 700; text-align: center;
+  margin-bottom: 16px; color: var(--text);
+}
+.restaurant-name {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700; font-size: 16px;
+  margin: 18px 0 6px 0; color: var(--text);
+}
+.paragraph { margin-bottom: 4px; text-indent: 2em; }
+.sentence {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px; line-height: 1.75;
+  position: relative; transition: background .2s; border-radius: 3px;
+  cursor: pointer;
+}
+.sentence:hover { background: var(--hover-bg); }
+.sentence.playing { background: var(--complex-bg); border-radius: 3px; }
+.sentence.complex { border-bottom: 1.5px dashed #93c5fd; }
+.sentence.complex.playing { background: var(--complex-bg); }
+
+/* ── Phrase tips ── */
+.tip {
+  border-bottom: 1.5px dashed var(--accent);
+  cursor: pointer;
+  position: relative;
+  transition: background .15s;
+}
+.tip:hover { background: var(--accent-light); }
+.tip.tip-flash { outline: 2px solid var(--accent); border-radius: 2px; animation: tipFlash 1.6s ease-out forwards; }
+@keyframes tipFlash { 0%{background:var(--accent);color:#fff;} 40%{background:var(--accent-light);color:inherit;} 100%{background:transparent;} }
+/* 注解模式：上标序号 */
+sup.ann-sup {
+  display: none;
+  font-size: 0.6em; color: var(--accent); font-weight: 700;
+  vertical-align: super; line-height: 0; margin-left: 2px;
+  font-family: system-ui, sans-serif; pointer-events: none;
+}
+body.mode-annotate sup.ann-sup { display: inline; }
+
+/* 注解模式：段后词注块 */
+.para-ann {
+  display: none;
+  margin: 16px 0 28px 0;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 15px; color: #333; text-indent: 0;
+}
+body.mode-annotate .para-ann {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+  gap: 16px 18px;
+  align-items: start;
+}
+.pan-row {
+  background: #fff;
+  border: 1px solid #ece8e0;
+  border-radius: 12px;
+  padding: 16px 20px 18px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+.pan-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pan-num {
+  flex-shrink: 0;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  font-size: 12px; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.pan-en  { font-family: Georgia, serif; font-weight: 700; font-size: 18px; color: #1a1a1a; }
+.pan-cn  { color: var(--accent); font-weight: 600; font-size: 15px; }
+.pan-lv { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 4px; line-height: 1.4; }
+.lv-超纲 { background: #fee2e2; color: #b91c1c; }
+.pan-det { margin: 12px 0 0 32px; color: #666; font-size: 14px; line-height: 1.85; }
+.pan-det div { position: relative; padding-left: 12px; }
+.pan-det div + div { margin-top: 8px; }
+.pan-det div::before { content: ''; position: absolute; left: 0; top: 0.8em; width: 4px; height: 4px; border-radius: 50%; background: #c9c3b8; }
+
+
+body.mode-quiz .para-ann, body.mode-raw .para-ann { display: none !important; }
+body.mode-quiz sup.ann-sup, body.mode-raw sup.ann-sup { display: none !important; }
+
+/* Tooltip bubble */
+.tooltip {
+  position: fixed;
+  z-index: 200;
+  background: var(--text);
+  color: #fff;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 8px 14px;
+  border-radius: 8px;
+  max-width: min(520px, calc(100vw - 16px));
+  width: max-content;
+  box-shadow: 0 4px 20px rgba(0,0,0,.25);
+  pointer-events: auto;
+  animation: tipIn .15s ease-out;
+}
+.tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: var(--arrow-left, 50%);
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid var(--text);
+}
+.tooltip.below::after {
+  bottom: auto; top: -6px;
+  border-top: none;
+  border-bottom: 6px solid var(--text);
+}
+.tooltip .tip-phrase {
+  font-family: Georgia, serif;
+  font-weight: 600;
+  color: #93c5fd;
+  margin-bottom: 2px;
+}
+.tooltip .tip-speak {
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 6px;
+  font-size: 12px;
+  opacity: .7;
+  vertical-align: middle;
+}
+.tooltip .tip-speak:hover { opacity: 1; }
+.level-badge { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 11px; font-weight: 600; margin-left: 6px; vertical-align: middle; font-family: -apple-system, "PingFang SC", sans-serif; }
+.badge-超纲 { background: rgba(239,68,68,.25); color: #fca5a5; }
+.badge-拓展 { background: rgba(251,146,60,.2); color: #fdba74; }
+.badge-选必 { background: rgba(96,165,250,.2); color: #93c5fd; }
+.tooltip .tip-zh-play {
+  display: block;
+  margin-top: 6px;
+  padding: 4px 10px;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 4px;
+  color: #93c5fd;
+  font-size: 12px;
+  cursor: pointer;
+  text-align: center;
+}
+.tooltip .tip-zh-play:hover { background: rgba(255,255,255,.25); }
+@keyframes tipIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Expandable analysis ── */
+.analysis {
+  display: none; margin: 8px 0 12px 0; padding: 12px 16px;
+  background: #f8f9fa; border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 14px; color: var(--text-secondary); line-height: 1.7; text-indent: 0;
+}
+.analysis.open { display: block; }
+.analysis p { margin-bottom: 4px; }
+.analysis b { color: var(--text); font-size: 13px; }
+.analysis-play {
+  float: right; margin-left: 8px;
+  background: none; border: 1px solid var(--border); border-radius: 4px;
+  font-size: 12px; padding: 2px 8px; cursor: pointer; color: var(--accent);
+  transition: all .15s;
+}
+.analysis-play:hover { background: var(--accent-light); border-color: var(--accent); }
+.analysis-play.playing { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ── Translation ── */
+.translation-inline {
+  display: none;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 14px; color: var(--text-muted);
+  margin: 2px 0 6px 0; text-indent: 0;
+}
+body.compare-mode .translation-inline,
+body.mode-annotate .translation-inline { display: block; }
+
+/* ── Panels ── */
+.panel {
+  background: var(--card-bg); border-radius: var(--radius);
+  box-shadow: var(--shadow); margin-top: 16px; overflow: hidden;
+}
+.panel-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px; cursor: pointer; user-select: none;
+  font-weight: 600; font-size: 15px;
+  border-bottom: 1px solid transparent; transition: border-color .2s;
+}
+.panel-header:hover { color: var(--accent); }
+.panel-header .arrow { transition: transform .2s; font-size: 12px; color: var(--text-muted); }
+.panel.open .panel-header { border-bottom-color: var(--border); }
+.panel.open .panel-header .arrow { transform: rotate(180deg); }
+.panel-body { display: none; padding: 16px 24px; }
+.panel.open .panel-body { display: block; }
+
+/* Vocab cards */
+.vocab-card { border-bottom: 1px solid #f0f0f0; padding: 12px 0; }
+.vocab-card:last-child { border-bottom: none; }
+.vocab-card-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 12px; }
+.vocab-word { font-family: Georgia, serif; font-weight: 600; color: var(--accent); cursor: pointer; font-size: 15px; }
+.vocab-word:hover { text-decoration: underline; }
+.vocab-meaning { font-size: 14px; color: var(--text); }
+.vocab-extra { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+.vocab-tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 3px; background: #fef3c7; color: #92400e; vertical-align: middle; }
+.vocab-tag.tag-core { background: #dcfce7; color: #166534; }
+.vocab-tag.tag-exam { background: #dbeafe; color: #1e40af; }
+.vocab-tag.tag-beyond { background: #fef3c7; color: #92400e; }
+.vocab-tag.tag-extend { background: #ffedd5; color: #c2410c; }
+.vocab-detail { display: none; margin-top: 8px; padding: 10px 14px; background: #f8f9fa; border-radius: var(--radius); font-size: 13.5px; line-height: 1.7; }
+.vocab-detail.open { display: block; }
+.vocab-detail .vd-section { margin-bottom: 6px; }
+.vocab-detail .vd-label { font-weight: 600; color: var(--accent); margin-right: 4px; }
+.vocab-detail .vd-example { color: var(--text-secondary); padding-left: 16px; }
+.vocab-detail .vd-example em { color: var(--text); font-style: normal; font-weight: 600; }
+.vocab-expand { font-size: 12px; color: var(--accent); cursor: pointer; border: none; background: none; padding: 0; margin-left: 8px; }
+.vocab-expand:hover { text-decoration: underline; }
+
+/* ── SRS review buttons ── */
+.srs-btns { display: flex; gap: 5px; margin-left: auto; }
+.srs-btn { font-size: 11px; padding: 2px 7px; border-radius: 10px; border: 1.5px solid; cursor: pointer; transition: all .15s; background: none; white-space: nowrap; }
+.srs-btn-know  { border-color: #16a34a; color: #16a34a; }
+.srs-btn-know:hover  { background: #dcfce7; }
+.srs-btn-forget { border-color: #dc2626; color: #dc2626; }
+.srs-btn-forget:hover { background: #fee2e2; }
+.vocab-card.srs-due  .vocab-word::after { content: ' 📌'; font-size: 10px; }
+.vocab-card.srs-known .vocab-word::after { content: ' ✓';  font-size: 11px; color: #16a34a; }
+.srs-badge { font-size: 12px; font-weight: 600; padding: 1px 8px; border-radius: 10px; background: #fef2f2; color: #dc2626; }
+.srs-badge.all-done { background: #dcfce7; color: #16a34a; }
+
+/* ── Questions ── */
+.question-item { padding: 16px 24px; border-bottom: 1px solid #f0f0f0; }
+.question-item:last-child { border-bottom: none; }
+.question-stem { font-weight: 600; font-size: 15px; margin-bottom: 8px; }
+.question-options { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 24px; font-size: 14px; margin-bottom: 8px; }
+.question-option { padding: 2px 0; }
+.show-answer-btn { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; color: var(--accent); cursor: pointer; background: none; border: none; padding: 4px 0; }
+.show-answer-btn:hover { text-decoration: underline; }
+.question-analysis { display: none; margin-top: 10px; padding: 12px 16px; background: #f8f9fa; border-radius: var(--radius); font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+.question-analysis.open { display: block; }
+.question-analysis .answer-line { font-weight: 700; color: #16a34a; margin-bottom: 6px; font-size: 15px; }
+.question-analysis .locate { background: #fef9c3; padding: 6px 10px; border-radius: 4px; margin: 6px 0; font-family: Georgia, serif; font-style: italic; font-size: 14px; color: var(--text); }
+.option-list { margin-top: 10px; display: flex; flex-direction: column; gap: 2px; }
+.option-item { padding: 3px 0; font-size: 13.5px; line-height: 1.5; }
+.option-item .opt-letter { font-weight: 700; }
+.option-item .opt-mark { font-weight: 700; }
+.option-item.correct .opt-mark { color: #15803d; }
+.option-item.wrong .opt-mark { color: #b91c1c; }
+.option-item .opt-why { color: #888; font-size: 12.5px; margin-left: 4px; }
+
+/* ── Writing panel ── */
+.writing-block { margin-bottom: 20px; }
+.writing-block:last-child { margin-bottom: 0; }
+.writing-block-title { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: .04em; text-transform: uppercase; margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+.writing-phrase-list { display: flex; flex-direction: column; gap: 0; }
+.writing-phrase { padding: 10px 0; border-bottom: 1px solid #f3f3f3; font-size: 14px; }
+.writing-phrase:last-child { border-bottom: none; }
+.writing-phrase-en { font-family: Georgia, serif; font-weight: 600; color: var(--text); font-size: 15px; }
+.writing-phrase-cn { color: var(--text-secondary); font-size: 13px; margin: 2px 0; }
+.writing-phrase-src { font-size: 12px; color: #aaa; font-style: italic; }
+.writing-phrase-src em { color: var(--accent); font-style: normal; }
+.writing-phrase-use { font-size: 13px; color: #555; margin-top: 4px; padding: 5px 10px; background: var(--hover-bg); border-radius: 4px; border-left: 2px solid var(--accent); }
+.conn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+@media (max-width: 600px) { .conn-grid { grid-template-columns: 1fr; } }
+.conn-card { padding: 10px 12px; border-radius: var(--radius); background: var(--hover-bg); font-size: 13.5px; }
+.conn-card-title { font-weight: 700; font-size: 12px; letter-spacing: .04em; margin-bottom: 6px; }
+.conn-card.c-add .conn-card-title { color: #0369a1; }
+.conn-card.c-contrast .conn-card-title { color: #b45309; }
+.conn-card.c-result .conn-card-title { color: #15803d; }
+.conn-card.c-example .conn-card-title { color: #7c3aed; }
+.conn-card.c-conclude .conn-card-title { color: #be185d; }
+.conn-item { display: inline-block; margin: 2px 3px 2px 0; padding: 2px 7px; border-radius: 10px; font-size: 12.5px; font-family: Georgia, serif; }
+.conn-card.c-add .conn-item { background: #e0f2fe; color: #0369a1; }
+.conn-card.c-contrast .conn-item { background: #fef3c7; color: #92400e; }
+.conn-card.c-result .conn-item { background: #dcfce7; color: #15803d; }
+.conn-card.c-example .conn-item { background: #ede9fe; color: #6d28d9; }
+.conn-card.c-conclude .conn-item { background: #fce7f3; color: #9d174d; }
+.conn-note { font-size: 12px; color: #888; margin-top: 5px; }
+
+/* ── Review ── */
+.review-section { padding: 20px 24px; }
+.review-section h3 { font-size: 15px; margin-bottom: 12px; }
+.review-checks { display: flex; flex-wrap: wrap; gap: 12px; font-size: 14px; }
+.review-checks label { display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 6px 12px; border: 1px solid var(--border); border-radius: var(--radius); transition: all .15s; }
+.review-checks label:has(input:checked) { background: var(--accent-light); border-color: var(--accent); }
+.review-checks input { accent-color: var(--accent); }
+
+/* ── Raw mode ── */
+body.mode-raw .tip { border-bottom: none; cursor: default; pointer-events: none; }
+body.mode-raw .tip:hover { background: none; }
+body.mode-raw .analysis,
+body.mode-raw .translation-inline,
+body.mode-raw .panel { display: none !important; }
+body.mode-raw .sentence.complex { border-bottom: none; }
+body.mode-raw .sentence { cursor: default; }
+body.mode-raw .sentence:hover { background: none; }
+
+/* ── Quiz mode ── */
+body.mode-quiz .tip { border-bottom: none; cursor: default; pointer-events: none; }
+body.mode-quiz .tip:hover { background: none; }
+body.mode-quiz .analysis,
+body.mode-quiz .translation-inline,
+body.mode-quiz #vocabPanel,
+body.mode-quiz #reviewPanel,
+body.mode-quiz #tipPanel,
+body.mode-quiz #writingPanel,
+body.mode-quiz #playbar { display: none !important; }
+body.mode-quiz .sentence.complex { border-bottom: none; cursor: default; }
+body.mode-quiz .sentence { cursor: default; }
+body.mode-quiz .sentence:hover { background: none; }
+body.mode-annotate .sentence.complex { border-bottom: none; }
+body.mode-annotate .sentence { cursor: default; }
+body.mode-annotate .sentence:hover { background: none; }
+body.mode-quiz #questionsPanel { display: block; }
+body.mode-quiz #questionsPanel .panel-body { display: block; }
+body.mode-quiz .question-analysis { display: none !important; }
+body.mode-quiz .show-answer-btn { display: none; }
+body.mode-quiz .question-option { cursor: pointer; padding: 6px 10px; border-radius: var(--radius); border: 1.5px solid transparent; transition: all .15s; }
+body.mode-quiz .question-option:hover { background: var(--accent-light); }
+body.mode-quiz .question-option.selected { border-color: var(--accent); background: var(--accent-light); }
+body.mode-quiz .question-option.correct { border-color: #16a34a; background: #dcfce7; }
+body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2e2; }
+.quiz-score { text-align: center; padding: 16px; font-size: 16px; font-weight: 600; color: var(--accent); display: none; }
+.quiz-score.show { display: block; }
+
+/* ── Bottom Playbar ── */
+#playbar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+  background: #1a1a1a; color: #fff;
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  padding: 10px 20px; height: 52px;
+  font-size: 14px;
+  box-shadow: 0 -2px 12px rgba(0,0,0,.2);
+}
+#playbar button {
+  background: none; border: none; color: #fff; font-size: 18px;
+  cursor: pointer; padding: 4px 8px; border-radius: 4px; line-height: 1;
+  transition: background .15s;
+}
+#playbar button:hover { background: rgba(255,255,255,.15); }
+#pb-play { font-size: 22px; }
+#pb-counter { font-size: 13px; color: #aaa; min-width: 52px; text-align: center; }
+#pb-speed {
+  background: #333; border: none; color: #fff; font-size: 13px;
+  padding: 3px 6px; border-radius: 4px; cursor: pointer;
+}
+
+/* ── Responsive ── */
+.sentence.highlighted { background: #fef08a; border-radius: 3px; }
+@media (max-width: 600px) {
+  .passage { padding: 20px 16px; }
+  .sentence { font-size: 16px; }
+  .question-options { grid-template-columns: 1fr; }
+  .panel-header, .question-item, .review-section { padding-left: 16px; padding-right: 16px; }
+  .panel-body { padding: 12px 16px; }
+}
+
+/* ── Full-width layout + safe areas (iPad / iPhone / home-screen app) ── */
+.container {
+  max-width: 1400px; width: 100%;
+  padding-left: max(12px, env(safe-area-inset-left));
+  padding-right: max(12px, env(safe-area-inset-right));
+}
+.header { padding-top: calc(16px + env(safe-area-inset-top)); }
+body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
+#playbar {
+  height: calc(52px + env(safe-area-inset-bottom));
+  padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  padding-left: max(20px, env(safe-area-inset-left));
+  padding-right: max(20px, env(safe-area-inset-right));
+}
+.passage { padding: 24px 24px; }
+@media (max-width: 600px) {
+  .passage { padding: 18px 14px; }
+  .panel-header, .question-item, .review-section { padding-left: 14px; padding-right: 14px; }
+  .panel-body { padding: 12px 14px; }
+}
+/* Tooltip: arrow stays outside the scroll area; only the body scrolls */
+.tooltip .tip-scroll { overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+
+/* ── Larger type for iPad / desktop (>=700px). Phones keep the compact sizes. ── */
+@media (min-width: 700px) {
+  .header h1 { font-size: 19px; }
+  .passage-title { font-size: 19px; }
+  .restaurant-name { font-size: 20px; }
+  .passage h2, .passage h3 { font-size: 20px; }
+  .header-sub { font-size: 14px; }
+  .sentence { font-size: 23px; line-height: 1.8; }
+  .translation-inline { font-size: 18px !important; line-height: 1.8; }
+  .analysis { font-size: 18px; line-height: 1.8; }
+  .analysis b { font-size: 16px; }
+  .panel-header { font-size: 18px; }
+  .vocab-word { font-size: 20px; }
+  .vocab-meaning { font-size: 18px; }
+  .vocab-extra { font-size: 16.5px; line-height: 1.7; }
+  .vocab-detail, .vd-example { font-size: 16px; }
+  .vocab-tag, .level-badge { font-size: 13px; }
+  .vocab-expand, .srs-btn, .srs-badge { font-size: 14px; }
+  .question-stem { font-size: 19px; }
+  .question-options { font-size: 18px; }
+  .show-answer-btn { font-size: 15.5px; }
+  .question-analysis .answer-line { font-size: 17px; }
+  .option-item { font-size: 16.5px; }
+  .option-item .opt-why { font-size: 15px; }
+  .writing-phrase, .writing-phrase-en { font-size: 18px; }
+  .writing-phrase-cn, .writing-phrase-use { font-size: 16px; }
+  .conn-card { font-size: 16px; } .conn-item { font-size: 15px; }
+  .review-section h3 { font-size: 17px; } .review-checks { font-size: 17px; }
+  .panel-body[style] { font-size: 17px !important; }
+  .tooltip { font-size: 17px; line-height: 1.55; }
+  .tooltip .tip-phrase { font-size: 19px; }
+  .tooltip .tip-zh-play { font-size: 14px; }
+  #pb-counter, #pb-speed { font-size: 15px; }
+}
+
+/* 注解模式：长难句拆解（无音频，替代 .analysis） */
+.sb-block { display: none; }
+body.mode-annotate .sb-block {
+  display: block; margin: 4px 0 28px; padding: 16px 20px 18px;
+  background: #f8f9fa; border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-family: -apple-system, "PingFang SC", sans-serif; text-indent: 0;
+}
+body.mode-annotate .analysis { display: none !important; }
+body.mode-quiz .sb-block, body.mode-raw .sb-block { display: none !important; }
+.sb-title { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: .08em; margin-bottom: 12px; }
+.sb-sent { font-family: Georgia, serif; font-size: 18px; line-height: 2.3; color: #1a1a1a; background: #fff; border: 1px solid #ece8e0; border-radius: 10px; padding: 14px 18px; }
+.sb-chip { display: inline-block; font-family: -apple-system, "PingFang SC", sans-serif; font-size: 11px; font-weight: 700; line-height: 1; padding: 4px 7px; border-radius: 999px; margin-right: 5px; vertical-align: 3px; }
+.sb-core { font-weight: 700; border-bottom: 2.5px solid var(--accent); }
+.sb-core-chip { background: var(--accent); color: #fff; }
+.sb-ins { color: #9a9a9a; background: #eeebe4; border-radius: 4px; padding: 2px 4px; }
+.sb-ins-chip { background: #e4e0d8; color: #777; }
+.sb-rest { border-bottom: 2.5px solid #4caf7a; }
+.sb-rest-chip { background: #4caf7a; color: #fff; }
+.sb-steps { margin-top: 14px; display: grid; gap: 10px; }
+.sb-step { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; font-size: 15px; line-height: 1.75; color: #333; }
+.sb-step-n { width: 24px; height: 24px; border-radius: 50%; background: #1a1a1a; color: #fff; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; margin-top: 2px; }
+.sb-step em { font-style: normal; font-family: Georgia, serif; color: #111; background: #fff; border: 1px solid #ece8e0; padding: 0 5px; border-radius: 4px; }
+.sb-step .arrow { color: #aaa; margin: 0 4px; }
+.sb-tip { margin-top: 14px; font-size: 14px; color: #8a6d1f; background: #fdf6e3; border-radius: 8px; padding: 9px 14px; }
+
+/* 打印：只印正文区（课本模式最完整），去掉导航/播放条/面板，卡片不跨页 */
+@media print {
+  @page { size: A4; margin: 14mm 12mm; }
+  html, body { background: #fff !important; }
+  body { padding: 0 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .header, #playbar, .panel, .tooltip { display: none !important; }
+  .passage { box-shadow: none !important; border: none !important; background: #fff !important; padding: 0 !important; margin: 0 !important; max-width: none !important; }
+  .sentence { font-size: 15px !important; line-height: 1.85 !important; }
+  .translation-inline { font-size: 12.5px !important; break-inside: avoid; }
+  body.mode-annotate .para-ann { grid-template-columns: 1fr 1fr; gap: 8px 10px; margin: 8px 0 14px; }
+  .pan-row { box-shadow: none; padding: 9px 12px 10px; break-inside: avoid; }
+  .pan-en { font-size: 14px; }
+  .pan-cn { font-size: 12.5px; }
+  .pan-det { margin: 6px 0 0 30px; font-size: 11.5px; line-height: 1.6; }
+  .pan-det div + div { margin-top: 3px; }
+  body.mode-annotate .sb-block { break-inside: avoid; padding: 12px 14px; margin: 4px 0 16px; }
+  .sb-sent { font-size: 14px; line-height: 2.1; padding: 10px 12px; }
+  .sb-step { font-size: 12.5px; line-height: 1.6; }
+  .sb-tip { font-size: 12px; }
+  .restaurant-name, h2, h3 { break-after: avoid; }
+}
+</style>
+</head>
+<body class="mode-study">
+
+<!-- ══════ Header ══════ -->
+<div class="header">
+  <div class="container">
+    <h1>D篇精读 · Life Stories &amp; Identity</h1>
+    <div class="header-controls">
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="study" onclick="setMode('study')">① 精读</button>
+        <button class="mode-step" data-mode="quiz" onclick="setMode('quiz')">② 做题</button>
+        <button class="mode-step" data-mode="raw" onclick="setMode('raw')">③ 原文</button>
+        <button class="mode-step" data-mode="annotate" onclick="setMode('annotate')">④ 课本</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()" title="切换护眼色">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Passage ══════ -->
+<div class="container">
+<div class="passage" id="passage">
+  <div class="passage-title">D</div>
+  <div class="passage-subtitle">Life Stories &amp; Identity</div>
+
+  <!-- ── Para 1: Opening ── -->
+  <div class="paragraph" id="para-1">
+    <span class="sentence" data-idx="0">We are all storytellers.</span>
+    <span class="sentence" data-idx="1">From the moment we learn to talk, we begin <span class="tip" data-tip="weaving|编织，构建｜weave = 编织（过去式 wove），这里是比喻：像编织一样构建故事。weaving narratives = 编织叙事——把零散经历织成完整故事｜搭配：weave a story 编故事，weave together 编织在一起" data-level="拓展">weaving</span> <span class="tip" data-tip="narratives|叙事，故事｜narrate = 叙述，narrative = 叙事/故事（比 story 更学术正式）。narratives about our experiences = 关于我们经历的叙事｜形容词：narrative structure 叙事结构" data-level="选必">narratives</span> about our experiences.</span>
+    <span class="sentence" data-idx="2">But psychologist Dan McAdams argues that these stories do far more than simply record events — they actually shape who we are.</span>
+    <div class="translation-inline">我们都是故事讲述者。从学会说话的那一刻起，我们就开始编织关于自身经历的叙事。但心理学家丹·麦克亚当斯认为，这些故事的作用远不止记录事件——它们实际上塑造了我们是谁。</div>
+  </div>
+
+  <!-- ── Para 2: McAdams' theory ── -->
+  <div class="paragraph" id="para-2">
+    <span class="sentence" data-idx="3">McAdams has spent decades studying what he calls "<span class="tip" data-tip="narrative identity|叙事身份/叙事认同｜narrative = 叙事，identity = 身份认同。narrative identity = 叙事认同——通过讲述自己的人生故事来建构身份认同。McAdams 提出的核心概念｜这是一个心理学术语" data-level="超纲">narrative identity</span>" — the <span class="tip" data-tip="internalized|内化的｜internal = 内部的，internalize = 内化（把外部的东西变成自己内心的一部分）。internalized story = 内化的故事——已经成为你内心一部分的人生叙事｜反义：externalized 外化的" data-level="拓展">internalized</span>, evolving story that each person constructs to make sense of his or her life.</span>
+    <span class="sentence" data-idx="4">This is not merely a summary of what has happened to us.</span>
+    <span class="sentence complex" data-idx="5">It is a selective, <span class="tip" data-tip="interpretive|解释性的，阐释性的｜interpret = 解释/阐释，interpretive = 解释性的。interpretive account = 带有个人解读的叙述——不只是客观记录，还包含主观解读｜近义：explanatory 解释性的" data-level="拓展">interpretive</span> account that highlights certain events while <span class="tip" data-tip="downplaying|淡化，低调处理｜down = 向下，play = 表演/处理。downplay = 淡化处理——有意降低某件事的重要性。highlights certain events while downplaying others = 突出某些事件同时淡化其他事件｜反义：highlight 强调，emphasize 强调" data-level="拓展">downplaying</span> others, creating a sense of purpose and <span class="tip" data-tip="continuity|连续性，连贯性｜continue = 继续，continuity = 连续性。a sense of continuity = 一种连贯感——觉得自己的人生是一个连贯的整体，而不是零散的碎片｜反义：discontinuity 不连续性" data-level="拓展">continuity</span>.</span>
+    <div class="analysis" id="analysis-5"><button class="analysis-play" onclick="playAnalysis('analysis-5', this)" title="听讲解">🔊 听讲解</button>
+      <p>这句的核心结构是：It is not A. It is B that C while D, creating E。先说"不仅仅是"（not merely a summary），再说"而是"（a selective, interpretive account）。that 从句说明这个叙述做了什么：highlights certain events while downplaying others。最后 creating... 是现在分词作结果状语。</p>
+      <p>核心意思：叙事认同不只是客观总结，而是一种有选择性的、带有个人解读的叙述，它突出某些事件、淡化另一些，从而创造出目标感和连贯性。</p>
+    </div>
+    <div class="translation-inline">麦克亚当斯花了数十年研究他所称的"叙事认同"——每个人为了理解自己的人生而构建的一个内化的、不断演变的故事。这不仅仅是对我们所经历之事的总结。它是一种有选择性的、带有解读的叙述，突出某些事件，同时淡化其他事件，从而创造出一种目标感和连贯性。</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-core-chip">主语 + 系动词</span><span class="sb-core">It is</span> <span class="sb-chip sb-core-chip">表语</span><span class="sb-core">a selective, interpretive account</span> <span class="sb-chip sb-rest-chip">that 定语从句</span><span class="sb-rest">that highlights certain events while downplaying others,</span> <span class="sb-chip sb-ins-chip">结果状语</span><span class="sb-ins">creating a sense of purpose and continuity.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读主干：<em>It is a selective, interpretive account</em><span class="arrow">→</span>它是一种有选择性的、解释性的叙述</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>that 定语从句：<em>that highlights certain events while downplaying others</em><span class="arrow">→</span>突出某些事件，同时淡化其他事件</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>结果状语：<em>creating a sense of purpose and continuity</em><span class="arrow">→</span>从而创造出目标感和连贯性</div></div></div><div class="sb-tip">💡 「V-ing 作结果状语」是高考长难句常见结构——前面的动作自然导致后面的结果。注意 while 在这里表示"同时"，不是"虽然"。</div></div>
+  </div>
+
+  <!-- ── Para 3: Bob Johnson example — redemption ── -->
+  <div class="paragraph" id="para-3">
+    <span class="sentence" data-idx="6">Consider a man named Bob Johnson who lost his job during an economic downturn.</span>
+    <span class="sentence" data-idx="7">One version of his story might go: "Losing my job was <span class="tip" data-tip="devastating|毁灭性的，极具破坏力的｜devastate = 摧毁/使震惊。devastating = 毁灭性的、令人崩溃的。Losing my job was devastating = 失业对我来说是毁灭性的打击｜近义：destructive 破坏性的，overwhelming 压倒性的" data-level="选必">devastating</span>, but it forced me to reconsider my priorities. I went back to school, <span class="tip" data-tip="retrained|再培训，重新学习技能｜re- = 再次，train = 训练。retrain = 重新培训——学习新的职业技能。went back to school, retrained = 重返校园，重新学习技能｜名词：retraining 再培训" data-level="拓展">retrained</span>, and eventually found work that I truly love."</span>
+    <span class="sentence" data-idx="8">McAdams would classify this as a "<span class="tip" data-tip="redemption sequence|救赎序列｜redemption = 救赎/赎回（宗教意味：从苦难中获得拯救），sequence = 序列/顺序。redemption sequence = 救赎叙事模式——坏事最终变成好事的故事模式｜这是 McAdams 的学术术语" data-level="超纲">redemption sequence</span>" — a narrative pattern in which a negative event is transformed into a positive outcome.</span>
+    <div class="translation-inline">想想一个叫鲍勃·约翰逊的人，他在经济衰退期间失去了工作。他的故事的一个版本可能是这样的："失业对我来说是毁灭性的打击，但它迫使我重新审视自己的优先事项。我重返校园，重新学习技能，最终找到了自己真正热爱的工作。"麦克亚当斯会将此归类为"救赎序列"——一种负面事件被转化为积极结果的叙事模式。</div>
+  </div>
+
+  <!-- ── Para 4: Contamination sequences ── -->
+  <div class="paragraph" id="para-4">
+    <span class="sentence" data-idx="9">But the same events can be narrated quite differently.</span>
+    <span class="sentence" data-idx="10">Another version: "I lost my job and everything fell apart. Even when things seemed to improve, something always went wrong again."</span>
+    <span class="sentence" data-idx="11">This is what McAdams terms a "<span class="tip" data-tip="contamination sequence|污染序列｜contaminate = 污染，contamination = 污染。contamination sequence = 污染叙事模式——好事被随后的坏事"污染"，好的开头总是被坏结局毁掉｜与 redemption sequence 相反" data-level="超纲">contamination sequence</span>" — good or hopeful moments are spoiled by <span class="tip" data-tip="subsequent|随后的，接下来的｜sub- = 在…之后，sequent = 跟随的。subsequent = 随后发生的。subsequent negative outcomes = 随后出现的负面结果｜搭配：subsequent events 后续事件，in subsequent years 在随后几年" data-level="选必">subsequent</span> negative outcomes.</span>
+    <div class="translation-inline">但同样的事件可以被截然不同地叙述。另一个版本是："我失去了工作，一切都崩塌了。即使事情似乎有所好转，总有什么东西又出了问题。"这就是麦克亚当斯所称的"污染序列"——好的或充满希望的时刻被随后的负面结果所破坏。</div>
+  </div>
+
+  <!-- ── Para 5: Research findings ── -->
+  <div class="paragraph" id="para-5">
+    <span class="sentence complex" data-idx="12">Research consistently shows that people who construct redemption narratives tend to report higher levels of well-being, greater <span class="tip" data-tip="generativity|繁衍关怀，代际关怀｜generate = 产生/繁殖，generativity = 对下一代的关怀和贡献欲。McAdams 研究的核心概念之一——关心并引导下一代人成长的意愿｜这是一个心理学专业术语" data-level="超纲">generativity</span> — a concern for guiding the next generation — and stronger mental health.</span>
+    <div class="analysis" id="analysis-12"><button class="analysis-play" onclick="playAnalysis('analysis-12', this)" title="听讲解">🔊 听讲解</button>
+      <p>主干是 Research shows that ... 。that 从句中，主语是 people who construct redemption narratives（构建救赎叙事的人），谓语是 tend to report，宾语是三个并列项：higher levels of well-being, greater generativity, and stronger mental health。破折号中间的 a concern for guiding the next generation 是对 generativity 的解释。</p>
+    </div>
+    <span class="sentence" data-idx="13">Those who <span class="tip" data-tip="habitually|习惯性地｜habit = 习惯，habitual = 习惯性的，habitually = 习惯性地。habitually tell contamination stories = 习惯性地讲述污染型故事｜近义：regularly, routinely" data-level="拓展">habitually</span> tell contamination stories, by contrast, are more likely to experience depression and a <span class="tip" data-tip="diminished|减少的，削弱的｜diminish = 减少/削弱。diminished sense of purpose = 被削弱的目标感——觉得人生没什么意义了｜近义：reduced, weakened" data-level="选必">diminished</span> sense of purpose.</span>
+    <div class="translation-inline">研究一致表明，构建救赎叙事的人往往报告更高水平的幸福感、更强的繁衍关怀——一种引导下一代的关切——以及更强的心理健康。相比之下，那些习惯性地讲述污染型故事的人更有可能经历抑郁和目标感的削弱。</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-core-chip">谁</span><span class="sb-core">Research</span> <span class="sb-chip sb-ins-chip">修饰</span><span class="sb-ins">consistently</span> <span class="sb-chip sb-core-chip">表明</span><span class="sb-core">shows that</span> <span class="sb-chip sb-rest-chip">内容</span><span class="sb-rest">people who construct redemption narratives tend to report higher levels of well-being, greater generativity — a concern for guiding the next generation — and stronger mental health.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读主干：<em>Research shows that ...</em><span class="arrow">→</span>研究表明……</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>that 从句主语：<em>people who construct redemption narratives</em><span class="arrow">→</span>构建救赎叙事的人</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>谓语 + 宾语（三个并列项）：<em>tend to report ① higher levels of well-being, ② greater generativity, ③ and stronger mental health</em><span class="arrow">→</span>往往报告更高的幸福感、更强的代际关怀、更强的心理健康</div></div><div class="sb-step"><span class="sb-step-n">4</span><div>破折号插入解释：<em>— a concern for guiding the next generation —</em><span class="arrow">→</span>对 generativity 的解释，可以先跳过</div></div></div><div class="sb-tip">💡 破折号中间的内容是对前面生僻词的解释，高考文章常用这种方式帮你理解术语——看到破折号要利用它来猜词义。</div></div>
+  </div>
+
+  <!-- ── Para 6: Conclusion — stories can be rewritten ── -->
+  <div class="paragraph" id="para-6">
+    <span class="sentence" data-idx="14">The encouraging finding from McAdams' work is that our life stories are not fixed.</span>
+    <span class="sentence" data-idx="15">With reflection and sometimes professional guidance, people can learn to reinterpret their experiences, finding <span class="tip" data-tip="threads|线索，脉络｜thread = 线/线索。finding threads of growth = 找到成长的线索——在痛苦经历中发现成长的脉络/线索｜搭配：a common thread 共同线索，lose the thread 失去线索" data-level="拓展">threads</span> of growth and meaning even in painful <span class="tip" data-tip="chapters|篇章，阶段｜chapter 本义是书的"章节"，这里比喻人生的某个阶段。painful chapters = 痛苦的人生篇章/阶段｜比 "periods" 更有文学感" data-level="选必">chapters</span>.</span>
+    <span class="sentence complex" data-idx="16">The stories we tell ourselves, it turns out, are not just reflections of our lives — they are among the most powerful tools we have for shaping them.</span>
+    <div class="analysis" id="analysis-16"><button class="analysis-play" onclick="playAnalysis('analysis-16', this)" title="听讲解">🔊 听讲解</button>
+      <p>主干是 The stories are not just A — they are B。主语 The stories 后面有定语从句 we tell ourselves 修饰。it turns out 是插入语（事实证明）。破折号后面用 they are among the most powerful tools 进一步加强语气。we have for shaping them 是定语从句修饰 tools。</p>
+    </div>
+    <div class="translation-inline">麦克亚当斯研究中令人鼓舞的发现是，我们的人生故事并非一成不变。通过反思，有时在专业指导下，人们可以学会重新解读自己的经历，即使在痛苦的人生篇章中也能找到成长和意义的线索。事实证明，我们讲给自己听的故事不仅仅是生活的映射——它们是我们塑造人生最强大的工具之一。</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-core-chip">主语 + 定语从句</span><span class="sb-core">The stories we tell ourselves,</span> <span class="sb-chip sb-ins-chip">插入语 · 先跳过</span><span class="sb-ins">it turns out,</span> <span class="sb-chip sb-core-chip">not just A</span><span class="sb-core">are not just reflections of our lives</span> <span class="sb-chip sb-rest-chip">— they are B</span><span class="sb-rest">— they are among the most powerful tools we have for shaping them.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读主干：<em>The stories are not just A — they are B</em><span class="arrow">→</span>这些故事不仅是A——更是B</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>主语的定语从句：<em>The stories we tell ourselves</em><span class="arrow">→</span>我们讲给自己听的故事</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>插入语：<em>it turns out</em><span class="arrow">→</span>事实证明（可先跳过）</div></div><div class="sb-step"><span class="sb-step-n">4</span><div>B 部分的定语从句：<em>the most powerful tools we have for shaping them</em><span class="arrow">→</span>我们用来塑造人生的最强大工具</div></div></div><div class="sb-tip">💡 「not just A — B」是强调递进的经典结构。插入语 it turns out 用逗号隔开，阅读时先跳过不影响理解主干。</div></div>
+  </div>
+</div>
+
+<!-- ══════ Vocabulary ══════ -->
+<div class="panel" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')">
+    <span>生词与短语（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="vocab-list">
+      <!-- ── 考纲内 ── -->
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('narratives')">narratives</span>
+          <span class="vocab-meaning">叙事，故事</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">narrate = 叙述，<em>narrative</em> = 叙事/故事（比 story 更学术正式）。<br><em>narratives</em> about our experiences 关于我们经历的叙事 &nbsp;·&nbsp; narrative structure 叙事结构</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('devastating')">devastating</span>
+          <span class="vocab-meaning">毁灭性的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">devastate = 摧毁/使震惊。<em>devastating</em> = 毁灭性的、令人崩溃的。<br>Losing my job was <em>devastating</em> 失业对我是毁灭性的打击 &nbsp;·&nbsp; 近义：destructive, overwhelming</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('subsequent')">subsequent</span>
+          <span class="vocab-meaning">随后的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">sub- = 在…之后，sequent = 跟随的。<em>subsequent</em> = 随后发生的。<br><em>subsequent</em> negative outcomes 随后的负面结果 &nbsp;·&nbsp; in <em>subsequent</em> years 在随后几年</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('diminished')">diminished</span>
+          <span class="vocab-meaning">减少的，削弱的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">diminish = 减少/削弱。<em>diminished</em> sense of purpose = 被削弱的目标感。<br>近义：reduced, weakened &nbsp;·&nbsp; <em>diminished</em> hope 减弱的希望</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('chapters')">chapters</span>
+          <span class="vocab-meaning">篇章，阶段（比喻义）</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">chapter 本义是书的"章节"，这里比喻人生的某个阶段。<br>painful <em>chapters</em> 痛苦的人生篇章 &nbsp;·&nbsp; 比 "periods" 更有文学感</div>
+      </div>
+      <!-- ── 拓展 ── -->
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('weaving')">weaving</span>
+          <span class="vocab-meaning">编织，构建</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">weave = 编织（过去式 wove），这里是比喻：像编织一样构建故事。<br>weave a story 编故事 &nbsp;·&nbsp; weave together 编织在一起</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('internalized')">internalized</span>
+          <span class="vocab-meaning">内化的</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">internal = 内部的，internalize = 内化（把外部的东西变成自己内心的一部分）。<br><em>internalized</em> story 内化的故事 &nbsp;·&nbsp; 反义：externalized 外化的</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('interpretive')">interpretive</span>
+          <span class="vocab-meaning">解释性的，阐释性的</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">interpret = 解释/阐释，<em>interpretive</em> = 解释性的。<br><em>interpretive</em> account 带有个人解读的叙述 &nbsp;·&nbsp; 近义：explanatory 解释性的</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('downplaying')">downplaying</span>
+          <span class="vocab-meaning">淡化，低调处理</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">down = 向下，play = 表演/处理。downplay = 淡化处理——有意降低某件事的重要性。<br>反义：highlight 强调，emphasize 强调</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('continuity')">continuity</span>
+          <span class="vocab-meaning">连续性，连贯性</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">continue = 继续，<em>continuity</em> = 连续性。a sense of <em>continuity</em> = 一种连贯感。<br>反义：discontinuity 不连续性</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Questions ══════ -->
+<div class="panel" id="questionsPanel">
+  <div class="panel-header" onclick="togglePanel('questionsPanel')">
+    题目解析（4题，31—34）
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="question-item" data-answer="C">
+      <div class="question-stem">31. According to McAdams, narrative identity is best described as _____.</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. a detailed record of all life events</div>
+        <div class="question-option" data-key="B">B. a fixed story determined by childhood experiences</div>
+        <div class="question-option" data-key="C">C. an evolving personal story that gives life meaning</div>
+        <div class="question-option" data-key="D">D. a scientific method for studying human behavior</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：C</div>
+        <div class="locate" data-goto="3" onclick="gotoSentence(3)">"McAdams has spent decades studying what he calls 'narrative identity' — the internalized, evolving story that each person constructs to make sense of his or her life."</div>
+        <p style="margin-top:8px"><b>解题思路：</b>细节题。根据第2段"the internalized, evolving story that each person constructs to make sense of his or her life"，叙事认同是一个不断演变的（evolving）、人们用来赋予人生意义的（make sense of life）个人故事。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-letter">A.</span> a detailed record of all life events <span class="opt-mark">✗</span><span class="opt-why">原文说"not merely a summary"，不是详细记录</span></div>
+          <div class="option-item wrong"><span class="opt-letter">B.</span> a fixed story determined by childhood experiences <span class="opt-mark">✗</span><span class="opt-why">原文说"evolving"而非"fixed"，第6段也说"not fixed"</span></div>
+          <div class="option-item correct"><span class="opt-letter">C.</span> an evolving personal story that gives life meaning <span class="opt-mark">✓</span><span class="opt-why">与"evolving story...make sense of life"完全对应</span></div>
+          <div class="option-item wrong"><span class="opt-letter">D.</span> a scientific method for studying human behavior <span class="opt-mark">✗</span><span class="opt-why">叙事认同是一个心理概念，不是科学方法</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="question-item" data-answer="C">
+      <div class="question-stem">32. The example of Bob Johnson is used to _____.</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. prove that job loss always leads to personal growth</div>
+        <div class="question-option" data-key="B">B. criticize people who tell negative stories about their lives</div>
+        <div class="question-option" data-key="C">C. illustrate the difference between redemption and contamination sequences</div>
+        <div class="question-option" data-key="D">D. suggest that economic downturns have psychological benefits</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：C</div>
+        <div class="locate" data-goto="6" onclick="gotoSentence(6)">"Consider a man named Bob Johnson who lost his job during an economic downturn."</div>
+        <p style="margin-top:8px"><b>解题思路：</b>写作目的题。Bob Johnson的例子占了第3-4段，分别展示了同一事件的两种叙述方式：救赎序列（坏事变好事）和污染序列（好事被坏结局毁掉）。作者用这个例子来说明这两种叙事模式的区别。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-letter">A.</span> prove that job loss always leads to personal growth <span class="opt-mark">✗</span><span class="opt-why">"always"过于绝对，原文只是展示一种可能的叙事</span></div>
+          <div class="option-item wrong"><span class="opt-letter">B.</span> criticize people who tell negative stories about their lives <span class="opt-mark">✗</span><span class="opt-why">作者没有批评讲负面故事的人</span></div>
+          <div class="option-item correct"><span class="opt-letter">C.</span> illustrate the difference between redemption and contamination sequences <span class="opt-mark">✓</span><span class="opt-why">两段分别展示redemption和contamination，正是为了说明区别</span></div>
+          <div class="option-item wrong"><span class="opt-letter">D.</span> suggest that economic downturns have psychological benefits <span class="opt-mark">✗</span><span class="opt-why">例子重点不在经济衰退的好处</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="question-item" data-answer="D">
+      <div class="question-stem">33. What does the last paragraph suggest about life stories?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. They should only be changed with professional help.</div>
+        <div class="question-option" data-key="B">B. They are accurate representations of what really happened.</div>
+        <div class="question-option" data-key="C">C. They become more negative as people grow older.</div>
+        <div class="question-option" data-key="D">D. They can be reshaped to promote personal growth.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：D</div>
+        <div class="locate" data-goto="15" onclick="gotoSentence(15)">"With reflection and sometimes professional guidance, people can learn to reinterpret their experiences, finding threads of growth and meaning even in painful chapters."</div>
+        <p style="margin-top:8px"><b>解题思路：</b>推断题。最后一段说"our life stories are not fixed"且"people can learn to reinterpret their experiences, finding threads of growth"——人们可以学会重新解读经历，从中找到成长的线索。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-letter">A.</span> They should only be changed with professional help. <span class="opt-mark">✗</span><span class="opt-why">原文说"with reflection and sometimes professional guidance"，不是"only"</span></div>
+          <div class="option-item wrong"><span class="opt-letter">B.</span> They are accurate representations of what really happened. <span class="opt-mark">✗</span><span class="opt-why">全文强调故事是"selective, interpretive"的，不是准确再现</span></div>
+          <div class="option-item wrong"><span class="opt-letter">C.</span> They become more negative as people grow older. <span class="opt-mark">✗</span><span class="opt-why">文中没有提到年龄与故事正负面的关系</span></div>
+          <div class="option-item correct"><span class="opt-letter">D.</span> They can be reshaped to promote personal growth. <span class="opt-mark">✓</span><span class="opt-why">"reinterpret experiences, finding threads of growth" = 重塑故事以促进成长</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="question-item" data-answer="A">
+      <div class="question-stem">34. What is the main idea of the passage?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. The personal stories we construct profoundly influence our identity and well-being.</div>
+        <div class="question-option" data-key="B">B. Psychologists have discovered the only correct way to interpret life events.</div>
+        <div class="question-option" data-key="C">C. Negative life events inevitably lead to poor mental health outcomes.</div>
+        <div class="question-option" data-key="D">D. People should avoid comparing their life stories with those of others.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：A</div>
+        <div class="locate" data-goto="2" onclick="gotoSentence(2)">"But psychologist Dan McAdams argues that these stories do far more than simply record events — they actually shape who we are."</div>
+        <p style="margin-top:8px"><b>解题思路：</b>主旨题。全文围绕McAdams的叙事认同理论展开：我们构建的人生故事（narrative identity）深刻地塑造了我们的身份认同和幸福感。</p>
+        <div class="option-list">
+          <div class="option-item correct"><span class="opt-letter">A.</span> The personal stories we construct profoundly influence our identity and well-being. <span class="opt-mark">✓</span><span class="opt-why">概括了全文核心——personal stories influence identity and well-being</span></div>
+          <div class="option-item wrong"><span class="opt-letter">B.</span> Psychologists have discovered the only correct way to interpret life events. <span class="opt-mark">✗</span><span class="opt-why">"only correct way"过于绝对，文章没有说只有一种正确方式</span></div>
+          <div class="option-item wrong"><span class="opt-letter">C.</span> Negative life events inevitably lead to poor mental health outcomes. <span class="opt-mark">✗</span><span class="opt-why">"inevitably"不对，文章说的是叙事方式（而非事件本身）影响心理健康</span></div>
+          <div class="option-item wrong"><span class="opt-letter">D.</span> People should avoid comparing their life stories with those of others. <span class="opt-mark">✗</span><span class="opt-why">文章讨论的是叙事认同，不是比较</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="quiz-score" id="quizScore"></div>
+  </div>
+</div>
+
+<!-- ══════ Review ══════ -->
+<div class="panel" id="reviewPanel">
+  <div class="panel-header" onclick="togglePanel('reviewPanel')">
+    本篇复盘
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="review-section">
+      <h3>我这篇的卡点：</h3>
+      <div class="review-checks">
+        <label><input type="checkbox" id="rev1"> 长难句看不懂</label>
+        <label><input type="checkbox" id="rev2"> 找不到原文证据</label>
+        <label><input type="checkbox" id="rev3"> 脑补推理</label>
+        <label><input type="checkbox" id="rev4"> 生词太多</label>
+      </div>
+      <h3 style="margin-top:16px">标记：</h3>
+      <div class="review-checks">
+        <label><input type="checkbox" id="rev5"> 待复习</label>
+        <label><input type="checkbox" id="rev6"> 已掌握</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ 阅读技巧 ══════ -->
+<div class="panel" id="tipPanel">
+  <div class="panel-header" onclick="togglePanel('tipPanel')">
+    阅读技巧：心理学/社科类文章怎么读
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body" style="font-size:15px; line-height:1.8;">
+    <p style="margin-bottom:14px;">D篇常考心理学/社科类文章——作者围绕一个学术概念展开论述，题目考你能不能<strong>抓住核心术语、理解例子的作用、读懂转折结构</strong>。有3个核心策略：</p>
+
+    <p style="margin-bottom:6px;"><strong>① 抓住核心术语及其定义</strong></p>
+    <p style="margin-bottom:14px; padding-left:16px; color:#555;">
+      本文有三个关键术语：<em>narrative identity</em>（叙事认同）、<em>redemption sequence</em>（救赎序列）、<em>contamination sequence</em>（污染序列）。它们都在文中有明确的解释——用破折号或 that 从句给出定义。遇到生僻术语不要慌，往后看一两行，定义通常就在附近。
+    </p>
+
+    <p style="margin-bottom:6px;"><strong>② 例子服务于论点</strong></p>
+    <p style="margin-bottom:14px; padding-left:16px; color:#555;">
+      Bob Johnson 的例子不是重点，重点是它说明了什么理论概念。同一个人、同一件事（失业），用两种不同方式讲述，分别对应 redemption 和 contamination 两种叙事模式。做写作目的题（如Q32）时，要问"作者举这个例子想说明什么"，而不是纠结例子本身的细节。
+    </p>
+
+    <p style="margin-bottom:6px;"><strong>③ 注意"不是A而是B"的转折</strong></p>
+    <p style="margin-bottom:0; padding-left:16px; color:#555;">
+      本文两处关键转折：<em>"not merely a summary"</em> → <em>"a selective, interpretive account"</em>（不仅是总结，而是有选择的解读）；<em>"not fixed"</em> → <em>"can learn to reinterpret"</em>（不是固定的，可以重新解读）。这种"否定 + 肯定"的结构里，肯定的部分往往就是作者的核心观点，也是出题的重点。
+    </p>
+  </div>
+</div>
+
+<!-- ══════ 作文拓展 ══════ -->
+<div class="panel" id="writingPanel">
+  <div class="panel-header" onclick="togglePanel('writingPanel')">
+    作文拓展：好句式 &amp; 连接词速查
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body" style="font-size:15px; line-height:1.8;">
+
+    <!-- 好句式 -->
+    <div class="writing-block">
+      <div class="writing-block-title">从文章偷来的好句式</div>
+      <div class="writing-phrase-list">
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">do far more than simply V — they actually V</div>
+          <div class="writing-phrase-cn">不仅仅是...实际上是...</div>
+          <div class="writing-phrase-src">原句：<em>These stories do far more than simply record events — they actually shape who we are.</em></div>
+          <div class="writing-phrase-use">作文套用：Books <em>do far more than simply</em> entertain us — they <em>actually</em> broaden our horizons. 用来强调某事的作用远超预期，比 "not only...but also" 更有力。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">not merely A. It is B that C while D, creating E</div>
+          <div class="writing-phrase-cn">不仅仅是A，而是B</div>
+          <div class="writing-phrase-src">原句：<em>This is not merely a summary... It is a selective, interpretive account that highlights certain events while downplaying others, creating a sense of purpose.</em></div>
+          <div class="writing-phrase-use">作文套用：Education is <em>not merely</em> the transfer of knowledge. <em>It is</em> a transformative process <em>that</em> shapes character <em>while</em> building skills, <em>creating</em> well-rounded individuals. 层层递进，非常高级。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">what he calls / what McAdams terms</div>
+          <div class="writing-phrase-cn">他所称的...</div>
+          <div class="writing-phrase-src">原句：<em>McAdams has spent decades studying what he calls "narrative identity."</em></div>
+          <div class="writing-phrase-use">作文套用：Psychologist Carol Dweck introduced <em>what she calls</em> a "growth mindset." 引用他人概念时的学术化表达，比直接说 "He said..." 高级。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">The encouraging finding is that ...</div>
+          <div class="writing-phrase-cn">令人鼓舞的发现是...</div>
+          <div class="writing-phrase-src">原句：<em>The encouraging finding from McAdams' work is that our life stories are not fixed.</em></div>
+          <div class="writing-phrase-use">作文套用：<em>The encouraging finding</em> from recent studies <em>is that</em> reading habits among teenagers are improving. 引出积极研究结论时非常好用。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">not just A — they are B</div>
+          <div class="writing-phrase-cn">不仅是A，更是B</div>
+          <div class="writing-phrase-src">原句：<em>The stories we tell ourselves are not just reflections of our lives — they are among the most powerful tools we have for shaping them.</em></div>
+          <div class="writing-phrase-use">作文套用：Friends are <em>not just</em> companions in daily life — <em>they are</em> mirrors that help us understand ourselves. 用破折号连接，语气更强。</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 连接词速查 -->
+    <div class="writing-block">
+      <div class="writing-block-title">连接词速查（按功能分）</div>
+      <div class="conn-grid">
+
+        <div class="conn-card c-add">
+          <div class="conn-card-title">递进 / 补充</div>
+          <span class="conn-item">furthermore</span>
+          <span class="conn-item">moreover</span>
+          <span class="conn-item">in addition</span>
+          <span class="conn-item">what's more</span>
+          <span class="conn-item">not only...but also</span>
+          <div class="conn-note">比 "also" 和 "and" 正式，议论文首选</div>
+        </div>
+
+        <div class="conn-card c-contrast">
+          <div class="conn-card-title">转折 / 对比</div>
+          <span class="conn-item">however</span>
+          <span class="conn-item">yet</span>
+          <span class="conn-item">while</span>
+          <span class="conn-item">by contrast</span>
+          <span class="conn-item">rather than</span>
+          <div class="conn-note">yet 用在句中；however 另起；by contrast 对比两个对象</div>
+        </div>
+
+        <div class="conn-card c-result">
+          <div class="conn-card-title">结果 / 因此</div>
+          <span class="conn-item">as a result</span>
+          <span class="conn-item">therefore</span>
+          <span class="conn-item">consequently</span>
+          <span class="conn-item">thus</span>
+          <div class="conn-note">thus 最简洁，thus + 分词短语直接高分</div>
+        </div>
+
+        <div class="conn-card c-example">
+          <div class="conn-card-title">举例说明</div>
+          <span class="conn-item">for instance</span>
+          <span class="conn-item">for example</span>
+          <span class="conn-item">take...for example</span>
+          <span class="conn-item">such as</span>
+          <div class="conn-note">for instance 比 for example 更口语化一点点，两者都可用</div>
+        </div>
+
+        <div class="conn-card c-conclude">
+          <div class="conn-card-title">总结 / 结尾</div>
+          <span class="conn-item">in conclusion</span>
+          <span class="conn-item">to sum up</span>
+          <span class="conn-item">in short</span>
+          <span class="conn-item">overall</span>
+          <span class="conn-item">in a word</span>
+          <div class="conn-note">结尾段第一句用，考官扫一眼就知道你会写结论</div>
+        </div>
+
+        <div class="conn-card c-add">
+          <div class="conn-card-title">顺序 / 衔接</div>
+          <span class="conn-item">first of all</span>
+          <span class="conn-item">secondly</span>
+          <span class="conn-item">finally</span>
+          <span class="conn-item">meanwhile</span>
+          <span class="conn-item">at the same time</span>
+          <div class="conn-note">列举多个原因/步骤时用，让文章结构清晰</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- .container -->
+
+<!-- ══════ Bottom Playbar ══════ -->
+<div id="playbar">
+  <button id="pb-prev" onclick="pbPrev()" title="上一句">⏮</button>
+  <button id="pb-play" onclick="pbToggle()" title="播放/暂停">▶</button>
+  <button id="pb-next" onclick="pbNext()" title="下一句">⏭</button>
+  <span id="pb-counter">— / 17</span>
+  <select id="pb-speed" onchange="pbSetSpeed(this.value)" title="播放速度">
+    <option value="0.8">0.8x</option>
+    <option value="1" selected>1.0x</option>
+    <option value="1.2">1.2x</option>
+  </select>
+</div>
+
+<script>
+// ── Theme toggle ──
+const THEMES = ['yellow', 'green'];
+const THEME_LABELS = { yellow: '📄 书本黄', green: '🌿 护眼绿' };
+let themeIdx = parseInt(localStorage.getItem('theme') || '0');
+function applyTheme() {
+  document.body.classList.remove('theme-yellow', 'theme-green');
+  const t = THEMES[themeIdx % THEMES.length];
+  document.body.classList.add('theme-' + t);
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.textContent = THEME_LABELS[t];
+}
+function cycleTheme() {
+  themeIdx = (themeIdx + 1) % THEMES.length;
+  localStorage.setItem('theme', themeIdx);
+  applyTheme();
+}
+applyTheme();
+
+const sentences = [
+  "We are all storytellers.",
+  "From the moment we learn to talk, we begin weaving narratives about our experiences.",
+  "But psychologist Dan McAdams argues that these stories do far more than simply record events — they actually shape who we are.",
+  "McAdams has spent decades studying what he calls \"narrative identity\" — the internalized, evolving story that each person constructs to make sense of his or her life.",
+  "This is not merely a summary of what has happened to us.",
+  "It is a selective, interpretive account that highlights certain events while downplaying others, creating a sense of purpose and continuity.",
+  "Consider a man named Bob Johnson who lost his job during an economic downturn.",
+  "One version of his story might go: \"Losing my job was devastating, but it forced me to reconsider my priorities. I went back to school, retrained, and eventually found work that I truly love.\"",
+  "McAdams would classify this as a \"redemption sequence\" — a narrative pattern in which a negative event is transformed into a positive outcome.",
+  "But the same events can be narrated quite differently.",
+  "Another version: \"I lost my job and everything fell apart. Even when things seemed to improve, something always went wrong again.\"",
+  "This is what McAdams terms a \"contamination sequence\" — good or hopeful moments are spoiled by subsequent negative outcomes.",
+  "Research consistently shows that people who construct redemption narratives tend to report higher levels of well-being, greater generativity — a concern for guiding the next generation — and stronger mental health.",
+  "Those who habitually tell contamination stories, by contrast, are more likely to experience depression and a diminished sense of purpose.",
+  "The encouraging finding from McAdams' work is that our life stories are not fixed.",
+  "With reflection and sometimes professional guidance, people can learn to reinterpret their experiences, finding threads of growth and meaning even in painful chapters.",
+  "The stories we tell ourselves, it turns out, are not just reflections of our lives — they are among the most powerful tools we have for shaping them."
+];
+
+// ── Tooltip system ──
+let activeTooltip = null;
+
+const ANALYSIS_AUDIO = {
+  "analysis-5":   "audio/2025北京卷-D/analysis-5.mp3",
+  "analysis-12":  "audio/2025北京卷-D/analysis-12.mp3",
+  "analysis-16":  "audio/2025北京卷-D/analysis-16.mp3",
+};
+let analysisPlayer = null;
+let analysisBtn = null;
+
+function playAnalysis(id, btn) {
+  if (analysisPlayer) {
+    analysisPlayer.pause();
+    analysisPlayer = null;
+    if (analysisBtn) { analysisBtn.textContent = '🔊 听讲解'; analysisBtn.classList.remove('playing'); }
+    if (analysisBtn === btn) { analysisBtn = null; return; }
+  }
+  const src = ANALYSIS_AUDIO[id];
+  if (!src) return;
+  analysisPlayer = new Audio(src);
+  analysisBtn = btn;
+  btn.textContent = '⏹ 停止';
+  btn.classList.add('playing');
+  analysisPlayer.onended = () => { btn.textContent = '🔊 听讲解'; btn.classList.remove('playing'); analysisPlayer = null; analysisBtn = null; };
+  analysisPlayer.play();
+}
+
+const ZH_AUDIO = {};
+let zhPlayer = null;
+
+function phraseToSlug(phrase) {
+  return phrase.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function playZhAudio(slug, btn) {
+  if (zhPlayer) {
+    zhPlayer.pause();
+    zhPlayer = null;
+    btn.textContent = '🔊 听讲解';
+    return;
+  }
+  const src = ZH_AUDIO[slug];
+  if (!src) return;
+  zhPlayer = new Audio(src);
+  btn.textContent = '⏹ 停止';
+  zhPlayer.onended = () => { btn.textContent = '🔊 听讲解'; zhPlayer = null; };
+  zhPlayer.play();
+}
+
+function showTooltip(tipEl) {
+  hideTooltip();
+  const raw = tipEl.getAttribute('data-tip');
+  const [phrase, explain] = raw.split('|');
+  const parts = explain.split('｜');
+  const slug = phraseToSlug(phrase);
+  const hasAudio = ZH_AUDIO[slug];
+
+  const tooltip = document.createElement('div');
+  tooltip.className = 'tooltip';
+  tooltip.innerHTML = '<div class="tip-scroll">' +
+    `<div class="tip-phrase">${phrase}${tipEl.dataset.level ? `<span class="level-badge badge-${tipEl.dataset.level}">${tipEl.dataset.level}</span>` : ''}<span class="tip-speak" onclick="speakWord('${phrase}')">&#9654;</span></div>` +
+    parts.map(p => `<div>${p.trim()}</div>`).join('') +
+    (hasAudio ? `<button class="tip-zh-play" onclick="playZhAudio('${slug}', this)">🔊 听讲解</button>` : '') + '</div>';
+  document.body.appendChild(tooltip);
+  activeTooltip = tooltip;
+  tooltip._tip = tipEl;
+  positionTooltip();
+  if (!activeTooltip) return;
+  speakWord(phrase);
+}
+
+// Visible frame for tooltips: viewport minus safe areas, sticky header and fixed playbar.
+let _safeProbe = null;
+function tooltipFrame() {
+  if (!_safeProbe) {
+    _safeProbe = document.createElement('div');
+    _safeProbe.style.cssText = 'position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;pointer-events:none;' +
+      'padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)';
+    document.body.appendChild(_safeProbe);
+  }
+  const cs = getComputedStyle(_safeProbe);
+  const M = 8;
+  const vw = document.documentElement.clientWidth, vh = window.innerHeight;
+  let minY = M + (parseFloat(cs.paddingTop) || 0);
+  let maxY = vh - M - (parseFloat(cs.paddingBottom) || 0);
+  const hdr = document.querySelector('.header');
+  if (hdr) { const b = hdr.getBoundingClientRect().bottom; if (b > 0) minY = Math.max(minY, b + 4); }
+  const pb = document.getElementById('playbar');
+  if (pb && getComputedStyle(pb).display !== 'none') { maxY = Math.min(maxY, pb.getBoundingClientRect().top - 4); }
+  return { minX: M + (parseFloat(cs.paddingLeft) || 0), maxX: vw - M - (parseFloat(cs.paddingRight) || 0), minY, maxY };
+}
+
+function positionTooltip() {
+  const tooltip = activeTooltip;
+  if (!tooltip) return;
+  const tipEl = tooltip._tip;
+  const rects = tipEl.getClientRects();
+  const f = tooltipFrame();
+  if (!rects.length) { hideTooltip(); return; }
+  const first = rects[0], last = rects[rects.length - 1];
+  // Anchor gone (scrolled out of the visible band): close instead of floating in the wrong place.
+  if (last.bottom < f.minY - 4 || first.top > f.maxY + 4) { hideTooltip(); return; }
+
+  const GAP = 10, PAD = 16;           // arrow + gap; tooltip vertical padding
+  const body = tooltip.firstElementChild;
+  tooltip.style.maxWidth = Math.max(120, Math.min(520, f.maxX - f.minX)) + 'px';
+  body.style.maxHeight = 'none';
+  tooltip.style.left = '0px'; tooltip.style.top = '0px';
+  const tw = tooltip.offsetWidth, naturalH = tooltip.offsetHeight;
+  const spaceAbove = first.top - f.minY - GAP;
+  const spaceBelow = f.maxY - last.bottom - GAP;
+  let below;
+  if (naturalH <= spaceAbove) below = false;
+  else if (naturalH <= spaceBelow) below = true;
+  else below = spaceBelow > spaceAbove;
+  const avail = Math.max(60, below ? spaceBelow : spaceAbove);
+  const th = Math.min(naturalH, avail);
+  if (naturalH > avail) body.style.maxHeight = Math.max(30, avail - PAD) + 'px';
+
+  const r = below ? last : first;
+  const cx = r.left + r.width / 2;
+  const left = Math.max(f.minX, Math.min(cx - tw / 2, f.maxX - tw));
+  let top = below ? last.bottom + GAP : first.top - GAP - tooltip.offsetHeight;
+  top = Math.max(f.minY, Math.min(top, f.maxY - tooltip.offsetHeight));
+  tooltip.classList.toggle('below', below);
+  tooltip.style.setProperty('--arrow-left', Math.max(14, Math.min(cx - left, tw - 14)) + 'px');
+  tooltip.style.left = left + 'px';
+  tooltip.style.top = top + 'px';
+}
+(function () {
+  let raf = 0;
+  const re = () => { if (!activeTooltip || raf) return; raf = requestAnimationFrame(() => { raf = 0; positionTooltip(); }); };
+  window.addEventListener('scroll', re, { passive: true });
+  window.addEventListener('resize', re);
+  window.addEventListener('orientationchange', re);
+  if (window.visualViewport) { visualViewport.addEventListener('resize', re); visualViewport.addEventListener('scroll', re); }
+})();
+
+function hideTooltip() {
+  if (zhPlayer) { zhPlayer.pause(); zhPlayer = null; }
+  if (activeTooltip) { activeTooltip.remove(); activeTooltip = null; }
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.sentence.highlighted') && !e.target.closest('.locate')) {
+    document.querySelectorAll('.sentence.highlighted').forEach(s => s.classList.remove('highlighted'));
+  }
+  const tipEl = e.target.closest('.tip');
+  if (tipEl) {
+    e.stopPropagation();
+    if (activeTooltip && activeTooltip._source === tipEl) {
+      hideTooltip();
+    } else {
+      showTooltip(tipEl);
+      if (activeTooltip) activeTooltip._source = tipEl;
+    }
+    return;
+  }
+  if (e.target.closest('.tooltip')) return;
+  hideTooltip();
+});
+
+// ── Playbar ──
+let pbCurrent = null;
+let pbPlaying = false;
+let pbSpeed = 1;
+let enPlayer = null;
+
+function pbStop() {
+  if (enPlayer) { enPlayer.pause(); enPlayer = null; }
+  pbPlaying = false;
+}
+
+function highlightSentence(idx) {
+  document.querySelectorAll('.sentence').forEach(el => el.classList.remove('playing'));
+  if (idx !== null && idx >= 0 && idx < sentences.length) {
+    const el = document.querySelector(`.sentence[data-idx="${idx}"]`);
+    if (el) {
+      el.classList.add('playing');
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+}
+
+function pbUpdateUI() {
+  const playBtn = document.getElementById('pb-play');
+  const counter = document.getElementById('pb-counter');
+  playBtn.textContent = pbPlaying ? '⏸' : '▶';
+  counter.textContent = pbCurrent !== null ? `${pbCurrent + 1} / ${sentences.length}` : `— / ${sentences.length}`;
+}
+
+function pbPlayCurrent() {
+  pbStop();
+  if (pbCurrent === null) { pbUpdateUI(); return; }
+  const src = `audio/2025北京卷-D/en-s${String(pbCurrent).padStart(2,'0')}.mp3`;
+  enPlayer = new Audio(src);
+  enPlayer.playbackRate = pbSpeed;
+  pbPlaying = true;
+  highlightSentence(pbCurrent);
+  pbUpdateUI();
+  enPlayer.onended = () => {
+    if (pbPlaying) {
+      if (pbCurrent < sentences.length - 1) {
+        pbCurrent++;
+        pbPlayCurrent();
+      } else {
+        pbPlaying = false;
+        highlightSentence(null);
+        pbUpdateUI();
+      }
+    }
+  };
+  enPlayer.onerror = () => {
+    pbPlaying = false;
+    highlightSentence(null);
+    pbUpdateUI();
+  };
+  enPlayer.play();
+}
+
+function pbToggle() {
+  if (pbCurrent === null) {
+    pbCurrent = 0;
+    pbPlayCurrent();
+    return;
+  }
+  if (pbPlaying) {
+    pbStop();
+    highlightSentence(pbCurrent);
+    pbUpdateUI();
+  } else {
+    pbPlayCurrent();
+  }
+}
+
+function pbPrev() {
+  if (pbCurrent === null) pbCurrent = 0;
+  else if (pbCurrent > 0) pbCurrent--;
+  pbPlayCurrent();
+}
+
+function pbNext() {
+  if (pbCurrent === null) pbCurrent = 0;
+  else if (pbCurrent < sentences.length - 1) pbCurrent++;
+  pbPlayCurrent();
+}
+
+function pbSetSpeed(v) {
+  pbSpeed = parseFloat(v);
+  if (enPlayer) enPlayer.playbackRate = pbSpeed;
+}
+
+function pbJumpTo(idx) {
+  pbStop();
+  pbCurrent = idx;
+  highlightSentence(idx);
+  pbUpdateUI();
+}
+
+document.addEventListener('click', function(e) {
+  if (e.target.closest('.tip') || e.target.closest('.tooltip')) return;
+  const sentence = e.target.closest('.sentence.complex');
+  if (sentence) toggleAnalysis(parseInt(sentence.dataset.idx));
+});
+
+// ── Other UI ──
+function speakWord(word) {
+  if (enPlayer) { enPlayer.pause(); enPlayer = null; }
+  const slug = 'en-word-' + word.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const src = 'audio/2025北京卷-D/' + slug + '.mp3';
+  enPlayer = new Audio(src);
+  enPlayer.onerror = function() {
+    const utter = new SpeechSynthesisUtterance(word);
+    const voices = speechSynthesis.getVoices();
+    utter.voice = voices.find(v => v.lang === 'en-GB') || voices.find(v => v.lang.startsWith('en')) || voices[0];
+    utter.rate = 0.8;
+    speechSynthesis.speak(utter);
+  };
+  enPlayer.play();
+}
+
+function highlightWord(phrase) {
+  const tips = document.querySelectorAll('.tip');
+  const matches = [];
+  const lc = phrase.toLowerCase();
+  tips.forEach(el => {
+    const tipPhrase = (el.dataset.tip || '').split('|')[0].toLowerCase();
+    if (tipPhrase === lc) matches.push(el);
+  });
+  if (!matches.length) return;
+  matches.forEach(el => {
+    el.classList.remove('tip-flash');
+    void el.offsetWidth;
+    el.classList.add('tip-flash');
+    setTimeout(() => el.classList.remove('tip-flash'), 1700);
+  });
+  matches[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function vocabClick(phrase) {
+  speakWord(phrase);
+}
+
+function initAnnotations() {
+  document.querySelectorAll('sup.ann-sup, .para-ann').forEach(el => el.remove());
+
+  document.querySelectorAll('.passage .paragraph').forEach(para => {
+    const seen = new Set();
+    const items = [];
+    let idx = 1;
+
+    para.querySelectorAll('.tip').forEach(el => {
+      const tip = el.dataset.tip || '';
+      const parts = tip.split('|');
+      if (parts.length < 2) return;
+      const phrase = parts[0].trim();
+
+      if (seen.has(phrase)) {
+        const prevIdx = items.findIndex(i => i.phrase === phrase) + 1;
+        const sup = document.createElement('sup');
+        sup.className = 'ann-sup';
+        sup.textContent = prevIdx;
+        el.after(sup);
+        return;
+      }
+      seen.add(phrase);
+
+      const sup = document.createElement('sup');
+      sup.className = 'ann-sup';
+      sup.textContent = idx;
+      el.after(sup);
+
+      const contentParts = parts[1].split('｜');
+      const cn = contentParts[0].trim();
+      const det = contentParts.slice(1).map(s => s.replace(/<[^>]+>/g, '').trim()).filter(Boolean);
+      items.push({ num: idx, phrase, cn, det, level: el.dataset.level === '超纲' ? '超纲' : '' });
+      idx++;
+    });
+
+    if (items.length === 0) return;
+
+    const ann = document.createElement('div');
+    ann.className = 'para-ann';
+    ann.innerHTML = items.map(i =>
+      `<div class="pan-row">
+        <div class="pan-head">
+          <span class="pan-num">${i.num}</span>
+          <span class="pan-en">${i.phrase}</span>
+          <span class="pan-cn">${i.cn}</span>
+          ${i.level ? `<span class="pan-lv lv-${i.level}">${i.level}</span>` : ''}
+        </div>
+        ${i.det.length ? `<div class="pan-det">${i.det.map(d => `<div>${d}</div>`).join('')}</div>` : ''}
+      </div>`
+    ).join('');
+
+    const trans = para.querySelector('.translation-inline');
+    if (trans) trans.after(ann);
+    else para.appendChild(ann);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initAnnotations);
+
+function toggleAnalysis(idx) {
+  const el = document.getElementById('analysis-' + idx);
+  if (el) el.classList.toggle('open');
+}
+
+function togglePanel(id) { document.getElementById(id).classList.toggle('open'); }
+
+function setMode(mode) {
+  document.body.classList.remove('mode-raw', 'mode-study', 'mode-quiz', 'mode-annotate');
+  if (mode !== 'study') document.body.classList.add('mode-' + mode);
+  document.querySelectorAll('.mode-step').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.mode === mode);
+  });
+  hideTooltip();
+  if (mode === 'quiz') { pbStop(); highlightSentence(null); pbUpdateUI(); resetQuiz(); }
+}
+
+// ── Quiz ──
+function resetQuiz() {
+  document.querySelectorAll('.question-option').forEach(opt => opt.classList.remove('selected','correct','wrong'));
+  document.querySelectorAll('.question-item').forEach(q => q.dataset.answered = '');
+  const score = document.getElementById('quizScore');
+  if (score) score.classList.remove('show');
+}
+
+document.addEventListener('click', function(e) {
+  if (!document.body.classList.contains('mode-quiz')) return;
+  const opt = e.target.closest('.question-option');
+  if (!opt) return;
+  const item = opt.closest('.question-item');
+  if (item.dataset.answered) return;
+  item.dataset.answered = 'true';
+  const picked = opt.dataset.key;
+  const correct = item.dataset.answer;
+  if (picked === correct) {
+    opt.classList.add('correct');
+  } else {
+    opt.classList.add('wrong');
+    item.querySelector(`.question-option[data-key="${correct}"]`).classList.add('correct');
+  }
+  const total = document.querySelectorAll('.question-item[data-answer]').length;
+  const done = document.querySelectorAll('.question-item[data-answered="true"]').length;
+  if (done === total) showQuizScore();
+});
+
+function showQuizScore() {
+  const total = document.querySelectorAll('.question-item[data-answer]').length;
+  const wrong = document.querySelectorAll('.question-option.wrong').length;
+  const score = document.getElementById('quizScore');
+  score.textContent = `得分：${total - wrong} / ${total}`;
+  score.classList.add('show');
+}
+
+function gotoSentence(idx) {
+  const el = document.querySelector(`.sentence[data-idx="${idx}"]`);
+  if (!el) return;
+  setMode('study');
+  document.querySelectorAll('.sentence.highlighted').forEach(s => s.classList.remove('highlighted'));
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  el.classList.add('highlighted');
+}
+
+function toggleQuestionAnalysis(btn) {
+  const analysis = btn.nextElementSibling;
+  analysis.classList.toggle('open');
+  btn.textContent = analysis.classList.contains('open') ? '收起解析' : '\u{1F50D} 查看解析';
+}
+
+// ── LocalStorage review ──
+function saveReview() {
+  const state = {};
+  document.querySelectorAll('.review-checks input').forEach(cb => { state[cb.id] = cb.checked; });
+  localStorage.setItem('review-beijing-2025-D', JSON.stringify(state));
+}
+function loadReview() {
+  try {
+    const state = JSON.parse(localStorage.getItem('review-beijing-2025-D'));
+    if (state) Object.keys(state).forEach(id => { const cb = document.getElementById(id); if (cb) cb.checked = state[id]; });
+  } catch(e) {}
+}
+document.querySelectorAll('.review-checks input').forEach(cb => cb.addEventListener('change', saveReview));
+loadReview();
+pbUpdateUI();
+
+// ── Spaced Repetition (SRS) ──
+const SRS_PREFIX = 'srs_beijing_2025_D_';
+const SRS_INTERVALS = [1, 3, 7, 14, 30];
+
+function srsLoad(word) {
+  const raw = localStorage.getItem(SRS_PREFIX + word);
+  return raw ? JSON.parse(raw) : null;
+}
+
+function srsSave(word, knew) {
+  const state = srsLoad(word) || { streak: 0 };
+  if (knew) {
+    state.streak = (state.streak || 0) + 1;
+    state.interval = SRS_INTERVALS[Math.min(state.streak - 1, SRS_INTERVALS.length - 1)];
+  } else {
+    state.streak = 0;
+    state.interval = 1;
+  }
+  state.nextReview = Date.now() + state.interval * 86400000;
+  localStorage.setItem(SRS_PREFIX + word, JSON.stringify(state));
+  return state;
+}
+
+function srsIsDue(state) {
+  return !state || Date.now() >= state.nextReview;
+}
+
+function srsUpdateCard(card) {
+  const state = srsLoad(card.dataset.srsWord);
+  card.classList.remove('srs-due', 'srs-known');
+  if (!state) return;
+  card.classList.add(srsIsDue(state) ? 'srs-due' : 'srs-known');
+}
+
+function srsUpdateBadge() {
+  const badge = document.getElementById('srs-badge');
+  if (!badge) return;
+  const cards = document.querySelectorAll('.vocab-card[data-srs-word]');
+  let due = 0;
+  cards.forEach(c => { if (srsIsDue(srsLoad(c.dataset.srsWord))) due++; });
+  if (due === 0) {
+    badge.textContent = '全掌握 ✓';
+    badge.className = 'srs-badge all-done';
+  } else {
+    badge.textContent = due + '个待复习';
+    badge.className = 'srs-badge';
+  }
+}
+
+function srsClick(word, knew, btn) {
+  srsSave(word, knew);
+  const card = btn.closest('.vocab-card');
+  srsUpdateCard(card);
+  srsUpdateBadge();
+  btn.style.opacity = '0.4';
+  setTimeout(() => btn.style.opacity = '', 600);
+}
+
+function srsInit() {
+  document.querySelectorAll('.vocab-card').forEach(card => {
+    const wordEl = card.querySelector('.vocab-word');
+    if (!wordEl) return;
+    const word = wordEl.textContent.trim();
+    card.dataset.srsWord = word;
+    const btns = document.createElement('div');
+    btns.className = 'srs-btns';
+    const esc = word.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    btns.innerHTML =
+      `<button class="srs-btn srs-btn-know"   onclick="srsClick('${esc}',true,this)">认识 ✓</button>` +
+      `<button class="srs-btn srs-btn-forget" onclick="srsClick('${esc}',false,this)">还不会 ✗</button>`;
+    card.querySelector('.vocab-card-head').appendChild(btns);
+    srsUpdateCard(card);
+  });
+  srsUpdateBadge();
+}
+srsInit();
+</script>
+</body>
+</html>

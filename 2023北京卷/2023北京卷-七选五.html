@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2023北京卷七选五 · College Rankings and Teaching Quality</title>
+<style>
+:root{--bg:#fafaf8;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;--accent:#2563eb;--accent-light:#dbeafe;--complex-bg:#f0f6fc;--border:#e2e2e0;--card-bg:#fff;--hover-bg:#f5f5f4;--shadow:0 1px 3px rgba(0,0,0,.08);--radius:6px;}
+.theme-yellow{--bg:#f5f0e8;--card-bg:#faf6ee;--border:#ddd5bf;--hover-bg:#ede7d8;--accent-light:#fde8b8;}
+.theme-green{--bg:#edecea;--card-bg:#f3f2f0;--border:#d6d5d0;--hover-bg:#e8e7e3;--accent-light:#dddcd6;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:60px;}
+.container{max-width:1400px;width:100%;margin:0 auto;padding:0 max(12px,env(safe-area-inset-left)) 0 max(12px,env(safe-area-inset-right));}
+.header{background:var(--card-bg);border-bottom:1px solid var(--border);padding:16px 0;padding-top:calc(16px + env(safe-area-inset-top));position:sticky;top:0;z-index:100;}
+.header .container{display:flex;align-items:center;flex-wrap:wrap;gap:10px;}
+.header h1{font-size:16px;font-weight:600;flex:1;min-width:200px;}
+.header-sub{font-size:12px;color:var(--accent);font-weight:500;background:var(--accent-light);padding:2px 8px;border-radius:10px;}
+.header-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card-bg);color:var(--text);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.mode-steps{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.mode-step{padding:6px 12px;border:none;background:var(--card-bg);color:var(--text-secondary);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.mode-step+.mode-step{border-left:1px solid var(--border);}
+.mode-step.active{background:var(--accent);color:#fff;}
+.mode-step:hover:not(.active){background:var(--accent-light);}
+.passage{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:20px;padding:28px 32px;}
+.passage-title{text-align:center;font-family:Georgia,serif;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;color:var(--text-secondary);}
+.passage-subtitle{text-align:center;font-family:-apple-system,sans-serif;font-size:13px;margin-bottom:20px;color:var(--text-muted);}
+.paragraph{margin-bottom:16px;font-family:Georgia,serif;font-size:18px;line-height:1.9;text-indent:2em;}
+.cloze-select{font-family:Georgia,serif;font-size:inherit;border:2px solid var(--accent);border-radius:4px;padding:2px 6px;background:var(--accent-light);color:var(--accent);cursor:pointer;min-width:60px;vertical-align:middle;}
+.cloze-select.sel-correct{border-color:#16a34a;background:#dcfce7;color:#15803d;}
+.cloze-select.sel-wrong{border-color:#dc2626;background:#fee2e2;color:#b91c1c;}
+.cloze-answer{font-family:Georgia,serif;font-weight:700;color:#16a34a;background:#dcfce7;padding:1px 10px;border-radius:4px;border:1.5px solid #16a34a;}
+.blank-num{font-size:12px;font-weight:700;color:var(--accent);margin-right:3px;font-family:-apple-system,sans-serif;vertical-align:middle;}
+body.mode-quiz .blank-quiz{display:inline;}
+body.mode-quiz .blank-ans{display:none;}
+body.mode-analysis .blank-quiz{display:none;}
+body.mode-analysis .blank-ans{display:inline;}
+.panel{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:16px;overflow:hidden;}
+.panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;cursor:pointer;user-select:none;font-weight:600;font-size:15px;border-bottom:1px solid transparent;transition:border-color .2s;}
+.panel-header:hover{color:var(--accent);}
+.panel-header .arrow{transition:transform .2s;font-size:12px;color:var(--text-muted);}
+.panel.open .panel-header{border-bottom-color:var(--border);}
+.panel.open .panel-header .arrow{transform:rotate(180deg);}
+.panel-body{display:none;padding:16px 24px;}
+.panel.open .panel-body{display:block;}
+.quiz-score{text-align:center;padding:16px;font-size:16px;font-weight:600;color:var(--accent);display:none;margin-top:12px;background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);}
+.quiz-score.show{display:block;}
+.opt-cards{display:flex;flex-direction:column;gap:8px;margin-top:12px;}
+.opt-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:12px 16px;font-family:Georgia,serif;font-size:17px;line-height:1.7;}
+.opt-key{font-weight:700;color:var(--accent);margin-right:8px;}
+body.mode-analysis .opt-card.opt-used{opacity:0.4;}
+.analysis-item{padding:16px 24px;border-bottom:1px solid #f0f0f0;}
+.analysis-item:last-child{border-bottom:none;}
+.analysis-answer{font-weight:700;color:#16a34a;font-size:15px;margin-bottom:6px;}
+.analysis-logic{font-size:14px;color:var(--text-secondary);line-height:1.75;margin-top:6px;}
+.analysis-logic b{color:var(--text);}
+.locate-quote{background:#fef9c3;padding:6px 10px;border-radius:4px;margin:6px 0;font-family:Georgia,serif;font-style:italic;font-size:14px;color:var(--text);}
+body.mode-quiz .analysis-panel{display:none!important;}
+body.mode-analysis .analysis-panel{display:block;}
+.quiz-btn{display:block;width:100%;padding:11px;border-radius:var(--radius);border:none;font-size:15px;font-weight:600;cursor:pointer;text-align:center;background:var(--accent);color:#fff;margin-top:16px;transition:opacity .15s;}
+.quiz-btn:hover{opacity:.9;}
+body.mode-analysis .quiz-actions{display:none;}
+.opt-label{font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin:16px 0 8px;font-family:-apple-system,sans-serif;}
+.tip-box{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:16px;padding:20px 24px;font-size:14px;line-height:1.9;color:var(--text-secondary);}
+.tip-box h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:10px;}
+.tip-box ul{margin-left:20px;}
+.tip-box li{margin-bottom:6px;}
+.tip-box b{color:var(--text);}
+@media(min-width:700px){
+  .header h1{font-size:19px;}.header-sub{font-size:14px;}
+  .paragraph{font-size:23px;line-height:1.9;}
+  .opt-card{font-size:21px;}.panel-header{font-size:18px;}
+  .analysis-answer{font-size:17px;}.analysis-logic{font-size:17px;}
+  .locate-quote{font-size:17px;}.quiz-btn{font-size:17px;}
+}
+@media(max-width:600px){
+  .passage{padding:18px 14px;}.paragraph{font-size:16px;}
+  .panel-header,.analysis-item{padding-left:16px;padding-right:16px;}.panel-body{padding:12px 16px;}
+}
+.vocab-card{border-bottom:1px solid #f0f0f0;padding:12px 0;}
+.vocab-card:last-child{border-bottom:none;}
+.vocab-card-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px;}
+.vocab-word{font-family:Georgia,serif;font-weight:600;color:var(--accent);cursor:pointer;font-size:15px;}
+.vocab-word:hover{text-decoration:underline;}
+.vocab-meaning{font-size:14px;color:var(--text);}
+.vocab-extra{font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.75;}
+.vocab-tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:3px;background:#fef3c7;color:#92400e;vertical-align:middle;}
+.vocab-tag.tag-core{background:#dcfce7;color:#166534;}
+.vocab-tag.tag-exam{background:#dbeafe;color:#1e40af;}
+.vocab-tag.tag-extend{background:#ffedd5;color:#c2410c;}
+.tip{border-bottom:1.5px dashed var(--accent);cursor:pointer;position:relative;transition:background .15s;}
+.tip:hover{background:var(--accent-light);}
+.tooltip{position:fixed;z-index:200;background:var(--text);color:#fff;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;line-height:1.5;padding:8px 14px;border-radius:8px;max-width:min(520px,calc(100vw - 16px));width:max-content;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:auto;animation:tipIn .15s ease-out;}
+.tooltip::after{content:'';position:absolute;bottom:-6px;left:var(--arrow-left,50%);transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text);}
+.tooltip.below::after{bottom:auto;top:-6px;border-top:none;border-bottom:6px solid var(--text);}
+.tooltip .tip-phrase{font-family:Georgia,serif;font-weight:600;color:#93c5fd;margin-bottom:2px;}
+.tooltip .tip-speak{display:inline-block;cursor:pointer;margin-left:6px;font-size:12px;opacity:.7;vertical-align:middle;}
+.tooltip .tip-speak:hover{opacity:1;}
+@keyframes tipIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+body.mode-quiz .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-quiz .tip:hover{background:none;}
+.srs-btns{display:flex;gap:5px;margin-left:auto;}
+.srs-btn{font-size:11px;padding:2px 7px;border-radius:10px;border:1.5px solid;cursor:pointer;transition:all .15s;background:none;white-space:nowrap;}
+.srs-btn-know{border-color:#16a34a;color:#16a34a;}
+.srs-btn-know:hover{background:#dcfce7;}
+.srs-btn-forget{border-color:#dc2626;color:#dc2626;}
+.srs-btn-forget:hover{background:#fee2e2;}
+.vocab-card.srs-due .vocab-word::after{content:' 📌';font-size:10px;}
+.vocab-card.srs-known .vocab-word::after{content:' ✓';font-size:11px;color:#16a34a;}
+.srs-badge{font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;background:#fef2f2;color:#dc2626;}
+.srs-badge.all-done{background:#dcfce7;color:#16a34a;}
+body.mode-quiz #vocabPanel{display:none!important;}
+@media(min-width:700px){
+  .vocab-word{font-size:20px;}.vocab-meaning{font-size:18px;}.vocab-extra{font-size:16.5px;line-height:1.75;}
+  .vocab-tag{font-size:13px;}.srs-btn,.srs-badge{font-size:14px;}
+  .tooltip{font-size:17px;line-height:1.55;}.tooltip .tip-phrase{font-size:19px;}
+}
+</style>
+</head>
+<body class="mode-quiz">
+<div class="header">
+  <div class="container">
+    <h1>2023北京卷七选五 · College Rankings and Teaching Quality</h1>
+    <div class="header-controls">
+      <span class="header-sub">Q35–39</span>
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="quiz" onclick="setMode('quiz')">① 做题</button>
+        <button class="mode-step" data-mode="analysis" onclick="setMode('analysis')">② 解析</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+<div class="container">
+<div class="passage">
+  <div class="passage-title">七选五阅读理解</div>
+  <div class="passage-subtitle">根据短文内容，从短文后的选项中选出能填入空白处的最佳选项。选项中有两项为多余选项。</div>
+  <div class="paragraph">It's a joyful and <span class="tip" data-tip="stressful|充满压力的｜stress n. 压力 → stressful adj. 令人有压力的｜a stressful time = 压力很大的时期">stressful</span> time of year in the United States for students and their families as they make decisions about where to attend college. Families often turn to <span class="tip" data-tip="rankings|排名，排行榜｜rank v. 排名 → ranking n. 排名｜college rankings = 大学排名系统">rankings</span> systems to help make a decision. <span class="blank-num">[35]</span><span class="blank-quiz"><select class="cloze-select" id="blank35"><option value="">— 选 —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select></span><span class="blank-ans"><span class="cloze-answer">D</span></span></div>
+  <div class="paragraph">When I talk to families as a <span class="tip" data-tip="scholar|学者，研究者｜scholarship 奖学金就是给 scholar（学者）的资助｜a scholar of higher education = 高等教育领域的学者">scholar</span> of higher education, they're often surprised that teaching <span class="tip" data-tip="excellence|卓越，优秀（名词）｜excellent adj. → excellence n.｜teaching excellence = 教学卓越/优质教学">excellence</span> is not <span class="tip" data-tip="counted|被计入，被算在内｜count v. 计算、把…算在内｜is not counted in rankings = 没有被纳入排名的计算中">counted</span> in rankings. <span class="blank-num">[36]</span><span class="blank-quiz"><select class="cloze-select" id="blank36"><option value="">— 选 —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select></span><span class="blank-ans"><span class="cloze-answer">F</span></span></div>
+  <div class="paragraph"><span class="tip" data-tip="Emerging|新出现的，新兴的｜emerge v. 出现、浮现 → emerging adj. 新兴的｜emerging research = 新出现的研究发现">Emerging</span> research suggests that courses in lower-ranked universities, on average, <span class="tip" data-tip="scored higher on|在…方面得分更高｜score v. 得分，score higher on teaching = 在教学评分中表现更好">scored higher on</span> teaching than courses in higher-ranked universities. <span class="blank-num">[37]</span><span class="blank-quiz"><select class="cloze-select" id="blank37"><option value="">— 选 —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select></span><span class="blank-ans"><span class="cloze-answer">G</span></span> The <span class="tip" data-tip="absence|缺失，缺少｜absent adj. 缺席的 → absence n.｜the absence of teaching excellence from the rankings = 排名中缺少对教学卓越的考量">absence</span> of teaching excellence from the rankings is surprising given the link between high-quality teaching and student success. Quality teaching is one of the most important <span class="tip" data-tip="predictors|预测因素，预测指标｜predict v. 预测 → predictor n.｜the most important predictors of college outcomes = 大学成果最重要的预测指标">predictors</span> of a wide range of college <span class="tip" data-tip="outcomes|结果，成果｜out + come = 出来的结果｜college outcomes = 大学教育的成果（如就业率、毕业率等）">outcomes</span>.</div>
+  <div class="paragraph">Rankings, however, are only one reason why a low value is placed on teaching in higher education. <span class="tip" data-tip="Administrators|管理者，行政人员｜administer v. 管理 → administrator n.｜大学 administrators = 校方管理层（校长、院长等）">Administrators</span> often don't view teaching excellence as a way to increase <span class="tip" data-tip="enrolment|入学人数，注册｜enrol v. 注册入学 → enrolment n.（英式拼写，美式 enrollment）｜increase enrolment = 提高入学率">enrolment</span> (注册) or funding. <span class="blank-num">[38]</span><span class="blank-quiz"><select class="cloze-select" id="blank38"><option value="">— 选 —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select></span><span class="blank-ans"><span class="cloze-answer">B</span></span> Research shows that the more time <span class="tip" data-tip="instructors|教师，讲师｜比 teacher 更正式，常指大学讲师或培训师｜the more time instructors spend on teaching, the lower their salary 教师花在教学上的时间越多，薪水越低">instructors</span> spend on teaching, the lower their <span class="tip" data-tip="salary|薪水，工资｜salary 指固定月薪/年薪（白领用），wage 指按小时计的工资（蓝领用）｜the lower their salary = 他们的薪水越低">salary</span>. What is the result? Many instructors continue to teach using traditional lectures, which lead to lower success rates.</div>
+  <div class="paragraph"><span class="blank-num">[39]</span><span class="blank-quiz"><select class="cloze-select" id="blank39"><option value="">— 选 —</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select></span><span class="blank-ans"><span class="cloze-answer">C</span></span> <span class="tip" data-tip="Nevertheless|然而，尽管如此｜拆词记忆：Never + the + less = 从来没有更少 → 前面再怎么让步，后面的事实一点不少 → 尽管如此｜同义词：nonetheless（none+the+less），两者可互换｜比 however 语气更强：我完全承认前面说的，但是…">Nevertheless</span>, not much will change until schools with high-quality teaching are <span class="tip" data-tip="rewarded|被奖励，得到回报｜reward v./n. 奖励｜are rewarded with more resources = 获得更多资源作为回报">rewarded</span> with more resources, higher rankings and increased enrolments. In the long term, universities, organisations that rank schools, and others should work to make teaching a valued, core part of the <span class="tip" data-tip="mission|使命，核心任务｜mission 指组织的根本使命/目标｜make teaching a valued, core part of the mission = 让教学成为学校使命中有价值的核心部分">mission</span>. What should students and their families do? They should give strong <span class="tip" data-tip="consideration|考虑，重视｜consider v. → consideration n.｜give strong consideration to = 认真考虑，高度重视">consideration</span> to universities where high-quality teaching is valued, even though the schools may be ranked lower.</div>
+  <div class="opt-label">选项 A–G（有两项多余）</div>
+  <div class="opt-cards">
+    <div class="opt-card" id="optA"><span class="opt-key">A.</span>Higher education has achieved its true potential.</div>
+    <div class="opt-card" id="optB"><span class="opt-key">B.</span>Therefore, it's not highly valued in <span class="tip" data-tip="hiring|招聘，雇用｜hire v. 雇用 → hiring n.｜not highly valued in hiring or promotion = 在招聘和晋升中不被重视">hiring</span> or <span class="tip" data-tip="promotion|晋升，升职｜promote v. 提升 → promotion n.｜也有&quot;推广&quot;义：sales promotion 促销活动">promotion</span>.</div>
+    <div class="opt-card" id="optC"><span class="opt-key">C.</span>Quality teaching has been an important <span class="tip" data-tip="reputation|声誉，名望｜repute v. 认为 → reputation n.｜reputation-building factor = 建立声誉的因素">reputation</span>-building factor.</div>
+    <div class="opt-card" id="optD"><span class="opt-key">D.</span>However, the rankings ignore a <span class="tip" data-tip="critical|关键的，至关重要的｜critical factor = 关键因素｜也有&quot;批评的&quot;义：critical review 批评性评价">critical</span> factor: the quality of teaching.</div>
+    <div class="opt-card" id="optE"><span class="opt-key">E.</span>Efforts to improve teaching at the university level have recently <span class="tip" data-tip="emerged|出现了，显现了｜emerge v. 出现、浮现｜efforts have recently emerged = 近来出现了一些努力/举措">emerged</span>.</div>
+    <div class="opt-card" id="optF"><span class="opt-key">F.</span>They're even more surprised at how teaching is <span class="tip" data-tip="undervalued|被低估的，不受重视的｜under-（不足）+ value（重视）= 重视不够｜teaching is undervalued = 教学不受重视">undervalued</span> by universities.</div>
+    <div class="opt-card" id="optG"><span class="opt-key">G.</span>In fact, universities often <span class="tip" data-tip="shift|转移，转变｜shift emphasis from A to B = 把重心从A转移到B｜也可作名词：a shift in focus 焦点的转变">shift</span> emphasis from teaching to other ranking factors.</div>
+  </div>
+  <div class="quiz-actions">
+    <button class="quiz-btn" onclick="checkAnswers()">查看得分</button>
+  </div>
+  <div class="quiz-score" id="quizScore"></div>
+</div>
+<div class="panel analysis-panel open" id="analysisPanel">
+  <div class="panel-header" onclick="togglePanel('analysisPanel')"><span>答案解析（35—39题）</span><span class="arrow">&#9660;</span></div>
+  <div class="panel-body">
+    <div class="analysis-item">
+      <div class="analysis-answer">35题 答案：D — However, the rankings ignore a critical factor: the quality of teaching.</div>
+      <div class="locate-quote">上文：Families often turn to rankings systems to help make a decision.</div>
+      <div class="analysis-logic"><b>逻辑：</b>上文说家庭依靠排名系统做决策，D 句用 <b>However</b> 转折，直接引出全文核心矛盾——排名忽视了教学质量这个关键因素（critical factor: the quality of teaching）。这是全文的论点句。<br><b>排除 A/E：</b>A 说"高等教育已实现真正潜力"与全文批评基调相反；E 说"教学改善努力最近出现"逻辑跳跃。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">36题 答案：F — They're even more surprised at how teaching is undervalued by universities.</div>
+      <div class="locate-quote">上文：they're often surprised that teaching excellence is not counted in rankings.</div>
+      <div class="analysis-logic"><b>逻辑：</b>上句说 families 对"教学未纳入排名"感到 surprised，F 句用 <b>even more</b> 递进，主语 they 指代上文 families，意思是"他们更惊讶的是大学自己也不重视教学"。逻辑连贯，代词呼应。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">37题 答案：G — In fact, universities often shift emphasis from teaching to other ranking factors.</div>
+      <div class="locate-quote">上文：courses in lower-ranked universities scored higher on teaching than higher-ranked ones.</div>
+      <div class="analysis-logic"><b>逻辑：</b>上句说低排名大学教学质量反而更高，G 句用 <b>In fact</b> 加强并解释原因——高排名大学把重心从教学转移到其他排名因素（shift emphasis from teaching）。这直接解释了教学质量与排名"倒挂"的原因。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">38题 答案：B — Therefore, it's not highly valued in hiring or promotion.</div>
+      <div class="locate-quote">上文：Administrators often don't view teaching excellence as a way to increase enrolment or funding.</div>
+      <div class="analysis-logic"><b>逻辑：</b>上句说管理者不把教学卓越视为增加入学率/资金的手段，B 句用 <b>Therefore</b> 因果，推出结论：教学在招聘和晋升中也不被重视。接下来"Research shows … lower salary"进一步验证这一结论，逻辑完整。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">39题 答案：C — Quality teaching has been an important reputation-building factor.</div>
+      <div class="locate-quote">下文：Nevertheless, not much will change until schools … are rewarded with more resources.</div>
+      <div class="analysis-logic"><b>逻辑：</b>C 句先肯定教学曾是重要声誉因素，然后下句用 <b>Nevertheless</b> 转折——尽管如此，不给予奖励就不会改变。C 为 Nevertheless 铺垫了让步语境（即使教学很重要，现实仍不会改变）。<br><b>排除 E：</b>E 说"近年出现教学改善努力"与 Nevertheless"不会改变"矛盾。</div>
+    </div>
+  </div>
+</div>
+<div class="tip-box">
+  <h3>七选五做题技巧</h3>
+  <ul>
+    <li><b>看衔接词：</b>However / In fact / Therefore / Even more 等是关键线索，直接锁定逻辑关系（转折/递进/因果）。</li>
+    <li><b>找代词呼应：</b>代词（they / it / this）必须指向上文某个具体名词；代词能对上，选项通常就对了。</li>
+    <li><b>读前后句：</b>空格填进去后，上下句必须"话题连贯"——前句话题收尾，所选句承接，下句继续展开。</li>
+    <li><b>排除法最有效：</b>先排除话题不符或逻辑矛盾的选项（A 结论与全文相反；E 与 Nevertheless 矛盾）。</li>
+  </ul>
+</div>
+<!-- Vocab panel -->
+<div class="panel" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')">
+    <span>重点词汇（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="vocab-list">
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('ranking')">ranking</span>
+          <span class="vocab-meaning">排名，名次</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">rank v. 排名，ranking n. 排名/名次。<em>college rankings</em> = 大学排名系统，全文核心词。<br><em>rank</em> among the top 10 = 跻身前十 &nbsp;·&nbsp; high-<em>ranking</em> 高排名的</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('excellence')">excellence</span>
+          <span class="vocab-meaning">卓越，优秀</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">excellent → excellence（名词）。<em>teaching excellence</em> = 教学卓越，全文核心概念。<br>pursue <em>excellence</em> 追求卓越 &nbsp;·&nbsp; centre of <em>excellence</em> 卓越中心</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('enrolment')">enrolment</span>
+          <span class="vocab-meaning">入学（人数），注册</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">enrol v. 注册/入学，enrolment n. = 入学行为或入学人数。英式拼写（美式 enrollment）。<br><em>increase enrolment</em> = 提高入学率 &nbsp;·&nbsp; <em>enrolment</em> numbers 入学人数</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('predictor')">predictor</span>
+          <span class="vocab-meaning">预测因素，预测指标</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">predict v. → predictor n. = 能预测结果的因素。<br>Quality teaching is one of the most important <em>predictors</em> of college outcomes. = 教学质量是大学成果最重要的预测因素之一</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('instructor')">instructor</span>
+          <span class="vocab-meaning">教师，讲师</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">instructor = 教学人员（比 teacher 更正式，常指大学讲师或培训师）。<br>the more time <em>instructors</em> spend on teaching = 教师花在教学上的时间越多 &nbsp;·&nbsp; driving <em>instructor</em> 驾校教练</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('emphasis')">emphasis</span>
+          <span class="vocab-meaning">重视，强调</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">emphasise / emphasize v. → emphasis n.。<br>shift <em>emphasis</em> from teaching to other factors = 把重心从教学转移到其他因素 &nbsp;·&nbsp; place <em>emphasis</em> on = 重视...</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('critical')">critical</span>
+          <span class="vocab-meaning">关键的；批判性的</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">critical 有两个常见义：① 关键的，至关重要的：a <em>critical</em> factor 关键因素；② 批评的，挑剔的：a <em>critical</em> review 批评性评价。<br>这里是义①：the rankings ignore a <em>critical</em> factor = 排名忽视了一个关键因素</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('undervalue')">undervalue</span>
+          <span class="vocab-meaning">低估，轻视</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">under-（不足）+ value（重视）= 给予的重视不够。<br>teaching is <em>undervalued</em> by universities = 大学低估了教学的价值 &nbsp;·&nbsp; 对比：overvalue = 高估</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('reward')">reward</span>
+          <span class="vocab-meaning">奖励，回报（动词/名词）</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">reward v./n.。schools with high-quality teaching are <em>rewarded</em> with more resources = 教学质量好的学校获得更多资源作为奖励。<br><em>rewarding</em> adj. = 有回报的，令人满足的（写作常用）</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('consideration')">consideration</span>
+          <span class="vocab-meaning">考虑，重视</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">consider v. → consideration n.。give strong <em>consideration</em> to = 认真考虑，高度重视。<br>take sth into <em>consideration</em> = 把某事纳入考虑 &nbsp;·&nbsp; under <em>consideration</em> = 在考虑中</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+const THEMES=['yellow','green'];
+const THEME_LABELS={yellow:'📄 书本黄',green:'🌿 护眼绿'};
+let themeIdx=parseInt(localStorage.getItem('theme')||'0');
+function applyTheme(){document.body.classList.remove('theme-yellow','theme-green');const t=THEMES[themeIdx%THEMES.length];document.body.classList.add('theme-'+t);const btn=document.getElementById('theme-btn');if(btn)btn.textContent=THEME_LABELS[t];}
+function cycleTheme(){themeIdx=(themeIdx+1)%THEMES.length;localStorage.setItem('theme',themeIdx);applyTheme();}
+applyTheme();
+const ANSWERS={35:'D',36:'F',37:'G',38:'B',39:'C'};
+const USED={'D':true,'F':true,'G':true,'B':true,'C':true};
+function checkAnswers(){
+  let correct=0;
+  for(const[num,ans]of Object.entries(ANSWERS)){
+    const sel=document.getElementById('blank'+num);if(!sel)continue;
+    const val=sel.value;sel.classList.remove('sel-correct','sel-wrong');
+    if(!val)continue;
+    if(val===ans){sel.classList.add('sel-correct');correct++;}else sel.classList.add('sel-wrong');
+  }
+  const sc=document.getElementById('quizScore');sc.textContent='得分：'+correct+' / 5';sc.classList.add('show');
+}
+function setMode(mode){
+  document.body.classList.remove('mode-quiz','mode-analysis');
+  document.body.classList.add('mode-'+mode);
+  document.querySelectorAll('.mode-step').forEach(btn=>btn.classList.toggle('active',btn.dataset.mode===mode));
+  if(mode==='analysis'){
+    Object.keys(USED).forEach(l=>{const el=document.getElementById('opt'+l);if(el)el.classList.add('opt-used');});
+    document.getElementById('analysisPanel').classList.add('open');
+  }else{
+    document.querySelectorAll('.opt-card').forEach(c=>c.classList.remove('opt-used'));
+    for(const num of[35,36,37,38,39]){const s=document.getElementById('blank'+num);if(s){s.value='';s.classList.remove('sel-correct','sel-wrong');}}
+    document.getElementById('quizScore').classList.remove('show');
+  }
+}
+function togglePanel(id){document.getElementById(id).classList.toggle('open');}
+let enPlayer=null;
+function speakWord(word){
+  if(enPlayer){enPlayer.pause();enPlayer=null;}
+  const slug='en-word-'+word.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const src='audio/2023北京卷-七选五/'+slug+'.mp3';
+  enPlayer=new Audio(src);
+  enPlayer.onerror=function(){const u=new SpeechSynthesisUtterance(word);const vs=speechSynthesis.getVoices();u.voice=vs.find(v=>v.lang==='en-GB')||vs.find(v=>v.lang.startsWith('en'))||vs[0];u.rate=0.8;speechSynthesis.speak(u);};
+  enPlayer.play();
+}
+function vocabClick(phrase){speakWord(phrase);}
+const SRS_PREFIX='srs_beijing_2023_75_';
+const SRS_INTERVALS=[1,3,7,14,30];
+function srsLoad(w){const r=localStorage.getItem(SRS_PREFIX+w);return r?JSON.parse(r):null;}
+function srsSave(w,knew){const s=srsLoad(w)||{streak:0};if(knew){s.streak=(s.streak||0)+1;s.interval=SRS_INTERVALS[Math.min(s.streak-1,SRS_INTERVALS.length-1)];}else{s.streak=0;s.interval=1;}s.nextReview=Date.now()+s.interval*86400000;localStorage.setItem(SRS_PREFIX+w,JSON.stringify(s));return s;}
+function srsIsDue(s){return!s||Date.now()>=s.nextReview;}
+function srsUpdateCard(card){const s=srsLoad(card.dataset.srsWord);card.classList.remove('srs-due','srs-known');if(!s)return;card.classList.add(srsIsDue(s)?'srs-due':'srs-known');}
+function srsUpdateBadge(){const badge=document.getElementById('srs-badge');if(!badge)return;const cards=document.querySelectorAll('.vocab-card[data-srs-word]');let due=0;cards.forEach(c=>{if(srsIsDue(srsLoad(c.dataset.srsWord)))due++;});if(due===0){badge.textContent='全掌握 ✓';badge.className='srs-badge all-done';}else{badge.textContent=due+'个待复习';badge.className='srs-badge';}}
+function srsClick(word,knew,btn){srsSave(word,knew);const card=btn.closest('.vocab-card');srsUpdateCard(card);srsUpdateBadge();btn.style.opacity='0.4';setTimeout(()=>btn.style.opacity='',600);}
+function srsInit(){document.querySelectorAll('.vocab-card').forEach(card=>{const wordEl=card.querySelector('.vocab-word');if(!wordEl)return;const word=wordEl.textContent.trim();card.dataset.srsWord=word;const btns=document.createElement('div');btns.className='srs-btns';const esc=word.replace(/\\/g,'\\\\').replace(/'/g,"\\'");btns.innerHTML='<button class="srs-btn srs-btn-know" onclick="srsClick(\''+esc+'\',true,this)">认识 ✓</button>'+'<button class="srs-btn srs-btn-forget" onclick="srsClick(\''+esc+'\',false,this)">还不会 ✗</button>';card.querySelector('.vocab-card-head').appendChild(btns);srsUpdateCard(card);});srsUpdateBadge();}
+srsInit();
+/* ── Tooltip ── */
+let tooltipEl=null;
+function showTooltip(tipEl){
+  hideTooltip();
+  const raw=tipEl.getAttribute('data-tip');
+  const[phrase,...rest]=raw.split('|');
+  const explain=rest.join('|');
+  const parts=explain.split('｜');
+  tooltipEl=document.createElement('div');
+  tooltipEl.className='tooltip';
+  let html='<div class="tip-phrase">'+phrase+' <span class="tip-speak" onclick="speakWord(\''+phrase.replace(/'/g,"\\'")+'\')">🔊</span></div>';
+  parts.forEach(p=>{html+='<div>'+p+'</div>';});
+  tooltipEl.innerHTML=html;
+  document.body.appendChild(tooltipEl);
+  speakWord(phrase);
+  const tr=tipEl.getBoundingClientRect();
+  const tt=tooltipEl.getBoundingClientRect();
+  let left=tr.left+tr.width/2-tt.width/2;
+  if(left<4)left=4;if(left+tt.width>window.innerWidth-4)left=window.innerWidth-4-tt.width;
+  let top=tr.top-tt.height-8;
+  if(top<4){top=tr.bottom+8;tooltipEl.classList.add('below');}
+  tooltipEl.style.left=left+'px';tooltipEl.style.top=top+'px';
+  const arrowLeft=tr.left+tr.width/2-left;
+  tooltipEl.style.setProperty('--arrow-left',arrowLeft+'px');
+}
+function hideTooltip(){if(tooltipEl){tooltipEl.remove();tooltipEl=null;}}
+document.addEventListener('click',function(e){
+  const tip=e.target.closest('.tip');
+  if(tip){e.stopPropagation();showTooltip(tip);return;}
+  hideTooltip();
+});
+</script>
+</body>
+</html>

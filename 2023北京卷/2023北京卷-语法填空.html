@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2023北京卷语法填空 · 三篇短文</title>
+<style>
+:root{--bg:#fafaf8;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;--accent:#2563eb;--accent-light:#dbeafe;--border:#e2e2e0;--card-bg:#fff;--hover-bg:#f5f5f4;--shadow:0 1px 3px rgba(0,0,0,.08);--radius:6px;}
+.theme-yellow{--bg:#f5f0e8;--card-bg:#faf6ee;--border:#ddd5bf;--hover-bg:#ede7d8;--accent-light:#fde8b8;}
+.theme-green{--bg:#edecea;--card-bg:#f3f2f0;--border:#d6d5d0;--hover-bg:#e8e7e3;--accent-light:#dddcd6;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:60px;}
+.container{max-width:1400px;width:100%;margin:0 auto;padding:0 max(12px,env(safe-area-inset-left)) 0 max(12px,env(safe-area-inset-right));}
+.header{background:var(--card-bg);border-bottom:1px solid var(--border);padding:16px 0;padding-top:calc(16px + env(safe-area-inset-top));position:sticky;top:0;z-index:100;}
+.header .container{display:flex;align-items:center;flex-wrap:wrap;gap:10px;}
+.header h1{font-size:16px;font-weight:600;flex:1;min-width:200px;}
+.header-sub{font-size:12px;color:var(--accent);font-weight:500;background:var(--accent-light);padding:2px 8px;border-radius:10px;}
+.header-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card-bg);color:var(--text);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.mode-steps{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.mode-step{padding:6px 12px;border:none;background:var(--card-bg);color:var(--text-secondary);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.mode-step+.mode-step{border-left:1px solid var(--border);}
+.mode-step.active{background:var(--accent);color:#fff;}
+.mode-step:hover:not(.active){background:var(--accent-light);}
+.section{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:20px;padding:24px 32px;}
+.section-title{font-size:14px;font-weight:700;color:var(--accent);letter-spacing:.05em;margin-bottom:14px;text-transform:uppercase;font-family:-apple-system,sans-serif;}
+.passage-label{font-size:13px;font-weight:600;color:var(--text-secondary);margin-bottom:10px;font-family:-apple-system,sans-serif;}
+.paragraph{margin-bottom:14px;font-family:Georgia,serif;font-size:18px;line-height:1.9;}
+.blank-wrap{display:inline-block;vertical-align:middle;position:relative;}
+.blank-num{font-size:11px;font-weight:700;color:var(--text-muted);font-family:-apple-system,sans-serif;position:absolute;top:-12px;left:0;white-space:nowrap;}
+.gram-input{font-family:Georgia,serif;font-size:16px;border:2px solid var(--accent);border-radius:4px;padding:2px 8px;background:var(--accent-light);color:var(--text);min-width:120px;outline:none;vertical-align:middle;margin:0 2px;}
+.gram-input.inp-correct{border-color:#16a34a;background:#dcfce7;color:#15803d;}
+.gram-input.inp-wrong{border-color:#dc2626;background:#fee2e2;color:#b91c1c;}
+.gram-answer{font-family:Georgia,serif;font-weight:700;color:#16a34a;background:#dcfce7;padding:1px 10px;border-radius:4px;border:1.5px solid #16a34a;vertical-align:middle;margin:0 2px;}
+body.mode-quiz .blank-quiz{display:inline;}
+body.mode-quiz .blank-ans{display:none;}
+body.mode-analysis .blank-quiz{display:none;}
+body.mode-analysis .blank-ans{display:inline;}
+.quiz-btn{display:block;width:100%;padding:11px;border-radius:var(--radius);border:none;font-size:15px;font-weight:600;cursor:pointer;text-align:center;background:var(--accent);color:#fff;margin-top:16px;transition:opacity .15s;}
+.quiz-btn:hover{opacity:.9;}
+body.mode-analysis .quiz-actions{display:none;}
+.quiz-score{text-align:center;padding:16px;font-size:16px;font-weight:600;color:var(--accent);display:none;margin-top:12px;background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);}
+.quiz-score.show{display:block;}
+.panel{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:16px;overflow:hidden;}
+.panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;cursor:pointer;user-select:none;font-weight:600;font-size:15px;border-bottom:1px solid transparent;transition:border-color .2s;}
+.panel-header:hover{color:var(--accent);}
+.panel-header .arrow{transition:transform .2s;font-size:12px;color:var(--text-muted);}
+.panel.open .panel-header{border-bottom-color:var(--border);}
+.panel.open .panel-header .arrow{transform:rotate(180deg);}
+.panel-body{display:none;padding:16px 24px;}
+.panel.open .panel-body{display:block;}
+.gram-item{padding:14px 24px;border-bottom:1px solid #f0f0f0;}
+.gram-item:last-child{border-bottom:none;}
+.gram-answer-line{font-weight:700;color:#16a34a;font-size:15px;margin-bottom:6px;}
+.gram-point{font-size:14px;color:var(--text-secondary);line-height:1.75;}
+.gram-point b{color:var(--text);}
+.gram-formula{display:inline-block;background:#f0f6fc;border:1px solid #bfdbfe;border-radius:4px;padding:3px 10px;font-family:Georgia,serif;font-size:14px;color:#1e40af;margin:4px 0;}
+body.mode-quiz .analysis-panel{display:none!important;}
+@media(min-width:700px){
+  .header h1{font-size:19px;}.paragraph{font-size:23px;line-height:1.9;}
+  .gram-input{font-size:20px;min-width:160px;}.panel-header{font-size:18px;}
+  .gram-answer-line{font-size:17px;}.gram-point{font-size:17px;}.gram-formula{font-size:16px;}
+  .quiz-btn{font-size:17px;}
+}
+@media(max-width:600px){
+  .section{padding:18px 14px;}.paragraph{font-size:16px;}
+  .gram-input{font-size:14px;min-width:100px;}
+  .panel-header,.gram-item{padding-left:16px;padding-right:16px;}.panel-body{padding:12px 16px;}
+}
+.vocab-card{border-bottom:1px solid #f0f0f0;padding:12px 0;}
+.vocab-card:last-child{border-bottom:none;}
+.vocab-card-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px;}
+.vocab-word{font-family:Georgia,serif;font-weight:600;color:var(--accent);cursor:pointer;font-size:15px;}
+.vocab-word:hover{text-decoration:underline;}
+.vocab-meaning{font-size:14px;color:var(--text);}
+.vocab-extra{font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.75;}
+.vocab-tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:3px;background:#fef3c7;color:#92400e;vertical-align:middle;}
+.vocab-tag.tag-core{background:#dcfce7;color:#166534;}
+.vocab-tag.tag-exam{background:#dbeafe;color:#1e40af;}
+.vocab-tag.tag-extend{background:#ffedd5;color:#c2410c;}
+.tip{border-bottom:1.5px dashed var(--accent);cursor:pointer;position:relative;transition:background .15s;}
+.tip:hover{background:var(--accent-light);}
+.tooltip{position:fixed;z-index:200;background:var(--text);color:#fff;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;line-height:1.5;padding:8px 14px;border-radius:8px;max-width:min(520px,calc(100vw - 16px));width:max-content;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:auto;animation:tipIn .15s ease-out;}
+.tooltip::after{content:'';position:absolute;bottom:-6px;left:var(--arrow-left,50%);transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text);}
+.tooltip.below::after{bottom:auto;top:-6px;border-top:none;border-bottom:6px solid var(--text);}
+.tooltip .tip-phrase{font-family:Georgia,serif;font-weight:600;color:#93c5fd;margin-bottom:2px;}
+.tooltip .tip-speak{display:inline-block;cursor:pointer;margin-left:6px;font-size:12px;opacity:.7;vertical-align:middle;}
+.tooltip .tip-speak:hover{opacity:1;}
+@keyframes tipIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+body.mode-quiz .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-quiz .tip:hover{background:none;}
+.srs-btns{display:flex;gap:5px;margin-left:auto;}
+.srs-btn{font-size:11px;padding:2px 7px;border-radius:10px;border:1.5px solid;cursor:pointer;transition:all .15s;background:none;white-space:nowrap;}
+.srs-btn-know{border-color:#16a34a;color:#16a34a;}
+.srs-btn-know:hover{background:#dcfce7;}
+.srs-btn-forget{border-color:#dc2626;color:#dc2626;}
+.srs-btn-forget:hover{background:#fee2e2;}
+.vocab-card.srs-due .vocab-word::after{content:' 📌';font-size:10px;}
+.vocab-card.srs-known .vocab-word::after{content:' ✓';font-size:11px;color:#16a34a;}
+.srs-badge{font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;background:#fef2f2;color:#dc2626;}
+.srs-badge.all-done{background:#dcfce7;color:#16a34a;}
+body.mode-quiz #vocabPanel{display:none!important;}
+@media(min-width:700px){
+  .vocab-word{font-size:20px;}.vocab-meaning{font-size:18px;}.vocab-extra{font-size:16.5px;line-height:1.75;}
+  .vocab-tag{font-size:13px;}.srs-btn,.srs-badge{font-size:14px;}
+  .tooltip{font-size:17px;line-height:1.55;}.tooltip .tip-phrase{font-size:19px;}
+}
+</style>
+</head>
+<body class="mode-quiz">
+<div class="header">
+  <div class="container">
+    <h1>2023北京卷语法填空 · 三篇短文</h1>
+    <div class="header-controls">
+      <span class="header-sub">Q11–20</span>
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="quiz" onclick="setMode('quiz')">① 做题</button>
+        <button class="mode-step" data-mode="analysis" onclick="setMode('analysis')">② 解析</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+<div class="container">
+
+<!-- Passage A -->
+<div class="section">
+  <div class="section-title">语法填空（共10题，每题1.5分）</div>
+  <div class="passage-label">A篇（第11—14题）· 瑞士的准时传统</div>
+  <div class="paragraph">In Switzerland, it is a <span class="tip" data-tip="tradition|传统，风俗｜it is a tradition that... 做某事是一种传统｜traditional adj. 传统的">tradition</span> that if a person has never been <span class="tip" data-tip="married|已婚的｜marry v. 结婚 → married adj.｜get married 结婚｜has never been married = 从未结过婚">married</span> by their 50th birthday, their friends
+    <span class="blank-wrap"><span class="blank-num">(11)</span><span class="blank-quiz"><input class="gram-input" id="g11" placeholder="throw的正确形式" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">would throw</span></span></span>
+    a birthday party for them. The invitation <span class="tip" data-tip="specifies|明确规定，指定｜specify v. 具体说明 → specific adj. 具体的｜The invitation specifies that... = 请柬上明确要求…">specifies</span> that guests should arrive
+    <span class="blank-wrap"><span class="blank-num">(12)</span><span class="blank-quiz"><input class="gram-input" id="g12" placeholder="填副词" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">exactly</span></span></span>
+    on time — not a minute earlier, not a minute later. By the time guests arrived, the guest of honour
+    <span class="blank-wrap"><span class="blank-num">(13)</span><span class="blank-quiz"><input class="gram-input" id="g13" placeholder="arrive的正确形式" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">had arrived</span></span></span>
+    already. Being
+    <span class="blank-wrap"><span class="blank-num">(14)</span><span class="blank-quiz"><input class="gram-input" id="g14" placeholder="see的正确形式" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">seen</span></span></span>
+    at such a party is considered a great <span class="tip" data-tip="honour|荣誉，光荣（英式拼写）｜美式拼写 honor｜the guest of honour = 主宾｜is considered a great honour = 被视为莫大的荣幸">honour</span>.</div>
+</div>
+
+<!-- Passage B -->
+<div class="section">
+  <div class="passage-label">B篇（第15—17题）· 红树林保护</div>
+  <div class="paragraph"><span class="tip" data-tip="Mangroves|红树林｜生长在热带/亚热带海岸线上的耐盐树木｜mangrove forest = 红树林">Mangroves</span> are <span class="tip" data-tip="salt-tolerant|耐盐的｜salt 盐 + tolerant 能忍受的 = 能忍受盐分的｜tolerant 也常用于 be tolerant of 对…宽容">salt-tolerant</span> trees that grow along <span class="tip" data-tip="coastlines|海岸线｜coast 海岸 + line 线 → coastline 海岸线｜along coastlines = 沿着海岸线">coastlines</span> in <span class="tip" data-tip="tropical|热带的｜tropic n. 回归线/热带 → tropical adj.｜tropical and subtropical = 热带和亚热带">tropical</span> and subtropical
+    <span class="blank-wrap"><span class="blank-num">(15)</span><span class="blank-quiz"><input class="gram-input" id="g15" placeholder="city的正确形式" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">cities</span></span></span>
+    around the world. In recent years, an international <span class="tip" data-tip="conservation|保育，保护（自然资源）｜conserve v. 保护/节约 → conservation n.｜wildlife conservation 野生动物保育">conservation</span> organisation
+    <span class="blank-wrap"><span class="blank-num">(16)</span><span class="blank-quiz"><input class="gram-input" id="g16" placeholder="establish的正确形式" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">has established</span></span></span>
+    protected zones along dozens of coastlines. These zones are essential
+    <span class="blank-wrap"><span class="blank-num">(17)</span><span class="blank-quiz"><input class="gram-input" id="g17" placeholder="填介词/词" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">to</span></span></span>
+    protecting <span class="tip" data-tip="biodiversity|生物多样性｜bio-（生命）+ diversity（多样性）= 生物多样性｜protecting biodiversity = 保护生物多样性">biodiversity</span> and <span class="tip" data-tip="stabilising|稳固，使稳定（英式拼写）｜stable adj. 稳定的 → stabilise v.｜stabilising coastlines = 稳固海岸线">stabilising</span> coastlines against <span class="tip" data-tip="erosion|侵蚀，腐蚀｜erode v. 侵蚀 → erosion n.｜soil erosion 土壤侵蚀 · coastal erosion 海岸侵蚀">erosion</span>.</div>
+</div>
+
+<!-- Passage C -->
+<div class="section">
+  <div class="passage-label">C篇（第18—20题）· 马拉松选手Nina</div>
+  <div class="paragraph">Nina grew up in a small mountain town
+    <span class="blank-wrap"><span class="blank-num">(18)</span><span class="blank-quiz"><input class="gram-input" id="g18" placeholder="填关系词" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">where</span></span></span>
+    no one had ever run a <span class="tip" data-tip="marathon|马拉松（全程42.195公里）｜来自古希腊马拉松战役的传说｜run a marathon = 跑马拉松">marathon</span>. At 30, she decided to <span class="tip" data-tip="train|训练（动词）｜train 除了&quot;火车&quot;，常用作动词表示&quot;训练&quot;｜train seriously = 认真训练">train</span> seriously
+    <span class="blank-wrap"><span class="blank-num">(19)</span><span class="blank-quiz"><input class="gram-input" id="g19" placeholder="address的正确形式" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">to address</span></span></span>
+    the <span class="tip" data-tip="challenge|挑战（名词/动词）｜address the challenge = 应对挑战｜challenging adj. 有挑战性的">challenge</span>. Like most first-time runners
+    <span class="blank-wrap"><span class="blank-num">(20)</span><span class="blank-quiz"><input class="gram-input" id="g20" placeholder="face的正确形式" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">facing</span></span></span>
+    their first big race, she felt both excited and <span class="tip" data-tip="nervous|紧张的，不安的｜nerve n. 神经 → nervous adj.｜felt both excited and nervous = 既兴奋又紧张">nervous</span> at the starting line.</div>
+
+  <div class="quiz-actions">
+    <button class="quiz-btn" onclick="checkAnswers()">查看得分</button>
+  </div>
+  <div class="quiz-score" id="quizScore"></div>
+</div>
+
+<!-- Analysis panel -->
+<div class="panel analysis-panel" id="analysisPanel">
+  <div class="panel-header" onclick="togglePanel('analysisPanel')"><span>答案解析（11—20题）</span><span class="arrow">&#9660;</span></div>
+  <div class="panel-body">
+
+    <div class="gram-item">
+      <div class="gram-answer-line">11. would throw</div>
+      <div class="gram-point">
+        <b>考点：虚拟语气 / 过去习惯（would do）</b><br>
+        这道题有两种分析角度：<br>
+        ① 表示过去的习惯性动作：<span class="gram-formula">would + 动词原形</span> 表示"过去总会做某事"（习惯性过去）。<br>
+        ② If 条件句：if 引导真实条件（never been married），主句用 would throw 描述通常的后果。<br>
+        注意：这里填 <em>would throw</em>，不是 <em>would have thrown</em>（后者用于与过去事实相反的假设）。
+      </div>
+    </div>
+
+    <div class="gram-item">
+      <div class="gram-answer-line">12. exactly</div>
+      <div class="gram-point">
+        <b>考点：副词填空</b><br>
+        空格修饰 <em>on time</em>（准时），需要一个副词来加强"严格准时"的语气。<span class="gram-formula">exactly on time</span> = 分毫不差地准时，与后文"not a minute earlier, not a minute later"完美呼应。<br>
+        exact（形容词）→ exactly（副词）。
+      </div>
+    </div>
+
+    <div class="gram-item">
+      <div class="gram-answer-line">13. had arrived</div>
+      <div class="gram-point">
+        <b>考点：过去完成时</b><br>
+        时间状语 <em>By the time guests arrived</em>（当客人到达的时候），主句的动作发生在"客人到达"之前，即"主宾比客人先到了"，使用过去完成时：<span class="gram-formula">had + 过去分词</span>。<br>
+        by the time + 过去时 → 主句用 had done（过去完成时）。
+      </div>
+    </div>
+
+    <div class="gram-item">
+      <div class="gram-answer-line">14. seen</div>
+      <div class="gram-point">
+        <b>考点：被动不定式（to be done）</b><br>
+        Being <em>seen</em> at such a party = 在这样的派对上被人看见（被动含义）。这里是动名词短语 <em>Being seen</em>，全句作主语。<span class="gram-formula">be seen = 被看见</span>，seen 是过去分词，表被动。<br>
+        区分：<em>Being seen</em>（被看见，被动）vs <em>seeing</em>（看，主动）。
+      </div>
+    </div>
+
+    <div class="gram-item">
+      <div class="gram-answer-line">15. cities</div>
+      <div class="gram-point">
+        <b>考点：名词复数</b><br>
+        空格前有 <em>tropical and subtropical</em>（热带和亚热带的），修饰名词；后有 <em>around the world</em>（世界各地），语义为"多个城市"，故用复数。<span class="gram-formula">city → cities</span>（辅音字母 + y → ies）。
+      </div>
+    </div>
+
+    <div class="gram-item">
+      <div class="gram-answer-line">16. has established</div>
+      <div class="gram-point">
+        <b>考点：现在完成时</b><br>
+        时间状语 <em>In recent years</em>（近年来）是现在完成时的典型标志。主语 <em>an international conservation organisation</em> 是第三人称单数，故用：<span class="gram-formula">has + 过去分词（established）</span>。<br>
+        近年来的结果仍有影响 → 现在完成时，不用过去时。
+      </div>
+    </div>
+
+    <div class="gram-item">
+      <div class="gram-answer-line">17. to</div>
+      <div class="gram-point">
+        <b>考点：固定搭配 essential to</b><br>
+        <span class="gram-formula">be essential to sth</span> = 对...至关重要（固定搭配）。to 后接动名词 protecting。<br>
+        注意：essential to（介词 to）vs be essential to do（不定式 to）——这里接 protecting（动名词），so it's the preposition to，not infinitive to。<br>
+        类似搭配：be important to, be vital to, be crucial to。
+      </div>
+    </div>
+
+    <div class="gram-item">
+      <div class="gram-answer-line">18. where</div>
+      <div class="gram-point">
+        <b>考点：关系副词 where 引导定语从句</b><br>
+        先行词是 <em>a small mountain town</em>（地点），定语从句中缺少地点状语（no one had ever run a marathon <em>in the town</em>），用关系副词 <span class="gram-formula">where</span> 引导。<br>
+        区分：which（指代事物，作主/宾语）vs where（指地点，作状语）。这里不能用 which，因为从句结构完整，只缺地点状语。
+      </div>
+    </div>
+
+    <div class="gram-item">
+      <div class="gram-answer-line">19. to address</div>
+      <div class="gram-point">
+        <b>考点：不定式作目的状语</b><br>
+        <span class="gram-formula">to do sth</span> 表示目的（"为了..."）。Nina 认真训练的目的是 <em>to address the challenge</em>（应对这一挑战）。<br>
+        address（动词）= 处理，解决，应对（address a problem / challenge）。不要写成 addressing（动名词不表目的）。
+      </div>
+    </div>
+
+    <div class="gram-item">
+      <div class="gram-answer-line">20. facing</div>
+      <div class="gram-point">
+        <b>考点：现在分词作后置定语</b><br>
+        <em>runners facing their first big race</em> = 正在面临第一场大比赛的跑者。<span class="gram-formula">名词 + doing（现在分词）</span>作后置定语，表示主动/进行中的动作。runners 与 face 是主动关系（跑者主动面对），所以用 facing，不用 faced（被动）。
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Tips panel -->
+<div class="panel" id="tipsPanel">
+  <div class="panel-header" onclick="togglePanel('tipsPanel')"><span>语法填空答题技巧</span><span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-size:14px;line-height:1.9;color:var(--text-secondary);">
+    <p><b>四步解题法：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li><b>第一步，判断词性：</b>空格在句中是名词/动词/形容词/副词位置？名词位置看单复数；动词位置看时态/语态/非谓语；副词位置找程度词。</li>
+      <li><b>第二步，找时间状语：</b>in recent years → 现在完成时；by the time + 过去 → 过去完成时；yesterday / last year → 过去时。</li>
+      <li><b>第三步，判断主动/被动：</b>主语是动作的发出者 → 主动；主语是动作的承受者 → 被动（be done / being done）。</li>
+      <li><b>第四步，查固定搭配：</b>essential to / contribute to / be used to / be devoted to 等介词搭配中 to 是介词，后接 doing。</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Vocab panel -->
+<div class="panel" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')">
+    <span>重点词汇（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="vocab-list">
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('tradition')">tradition</span>
+          <span class="vocab-meaning">传统，风俗</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">it is a <em>tradition</em> that... = ...是一个传统。traditional adj. 传统的，traditionally adv. 传统上。<br>a long-standing <em>tradition</em> 长久传统 &nbsp;·&nbsp; <em>tradition</em> holds that... 传统认为...</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('specify')">specify</span>
+          <span class="vocab-meaning">明确规定，指定</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">The invitation <em>specifies</em> that guests should arrive exactly on time. = 请柬明确规定客人须分毫不差地准时到达。<br>specific adj. 具体的 &nbsp;·&nbsp; specification n. 规格，说明书</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('tolerant')">tolerant</span>
+          <span class="vocab-meaning">耐受的，宽容的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">tolerate v. 容忍，tolerate → tolerant adj.。<br>salt-<em>tolerant</em> trees = 耐盐树木（能在盐分高的环境中生存）。be <em>tolerant</em> of = 对...宽容</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('conservation')">conservation</span>
+          <span class="vocab-meaning">保育，保护（自然资源）</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">conserve v. 保护/节约 → conservation n.。<br>a <em>conservation</em> organisation = 一个环保/保育组织 &nbsp;·&nbsp; wildlife <em>conservation</em> 野生动物保育 &nbsp;·&nbsp; energy <em>conservation</em> 节能</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('biodiversity')">biodiversity</span>
+          <span class="vocab-meaning">生物多样性</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">bio-（生命）+ diversity（多样性）= 生物多样性。保护生态系统中各种生物物种的多样性。<br>protect <em>biodiversity</em> = 保护生物多样性 &nbsp;·&nbsp; loss of <em>biodiversity</em> 生物多样性丧失</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('erosion')">erosion</span>
+          <span class="vocab-meaning">侵蚀，腐蚀</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">erode v. 侵蚀 → erosion n.。稳固海岸线防止侵蚀。<br>stabilising coastlines against <em>erosion</em> = 稳固海岸线，防止侵蚀 &nbsp;·&nbsp; soil <em>erosion</em> 土壤侵蚀</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('establish')">establish</span>
+          <span class="vocab-meaning">建立，设立</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">has <em>established</em> protected zones = 已建立了保护区（现在完成时，in recent years 触发）。<br><em>establish</em> a record 创纪录 &nbsp;·&nbsp; well-<em>established</em> adj. 成熟的，久负盛名的</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('essential')">essential</span>
+          <span class="vocab-meaning">至关重要的，必不可少的</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">be <em>essential</em> to sth/doing = 对...至关重要（固定搭配，to 是介词，后接名词/动名词）。<br>近义：vital, crucial, indispensable &nbsp;·&nbsp; <em>essential</em> skills 基本技能</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('address')">address（动词）</span>
+          <span class="vocab-meaning">处理，应对，解决</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">address 除了"地址/演讲"，还有重要动词义：处理/应对问题。to <em>address</em> the challenge = 为了应对这一挑战（不定式作目的状语）。<br><em>address</em> a problem/issue/concern 应对问题/议题/顾虑</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('competitive')">competitive</span>
+          <span class="vocab-meaning">有竞争力的，竞争激烈的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">compete v. → competitive adj.。marathon 是竞争性运动，选手面临挑战。<br>a highly <em>competitive</em> market 竞争激烈的市场 &nbsp;·&nbsp; <em>competitive</em> advantage 竞争优势</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+const THEMES=['yellow','green'];
+const THEME_LABELS={yellow:'📄 书本黄',green:'🌿 护眼绿'};
+let themeIdx=parseInt(localStorage.getItem('theme')||'0');
+function applyTheme(){document.body.classList.remove('theme-yellow','theme-green');const t=THEMES[themeIdx%THEMES.length];document.body.classList.add('theme-'+t);const btn=document.getElementById('theme-btn');if(btn)btn.textContent=THEME_LABELS[t];}
+function cycleTheme(){themeIdx=(themeIdx+1)%THEMES.length;localStorage.setItem('theme',themeIdx);applyTheme();}
+applyTheme();
+
+const GRAM_ANSWERS={
+  g11:'would throw',g12:'exactly',g13:'had arrived',g14:'seen',
+  g15:'cities',g16:'has established',g17:'to',
+  g18:'where',g19:'to address',g20:'facing'
+};
+
+function normalize(s){return s.trim().toLowerCase().replace(/\s+/g,' ');}
+
+function checkAnswers(){
+  let correct=0,answered=0;
+  for(const[id,ans]of Object.entries(GRAM_ANSWERS)){
+    const inp=document.getElementById(id);if(!inp)continue;
+    const val=inp.value;inp.classList.remove('inp-correct','inp-wrong');
+    if(!val.trim())continue;answered++;
+    if(normalize(val)===normalize(ans)){inp.classList.add('inp-correct');correct++;}
+    else inp.classList.add('inp-wrong');
+  }
+  const sc=document.getElementById('quizScore');
+  sc.textContent='得分：'+correct+' / 10'+(answered<10?' （还有'+(10-answered)+'题未填）':'');
+  sc.classList.add('show');
+}
+
+function setMode(mode){
+  document.body.classList.remove('mode-quiz','mode-analysis');
+  document.body.classList.add('mode-'+mode);
+  document.querySelectorAll('.mode-step').forEach(btn=>btn.classList.toggle('active',btn.dataset.mode===mode));
+  if(mode==='analysis'){document.getElementById('analysisPanel').classList.add('open');}
+  else{
+    for(const id of Object.keys(GRAM_ANSWERS)){const inp=document.getElementById(id);if(inp){inp.value='';inp.classList.remove('inp-correct','inp-wrong');}}
+    document.getElementById('quizScore').classList.remove('show');
+  }
+}
+
+function togglePanel(id){document.getElementById(id).classList.toggle('open');}
+let enPlayer=null;
+function speakWord(word){
+  if(enPlayer){enPlayer.pause();enPlayer=null;}
+  const slug='en-word-'+word.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const src='audio/2023北京卷-语法填空/'+slug+'.mp3';
+  enPlayer=new Audio(src);
+  enPlayer.onerror=function(){const u=new SpeechSynthesisUtterance(word);const vs=speechSynthesis.getVoices();u.voice=vs.find(v=>v.lang==='en-GB')||vs.find(v=>v.lang.startsWith('en'))||vs[0];u.rate=0.8;speechSynthesis.speak(u);};
+  enPlayer.play();
+}
+function vocabClick(phrase){speakWord(phrase);}
+const SRS_PREFIX='srs_beijing_2023_gram_';
+const SRS_INTERVALS=[1,3,7,14,30];
+function srsLoad(w){const r=localStorage.getItem(SRS_PREFIX+w);return r?JSON.parse(r):null;}
+function srsSave(w,knew){const s=srsLoad(w)||{streak:0};if(knew){s.streak=(s.streak||0)+1;s.interval=SRS_INTERVALS[Math.min(s.streak-1,SRS_INTERVALS.length-1)];}else{s.streak=0;s.interval=1;}s.nextReview=Date.now()+s.interval*86400000;localStorage.setItem(SRS_PREFIX+w,JSON.stringify(s));return s;}
+function srsIsDue(s){return!s||Date.now()>=s.nextReview;}
+function srsUpdateCard(card){const s=srsLoad(card.dataset.srsWord);card.classList.remove('srs-due','srs-known');if(!s)return;card.classList.add(srsIsDue(s)?'srs-due':'srs-known');}
+function srsUpdateBadge(){const badge=document.getElementById('srs-badge');if(!badge)return;const cards=document.querySelectorAll('.vocab-card[data-srs-word]');let due=0;cards.forEach(c=>{if(srsIsDue(srsLoad(c.dataset.srsWord)))due++;});if(due===0){badge.textContent='全掌握 ✓';badge.className='srs-badge all-done';}else{badge.textContent=due+'个待复习';badge.className='srs-badge';}}
+function srsClick(word,knew,btn){srsSave(word,knew);const card=btn.closest('.vocab-card');srsUpdateCard(card);srsUpdateBadge();btn.style.opacity='0.4';setTimeout(()=>btn.style.opacity='',600);}
+function srsInit(){document.querySelectorAll('.vocab-card').forEach(card=>{const wordEl=card.querySelector('.vocab-word');if(!wordEl)return;const word=wordEl.textContent.trim();card.dataset.srsWord=word;const btns=document.createElement('div');btns.className='srs-btns';const esc=word.replace(/\\/g,'\\\\').replace(/'/g,"\\'");btns.innerHTML='<button class="srs-btn srs-btn-know" onclick="srsClick(\''+esc+'\',true,this)">认识 ✓</button>'+'<button class="srs-btn srs-btn-forget" onclick="srsClick(\''+esc+'\',false,this)">还不会 ✗</button>';card.querySelector('.vocab-card-head').appendChild(btns);srsUpdateCard(card);});srsUpdateBadge();}
+srsInit();
+/* ── Tooltip ── */
+let tooltipEl=null;
+function showTooltip(tipEl){
+  hideTooltip();
+  const raw=tipEl.getAttribute('data-tip');
+  const[phrase,...rest]=raw.split('|');
+  const explain=rest.join('|');
+  const parts=explain.split('｜');
+  tooltipEl=document.createElement('div');
+  tooltipEl.className='tooltip';
+  let html='<div class="tip-phrase">'+phrase+' <span class="tip-speak" onclick="speakWord(\''+phrase.replace(/'/g,"\\'")+'\')">🔊</span></div>';
+  parts.forEach(p=>{html+='<div>'+p+'</div>';});
+  tooltipEl.innerHTML=html;
+  document.body.appendChild(tooltipEl);
+  speakWord(phrase);
+  const tr=tipEl.getBoundingClientRect();
+  const tt=tooltipEl.getBoundingClientRect();
+  let left=tr.left+tr.width/2-tt.width/2;
+  if(left<4)left=4;if(left+tt.width>window.innerWidth-4)left=window.innerWidth-4-tt.width;
+  let top=tr.top-tt.height-8;
+  if(top<4){top=tr.bottom+8;tooltipEl.classList.add('below');}
+  tooltipEl.style.left=left+'px';tooltipEl.style.top=top+'px';
+  const arrowLeft=tr.left+tr.width/2-left;
+  tooltipEl.style.setProperty('--arrow-left',arrowLeft+'px');
+}
+function hideTooltip(){if(tooltipEl){tooltipEl.remove();tooltipEl=null;}}
+document.addEventListener('click',function(e){
+  const tip=e.target.closest('.tip');
+  if(tip){e.stopPropagation();showTooltip(tip);return;}
+  hideTooltip();
+});
+</script>
+</body>
+</html>

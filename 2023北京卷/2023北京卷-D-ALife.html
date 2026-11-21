@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2023北京卷D篇精读 · What Is Life? ALife and Its Pursuit</title>
+<style>
+:root{--bg:#fafaf8;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;--accent:#2563eb;--accent-light:#dbeafe;--complex-bg:#f0f6fc;--border:#e2e2e0;--card-bg:#fff;--hover-bg:#f5f5f4;--shadow:0 1px 3px rgba(0,0,0,.08);--radius:6px;}
+.theme-yellow{--bg:#f5f0e8;--card-bg:#faf6ee;--border:#ddd5bf;--complex-bg:#ece4d4;--hover-bg:#ede7d8;--accent-light:#fde8b8;}
+.theme-green{--bg:#edecea;--card-bg:#f3f2f0;--border:#d6d5d0;--complex-bg:#e5e4e0;--hover-bg:#e8e7e3;--accent-light:#dddcd6;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:60px;}
+.container{max-width:min(1100px,88vw);margin:0 auto;padding:0 20px;}
+.header{background:var(--card-bg);border-bottom:1px solid var(--border);padding:16px 0;position:sticky;top:0;z-index:100;}
+.header .container{display:flex;align-items:center;flex-wrap:wrap;gap:10px;}
+.header h1{font-size:16px;font-weight:600;flex:1;min-width:200px;}
+.header-sub{font-size:12px;color:var(--accent);font-weight:500;background:var(--accent-light);padding:2px 8px;border-radius:10px;}
+.header-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card-bg);color:var(--text);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.mode-steps{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.mode-step{padding:6px 12px;border:none;background:var(--card-bg);color:var(--text-secondary);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.mode-step+.mode-step{border-left:1px solid var(--border);}
+.mode-step.active{background:var(--accent);color:#fff;}
+.mode-step:hover:not(.active){background:var(--accent-light);}
+.passage{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:20px;padding:28px 32px;}
+.passage-title{text-align:center;font-family:Georgia,"Times New Roman",serif;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:20px;color:var(--text-secondary);}
+.paragraph{margin-bottom:4px;text-indent:2em;}
+.sentence{font-family:Georgia,"Times New Roman",serif;font-size:18px;line-height:1.75;position:relative;transition:background .2s;border-radius:3px;cursor:pointer;}
+.sentence:hover{background:var(--hover-bg);}
+.sentence.playing{background:var(--complex-bg);border-radius:3px;}
+.sentence.complex{border-bottom:1.5px dashed #93c5fd;}
+.sentence.complex.playing{background:var(--complex-bg);}
+.tip{border-bottom:1.5px dashed var(--accent);cursor:pointer;position:relative;transition:background .15s;}
+.tip:hover{background:var(--accent-light);}
+.tip.tip-flash{outline:2px solid var(--accent);border-radius:2px;animation:tipFlash 1.6s ease-out forwards;}
+@keyframes tipFlash{0%{background:var(--accent);color:#fff;}40%{background:var(--accent-light);color:inherit;}100%{background:transparent;}}
+.tooltip{position:fixed;z-index:200;background:var(--text);color:#fff;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;line-height:1.5;padding:8px 14px;border-radius:8px;max-width:min(520px,calc(100vw - 16px));width:max-content;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:auto;animation:tipIn .15s ease-out;}
+.tooltip::after{content:'';position:absolute;bottom:-6px;left:var(--arrow-left,50%);transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text);}
+.tooltip.below::after{bottom:auto;top:-6px;border-top:none;border-bottom:6px solid var(--text);}
+.tooltip .tip-phrase{font-family:Georgia,serif;font-weight:600;color:#93c5fd;margin-bottom:2px;}
+.tooltip .tip-speak{display:inline-block;cursor:pointer;margin-left:6px;font-size:12px;opacity:.7;vertical-align:middle;}
+.tooltip .tip-speak:hover{opacity:1;}
+.level-badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:11px;font-weight:600;margin-left:6px;vertical-align:middle;font-family:-apple-system,"PingFang SC",sans-serif;}
+.badge-超纲{background:rgba(239,68,68,.25);color:#fca5a5;}
+.badge-拓展{background:rgba(251,146,60,.2);color:#fdba74;}
+.badge-选必{background:rgba(96,165,250,.2);color:#93c5fd;}
+.tooltip .tip-zh-play{display:block;margin-top:6px;padding:4px 10px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:4px;color:#93c5fd;font-size:12px;cursor:pointer;text-align:center;}
+.tooltip .tip-zh-play:hover{background:rgba(255,255,255,.25);}
+@keyframes tipIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+.analysis{display:none;margin:8px 0 12px 0;padding:12px 16px;background:#f8f9fa;border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;color:var(--text-secondary);line-height:1.7;text-indent:0;}
+.analysis.open{display:block;}
+.analysis p{margin-bottom:4px;}
+.analysis b{color:var(--text);font-size:13px;}
+.translation-inline{display:none;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;color:var(--text-muted);margin:2px 0 6px 0;text-indent:0;}
+body.compare-mode .translation-inline,body.mode-annotate .translation-inline{display:block;}
+.panel{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:16px;overflow:hidden;}
+.panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;cursor:pointer;user-select:none;font-weight:600;font-size:15px;border-bottom:1px solid transparent;transition:border-color .2s;}
+.panel-header:hover{color:var(--accent);}
+.panel-header .arrow{transition:transform .2s;font-size:12px;color:var(--text-muted);}
+.panel.open .panel-header{border-bottom-color:var(--border);}
+.panel.open .panel-header .arrow{transform:rotate(180deg);}
+.panel-body{display:none;padding:16px 24px;}
+.panel.open .panel-body{display:block;}
+.vocab-card{border-bottom:1px solid #f0f0f0;padding:12px 0;}
+.vocab-card:last-child{border-bottom:none;}
+.vocab-card-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px;}
+.vocab-word{font-family:Georgia,serif;font-weight:600;color:var(--accent);cursor:pointer;font-size:15px;}
+.vocab-word:hover{text-decoration:underline;}
+.vocab-meaning{font-size:14px;color:var(--text);}
+.vocab-extra{font-size:13px;color:var(--text-secondary);margin-top:2px;}
+.vocab-tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:3px;background:#fef3c7;color:#92400e;vertical-align:middle;}
+.vocab-tag.tag-core{background:#dcfce7;color:#166534;}
+.vocab-tag.tag-exam{background:#dbeafe;color:#1e40af;}
+.vocab-tag.tag-beyond{background:#fef3c7;color:#92400e;}
+.vocab-tag.tag-extend{background:#ffedd5;color:#c2410c;}
+.vocab-detail{display:none;margin-top:8px;padding:10px 14px;background:#f8f9fa;border-radius:var(--radius);font-size:13.5px;line-height:1.7;}
+.vocab-detail.open{display:block;}
+.vocab-detail .vd-example{color:var(--text-secondary);padding-left:16px;}
+.vocab-detail .vd-example em{color:var(--text);font-style:normal;font-weight:600;}
+.vocab-expand{font-size:12px;color:var(--accent);cursor:pointer;border:none;background:none;padding:0;margin-left:8px;}
+.vocab-expand:hover{text-decoration:underline;}
+.srs-btns{display:flex;gap:5px;margin-left:auto;}
+.srs-btn{font-size:11px;padding:2px 7px;border-radius:10px;border:1.5px solid;cursor:pointer;transition:all .15s;background:none;white-space:nowrap;}
+.srs-btn-know{border-color:#16a34a;color:#16a34a;}
+.srs-btn-know:hover{background:#dcfce7;}
+.srs-btn-forget{border-color:#dc2626;color:#dc2626;}
+.srs-btn-forget:hover{background:#fee2e2;}
+.srs-badge{font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;background:#fef2f2;color:#dc2626;}
+.srs-badge.all-done{background:#dcfce7;color:#16a34a;}
+.analysis-play{float:right;margin-left:8px;background:none;border:1px solid var(--border);border-radius:4px;font-size:12px;padding:2px 8px;cursor:pointer;color:var(--accent);transition:all .15s;}
+.analysis-play:hover{background:var(--accent-light);border-color:var(--accent);}
+.analysis-play.playing{background:var(--accent);color:#fff;border-color:var(--accent);}
+.question-item{padding:16px 24px;border-bottom:1px solid #f0f0f0;}
+.question-item:last-child{border-bottom:none;}
+.question-stem{font-weight:600;font-size:15px;margin-bottom:8px;}
+.question-options{display:grid;grid-template-columns:1fr;gap:4px;font-size:14px;margin-bottom:8px;}
+.question-option{padding:2px 0;}
+.show-answer-btn{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--accent);cursor:pointer;background:none;border:none;padding:4px 0;}
+.show-answer-btn:hover{text-decoration:underline;}
+.question-analysis{display:none;margin-top:10px;padding:12px 16px;background:#f8f9fa;border-radius:var(--radius);font-size:14px;color:var(--text-secondary);line-height:1.7;}
+.question-analysis.open{display:block;}
+.question-analysis .answer-line{font-weight:700;color:#16a34a;margin-bottom:6px;font-size:15px;}
+.question-analysis .locate{background:#fef9c3;padding:6px 10px;border-radius:4px;margin:6px 0;font-family:Georgia,serif;font-style:italic;font-size:14px;color:var(--text);}
+.option-list{margin-top:10px;display:flex;flex-direction:column;gap:2px;}
+.option-item{padding:3px 0;font-size:13.5px;line-height:1.5;}
+.option-item .opt-letter{font-weight:700;}
+.option-item.correct .opt-mark{color:#15803d;font-weight:700;}
+.option-item.wrong .opt-mark{color:#b91c1c;font-weight:700;}
+.option-item .opt-why{color:#888;font-size:12.5px;margin-left:4px;}
+.quiz-score{text-align:center;padding:16px;font-size:16px;font-weight:600;color:var(--accent);display:none;}
+.quiz-score.show{display:block;}
+#playbar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:#1a1a1a;color:#fff;display:flex;align-items:center;justify-content:center;gap:16px;padding:10px 20px;height:52px;font-size:14px;box-shadow:0 -2px 12px rgba(0,0,0,.2);}
+#playbar button{background:none;border:none;color:#fff;font-size:18px;cursor:pointer;padding:4px 8px;border-radius:4px;line-height:1;transition:background .15s;}
+#playbar button:hover{background:rgba(255,255,255,.15);}
+#pb-play{font-size:22px;}
+#pb-counter{font-size:13px;color:#aaa;min-width:52px;text-align:center;}
+#pb-speed{background:#333;border:none;color:#fff;font-size:13px;padding:3px 6px;border-radius:4px;cursor:pointer;}
+body.mode-raw .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-raw .tip:hover{background:none;}
+body.mode-raw .analysis,body.mode-raw .translation-inline,body.mode-raw .panel{display:none!important;}
+body.mode-raw .sentence.complex{border-bottom:none;}
+body.mode-raw .sentence{cursor:default;}
+body.mode-raw .sentence:hover{background:none;}
+body.mode-quiz .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-quiz .tip:hover{background:none;}
+body.mode-quiz .analysis,body.mode-quiz .translation-inline,body.mode-quiz #vocabPanel,body.mode-quiz #reviewPanel,body.mode-quiz #tipPanel,body.mode-quiz #writingPanel,body.mode-quiz #playbar{display:none!important;}
+body.mode-quiz .sentence.complex{border-bottom:none;cursor:default;}
+body.mode-quiz .sentence{cursor:default;}
+body.mode-quiz .sentence:hover{background:none;}
+body.mode-annotate .sentence.complex{border-bottom:none;}
+body.mode-annotate .sentence{cursor:default;}
+body.mode-annotate .sentence:hover{background:none;}
+body.mode-quiz #questionsPanel{display:block;}
+body.mode-quiz #questionsPanel .panel-body{display:block;}
+body.mode-quiz .question-analysis{display:none!important;}
+body.mode-quiz .show-answer-btn{display:none;}
+body.mode-quiz .question-option{cursor:pointer;padding:6px 10px;border-radius:var(--radius);border:1.5px solid transparent;transition:all .15s;}
+body.mode-quiz .question-option:hover{background:var(--accent-light);}
+body.mode-quiz .question-option.selected{border-color:var(--accent);background:var(--accent-light);}
+body.mode-quiz .question-option.correct{border-color:#16a34a;background:#dcfce7;}
+body.mode-quiz .question-option.wrong{border-color:#dc2626;background:#fee2e2;}
+.locate[data-goto]{cursor:pointer;transition:background .15s;}
+.locate[data-goto]:hover{background:#fde68a;}
+.locate[data-goto]::after{content:' ↗ 跳到原文';font-size:11px;color:var(--accent);font-family:-apple-system,sans-serif;font-style:normal;}
+.sentence.highlighted{background:#fef08a;border-radius:3px;}
+sup.ann-sup{display:none;font-size:0.6em;color:var(--accent);font-weight:700;vertical-align:super;line-height:0;margin-left:2px;font-family:system-ui,sans-serif;pointer-events:none;}
+body.mode-annotate sup.ann-sup{display:inline;}
+.para-ann{display:none;margin:16px 0 28px 0;font-family:-apple-system,"PingFang SC",sans-serif;font-size:15px;color:#333;text-indent:0;}
+body.mode-annotate .para-ann{display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:16px 18px;align-items:start;}
+.pan-row{background:#fff;border:1px solid #ece8e0;border-radius:12px;padding:16px 20px 18px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.pan-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.pan-num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
+.pan-en{font-family:Georgia,serif;font-weight:700;font-size:18px;color:#1a1a1a;}
+.pan-cn{color:var(--accent);font-weight:600;font-size:15px;}
+.pan-lv{font-size:12px;font-weight:600;padding:2px 8px;border-radius:4px;line-height:1.4;}
+.lv-超纲{background:#fee2e2;color:#b91c1c;}
+.pan-det{margin:12px 0 0 32px;color:#666;font-size:14px;line-height:1.85;}
+.pan-det div{position:relative;padding-left:12px;}
+.pan-det div+div{margin-top:8px;}
+.pan-det div::before{content:'';position:absolute;left:0;top:0.8em;width:4px;height:4px;border-radius:50%;background:#c9c3b8;}
+body.mode-quiz .para-ann,body.mode-raw .para-ann{display:none!important;}
+body.mode-quiz sup.ann-sup,body.mode-raw sup.ann-sup{display:none!important;}
+.sb-block{display:none;}
+body.mode-annotate .sb-block{display:block;margin:4px 0 28px;padding:16px 20px 18px;background:#f8f9fa;border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;font-family:-apple-system,"PingFang SC",sans-serif;text-indent:0;}
+body.mode-annotate .analysis{display:none!important;}
+body.mode-quiz .sb-block,body.mode-raw .sb-block{display:none!important;}
+.sb-title{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.08em;margin-bottom:12px;}
+.sb-sent{font-family:Georgia,serif;font-size:18px;line-height:2.3;color:#1a1a1a;background:#fff;border:1px solid #ece8e0;border-radius:10px;padding:14px 18px;}
+.sb-chip{display:inline-block;font-family:-apple-system,"PingFang SC",sans-serif;font-size:11px;font-weight:700;line-height:1;padding:4px 7px;border-radius:999px;margin-right:5px;vertical-align:3px;}
+.sb-core{font-weight:700;border-bottom:2.5px solid var(--accent);}
+.sb-core-chip{background:var(--accent);color:#fff;}
+.sb-ins{color:#9a9a9a;background:#eeebe4;border-radius:4px;padding:2px 4px;}
+.sb-ins-chip{background:#e4e0d8;color:#777;}
+.sb-rest{border-bottom:2.5px solid #4caf7a;}
+.sb-rest-chip{background:#4caf7a;color:#fff;}
+.sb-steps{margin-top:14px;display:grid;gap:10px;}
+.sb-step{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;font-size:15px;line-height:1.75;color:#333;}
+.sb-step-n{width:24px;height:24px;border-radius:50%;background:#1a1a1a;color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-top:2px;}
+.sb-step em{font-style:normal;font-family:Georgia,serif;color:#111;background:#fff;border:1px solid #ece8e0;padding:0 5px;border-radius:4px;}
+.sb-step .arrow{color:#aaa;margin:0 4px;}
+.sb-tip{margin-top:14px;font-size:14px;color:#8a6d1f;background:#fdf6e3;border-radius:8px;padding:9px 14px;}
+.container{max-width:1400px;width:100%;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right));}
+.header{padding-top:calc(16px + env(safe-area-inset-top));}
+body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
+#playbar{height:calc(52px + env(safe-area-inset-bottom));padding-bottom:calc(10px + env(safe-area-inset-bottom));padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right));}
+.passage{padding:24px 24px;}
+.tooltip .tip-scroll{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
+@media(min-width:700px){
+  .header h1{font-size:19px;}.passage-title{font-size:19px;}.header-sub{font-size:14px;}
+  .sentence{font-size:23px;line-height:1.8;}.translation-inline{font-size:18px!important;line-height:1.8;}
+  .analysis{font-size:18px;line-height:1.8;}.analysis b{font-size:16px;}.panel-header{font-size:18px;}
+  .vocab-word{font-size:20px;}.vocab-meaning{font-size:18px;}.vocab-extra{font-size:16.5px;line-height:1.7;}
+  .vocab-detail,.vd-example{font-size:16px;}.vocab-tag,.level-badge{font-size:13px;}
+  .vocab-expand,.srs-btn,.srs-badge{font-size:14px;}.question-stem{font-size:19px;}
+  .question-options{font-size:18px;}.show-answer-btn{font-size:15.5px;}
+  .question-analysis .answer-line{font-size:17px;}.option-item{font-size:16.5px;}.option-item .opt-why{font-size:15px;}
+  .tooltip{font-size:17px;line-height:1.55;}.tooltip .tip-phrase{font-size:19px;}
+  #pb-counter,#pb-speed{font-size:15px;}
+}
+@media(max-width:600px){
+  .passage{padding:18px 14px;}.sentence{font-size:16px;}
+  .panel-header,.question-item{padding-left:16px;padding-right:16px;}.panel-body{padding:12px 16px;}
+}
+</style>
+</head>
+<body class="mode-study">
+
+<div class="header">
+  <div class="container">
+    <h1>2023北京卷D篇精读 · What Is Life? ALife and Its Pursuit</h1>
+    <div class="header-controls">
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="study" onclick="setMode('study')">① 精读</button>
+        <button class="mode-step" data-mode="quiz" onclick="setMode('quiz')">② 做题</button>
+        <button class="mode-step" data-mode="raw" onclick="setMode('raw')">③ 原文</button>
+        <button class="mode-step" data-mode="annotate" onclick="setMode('annotate')">④ 课本</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()" title="切换护眼色">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="passage" id="passage">
+  <div class="passage-title">D</div>
+
+  <!-- ── Paragraph 1 ── -->
+  <div class="paragraph" id="para-1">
+    <span class="sentence" data-idx="0">What is life? Like most great questions, this one is easy to ask but difficult to answer.</span>
+    <span class="sentence" data-idx="1">The reason is simple: we know of just one type of life and it's challenging to do science with a <span class="tip" data-tip="sample size of one|只有一个样本（无法比较）｜sample size = 样本数量（做实验/研究时，你研究的对象数量）。sample size of one = 只有一个样本。科学通常需要比较很多例子，但地球上的「生命」只有一种，所以很难做到｜near: only one example to study" data-level="拓展">sample size of one</span>.</span>
+    <span class="sentence complex" data-idx="2">The field of artificial life — <span class="tip" data-tip="called ALife for short|简称ALife｜for short = 简称，缩写叫法。called ALife for short = 简称为ALife。这是破折号插入语，说明「人工生命」这个领域的缩写｜常见用法：We call it X for short. 我们简称它为X。">called ALife for short</span> — is the <span class="tip" data-tip="systematic attempt|有系统的尝试，系统性的努力｜systematic = 有条理的、系统的（system = 系统）。attempt = 尝试、努力。a systematic attempt to do sth = 有系统地去尝试做某事｜near: organised effort, structured endeavour" data-level="选必">systematic attempt</span> to <span class="tip" data-tip="spell out|说清楚，阐明（逐字解释）｜spell out = 把每个字母都拼出来，引申为「讲得非常清楚」。spell out life's fundamental principles = 把生命的基本原理说清楚、阐明出来｜= explain clearly, set out clearly. 搭配：spell out the rules 把规则说清楚" data-level="拓展">spell out</span> life's fundamental principles.</span>
+    <div class="analysis" id="analysis-2">
+      <p><b>破折号插入语：</b>这句的主干是 <em>The field of artificial life is the systematic attempt to spell out life's fundamental principles</em>（人工生命领域是系统地阐明生命基本原理的尝试）。</p>
+      <p><b>— called ALife for short —：</b>两个破折号之间是插入语，对主语补充说明（简称ALife）。读句子时可以先跳过插入语，找到主干：<em>The field of artificial life ... is the systematic attempt...</em></p>
+      <p><b>spell out：</b>本意是「拼写出来」，这里引申为「把...说清楚、阐明」。考试遇到不认识的词，可以看语境猜：这个领域是在「做什么」？→ 阐明（explain）生命的原理。</p>
+    </div>
+    <span class="sentence" data-idx="3">Many of these <span class="tip" data-tip="practitioners|从业者，实践者｜practise = 实践、做（practitioner = 实际去做/从事某领域的人）。these practitioners = 这些从事人工生命研究的人，下文也叫 ALifers｜= researchers, those who work in the field. 搭配：medical practitioners 医疗从业者" data-level="选必">practitioners</span>, so-called ALifers, think that somehow making life is the surest way to really understand what life is.</span>
+    <div class="translation-inline">生命是什么？像大多数伟大的问题一样，这个问题容易提出，却难以回答。原因很简单：我们只知道一种形式的生命，而只有一个样本的科学研究是很难做的。人工生命这个领域——简称ALife——是一种系统性的尝试，目的是把生命的基本原理说清楚。很多从事这个领域的人（也叫ALifers）认为，以某种方式创造出生命，是真正理解生命的最好途径。</div>
+    <div class="sb-block">
+      <div class="sb-title">长难句拆解</div>
+      <div class="sb-sent">
+        <span class="sb-chip sb-core-chip">主语</span><span class="sb-core">The field of artificial life</span>
+        <span class="sb-chip sb-ins-chip">插入语 · 先跳过</span><span class="sb-ins">— called ALife for short —</span>
+        <span class="sb-chip sb-core-chip">谓语</span><span class="sb-core">is the systematic attempt</span>
+        <span class="sb-chip sb-rest-chip">做什么</span><span class="sb-rest">to spell out life's fundamental principles.</span>
+      </div>
+      <div class="sb-steps">
+        <div class="sb-step"><span class="sb-step-n">1</span><div>先跳过破折号插入语，找主干：<em>The field of artificial life is the systematic attempt to spell out life's fundamental principles</em><span class="arrow">→</span>人工生命领域是阐明生命基本原理的尝试</div></div>
+        <div class="sb-step"><span class="sb-step-n">2</span><div>再补充插入语：<em>called ALife for short</em><span class="arrow">→</span>简称ALife</div></div>
+        <div class="sb-step"><span class="sb-step-n">3</span><div><em>spell out</em> = 阐明，说清楚（不是「拼写」）</div></div>
+      </div>
+      <div class="sb-tip">💡 破折号插入语做题技巧：遇到 — ... — 直接跳过，先找主谓宾，然后把插入说明补进去理解。</div>
+    </div>
+  </div>
+
+  <!-- ── Paragraph 2 ── -->
+  <div class="paragraph" id="para-2">
+    <span class="sentence" data-idx="4">So far no one has <span class="tip" data-tip="convincingly|有说服力地，令人信服地｜convince = 说服（convincing = 有说服力的，convincingly = 有说服力地）。no one has convincingly made artificial life = 到目前为止，还没有人以令人信服的方式制造出人工生命（也就是谁都没真正成功过）｜= in a convincing way. 反义：unconvincingly 缺乏说服力地" data-level="选必">convincingly</span> made artificial life.</span>
+    <span class="sentence" data-idx="5">This <span class="tip" data-tip="track record|过往记录，历史成绩｜track = 跑道，record = 记录。track record = 过去做过的事情的成绩/记录，就像运动员的比赛成绩表。This track record = 这样的（失败）记录｜near: history of results, past performance. 搭配：have a good/poor track record 有好/差的历史记录" data-level="拓展">track record</span> makes ALife a <span class="tip" data-tip="ripe target for criticism|被批评的成熟靶子，容易受批评的｜ripe = 成熟的（水果熟了才好摘）。ripe target = 一个容易被攻击的目标，时机成熟可以批评。ripe target for criticism = 很容易受到批评，批评它的时机已经「成熟」了｜near: an easy target, deserving of criticism" data-level="拓展">ripe target for criticism</span>, such as declarations of the field's doubtful scientific value.</span>
+    <span class="sentence" data-idx="6"><span class="tip" data-tip="Alan Smith|艾伦·史密斯（人名）｜文中他的身份是 a complexity scientist（复杂性科学家），研究复杂系统（如大脑、生态系统、经济）如何产生涌现行为。他为ALife辩护，认为问「有什么用」本身就是问错了｜这是人名，不用记">Alan Smith</span>, a <span class="tip" data-tip="complexity scientist|复杂性科学家｜complexity = 复杂性（complex + ity）。complexity science = 研究复杂系统（如大脑、生态、市场）如何从简单规则中产生复杂行为的学科。complexity scientist = 研究这个领域的科学家｜near: systems scientist" data-level="超纲">complexity scientist</span>, is tired of such complaints.</span>
+    <span class="sentence complex" data-idx="7">Asking about "the point" of ALife might be, well, <span class="tip" data-tip="missing the point|没抓住重点，问错了方向｜point = 要点、意义。missing the point = 没理解核心意思，问错了方向。这里说：问「ALife有什么用」本身可能就是在问错问题｜= failing to understand the real issue. 搭配：miss the point of sth 没抓住某事的关键" data-level="选必">missing the point</span> entirely, he says — "The existence of a living system is not about the use of anything."</span>
+    <div class="analysis" id="analysis-7">
+      <p><b>这段整体结构：</b>ALife 还没有成功过（第4句），因此常被批评（第5句）。Alan Smith 对这类批评感到厌烦（第6句），他认为问"ALife有什么用"本身就搞错了方向（第7句）。</p>
+      <p><b>"missing the point entirely"：</b>might be, well, missing the point = 也许（其实是）完全搞错了方向。well 是口语中的停顿词，表示"这样说可能有点奇怪，但……"。</p>
+      <p><b>与31题的关系：</b>作者如何看待 Alan Smith 的辩护（defence）？答案是 A（supportive，支持的）——作者呈现 Alan 的话，没有任何质疑，说明作者认为这个辩护是有道理的。</p>
+    </div>
+    <div class="translation-inline">到目前为止，还没有人令人信服地制造出人工生命。这样的记录让ALife成为容易受批评的靶子，比如有人宣称这个领域的科学价值令人怀疑。艾伦·史密斯是一位复杂性科学家，他对这类抱怨感到厌烦。他说，问ALife"有什么意义"这件事本身，可能恰恰就是问错了方向——"一个生命系统的存在，不是关于任何东西的用途的。"</div>
+    <div class="sb-block">
+      <div class="sb-title">长难句拆解</div>
+      <div class="sb-sent">
+        <span class="sb-chip sb-core-chip">主语动作</span><span class="sb-core">Asking about "the point" of ALife</span>
+        <span class="sb-chip sb-core-chip">可能是</span><span class="sb-core">might be,</span>
+        <span class="sb-chip sb-ins-chip">停顿词</span><span class="sb-ins">well,</span>
+        <span class="sb-chip sb-rest-chip">完全</span><span class="sb-rest">missing the point entirely,</span>
+        <span class="sb-chip sb-ins-chip">谁说的</span><span class="sb-ins">he says</span>
+      </div>
+      <div class="sb-steps">
+        <div class="sb-step"><span class="sb-step-n">1</span><div>主干：<em>Asking about "the point" of ALife might be missing the point</em><span class="arrow">→</span>问ALife有什么用，可能本身就是在问错方向</div></div>
+        <div class="sb-step"><span class="sb-step-n">2</span><div><em>well</em> 是口语停顿词（相当于"……嗯……"），跳过即可</div></div>
+        <div class="sb-step"><span class="sb-step-n">3</span><div>这里用了双关：miss the point of ALife（问错ALife的关键），而回应方式正是 miss the point（搞错了方向）</div></div>
+      </div>
+      <div class="sb-tip">💡 31题考作者态度：作者引用 Alan 的话（包括奶奶比喻），没有质疑，说明作者是 supportive（支持的）。</div>
+    </div>
+  </div>
+
+  <!-- ── Paragraph 3 ── -->
+  <div class="paragraph" id="para-3">
+    <span class="sentence" data-idx="8">As much as many ALifers hate <span class="tip" data-tip="emphasizing their research's applications|强调研究的实际应用｜emphasise = 强调（em + phase 重点）。applications = 应用、用途。hate emphasizing their research's applications = 不喜欢总谈「研究有什么用」，更关注纯粹的知识探索｜near: highlighting practical uses. as much as = 尽管，虽然" data-level="选必">emphasizing their research's applications</span>, the attempts to create artificial life could have <span class="tip" data-tip="practical payoffs|实际回报，实际效益｜practical = 实际的，payoff = 回报、成果（pay + off = 付出之后得到的）。practical payoffs = 研究带来的实实在在的好处和回报｜near: real-world benefits, tangible results. 搭配：have big payoffs 有很大的回报" data-level="拓展">practical payoffs</span>.</span>
+    <span class="sentence complex" data-idx="9">Artificial intelligence may be considered ALife's cousin <span class="tip" data-tip="in that|因为，在于（表原因）｜in that = 因为，在某种意义上说。in that researchers in both fields are enamored... = 因为两个领域的研究者都迷上了...。这个连词很正式，高考出现要认识｜= in the sense that, because. 对比：in which（定语从句）vs in that（原因/方式）" data-level="拓展">in that</span> researchers in both fields are <span class="tip" data-tip="enamored|着迷的，痴迷的（by sth）｜en- = 使进入某种状态，amor = 爱（西班牙语/拉丁语，你可能见过 amor）。enamored by sth = 对某事着迷、迷上了某事。这是课文下划线词，32题考词义推断｜= fascinated by, attracted to, in love with. 32题答案：C（Attracted）" data-level="超纲">enamored</span> by a concept called <span class="tip" data-tip="open-ended evolution|开放式演化（没有固定终点的演化）｜open-ended = 没有固定结果/终点的，可以无限展开的。evolution = 演化（课文括号里写了演化）。open-ended evolution = 一种可以无限创造新复杂性的演化过程，没有终点｜文中解释：the capacity for a system to create essentially endless complexity" data-level="超纲">open-ended evolution</span>.</span>
+    <div class="analysis" id="analysis-9">
+      <p><b>句子结构：</b>主干是 <em>Artificial intelligence may be considered ALife's cousin</em>（人工智能可以被看作ALife的表兄弟）。</p>
+      <p><b>in that 引导原因：</b><em>in that researchers in both fields are enamored by open-ended evolution</em> = 因为两个领域的研究者都迷上了开放式演化这个概念。这就是AI和ALife的"亲缘关系"所在。</p>
+      <p><b>enamored（32题下划线词）：</b>context clue：研究者们"痴迷"于一个概念，往往是因为它吸引人、令人着迷。答案是 C（Attracted，被吸引的）。</p>
+      <p><b>与33题的关系：</b>AI和ALife都迷上了 open-ended evolution（开放式演化）→ 这就是他们"共同的特征"（a common feature）→ 33题答案 B。</p>
+    </div>
+    <span class="sentence" data-idx="10">This is the capacity for a system to create essentially endless complexity, to be a sort of "<span class="tip" data-tip="novelty generator|新奇事物的生成器｜novelty = 新奇、新鲜的东西（novel = 新颖的，novelty = 新奇性）。generator = 生成器（generate = 产生）。novelty generator = 能不断产生新鲜、新奇事物的东西，就像自然界一直在产生新物种一样｜near: creativity engine, source of endless new things" data-level="超纲">novelty generator</span>".</span>
+    <span class="sentence" data-idx="11">The only system known to <span class="tip" data-tip="exhibit|表现出，展现出｜exhibit = 展示、呈现（你可能在博物馆里见过 exhibit = 展品）。exhibit this = 表现出这种能力（无限创造复杂性的能力）。The only system known to exhibit this = 目前已知唯一能表现出这一点的系统｜= demonstrate, show, display. 搭配：exhibit signs of 表现出...的迹象" data-level="选必">exhibit</span> this is Earth's biosphere.</span>
+    <span class="sentence complex" data-idx="12">If the field of ALife manages to reproduce life's endless "creativity" in some virtual model, those same principles could <span class="tip" data-tip="give rise to|导致，产生，引起｜rise = 上升。give rise to sth = 使某事出现，导致/产生某事。those principles give rise to truly inventive machines = 那些原理能产生/制造出真正有创造力的机器｜高频！写作：This gives rise to new opportunities. 这会带来新机遇。= lead to, result in, bring about" data-level="选必">give rise to</span> truly inventive machines.</span>
+    <div class="translation-inline">尽管很多ALifers不喜欢强调研究的实际应用，这些创造人工生命的尝试还是可能带来实际回报。人工智能可以被看作ALife的表兄弟，因为两个领域的研究者都痴迷于一个叫做「开放式演化」的概念。这是一种系统创造无限复杂性的能力，是一种"新奇生成器"。目前已知唯一能表现这一能力的系统是地球的生物圈。如果ALife能在某个虚拟模型中再现生命无限的"创造力"，那些相同的原理就能诞生出真正有创造力的机器。</div>
+  </div>
+
+  <!-- ── Paragraph 4 ── -->
+  <div class="paragraph" id="para-4">
+    <span class="sentence" data-idx="13">Compared with the developments of AI, advances in ALife are harder to recognize.</span>
+    <span class="sentence complex" data-idx="14">One reason is that ALife is a field in which the central concept — <span class="tip" data-tip="life itself|生命本身｜itself = 本身（强调）。life itself = 生命本身，就是「生命」这个词所指的概念。这里强调：连「生命」这个核心概念都没有被定义清楚｜用法：X itself = X本身。搭配：by itself 单独，for itself 为了自己" data-level="选必">life itself</span> — is <span class="tip" data-tip="undefined|没有被定义的，含义不清楚的｜un- = 没有，define = 定义，undefined = 还没有定义清楚。the central concept is undefined = 核心概念没有被明确界定，大家对「生命是什么」没有统一答案｜反义：defined（已定义的）. 搭配：leave sth undefined 让某事处于未定义状态" data-level="选必">undefined</span>.</span>
+    <div class="analysis" id="analysis-14">
+      <p><b>句子结构：</b>主干是 <em>ALife is a field in which the central concept is undefined</em>（ALife是一个核心概念没被定义清楚的领域）。</p>
+      <p><b>in which 定语从句：</b><em>in which the central concept — life itself — is undefined</em> 修饰 field。这里的 in which = in the field（在这个领域中）。</p>
+      <p><b>破折号插入语 — life itself —：</b>对 the central concept 进行解释说明（=「生命」本身）。跳过插入语：<em>the central concept is undefined</em>，然后插入说明：这个核心概念就是「生命」本身。</p>
+      <p><b>这段与34题的关系：</b>"Life Evolves" = ALife的发展本身也像生命演化一样混乱、无法预测。题目 D "Can Attempts to Create ALife Evolve, Too?" 对应这种思路。</p>
+    </div>
+    <span class="sentence" data-idx="15">The lack of agreement among ALifers doesn't help either, resulting in a diverse line of projects that each advance along their unique paths.</span>
+    <span class="sentence" data-idx="16">For better or worse, ALife mirrors the very subject it studies — its <span class="tip" data-tip="muddled|混乱的，思路不清的｜muddle = 混乱（课文括号里给了「混乱的」）。muddled progression = 混乱的发展历程。ALife的进展是混乱的，就像生命演化一样无规律｜= disordered, confused, chaotic. 课文括号里有中文注释" data-level="拓展">muddled</span> progression is a striking <span class="tip" data-tip="parallel|平行关系，对应关系，相似之处｜parallel = 平行线（课文括号里有中文「平行线」）。a striking parallel = 一个惊人的相似/对应关系。ALife的混乱发展与地球生命的演化斗争有惊人的相似｜= similarity, resemblance. 搭配：draw a parallel between A and B 把A和B相提并论" data-level="选必">parallel</span> to the evolutionary struggles that have shaped Earth's biosphere.</span>
+    <div class="translation-inline">与AI的发展相比，ALife的进步更难以被认识到。一个原因是，ALife是一个核心概念——生命本身——都没有被定义清楚的领域。ALifers之间缺乏共识也没有帮助，结果是出现了多种项目，每个项目都沿着各自独特的路径推进。不管好坏，ALife折射出它所研究的对象本身——它混乱的发展历程与塑造地球生物圈的演化斗争有着惊人的相似之处。</div>
+    <div class="sb-block">
+      <div class="sb-title">长难句拆解</div>
+      <div class="sb-sent">
+        <span class="sb-chip sb-core-chip">主干</span><span class="sb-core">One reason is that ALife is a field</span>
+        <span class="sb-chip sb-rest-chip">in which 定语从句</span><span class="sb-rest">in which the central concept</span>
+        <span class="sb-chip sb-ins-chip">插入说明 · 先跳过</span><span class="sb-ins">— life itself —</span>
+        <span class="sb-chip sb-core-chip">谓语</span><span class="sb-core">is undefined.</span>
+      </div>
+      <div class="sb-steps">
+        <div class="sb-step"><span class="sb-step-n">1</span><div>主干：<em>ALife is a field in which the central concept is undefined</em><span class="arrow">→</span>ALife是核心概念没被定义的领域</div></div>
+        <div class="sb-step"><span class="sb-step-n">2</span><div>in which = in the field（在这个领域里），引导定语从句修饰 field</div></div>
+        <div class="sb-step"><span class="sb-step-n">3</span><div>插入语 — life itself — 说明「核心概念」就是「生命」本身</div></div>
+      </div>
+      <div class="sb-tip">💡 34题选 D：ALife自身的混乱发展（muddled progression）就像生命演化（life evolves）一样，所以"Can Attempts to Create ALife Evolve, Too?"是最佳标题。</div>
+    </div>
+  </div>
+
+  <!-- ── Paragraph 5 ── -->
+  <div class="paragraph" id="para-5">
+    <span class="sentence" data-idx="17">Undefined and uncontrolled, ALife drives its followers to <span class="tip" data-tip="repurpose|改作他用，重新利用（老想法用于新地方）｜re- = 再次，purpose = 目的/用途。repurpose = 把原本用于一件事的东西，改用到另一件事上。repurpose old ideas = 把旧的想法拿来，用在新的地方｜= reuse for a new purpose, adapt. 近义：recycle ideas 循环利用想法" data-level="拓展">repurpose</span> old ideas and generate novelty — perhaps, just like life itself throughout the universe, the rise of ALife will prove <span class="tip" data-tip="unavoidable|不可避免的，无法阻止的｜un- = 不，avoid = 避免，-able = 能...的。unavoidable = 不能被避免的，必然会发生。the rise of ALife will prove unavoidable = ALife的崛起将被证明是不可避免的｜= inevitable, bound to happen. 反义：avoidable（可以避免的）" data-level="选必">unavoidable</span>.</span>
+    <div class="translation-inline">ALife没有定义、无法控制，驱使其追随者改造旧想法、产生新奇事物——也许，就像生命在整个宇宙中的存在一样，ALife的兴起将被证明是不可避免的。</div>
+  </div>
+
+</div><!-- /passage -->
+
+<!-- ══════ Vocabulary ══════ -->
+<div class="panel" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')">
+    <span>生词与短语（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="vocab-list">
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('spell out')">spell out</span>
+          <span class="vocab-meaning">说清楚，阐明</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>spell = 拼写，spell out = 把每个字母都读出来，引申为「把道理说得非常清楚」。</div>
+          <div class="vd-example">the systematic attempt to <em>spell out</em> life's fundamental principles. （课文）</div>
+          <div class="vd-example">Could you <em>spell out</em> exactly what you mean? 你能把你的意思说清楚吗？</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('practitioners')">practitioners</span>
+          <span class="vocab-meaning">从业者，实践者</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>practise（实践）→ practitioner（实际从事某领域的人）。文中指从事ALife研究的科学家。</div>
+          <div class="vd-example">Many of these <em>practitioners</em>, so-called ALifers... （课文）</div>
+          <div class="vd-example">medical <em>practitioners</em> 医疗从业者；legal <em>practitioners</em> 法律从业者</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('convincingly')">convincingly</span>
+          <span class="vocab-meaning">有说服力地，令人信服地</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>convince（说服）→ convincing（有说服力的）→ convincingly（有说服力地）。</div>
+          <div class="vd-example">no one has <em>convincingly</em> made artificial life. （课文）</div>
+          <div class="vd-example">She argued her case very <em>convincingly</em>. 她的论据非常有说服力。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('track record')">track record</span>
+          <span class="vocab-meaning">过往记录，历史成绩</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>track = 跑道，record = 记录。track record = 在某事上一贯的表现记录（偏向历史成绩）。</div>
+          <div class="vd-example">This <em>track record</em> makes ALife a ripe target for criticism. （课文）</div>
+          <div class="vd-example">She has an excellent <em>track record</em> in management. 她在管理方面有出色的业绩记录。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('enamored')">enamored</span>
+          <span class="vocab-meaning">着迷的，痴迷的（by sth）</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>课文32题下划线词！en-（使…）+ amor（爱，拉丁语）= 迷上某事。enamored by sth = 对某事深深着迷。</div>
+          <div class="vd-example">researchers in both fields are <em>enamored</em> by open-ended evolution. （课文）</div>
+          <div class="vd-example">32题：enamored = C（Attracted，被吸引的）——从语境看：研究者被这个概念所"吸引"。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('practical payoffs')">practical payoffs</span>
+          <span class="vocab-meaning">实际回报，实际效益</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>practical = 实际的，payoff = 回报（pay + off = 付出之后获得的东西）。</div>
+          <div class="vd-example">the attempts to create artificial life could have <em>practical payoffs</em>. （课文）</div>
+          <div class="vd-example">The research had unexpected <em>payoffs</em> for medicine. 该研究对医学带来意外的回报。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('give rise to')">give rise to</span>
+          <span class="vocab-meaning">导致，产生，引起</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>rise = 上升/出现，give rise to sth = 使某事出现，导致某事。与 lead to、result in 同义，但更正式。</div>
+          <div class="vd-example">those principles could <em>give rise to</em> truly inventive machines. （课文）</div>
+          <div class="vd-example">作文：This situation <em>gives rise to</em> many problems. 这种情况导致了很多问题。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('muddled')">muddled</span>
+          <span class="vocab-meaning">混乱的，思路不清的</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>muddle = 混乱，muddle up = 搞混乱。muddled = 混乱的（课文括号里有中文注释：混乱的）。</div>
+          <div class="vd-example">Its <em>muddled</em> progression is a striking parallel to the evolutionary struggles. （课文）</div>
+          <div class="vd-example">I got all <em>muddled up</em> about the dates. 我把日期搞混乱了。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('repurpose')">repurpose</span>
+          <span class="vocab-meaning">改作他用，重新利用</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>re-（再次）+ purpose（目的）= 把原本的东西改用到新用途上。</div>
+          <div class="vd-example">ALife drives its followers to <em>repurpose</em> old ideas. （课文）</div>
+          <div class="vd-example">The factory was <em>repurposed</em> as an art space. 工厂被改造成了艺术空间。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('unavoidable')">unavoidable</span>
+          <span class="vocab-meaning">不可避免的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>un-（不）+ avoid（避免）+ -able（能...的）= 不能被避免的。= inevitable。</div>
+          <div class="vd-example">the rise of ALife will prove <em>unavoidable</em>. （课文）</div>
+          <div class="vd-example">作文：Mistakes are <em>unavoidable</em> in learning. 学习中犯错是不可避免的。</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Questions ══════ -->
+<div class="panel" id="questionsPanel">
+  <div class="panel-header" onclick="togglePanel('questionsPanel')">
+    <span>题目解析（4题，31—34）</span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+
+    <!-- Q31 -->
+    <div class="question-item" data-answer="A">
+      <div class="question-stem">31. Regarding Alan Smith's defence of ALife, the author is ______.</div>
+      <div class="question-options" style="grid-template-columns: repeat(2,1fr);">
+        <div class="question-option" data-key="A">A. supportive</div>
+        <div class="question-option" data-key="B">B. puzzled</div>
+        <div class="question-option" data-key="C">C. unconcerned</div>
+        <div class="question-option" data-key="D">D. doubtful</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：A</div>
+        <div class="locate" data-goto="6" onclick="gotoSentence(6)">"Alan Smith, a complexity scientist, is tired of such complaints."</div>
+        <div class="locate" data-goto="7" onclick="gotoSentence(7)" style="margin-top:4px">"Asking about 'the point' of ALife might be, well, missing the point entirely, he says..."</div>
+        <p>作者的态度题。作者呈现了 Alan Smith 的辩护：问「ALife有什么用」本身就是在问错方向，就好比问「奶奶有什么用」一样荒谬。作者用 <em>tired of such complaints</em> 描述 Alan，表达了理解和认同，全文没有任何质疑或反驳 Alan 的观点。这说明作者对 Alan 的辩护是 <b>supportive（支持的）</b>。</p>
+        <div class="option-list">
+          <div class="option-item correct"><span class="opt-mark">✓ A</span><span class="opt-why">— supportive（支持的）：作者引用 Alan 的话且没有质疑，态度是认同支持的。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ B</span><span class="opt-why">— puzzled（困惑的）：作者没有表现出任何困惑或不理解，而是清楚地呈现了 Alan 的立场。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ C</span><span class="opt-why">— unconcerned（不关心的）：作者专门花一整段介绍 Alan 的辩护，明显是关心的。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— doubtful（怀疑的）：没有任何语言表明作者质疑 Alan 的观点。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q32 -->
+    <div class="question-item" data-answer="C">
+      <div class="question-stem">32. What does the word "enamored" underlined in Paragraph 3 most probably mean?</div>
+      <div class="question-options" style="grid-template-columns: repeat(2,1fr);">
+        <div class="question-option" data-key="A">A. Shocked</div>
+        <div class="question-option" data-key="B">B. Protected</div>
+        <div class="question-option" data-key="C">C. Attracted</div>
+        <div class="question-option" data-key="D">D. Challenged</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：C</div>
+        <div class="locate" data-goto="9" onclick="gotoSentence(9)">"...researchers in both fields are <u>enamored</u> by a concept called open-ended evolution."</div>
+        <p>词义推断题。关键在于语境：<em>researchers... are enamored by a concept</em>。研究者对一个概念感到 enamored，后文说这个概念（开放式演化）可以创造无限复杂性——说明这个概念很吸引人、令人着迷。再看选项：A（Shocked，被震惊的），B（Protected，被保护的），C（Attracted，被吸引的），D（Challenged，被挑战的）。研究者对概念最自然的反应是"被吸引"，故答案是 <b>C</b>。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— Shocked（被震惊的）：shocked 有突然的惊吓含义，不符合对概念持续迷恋的语境。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ B</span><span class="opt-why">— Protected（被保护的）：语义上完全不通——研究者无法被一个「概念」保护。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ C</span><span class="opt-why">— Attracted（被吸引的）：enamored = 深深迷上，这正是「被吸引/着迷」的意思，符合语境。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— Challenged（被挑战的）：研究者不是被这个概念"挑战"，而是主动被它吸引并研究它。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q33 -->
+    <div class="question-item" data-answer="B">
+      <div class="question-stem">33. What can we learn from this passage?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. ALife holds the key to human future.</div>
+        <div class="question-option" data-key="B">B. ALife and AI share a common feature.</div>
+        <div class="question-option" data-key="C">C. AI mirrors the developments of ALife.</div>
+        <div class="question-option" data-key="D">D. AI speeds up the process of human evolution.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：B</div>
+        <div class="locate" data-goto="9" onclick="gotoSentence(9)">"Artificial intelligence may be considered ALife's cousin in that researchers in both fields are enamored by a concept called open-ended evolution."</div>
+        <p>推断题。第三段明确说：AI 可以被看作 ALife 的"表兄弟"——因为两个领域的研究者都迷上了「开放式演化」这个概念。这就是他们的共同特征（common feature）。选 <b>B</b>。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— ALife holds the key to human future：文章说 ALife 可能有实际效益，但没有说它是人类未来的"关键"，太绝对。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ B</span><span class="opt-why">— ALife and AI share a common feature：两个领域都对 open-ended evolution 着迷，这正是共同特征，直接对应课文。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ C</span><span class="opt-why">— AI mirrors the developments of ALife：说反了。是 ALife mirrors the subject it studies（生命），不是 AI 镜像 ALife。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— AI speeds up the process of human evolution：文章完全没提 AI 对人类演化速度的影响。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q34 -->
+    <div class="question-item" data-answer="D">
+      <div class="question-stem">34. Which would be the best title for the passage?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. Life Is Undefined. Can AI Be a Way Out?</div>
+        <div class="question-option" data-key="B">B. Life Evolves. Can AI Help ALife Evolve, Too?</div>
+        <div class="question-option" data-key="C">C. Life Is Undefined. Can ALife Be Defined One Day?</div>
+        <div class="question-option" data-key="D">D. Life Evolves. Can Attempts to Create ALife Evolve, Too?</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：D</div>
+        <div class="locate" data-goto="16" onclick="gotoSentence(16)">"For better or worse, ALife mirrors the very subject it studies — its muddled progression is a striking parallel to the evolutionary struggles that have shaped Earth's biosphere."</div>
+        <div class="locate" data-goto="17" onclick="gotoSentence(17)" style="margin-top:4px">"...perhaps, just like life itself throughout the universe, the rise of ALife will prove unavoidable."</div>
+        <p>标题题。文章核心观点：ALife自身的发展是混乱的，就像生命演化一样无法预测（muddled progression is a striking parallel to evolutionary struggles）。结尾暗示，就像生命的出现是不可避免的，ALife 的兴起也是如此。选项 D 完美捕捉了这个逻辑：生命在演化，创造ALife的尝试能否也"演化"？选 <b>D</b>。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— Can AI Be a Way Out?：文章没说 AI 是 ALife 的"出路"，两者是平行关系（cousin），不是救援关系。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ B</span><span class="opt-why">— Can AI Help ALife Evolve?：文章没说 AI 要"帮助" ALife 演化，这个方向是错的。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ C</span><span class="opt-why">— Can ALife Be Defined One Day?：文章没有以"能否定义ALife"为核心问题，而是在讨论ALife的发展本身像生命演化一样。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ D</span><span class="opt-why">— Life Evolves. Can Attempts to Create ALife Evolve, Too?：前半句对应文章核心比喻（ALife的混乱发展像生命演化），后半句对应结尾展望（ALife的兴起不可避免）。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-score" id="quizScore"></div>
+  </div>
+</div>
+
+<!-- ══════ Review ══════ -->
+<div class="panel" id="reviewPanel">
+  <div class="panel-header" onclick="togglePanel('reviewPanel')">阅读原文<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-family:Georgia,serif;font-size:16px;line-height:2;">
+    <p style="text-indent:2em">What is life? Like most great questions, this one is easy to ask but difficult to answer. The reason is simple: we know of just one type of life and it's challenging to do science with a sample size of one. The field of artificial life — called ALife for short — is the systematic attempt to spell out life's fundamental principles. Many of these practitioners, so-called ALifers, think that somehow making life is the surest way to really understand what life is.</p>
+    <p style="text-indent:2em">So far no one has convincingly made artificial life. This track record makes ALife a ripe target for criticism, such as declarations of the field's doubtful scientific value. Alan Smith, a complexity scientist, is tired of such complaints. Asking about "the point" of ALife might be, well, missing the point entirely, he says — "The existence of a living system is not about the use of anything."</p>
+    <p style="text-indent:2em">As much as many ALifers hate emphasizing their research's applications, the attempts to create artificial life could have practical payoffs. Artificial intelligence may be considered ALife's cousin in that researchers in both fields are enamored by a concept called open-ended evolution. This is the capacity for a system to create essentially endless complexity, to be a sort of "novelty generator". The only system known to exhibit this is Earth's biosphere. If the field of ALife manages to reproduce life's endless "creativity" in some virtual model, those same principles could give rise to truly inventive machines.</p>
+    <p style="text-indent:2em">Compared with the developments of AI, advances in ALife are harder to recognize. One reason is that ALife is a field in which the central concept — life itself — is undefined. The lack of agreement among ALifers doesn't help either, resulting in a diverse line of projects that each advance along their unique paths. For better or worse, ALife mirrors the very subject it studies — its muddled progression is a striking parallel to the evolutionary struggles that have shaped Earth's biosphere.</p>
+    <p style="text-indent:2em">Undefined and uncontrolled, ALife drives its followers to repurpose old ideas and generate novelty — perhaps, just like life itself throughout the universe, the rise of ALife will prove unavoidable.</p>
+  </div>
+</div>
+
+<!-- ══════ 阅读技巧 ══════ -->
+<div class="panel" id="tipPanel">
+  <div class="panel-header" onclick="togglePanel('tipPanel')">阅读技巧<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-size:15px;line-height:1.8;">
+    <p><b>作者态度题的做法（31题）：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li><b>看作者用什么语气描述人物：</b>文中说 Alan "is tired of such complaints"——tired of = 厌烦，说明作者同情 Alan 的处境，而不是质疑他。</li>
+      <li><b>作者有没有反驳？</b>如果作者不认同，会用 "however", "but", "while" 等转折词提出异议。这里没有，说明作者认同。</li>
+      <li><b>常见态度词：</b>supportive（支持）/ critical（批评）/ neutral（中立）/ puzzled（困惑）/ doubtful（怀疑）/ admiring（欣赏）</li>
+    </ul>
+    <p style="margin-top:12px"><b>词义推断题的做法（32题）：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li><b>看前后文语境：</b>researchers are enamored by a concept → 研究者对概念有什么感情？→ 着迷、喜欢、被吸引</li>
+      <li><b>替换选项检验：</b>把每个选项代入句子：researchers are "shocked/protected/attracted/challenged" by a concept → 只有 attracted（被吸引的）语义通顺</li>
+    </ul>
+    <p style="margin-top:12px"><b>标题题的做法（34题）：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li>标题 = 文章核心观点的浓缩。找文章最后的结论句，以及全文的中心比喻。</li>
+      <li>这篇：ALife 的发展像生命演化（parallel）→ 标题也应该用 evolve/evolution 作核心意象。</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════ 作文拓展 ══════ -->
+<div class="panel" id="writingPanel">
+  <div class="panel-header" onclick="togglePanel('writingPanel')">作文拓展：好句式 &amp; 好短语<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-size:15px;line-height:1.9;">
+    <p><b>可以直接用进作文的句式：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li><em>give rise to</em>（导致/产生）—— This situation gives rise to many opportunities.</li>
+      <li><em>prove unavoidable / prove beneficial</em>（被证明是不可避免的/有益的）—— Learning a second language will prove beneficial.</li>
+      <li><em>in that</em>（因为，在于）—— They are similar in that both value cooperation.</li>
+      <li><em>for better or worse</em>（不管好坏，无论如何）—— For better or worse, technology has changed our lives.</li>
+      <li><em>spell out</em>（说清楚）—— Could you spell out your plans? 能说清楚你的计划吗？</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div id="playbar">
+  <button onclick="pbPrev()" title="上一句">⏮</button>
+  <button id="pb-play" onclick="pbToggle()">▶</button>
+  <button onclick="pbNext()" title="下一句">⏭</button>
+  <span id="pb-counter">— / 18</span>
+  <select id="pb-speed" onchange="pbSetSpeed(this.value)">
+    <option value="0.8">0.8×</option>
+    <option value="1" selected>1.0×</option>
+    <option value="1.2">1.2×</option>
+  </select>
+</div>
+
+<script>
+const THEMES=['yellow','green'];
+const THEME_LABELS={yellow:'📄 书本黄',green:'🌿 护眼绿'};
+let themeIdx=parseInt(localStorage.getItem('theme')||'0');
+function applyTheme(){document.body.classList.remove('theme-yellow','theme-green');const t=THEMES[themeIdx%THEMES.length];document.body.classList.add('theme-'+t);const btn=document.getElementById('theme-btn');if(btn)btn.textContent=THEME_LABELS[t];}
+function cycleTheme(){themeIdx=(themeIdx+1)%THEMES.length;localStorage.setItem('theme',themeIdx);applyTheme();}
+applyTheme();
+
+const sentences=[
+  "What is life? Like most great questions, this one is easy to ask but difficult to answer.",
+  "The reason is simple: we know of just one type of life and it's challenging to do science with a sample size of one.",
+  "The field of artificial life — called ALife for short — is the systematic attempt to spell out life's fundamental principles.",
+  "Many of these practitioners, so-called ALifers, think that somehow making life is the surest way to really understand what life is.",
+  "So far no one has convincingly made artificial life.",
+  "This track record makes ALife a ripe target for criticism, such as declarations of the field's doubtful scientific value.",
+  "Alan Smith, a complexity scientist, is tired of such complaints.",
+  "Asking about the point of ALife might be, well, missing the point entirely, he says — the existence of a living system is not about the use of anything.",
+  "As much as many ALifers hate emphasizing their research's applications, the attempts to create artificial life could have practical payoffs.",
+  "Artificial intelligence may be considered ALife's cousin in that researchers in both fields are enamored by a concept called open-ended evolution.",
+  "This is the capacity for a system to create essentially endless complexity, to be a sort of novelty generator.",
+  "The only system known to exhibit this is Earth's biosphere.",
+  "If the field of ALife manages to reproduce life's endless creativity in some virtual model, those same principles could give rise to truly inventive machines.",
+  "Compared with the developments of AI, advances in ALife are harder to recognize.",
+  "One reason is that ALife is a field in which the central concept — life itself — is undefined.",
+  "The lack of agreement among ALifers doesn't help either, resulting in a diverse line of projects that each advance along their unique paths.",
+  "For better or worse, ALife mirrors the very subject it studies — its muddled progression is a striking parallel to the evolutionary struggles that have shaped Earth's biosphere.",
+  "Undefined and uncontrolled, ALife drives its followers to repurpose old ideas and generate novelty — perhaps, just like life itself throughout the universe, the rise of ALife will prove unavoidable."
+];
+
+let activeTooltip=null;
+const ZH_AUDIO={};
+let zhPlayer=null;
+
+function phraseToSlug(phrase){return phrase.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+function playZhAudio(slug,btn){if(zhPlayer){zhPlayer.pause();zhPlayer=null;btn.textContent='🔊 听讲解';return;}const src=ZH_AUDIO[slug];if(!src)return;zhPlayer=new Audio(src);btn.textContent='⏹ 停止';zhPlayer.onended=()=>{btn.textContent='🔊 听讲解';zhPlayer=null;};zhPlayer.play();}
+
+function showTooltip(tipEl){
+  hideTooltip();
+  const raw=tipEl.getAttribute('data-tip');const[phrase,explain]=raw.split('|');const parts=explain.split('｜');
+  const slug=phraseToSlug(phrase);const hasAudio=ZH_AUDIO[slug];
+  const tooltip=document.createElement('div');tooltip.className='tooltip';
+  tooltip.innerHTML='<div class="tip-scroll">'+
+    `<div class="tip-phrase">${phrase}${tipEl.dataset.level?`<span class="level-badge badge-${tipEl.dataset.level}">${tipEl.dataset.level}</span>`:''}<span class="tip-speak" onclick="speakWord('${phrase.replace(/'/g,"\\'")}')">&#9654;</span></div>`+
+    parts.map(p=>`<div>${p.trim()}</div>`).join('')+(hasAudio?`<button class="tip-zh-play" onclick="playZhAudio('${slug}',this)">🔊 听讲解</button>`:'')+
+    '</div>';
+  document.body.appendChild(tooltip);activeTooltip=tooltip;tooltip._tip=tipEl;positionTooltip();if(!activeTooltip)return;speakWord(phrase);
+}
+
+let _safeProbe=null;
+function tooltipFrame(){
+  if(!_safeProbe){_safeProbe=document.createElement('div');_safeProbe.style.cssText='position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)';document.body.appendChild(_safeProbe);}
+  const cs=getComputedStyle(_safeProbe);const M=8;const vw=document.documentElement.clientWidth,vh=window.innerHeight;
+  let minY=M+(parseFloat(cs.paddingTop)||0);let maxY=vh-M-(parseFloat(cs.paddingBottom)||0);
+  const hdr=document.querySelector('.header');if(hdr){const b=hdr.getBoundingClientRect().bottom;if(b>0)minY=Math.max(minY,b+4);}
+  const pb=document.getElementById('playbar');if(pb&&getComputedStyle(pb).display!=='none'){maxY=Math.min(maxY,pb.getBoundingClientRect().top-4);}
+  return{minX:M+(parseFloat(cs.paddingLeft)||0),maxX:vw-M-(parseFloat(cs.paddingRight)||0),minY,maxY};
+}
+function positionTooltip(){
+  const tooltip=activeTooltip;if(!tooltip)return;const tipEl=tooltip._tip;const rects=tipEl.getClientRects();const f=tooltipFrame();
+  if(!rects.length){hideTooltip();return;}const first=rects[0],last=rects[rects.length-1];
+  if(last.bottom<f.minY-4||first.top>f.maxY+4){hideTooltip();return;}
+  const GAP=10,PAD=16;const body=tooltip.firstElementChild;
+  tooltip.style.maxWidth=Math.max(120,Math.min(520,f.maxX-f.minX))+'px';body.style.maxHeight='none';tooltip.style.left='0px';tooltip.style.top='0px';
+  const tw=tooltip.offsetWidth,naturalH=tooltip.offsetHeight;const spaceAbove=first.top-f.minY-GAP;const spaceBelow=f.maxY-last.bottom-GAP;
+  let below;if(naturalH<=spaceAbove)below=false;else if(naturalH<=spaceBelow)below=true;else below=spaceBelow>spaceAbove;
+  const avail=Math.max(60,below?spaceBelow:spaceAbove);if(naturalH>avail)body.style.maxHeight=Math.max(30,avail-PAD)+'px';
+  const r=below?last:first;const cx=r.left+r.width/2;const left=Math.max(f.minX,Math.min(cx-tw/2,f.maxX-tw));
+  let top=below?last.bottom+GAP:first.top-GAP-tooltip.offsetHeight;top=Math.max(f.minY,Math.min(top,f.maxY-tooltip.offsetHeight));
+  tooltip.classList.toggle('below',below);tooltip.style.setProperty('--arrow-left',Math.max(14,Math.min(cx-left,tw-14))+'px');tooltip.style.left=left+'px';tooltip.style.top=top+'px';
+}
+(function(){let raf=0;const re=()=>{if(!activeTooltip||raf)return;raf=requestAnimationFrame(()=>{raf=0;positionTooltip();});};
+window.addEventListener('scroll',re,{passive:true});window.addEventListener('resize',re);window.addEventListener('orientationchange',re);
+if(window.visualViewport){visualViewport.addEventListener('resize',re);visualViewport.addEventListener('scroll',re);}})();
+
+function hideTooltip(){if(zhPlayer){zhPlayer.pause();zhPlayer=null;}if(activeTooltip){activeTooltip.remove();activeTooltip=null;}}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.sentence.highlighted')&&!e.target.closest('.locate')){document.querySelectorAll('.sentence.highlighted').forEach(s=>s.classList.remove('highlighted'));}
+  const tipEl=e.target.closest('.tip');
+  if(tipEl){e.stopPropagation();if(activeTooltip&&activeTooltip._source===tipEl){hideTooltip();}else{showTooltip(tipEl);if(activeTooltip)activeTooltip._source=tipEl;}return;}
+  if(e.target.closest('.tooltip'))return;hideTooltip();
+});
+
+let pbCurrent=null,pbPlaying=false,pbSpeed=1,enPlayer=null;
+function pbStop(){if(enPlayer){enPlayer.pause();enPlayer=null;}pbPlaying=false;}
+function highlightSentence(idx){
+  document.querySelectorAll('.sentence').forEach(el=>el.classList.remove('playing'));
+  if(idx!==null&&idx>=0&&idx<sentences.length){const el=document.querySelector(`.sentence[data-idx="${idx}"]`);if(el){el.classList.add('playing');el.scrollIntoView({behavior:'smooth',block:'center'});}}
+}
+function pbUpdateUI(){document.getElementById('pb-play').textContent=pbPlaying?'⏸':'▶';document.getElementById('pb-counter').textContent=pbCurrent!==null?`${pbCurrent+1} / ${sentences.length}`:`— / ${sentences.length}`;}
+function pbPlayCurrent(){
+  pbStop();if(pbCurrent===null){pbUpdateUI();return;}
+  const src=`audio/2023北京卷-D/en-s${String(pbCurrent).padStart(2,'0')}.mp3`;
+  enPlayer=new Audio(src);enPlayer.playbackRate=pbSpeed;pbPlaying=true;highlightSentence(pbCurrent);pbUpdateUI();
+  enPlayer.onerror=()=>{const utter=new SpeechSynthesisUtterance(sentences[pbCurrent]);const voices=speechSynthesis.getVoices();utter.voice=voices.find(v=>v.lang==='en-GB')||voices.find(v=>v.lang.startsWith('en'))||null;utter.rate=pbSpeed*0.85;utter.onend=()=>{if(pbPlaying){if(pbCurrent<sentences.length-1){pbCurrent++;pbPlayCurrent();}else{pbPlaying=false;highlightSentence(null);pbUpdateUI();}}};speechSynthesis.speak(utter);enPlayer=null;};
+  enPlayer.onended=()=>{if(pbPlaying){if(pbCurrent<sentences.length-1){pbCurrent++;pbPlayCurrent();}else{pbPlaying=false;highlightSentence(null);pbUpdateUI();}}};enPlayer.play();
+}
+function pbToggle(){if(pbCurrent===null){pbCurrent=0;pbPlayCurrent();return;}if(pbPlaying){pbStop();highlightSentence(pbCurrent);pbUpdateUI();}else{pbPlayCurrent();}}
+function pbPrev(){if(pbCurrent===null)pbCurrent=0;else if(pbCurrent>0)pbCurrent--;pbPlayCurrent();}
+function pbNext(){if(pbCurrent===null)pbCurrent=0;else if(pbCurrent<sentences.length-1)pbCurrent++;pbPlayCurrent();}
+function pbSetSpeed(v){pbSpeed=parseFloat(v);if(enPlayer)enPlayer.playbackRate=pbSpeed;}
+
+document.addEventListener('click',function(e){if(e.target.closest('.tip')||e.target.closest('.tooltip'))return;const sentence=e.target.closest('.sentence.complex');if(sentence)toggleAnalysis(parseInt(sentence.dataset.idx));});
+
+function speakWord(word){
+  if(enPlayer){enPlayer.pause();enPlayer=null;}
+  const slug='en-word-'+word.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const src='audio/2023北京卷-D/'+slug+'.mp3';
+  enPlayer=new Audio(src);
+  enPlayer.onerror=function(){const utter=new SpeechSynthesisUtterance(word);const voices=speechSynthesis.getVoices();utter.voice=voices.find(v=>v.lang==='en-GB')||voices.find(v=>v.lang.startsWith('en'))||voices[0];utter.rate=0.8;speechSynthesis.speak(utter);};
+  enPlayer.play();
+}
+
+const ANALYSIS_AUDIO={};let analysisPlayer=null,analysisBtn=null;
+function playAnalysis(id,btn){if(analysisPlayer){analysisPlayer.pause();analysisPlayer=null;if(analysisBtn){analysisBtn.textContent='🔊 听讲解';analysisBtn.classList.remove('playing');}if(analysisBtn===btn){analysisBtn=null;return;}}const src=ANALYSIS_AUDIO[id];if(!src)return;analysisPlayer=new Audio(src);analysisBtn=btn;btn.textContent='⏹ 停止';btn.classList.add('playing');analysisPlayer.onended=()=>{btn.textContent='🔊 听讲解';btn.classList.remove('playing');analysisPlayer=null;analysisBtn=null;};analysisPlayer.play();}
+
+function toggleAnalysis(idx){const el=document.getElementById('analysis-'+idx);if(el)el.classList.toggle('open');}
+function togglePanel(id){document.getElementById(id).classList.toggle('open');}
+function setMode(mode){document.body.classList.remove('mode-raw','mode-study','mode-quiz','mode-annotate');if(mode!=='study')document.body.classList.add('mode-'+mode);document.querySelectorAll('.mode-step').forEach(btn=>btn.classList.toggle('active',btn.dataset.mode===mode));hideTooltip();if(mode==='quiz'){pbStop();highlightSentence(null);pbUpdateUI();resetQuiz();}}
+function resetQuiz(){document.querySelectorAll('.question-option').forEach(opt=>opt.classList.remove('selected','correct','wrong'));document.querySelectorAll('.question-item').forEach(q=>q.dataset.answered='');const score=document.getElementById('quizScore');if(score)score.classList.remove('show');}
+document.addEventListener('click',function(e){if(!document.body.classList.contains('mode-quiz'))return;const opt=e.target.closest('.question-option');if(!opt)return;const item=opt.closest('.question-item');if(item.dataset.answered)return;item.dataset.answered='true';const picked=opt.dataset.key;const correct=item.dataset.answer;if(picked===correct){opt.classList.add('correct');}else{opt.classList.add('wrong');item.querySelector(`.question-option[data-key="${correct}"]`).classList.add('correct');}const total=document.querySelectorAll('.question-item[data-answer]').length;const done=document.querySelectorAll('.question-item[data-answered="true"]').length;if(done===total)showQuizScore();});
+function showQuizScore(){const total=document.querySelectorAll('.question-item[data-answer]').length;const wrong=document.querySelectorAll('.question-option.wrong').length;const score=document.getElementById('quizScore');score.textContent=`得分：${total-wrong} / ${total}`;score.classList.add('show');}
+function gotoSentence(idx){const el=document.querySelector(`.sentence[data-idx="${idx}"]`);if(!el)return;setMode('study');document.querySelectorAll('.sentence.highlighted').forEach(s=>s.classList.remove('highlighted'));el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('highlighted');}
+function toggleQuestionAnalysis(btn){const analysis=btn.nextElementSibling;analysis.classList.toggle('open');btn.textContent=analysis.classList.contains('open')?'收起解析':'🔍 查看解析';}
+
+const SRS_PREFIX='srs_beijing_2023_D_';const SRS_INTERVALS=[1,3,7,14,30];
+function srsLoad(word){const raw=localStorage.getItem(SRS_PREFIX+word);return raw?JSON.parse(raw):null;}
+function srsSave(word,knew){const state=srsLoad(word)||{streak:0};if(knew){state.streak=(state.streak||0)+1;state.interval=SRS_INTERVALS[Math.min(state.streak-1,SRS_INTERVALS.length-1)];}else{state.streak=0;state.interval=1;}state.nextReview=Date.now()+state.interval*86400000;localStorage.setItem(SRS_PREFIX+word,JSON.stringify(state));return state;}
+function srsIsDue(state){return!state||Date.now()>=state.nextReview;}
+function srsUpdateCard(card){const state=srsLoad(card.dataset.srsWord);card.classList.remove('srs-due','srs-known');if(!state)return;card.classList.add(srsIsDue(state)?'srs-due':'srs-known');}
+function srsUpdateBadge(){const badge=document.getElementById('srs-badge');if(!badge)return;const cards=document.querySelectorAll('.vocab-card[data-srs-word]');let due=0;cards.forEach(c=>{if(srsIsDue(srsLoad(c.dataset.srsWord)))due++;});if(due===0){badge.textContent='全掌握 ✓';badge.className='srs-badge all-done';}else{badge.textContent=due+'个待复习';badge.className='srs-badge';}}
+function srsClick(word,knew,btn){srsSave(word,knew);const card=btn.closest('.vocab-card');srsUpdateCard(card);srsUpdateBadge();btn.style.opacity='0.4';setTimeout(()=>btn.style.opacity='',600);}
+function srsInit(){document.querySelectorAll('.vocab-card').forEach(card=>{const wordEl=card.querySelector('.vocab-word');if(!wordEl)return;const word=wordEl.textContent.trim();card.dataset.srsWord=word;const btns=document.createElement('div');btns.className='srs-btns';const esc=word.replace(/\\/g,'\\\\').replace(/'/g,"\\'");btns.innerHTML=`<button class="srs-btn srs-btn-know" onclick="srsClick('${esc}',true,this)">认识 ✓</button>`+`<button class="srs-btn srs-btn-forget" onclick="srsClick('${esc}',false,this)">还不会 ✗</button>`;card.querySelector('.vocab-card-head').appendChild(btns);srsUpdateCard(card);});srsUpdateBadge();}
+
+function initAnnotations(){
+  document.querySelectorAll('sup.ann-sup,.para-ann').forEach(el=>el.remove());
+  document.querySelectorAll('.passage .paragraph').forEach(para=>{
+    const seen=new Set();const items=[];let idx=1;
+    para.querySelectorAll('.tip').forEach(el=>{const tip=el.dataset.tip||'';const parts=tip.split('|');if(parts.length<2)return;const phrase=parts[0].trim();if(seen.has(phrase)){const prevIdx=items.findIndex(i=>i.phrase===phrase)+1;const sup=document.createElement('sup');sup.className='ann-sup';sup.textContent=prevIdx;el.after(sup);return;}seen.add(phrase);const sup=document.createElement('sup');sup.className='ann-sup';sup.textContent=idx;el.after(sup);const contentParts=parts[1].split('｜');const cn=contentParts[0].trim();const det=contentParts.slice(1).map(s=>s.replace(/<[^>]+>/g,'').trim()).filter(Boolean);items.push({num:idx,phrase,cn,det,level:el.dataset.level==='超纲'?'超纲':''});idx++;});
+    if(items.length===0)return;const ann=document.createElement('div');ann.className='para-ann';ann.innerHTML=items.map(i=>`<div class="pan-row"><div class="pan-head"><span class="pan-num">${i.num}</span><span class="pan-en">${i.phrase}</span><span class="pan-cn">${i.cn}</span>${i.level?`<span class="pan-lv lv-${i.level}">${i.level}</span>`:''}</div>${i.det.length?`<div class="pan-det">${i.det.map(d=>`<div>${d}</div>`).join('')}</div>`:''}</div>`).join('');
+    const trans=para.querySelector('.translation-inline');if(trans)trans.after(ann);else para.appendChild(ann);
+  });
+}
+
+pbUpdateUI();srsInit();
+document.addEventListener('DOMContentLoaded',initAnnotations);
+</script>
+</body>
+</html>

@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2023北京卷C篇精读 · Short-termism and Psychological Biases</title>
+<style>
+:root{--bg:#fafaf8;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;--accent:#2563eb;--accent-light:#dbeafe;--complex-bg:#f0f6fc;--border:#e2e2e0;--card-bg:#fff;--hover-bg:#f5f5f4;--shadow:0 1px 3px rgba(0,0,0,.08);--radius:6px;}
+.theme-yellow{--bg:#f5f0e8;--card-bg:#faf6ee;--border:#ddd5bf;--complex-bg:#ece4d4;--hover-bg:#ede7d8;--accent-light:#fde8b8;}
+.theme-green{--bg:#edecea;--card-bg:#f3f2f0;--border:#d6d5d0;--complex-bg:#e5e4e0;--hover-bg:#e8e7e3;--accent-light:#dddcd6;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:60px;}
+.container{max-width:min(1100px,88vw);margin:0 auto;padding:0 20px;}
+.header{background:var(--card-bg);border-bottom:1px solid var(--border);padding:16px 0;position:sticky;top:0;z-index:100;}
+.header .container{display:flex;align-items:center;flex-wrap:wrap;gap:10px;}
+.header h1{font-size:16px;font-weight:600;flex:1;min-width:200px;}
+.header-sub{font-size:12px;color:var(--accent);font-weight:500;background:var(--accent-light);padding:2px 8px;border-radius:10px;}
+.header-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card-bg);color:var(--text);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.mode-steps{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.mode-step{padding:6px 12px;border:none;background:var(--card-bg);color:var(--text-secondary);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.mode-step+.mode-step{border-left:1px solid var(--border);}
+.mode-step.active{background:var(--accent);color:#fff;}
+.mode-step:hover:not(.active){background:var(--accent-light);}
+.passage{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:20px;padding:28px 32px;}
+.passage-title{text-align:center;font-family:Georgia,"Times New Roman",serif;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:20px;color:var(--text-secondary);}
+.paragraph{margin-bottom:4px;text-indent:2em;}
+.sentence{font-family:Georgia,"Times New Roman",serif;font-size:18px;line-height:1.75;position:relative;transition:background .2s;border-radius:3px;cursor:pointer;}
+.sentence:hover{background:var(--hover-bg);}
+.sentence.playing{background:var(--complex-bg);border-radius:3px;}
+.sentence.complex{border-bottom:1.5px dashed #93c5fd;}
+.sentence.complex.playing{background:var(--complex-bg);}
+.tip{border-bottom:1.5px dashed var(--accent);cursor:pointer;position:relative;transition:background .15s;}
+.tip:hover{background:var(--accent-light);}
+.tip.tip-flash{outline:2px solid var(--accent);border-radius:2px;animation:tipFlash 1.6s ease-out forwards;}
+@keyframes tipFlash{0%{background:var(--accent);color:#fff;}40%{background:var(--accent-light);color:inherit;}100%{background:transparent;}}
+.tooltip{position:fixed;z-index:200;background:var(--text);color:#fff;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;line-height:1.5;padding:8px 14px;border-radius:8px;max-width:min(520px,calc(100vw - 16px));width:max-content;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:auto;animation:tipIn .15s ease-out;}
+.tooltip::after{content:'';position:absolute;bottom:-6px;left:var(--arrow-left,50%);transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text);}
+.tooltip.below::after{bottom:auto;top:-6px;border-top:none;border-bottom:6px solid var(--text);}
+.tooltip .tip-phrase{font-family:Georgia,serif;font-weight:600;color:#93c5fd;margin-bottom:2px;}
+.tooltip .tip-speak{display:inline-block;cursor:pointer;margin-left:6px;font-size:12px;opacity:.7;vertical-align:middle;}
+.tooltip .tip-speak:hover{opacity:1;}
+.level-badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:11px;font-weight:600;margin-left:6px;vertical-align:middle;font-family:-apple-system,"PingFang SC",sans-serif;}
+.badge-超纲{background:rgba(239,68,68,.25);color:#fca5a5;}
+.badge-拓展{background:rgba(251,146,60,.2);color:#fdba74;}
+.badge-选必{background:rgba(96,165,250,.2);color:#93c5fd;}
+.tooltip .tip-zh-play{display:block;margin-top:6px;padding:4px 10px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:4px;color:#93c5fd;font-size:12px;cursor:pointer;text-align:center;}
+.tooltip .tip-zh-play:hover{background:rgba(255,255,255,.25);}
+@keyframes tipIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+.analysis{display:none;margin:8px 0 12px 0;padding:12px 16px;background:#f8f9fa;border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;color:var(--text-secondary);line-height:1.7;text-indent:0;}
+.analysis.open{display:block;}
+.analysis p{margin-bottom:4px;}
+.analysis b{color:var(--text);font-size:13px;}
+.translation-inline{display:none;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;color:var(--text-muted);margin:2px 0 6px 0;text-indent:0;}
+body.compare-mode .translation-inline,body.mode-annotate .translation-inline{display:block;}
+.panel{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:16px;overflow:hidden;}
+.panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;cursor:pointer;user-select:none;font-weight:600;font-size:15px;border-bottom:1px solid transparent;transition:border-color .2s;}
+.panel-header:hover{color:var(--accent);}
+.panel-header .arrow{transition:transform .2s;font-size:12px;color:var(--text-muted);}
+.panel.open .panel-header{border-bottom-color:var(--border);}
+.panel.open .panel-header .arrow{transform:rotate(180deg);}
+.panel-body{display:none;padding:16px 24px;}
+.panel.open .panel-body{display:block;}
+.vocab-card{border-bottom:1px solid #f0f0f0;padding:12px 0;}
+.vocab-card:last-child{border-bottom:none;}
+.vocab-card-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px;}
+.vocab-word{font-family:Georgia,serif;font-weight:600;color:var(--accent);cursor:pointer;font-size:15px;}
+.vocab-word:hover{text-decoration:underline;}
+.vocab-meaning{font-size:14px;color:var(--text);}
+.vocab-extra{font-size:13px;color:var(--text-secondary);margin-top:2px;}
+.vocab-tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:3px;background:#fef3c7;color:#92400e;vertical-align:middle;}
+.vocab-tag.tag-core{background:#dcfce7;color:#166534;}
+.vocab-tag.tag-exam{background:#dbeafe;color:#1e40af;}
+.vocab-tag.tag-beyond{background:#fef3c7;color:#92400e;}
+.vocab-tag.tag-extend{background:#ffedd5;color:#c2410c;}
+.vocab-detail{display:none;margin-top:8px;padding:10px 14px;background:#f8f9fa;border-radius:var(--radius);font-size:13.5px;line-height:1.7;}
+.vocab-detail.open{display:block;}
+.vocab-detail .vd-example{color:var(--text-secondary);padding-left:16px;}
+.vocab-detail .vd-example em{color:var(--text);font-style:normal;font-weight:600;}
+.vocab-expand{font-size:12px;color:var(--accent);cursor:pointer;border:none;background:none;padding:0;margin-left:8px;}
+.vocab-expand:hover{text-decoration:underline;}
+.srs-btns{display:flex;gap:5px;margin-left:auto;}
+.srs-btn{font-size:11px;padding:2px 7px;border-radius:10px;border:1.5px solid;cursor:pointer;transition:all .15s;background:none;white-space:nowrap;}
+.srs-btn-know{border-color:#16a34a;color:#16a34a;}
+.srs-btn-know:hover{background:#dcfce7;}
+.srs-btn-forget{border-color:#dc2626;color:#dc2626;}
+.srs-btn-forget:hover{background:#fee2e2;}
+.srs-badge{font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;background:#fef2f2;color:#dc2626;}
+.srs-badge.all-done{background:#dcfce7;color:#16a34a;}
+.analysis-play{float:right;margin-left:8px;background:none;border:1px solid var(--border);border-radius:4px;font-size:12px;padding:2px 8px;cursor:pointer;color:var(--accent);transition:all .15s;}
+.analysis-play:hover{background:var(--accent-light);border-color:var(--accent);}
+.analysis-play.playing{background:var(--accent);color:#fff;border-color:var(--accent);}
+.question-item{padding:16px 24px;border-bottom:1px solid #f0f0f0;}
+.question-item:last-child{border-bottom:none;}
+.question-stem{font-weight:600;font-size:15px;margin-bottom:8px;}
+.question-options{display:grid;grid-template-columns:1fr;gap:4px;font-size:14px;margin-bottom:8px;}
+.question-option{padding:2px 0;}
+.show-answer-btn{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--accent);cursor:pointer;background:none;border:none;padding:4px 0;}
+.show-answer-btn:hover{text-decoration:underline;}
+.question-analysis{display:none;margin-top:10px;padding:12px 16px;background:#f8f9fa;border-radius:var(--radius);font-size:14px;color:var(--text-secondary);line-height:1.7;}
+.question-analysis.open{display:block;}
+.question-analysis .answer-line{font-weight:700;color:#16a34a;margin-bottom:6px;font-size:15px;}
+.question-analysis .locate{background:#fef9c3;padding:6px 10px;border-radius:4px;margin:6px 0;font-family:Georgia,serif;font-style:italic;font-size:14px;color:var(--text);}
+.option-list{margin-top:10px;display:flex;flex-direction:column;gap:2px;}
+.option-item{padding:3px 0;font-size:13.5px;line-height:1.5;}
+.option-item .opt-letter{font-weight:700;}
+.option-item.correct .opt-mark{color:#15803d;font-weight:700;}
+.option-item.wrong .opt-mark{color:#b91c1c;font-weight:700;}
+.option-item .opt-why{color:#888;font-size:12.5px;margin-left:4px;}
+.quiz-score{text-align:center;padding:16px;font-size:16px;font-weight:600;color:var(--accent);display:none;}
+.quiz-score.show{display:block;}
+#playbar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:#1a1a1a;color:#fff;display:flex;align-items:center;justify-content:center;gap:16px;padding:10px 20px;height:52px;font-size:14px;box-shadow:0 -2px 12px rgba(0,0,0,.2);}
+#playbar button{background:none;border:none;color:#fff;font-size:18px;cursor:pointer;padding:4px 8px;border-radius:4px;line-height:1;transition:background .15s;}
+#playbar button:hover{background:rgba(255,255,255,.15);}
+#pb-play{font-size:22px;}
+#pb-counter{font-size:13px;color:#aaa;min-width:52px;text-align:center;}
+#pb-speed{background:#333;border:none;color:#fff;font-size:13px;padding:3px 6px;border-radius:4px;cursor:pointer;}
+body.mode-raw .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-raw .tip:hover{background:none;}
+body.mode-raw .analysis,body.mode-raw .translation-inline,body.mode-raw .panel{display:none!important;}
+body.mode-raw .sentence.complex{border-bottom:none;}
+body.mode-raw .sentence{cursor:default;}
+body.mode-raw .sentence:hover{background:none;}
+body.mode-quiz .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-quiz .tip:hover{background:none;}
+body.mode-quiz .analysis,body.mode-quiz .translation-inline,body.mode-quiz #vocabPanel,body.mode-quiz #reviewPanel,body.mode-quiz #tipPanel,body.mode-quiz #writingPanel,body.mode-quiz #playbar{display:none!important;}
+body.mode-quiz .sentence.complex{border-bottom:none;cursor:default;}
+body.mode-quiz .sentence{cursor:default;}
+body.mode-quiz .sentence:hover{background:none;}
+body.mode-annotate .sentence.complex{border-bottom:none;}
+body.mode-annotate .sentence{cursor:default;}
+body.mode-annotate .sentence:hover{background:none;}
+body.mode-quiz #questionsPanel{display:block;}
+body.mode-quiz #questionsPanel .panel-body{display:block;}
+body.mode-quiz .question-analysis{display:none!important;}
+body.mode-quiz .show-answer-btn{display:none;}
+body.mode-quiz .question-option{cursor:pointer;padding:6px 10px;border-radius:var(--radius);border:1.5px solid transparent;transition:all .15s;}
+body.mode-quiz .question-option:hover{background:var(--accent-light);}
+body.mode-quiz .question-option.selected{border-color:var(--accent);background:var(--accent-light);}
+body.mode-quiz .question-option.correct{border-color:#16a34a;background:#dcfce7;}
+body.mode-quiz .question-option.wrong{border-color:#dc2626;background:#fee2e2;}
+.locate[data-goto]{cursor:pointer;transition:background .15s;}
+.locate[data-goto]:hover{background:#fde68a;}
+.locate[data-goto]::after{content:' ↗ 跳到原文';font-size:11px;color:var(--accent);font-family:-apple-system,sans-serif;font-style:normal;}
+.sentence.highlighted{background:#fef08a;border-radius:3px;}
+sup.ann-sup{display:none;font-size:0.6em;color:var(--accent);font-weight:700;vertical-align:super;line-height:0;margin-left:2px;font-family:system-ui,sans-serif;pointer-events:none;}
+body.mode-annotate sup.ann-sup{display:inline;}
+.para-ann{display:none;margin:16px 0 28px 0;font-family:-apple-system,"PingFang SC",sans-serif;font-size:15px;color:#333;text-indent:0;}
+body.mode-annotate .para-ann{display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:16px 18px;align-items:start;}
+.pan-row{background:#fff;border:1px solid #ece8e0;border-radius:12px;padding:16px 20px 18px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.pan-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.pan-num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
+.pan-en{font-family:Georgia,serif;font-weight:700;font-size:18px;color:#1a1a1a;}
+.pan-cn{color:var(--accent);font-weight:600;font-size:15px;}
+.pan-lv{font-size:12px;font-weight:600;padding:2px 8px;border-radius:4px;line-height:1.4;}
+.lv-超纲{background:#fee2e2;color:#b91c1c;}
+.pan-det{margin:12px 0 0 32px;color:#666;font-size:14px;line-height:1.85;}
+.pan-det div{position:relative;padding-left:12px;}
+.pan-det div+div{margin-top:8px;}
+.pan-det div::before{content:'';position:absolute;left:0;top:0.8em;width:4px;height:4px;border-radius:50%;background:#c9c3b8;}
+body.mode-quiz .para-ann,body.mode-raw .para-ann{display:none!important;}
+body.mode-quiz sup.ann-sup,body.mode-raw sup.ann-sup{display:none!important;}
+.sb-block{display:none;}
+body.mode-annotate .sb-block{display:block;margin:4px 0 28px;padding:16px 20px 18px;background:#f8f9fa;border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;font-family:-apple-system,"PingFang SC",sans-serif;text-indent:0;}
+body.mode-annotate .analysis{display:none!important;}
+body.mode-quiz .sb-block,body.mode-raw .sb-block{display:none!important;}
+.sb-title{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.08em;margin-bottom:12px;}
+.sb-sent{font-family:Georgia,serif;font-size:18px;line-height:2.3;color:#1a1a1a;background:#fff;border:1px solid #ece8e0;border-radius:10px;padding:14px 18px;}
+.sb-chip{display:inline-block;font-family:-apple-system,"PingFang SC",sans-serif;font-size:11px;font-weight:700;line-height:1;padding:4px 7px;border-radius:999px;margin-right:5px;vertical-align:3px;}
+.sb-core{font-weight:700;border-bottom:2.5px solid var(--accent);}
+.sb-core-chip{background:var(--accent);color:#fff;}
+.sb-ins{color:#9a9a9a;background:#eeebe4;border-radius:4px;padding:2px 4px;}
+.sb-ins-chip{background:#e4e0d8;color:#777;}
+.sb-rest{border-bottom:2.5px solid #4caf7a;}
+.sb-rest-chip{background:#4caf7a;color:#fff;}
+.sb-steps{margin-top:14px;display:grid;gap:10px;}
+.sb-step{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;font-size:15px;line-height:1.75;color:#333;}
+.sb-step-n{width:24px;height:24px;border-radius:50%;background:#1a1a1a;color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-top:2px;}
+.sb-step em{font-style:normal;font-family:Georgia,serif;color:#111;background:#fff;border:1px solid #ece8e0;padding:0 5px;border-radius:4px;}
+.sb-step .arrow{color:#aaa;margin:0 4px;}
+.sb-tip{margin-top:14px;font-size:14px;color:#8a6d1f;background:#fdf6e3;border-radius:8px;padding:9px 14px;}
+.container{max-width:1400px;width:100%;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right));}
+.header{padding-top:calc(16px + env(safe-area-inset-top));}
+body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
+#playbar{height:calc(52px + env(safe-area-inset-bottom));padding-bottom:calc(10px + env(safe-area-inset-bottom));padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right));}
+.passage{padding:24px 24px;}
+.tooltip .tip-scroll{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
+@media(min-width:700px){
+  .header h1{font-size:19px;}.passage-title{font-size:19px;}.header-sub{font-size:14px;}
+  .sentence{font-size:23px;line-height:1.8;}.translation-inline{font-size:18px!important;line-height:1.8;}
+  .analysis{font-size:18px;line-height:1.8;}.analysis b{font-size:16px;}.panel-header{font-size:18px;}
+  .vocab-word{font-size:20px;}.vocab-meaning{font-size:18px;}.vocab-extra{font-size:16.5px;line-height:1.7;}
+  .vocab-detail,.vd-example{font-size:16px;}.vocab-tag,.level-badge{font-size:13px;}
+  .vocab-expand,.srs-btn,.srs-badge{font-size:14px;}.question-stem{font-size:19px;}
+  .question-options{font-size:18px;}.show-answer-btn{font-size:15.5px;}
+  .question-analysis .answer-line{font-size:17px;}.option-item{font-size:16.5px;}.option-item .opt-why{font-size:15px;}
+  .tooltip{font-size:17px;line-height:1.55;}.tooltip .tip-phrase{font-size:19px;}
+  #pb-counter,#pb-speed{font-size:15px;}
+}
+@media(max-width:600px){
+  .passage{padding:18px 14px;}.sentence{font-size:16px;}
+  .panel-header,.question-item{padding-left:16px;padding-right:16px;}.panel-body{padding:12px 16px;}
+}
+</style>
+</head>
+<body class="mode-study">
+
+<div class="header">
+  <div class="container">
+    <h1>2023北京卷C篇精读 · Short-termism and Psychological Biases</h1>
+    <div class="header-controls">
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="study" onclick="setMode('study')">① 精读</button>
+        <button class="mode-step" data-mode="quiz" onclick="setMode('quiz')">② 做题</button>
+        <button class="mode-step" data-mode="raw" onclick="setMode('raw')">③ 原文</button>
+        <button class="mode-step" data-mode="annotate" onclick="setMode('annotate')">④ 课本</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()" title="切换护眼色">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="passage" id="passage">
+  <div class="passage-title">C</div>
+
+  <!-- ── Paragraph 1 ── -->
+  <div class="paragraph" id="para-1">
+    <span class="sentence" data-idx="0">In recent years, researchers from <span class="tip" data-tip="diverse fields|不同领域，各个学科｜diverse = 多种多样的，不同的（div = 分开）。diverse fields = 多个不同的研究领域｜near: various fields, different fields. 搭配：diverse backgrounds 不同背景" data-level="选必">diverse fields</span> have agreed that <span class="tip" data-tip="short-termism|短视主义，只顾眼前不顾长远｜short-term = 短期的，-ism = 主义。short-termism = 一种只关注眼前短期利益、忽视长远后果的思维方式。这是本文的核心词｜反义：long-term thinking 长远思维" data-level="拓展">short-termism</span> is now a significant problem in <span class="tip" data-tip="industrialised societies|工业化社会｜industrialise = 使工业化（industry 工业 + -ise 使...化）。industrialised societies = 已经完成工业化的社会，主要指西方发达国家｜也拼作 industrialized（美式）" data-level="拓展">industrialised societies</span>.</span>
+    <span class="sentence" data-idx="1">The <span class="tip" data-tip="inability|没有能力，做不到｜in- = 没有，ability = 能力。inability to do sth = 没有能力做某事，做不到。The inability to engage with longer-term causes = 没有能力去面对更长远的原因和后果｜反义：ability 能力" data-level="选必">inability</span> to <span class="tip" data-tip="engage with|去面对，处理，关注｜engage = 参与、面对。engage with longer-term causes = 去面对更长远的原因。engage with a problem = 认真面对一个问题｜搭配：engage with sb 与某人交流，engage with an issue 处理某个问题" data-level="选必">engage with</span> longer-term causes and <span class="tip" data-tip="consequences|后果，结果｜consequence = 因某事而产生的后果（con = 一起，sequence = 顺序）。longer-term consequences = 长远的后果。高考必考词！｜搭配：as a consequence 因此，face the consequences 承担后果" data-level="选必">consequences</span> leads to some of the world's most serious problems: climate change, <span class="tip" data-tip="biodiversity collapse|生物多样性崩溃｜bio = 生命，diversity = 多样性，collapse = 崩溃。biodiversity = 生物多样性（各种各样的动植物）。biodiversity collapse = 很多物种消失，生态系统崩溃" data-level="超纲">biodiversity collapse</span>, and more.</span>
+    <span class="sentence complex" data-idx="2">The historian Francis Cole argues that the West has entered a period where "only the present exists, a present <span class="tip" data-tip="characterised at once by|同时具有...特点｜characterise = 以...为特点（特征）。at once = 同时。characterised at once by A and by B = 同时具有A和B两个特点｜at once 在这里不是「立刻」而是「同时」" data-level="拓展">characterised at once by</span> the <span class="tip" data-tip="cruelty of the instant|瞬间的残酷感｜cruel = 残酷的，cruelty = 残酷（cruel + ty）。the instant = 这一瞬间、当下。cruelty of the instant = 活在当下那种让人焦虑的残酷感，只有当下、没有未来｜这是引用原话，不用背，读懂意思就好" data-level="超纲">cruelty of the instant</span> and by the <span class="tip" data-tip="boredom of an unending now|无休止的「当下」带来的厌倦｜boredom = 无聊、厌倦（bore = 让人无聊）。unending = 没有尽头的（un- = 没有，end = 结束）。an unending now = 永无止境的「现在」，没有过去也没有未来｜同样是引用原话，读懂即可" data-level="超纲">boredom of an unending now</span>".</span>
+    <div class="analysis" id="analysis-2">
+      <p><b>这句话的结构：</b>主干是 <em>Francis Cole argues that the West has entered a period</em>（Francis Cole 认为西方已进入了一个时代）。</p>
+      <p><b>where 引导定语从句：</b><em>where only the present exists</em>——修饰 period（一个只有当下存在的时代）。</p>
+      <p><b>a present characterised at once by...and by...：</b>这是对前面 the present 的进一步解释（同位语）。characterised at once by A and by B = 同时具有A和B两个特点：① the cruelty of the instant（瞬间的残酷），② the boredom of an unending now（永无止境的「当下」带来的无聊）。</p>
+      <p><b>引用的作用（28题）：</b>作者引用 Cole 的话是为了说明短视主义问题有多严重——highlight a problem。</p>
+    </div>
+    <div class="translation-inline">近年来，来自不同领域的研究人员一致认为，短视主义（只顾眼前不顾长远）已成为工业化社会的一个重要问题。对长远原因和后果的关注缺失，导致了世界上一些最严峻的问题：气候变化、生物多样性崩溃等等。历史学家Francis Cole认为，西方已经进入了一个"只有当下存在"的时代——这个当下同时笼罩着瞬间的残酷感和无休止"现在"的无聊感。</div>
+    <div class="sb-block">
+      <div class="sb-title">长难句拆解</div>
+      <div class="sb-sent">
+        <span class="sb-chip sb-core-chip">谁说</span><span class="sb-core">Francis Cole argues that</span>
+        <span class="sb-chip sb-core-chip">什么</span><span class="sb-core">the West has entered a period</span>
+        <span class="sb-chip sb-rest-chip">什么时代</span><span class="sb-rest">where "only the present exists,</span>
+        <span class="sb-chip sb-ins-chip">解释「当下」· 先跳过</span><span class="sb-ins">a present characterised at once by the cruelty of the instant and by the boredom of an unending now".</span>
+      </div>
+      <div class="sb-steps">
+        <div class="sb-step"><span class="sb-step-n">1</span><div>先找主干：<em>Cole argues that the West has entered a period</em><span class="arrow">→</span>Cole认为西方进入了一个时代</div></div>
+        <div class="sb-step"><span class="sb-step-n">2</span><div>where 定语从句：<em>only the present exists</em><span class="arrow">→</span>这个时代只有当下存在</div></div>
+        <div class="sb-step"><span class="sb-step-n">3</span><div>后面的补充说明：<em>cruelty of the instant + boredom of an unending now</em><span class="arrow">→</span>瞬间的残酷感 + 无休止当下的无聊感</div></div>
+      </div>
+      <div class="sb-tip">💡 引用原话目的题（28题）：作者用名人的话来说明问题有多严重，这叫 highlight a problem（突出/强调一个问题）。</div>
+    </div>
+  </div>
+
+  <!-- ── Paragraph 2 ── -->
+  <div class="paragraph" id="para-2">
+    <span class="sentence complex" data-idx="3">It has been proved that people have a <span class="tip" data-tip="bias towards the present|偏向眼前的偏见，重视当下｜bias = 偏见、偏向（某一方向的倾向）。bias towards the present = 总是更关注眼前当下、忽视未来的心理倾向。原文括号里给了中文「偏向」｜搭配：have a bias towards = 偏向于，be biased = 有偏见的" data-level="拓展">bias towards the present</span>, focusing on loud attractions in the moment <span class="tip" data-tip="at the expense of|以...为代价，牺牲了...｜expense = 代价、花费。at the expense of sth = 以某事为代价。at the expense of their future health = 牺牲了他们未来的健康｜高频！高考写作：at the expense of one's health 以健康为代价" data-level="选必">at the expense of</span> the health, well-being and <span class="tip" data-tip="financial stability|经济稳定｜financial = 财务上的（finance = 金融，你可能见过）。stability = 稳定（stable + ity）。financial stability = 经济/财务稳定，能保证未来生活的能力｜搭配：financial security 经济安全感" data-level="选必">financial stability</span> of their future selves or community.</span>
+    <div class="analysis" id="analysis-3">
+      <p><b>句子结构：</b>主干是 <em>people have a bias towards the present</em>（人们倾向于重视眼前）。</p>
+      <p><b>focusing on...at the expense of...：</b>这是一个分词短语，补充说明这种偏见的具体表现：专注于眼前的"大声"诱惑，代价是牺牲了未来自己和社会的健康、幸福与经济稳定。</p>
+      <p><b>loud attractions：</b>loud 在这里不是"声音大"，而是"引人注目的、抓人眼球的"——那些当下最热门、最刺激的东西。</p>
+    </div>
+    <span class="sentence" data-idx="4">In business, this bias <span class="tip" data-tip="surfaces as|以...的形式出现，表现为｜surface = 浮上表面，surface as sth = 以某种形式出现/露出水面。this bias surfaces as short-sighted decisions = 这种偏见在商业上表现为目光短浅的决策｜= appears as, shows up as">surfaces as</span> <span class="tip" data-tip="short-sighted|短视的，只看眼前的｜sight = 视力（眼睛能看到的范围）。short-sighted = 视线短，只能看到眼前，比喻"目光短浅的"｜= narrow-minded about the future. 反义：far-sighted（有远见的）。搭配：short-sighted decision 短视的决定" data-level="选必">short-sighted</span> decisions.</span>
+    <span class="sentence" data-idx="5">And on <span class="tip" data-tip="slow-burning|缓慢发展的，不容易被注意到的｜burn = 燃烧。slow-burning = 烧得很慢，像炭火一样。比喻那些发展缓慢、不容易被注意到的问题（比如气候变化）｜near: gradual, long-term">slow-burning</span> problems like climate change, it <span class="tip" data-tip="translates into|转变为，变成了｜translate = 翻译，也有「转变为」的意思。translate into = 变成/导致。it translates into the unwillingness = 它变成了不愿意做小牺牲的心态｜搭配：hard work translates into success 努力转化为成功" data-level="选必">translates into</span> the <span class="tip" data-tip="unwillingness|不愿意（做某事）｜willing = 愿意的，un- = 不，unwillingness = 不愿意（做某事的心态）。the unwillingness to make small sacrifices = 不愿意做小小的牺牲｜反义：willingness 愿意" data-level="选必">unwillingness</span> to make small sacrifices today that could <span class="tip" data-tip="make a major difference|带来很大改变，起到很大作用｜difference = 不同、差别。make a difference = 起作用，带来改变。make a major difference = 带来很大的改变、起到重要作用｜高频！写作：This can make a major difference. 这能带来很大改变。">make a major difference</span> tomorrow.</span>
+    <span class="sentence" data-idx="6">Instead, all that matters is next quarter's <span class="tip" data-tip="profit|利润，获利｜profit = 做生意赚到的钱（收入 - 成本 = 利润）。next quarter's profit = 下个季度的利润（公司每三个月一个季度）。短视主义的典型表现：只关心下季度能赚多少钱｜搭配：make a profit 盈利，profit from 从...中获益" data-level="选必">profit</span>, or satisfying some other <span class="tip" data-tip="near-term desires|眼前的欲望，短期的需求｜near-term = 近期的（和 short-term 意思相近）。desires = 欲望、想要的东西。near-term desires = 眼前想要的东西，不顾长远｜near: immediate desires, short-term wants">near-term desires</span>.</span>
+    <div class="translation-inline">事实证明，人们有一种偏向眼前的偏见，把注意力集中在当下最抓人眼球的事物上，代价是牺牲了自身和社会未来的健康、幸福与经济稳定。在商业上，这种偏见表现为目光短浅的决策。而在气候变化这类缓慢发展的问题上，它变成了不愿意为了明天可能发生的巨大改变而做出今天的小牺牲。人们只关心下个季度的利润，或者满足某些眼前的欲望。</div>
+    <div class="sb-block">
+      <div class="sb-title">长难句拆解</div>
+      <div class="sb-sent">
+        <span class="sb-chip sb-rest-chip">已知</span><span class="sb-rest">It has been proved that</span>
+        <span class="sb-chip sb-core-chip">谁</span><span class="sb-core">people have a bias towards the present,</span>
+        <span class="sb-chip sb-core-chip">怎么表现</span><span class="sb-core">focusing on loud attractions in the moment</span>
+        <span class="sb-chip sb-rest-chip">代价</span><span class="sb-rest">at the expense of the health, well-being and financial stability</span>
+        <span class="sb-chip sb-ins-chip">谁的 · 先跳过</span><span class="sb-ins">of their future selves or community.</span>
+      </div>
+      <div class="sb-steps">
+        <div class="sb-step"><span class="sb-step-n">1</span><div>主干：<em>people have a bias towards the present</em><span class="arrow">→</span>人们偏向于重视当下</div></div>
+        <div class="sb-step"><span class="sb-step-n">2</span><div>怎么偏向：<em>focusing on loud attractions in the moment</em><span class="arrow">→</span>专注于当下最抓人的东西</div></div>
+        <div class="sb-step"><span class="sb-step-n">3</span><div>代价是什么：<em>at the expense of ... health, well-being and financial stability</em><span class="arrow">→</span>牺牲了未来的健康、幸福和经济稳定</div></div>
+      </div>
+      <div class="sb-tip">💡 at the expense of = 以...为代价，这是高考高频词组，前面是得到的，后面是牺牲的。</div>
+    </div>
+  </div>
+
+  <!-- ── Paragraph 3 ── -->
+  <div class="paragraph" id="para-3">
+    <span class="sentence" data-idx="7">These biased <span class="tip" data-tip="perspectives|看法，观点，视角｜perspective = 看问题的角度和方式。biased perspectives = 有偏差的看法、偏见。cannot be blamed on one single cause = 不能归因于单一原因｜高考高频词：from one's perspective 从某人角度看，see things from a different perspective 从不同角度看问题" data-level="选必">perspectives</span> cannot be blamed on one single cause.</span>
+    <span class="sentence" data-idx="8">It is fair to say, though, that our <span class="tip" data-tip="psychological biases|心理上的偏见｜psychological = 心理的（psychology = 心理学，你可能见过）。biases = bias 的复数，偏见。psychological biases = 人类心理上固有的偏见，导致我们做出不理性的判断｜搭配：cognitive bias 认知偏见" data-level="拓展">psychological biases</span> play a major role.</span>
+    <span class="sentence" data-idx="9">People's <span class="tip" data-tip="hesitancy to delay satisfaction|不愿意延迟满足（想要立刻得到）｜hesitancy = 犹豫、不愿意（hesitate = 犹豫）。delay = 推迟，satisfaction = 满足感。delay satisfaction = 把满足感推迟到以后——比如不吃眼前的糖果，等以后得到更多。人类天生不愿意这样做｜= reluctance to wait for rewards" data-level="拓展">hesitancy to delay satisfaction</span> is the most obvious example, but there are others.</span>
+    <span class="sentence" data-idx="10">One of them is about how the most <span class="tip" data-tip="accessible|容易得到的，容易看到的｜access = 进入（accessible = 可以进入/得到的）。the most accessible information = 最容易看到/得到的信息，就在眼前的信息｜搭配：accessible to everyone 所有人都能得到的，easy to access 容易获取" data-level="选必">accessible</span> information in the present affects decisions about the future.</span>
+    <span class="sentence" data-idx="11">For instance, you might hear someone say: "It's cold this winter, so I needn't worry about global warming."</span>
+    <span class="sentence" data-idx="12">Another is that loud and <span class="tip" data-tip="urgent|紧迫的，紧急的｜urgent = 需要立刻处理、非常紧急的。loud and urgent matters = 那些高调又紧迫的事情（比如娱乐新闻、突发事件），往往得到过多关注｜搭配：urgent need 紧迫需求，It is urgent that... 迫切需要..." data-level="选必">urgent</span> matters are given too much importance, making people ignore longer-term trends that <span class="tip" data-tip="arguably|可以说，有理由认为｜argue = 认为，arguable = 可以争论的，arguably = 可以说是，有理由认为。arguably matter more = 可以说更重要（作者在表达自己的判断，但留了余地）｜= one could argue that, it can be said that" data-level="拓展">arguably</span> matter more.</span>
+    <span class="sentence" data-idx="13">This is when a pop star <span class="tip" data-tip="draws far more attention|吸引了更多得多的注意力｜draw attention = 吸引注意力（draw = 吸引）。far more = 多得多（far 加强比较级）。draws far more attention than = 比...吸引多得多的注意力｜搭配：attract attention, draw attention to sth 把注意力引向某事">draws far more attention</span> than, say, <span class="tip" data-tip="gradual biodiversity decline|生物多样性的逐渐减少｜gradual = 渐进的，慢慢来的（grade = 等级，逐渐变化）。biodiversity decline = 生物多样性减少。gradual biodiversity decline = 物种数量慢慢减少，这类缓慢的变化容易被人忽视｜搭配：gradual change 渐进的变化，gradual progress 逐步进展" data-level="选必">gradual biodiversity decline</span>.</span>
+    <div class="translation-inline">这些有偏差的看法不能归因于单一原因。但可以说，我们心理上的偏见起了很大的作用。人们不愿意延迟满足，这是最明显的例子，但还有其他原因。其中一种是：当下最容易看到的信息会影响对未来的判断。比如，你可能听到有人说："今年冬天这么冷，全球变暖我根本不需要担心。"另一种是，那些高调紧迫的事被给予了太多重视，让人忽视了可以说更重要的长期趋势——比如一个明星受到的关注，远超生物多样性的逐渐消失。</div>
+  </div>
+
+  <!-- ── Paragraph 4 ── -->
+  <div class="paragraph" id="para-4">
+    <span class="sentence" data-idx="14">As a psychologist once joked, if aliens wanted to <span class="tip" data-tip="weaken humanity|削弱人类｜weaken = 使...变弱（weak + en）。humanity = 人类（human + ity）。weaken humanity = 削弱人类的力量。这位心理学家在开玩笑：外星人最好的武器不是飞船，而是发明气候变化——因为人类根本不会重视">weaken humanity</span>, they wouldn't send ships; they would invent climate change.</span>
+    <span class="sentence complex" data-idx="15">Indeed, when it comes to environmental transformations, we can develop a form of <span class="tip" data-tip="collective poor memory|集体健忘｜collective = 集体的，大家共同的（collect = 收集，collective = 大家一起的）。poor memory = 记性差、健忘。collective poor memory = 整个社会共同的健忘——每一代人都把他们遇到的情况当成正常" data-level="拓展">collective "poor memory"</span>, and each new generation can believe the <span class="tip" data-tip="state of affairs|现状，目前的情况｜state = 状态，affairs = 事务。state of affairs = 当前的事态/情况。the state of affairs they encounter = 他们遇到的这种情况｜= the current situation. 搭配：the present state of affairs 目前状况">state of affairs</span> they encounter is <span class="tip" data-tip="nothing out of the ordinary|没什么特别的，很正常｜out of the ordinary = 不寻常的（超出普通范围的）。nothing out of the ordinary = 没什么特别的，完全正常。每一代人以为他们看到的就是正常的，不知道以前不一样｜= nothing unusual, perfectly normal" data-level="拓展">nothing out of the ordinary</span>.</span>
+    <div class="analysis" id="analysis-15">
+      <p><b>句子主干：</b>we can develop a form of collective "poor memory"（我们会发展出一种集体健忘）and each new generation can believe the state of affairs … is nothing out of the ordinary（每一代人都以为现状很正常）。</p>
+      <p><b>when it comes to：</b>"当谈到/说到...的时候"，高考常见短语，表示"说到某个话题"。</p>
+      <p><b>the state of affairs they encounter：</b>they encounter 是省略了 that 的定语从句，修饰 state of affairs。= the state of affairs that they encounter（他们遇到/看到的这种情况）。</p>
+      <p><b>与29题的关系：</b>这段举的例子（老人记得车窗上爬满虫子，小孩不知道虫子减少了）说明：人类大脑不擅长注意到缓慢的变化。→ 29题答案 C。</p>
+    </div>
+    <span class="sentence" data-idx="16">Older people today, for example, can remember a time with insect-covered car windscreens after long drives.</span>
+    <span class="sentence" data-idx="17">Children, on the other hand, have no idea that insect population has dropped <span class="tip" data-tip="dramatically|急剧地，大幅度地｜drama = 戏剧，dramatic = 戏剧性的，dramatically = 急剧地、大幅度地（像戏剧一样剧烈）。has dropped dramatically = 急剧下降了｜高频！写作：increase/decrease dramatically 急剧增加/减少，change dramatically 大幅改变" data-level="选必">dramatically</span>.</span>
+    <div class="translation-inline">正如一位心理学家曾开玩笑说，如果外星人想要削弱人类，他们不会派出飞船；他们会发明气候变化。确实，在环境变化这个问题上，我们会产生一种集体健忘，每一代新人都会以为他们遇到的现状是完全正常的。比如，今天的老人们还记得长途驾驶后挡风玻璃上爬满虫子的年代，而孩子们却根本不知道昆虫数量已经急剧减少了。</div>
+    <div class="sb-block">
+      <div class="sb-title">长难句拆解</div>
+      <div class="sb-sent">
+        <span class="sb-chip sb-rest-chip">话题</span><span class="sb-rest">Indeed, when it comes to environmental transformations,</span>
+        <span class="sb-chip sb-core-chip">谁</span><span class="sb-core">we can develop a form of collective "poor memory",</span>
+        <span class="sb-chip sb-core-chip">而且</span><span class="sb-core">and each new generation can believe</span>
+        <span class="sb-chip sb-core-chip">什么</span><span class="sb-core">the state of affairs</span>
+        <span class="sb-chip sb-ins-chip">修饰 · 先跳过</span><span class="sb-ins">they encounter</span>
+        <span class="sb-chip sb-core-chip">是</span><span class="sb-core">is nothing out of the ordinary.</span>
+      </div>
+      <div class="sb-steps">
+        <div class="sb-step"><span class="sb-step-n">1</span><div>主干：<em>we develop collective poor memory</em><span class="arrow">→</span>我们会集体健忘</div></div>
+        <div class="sb-step"><span class="sb-step-n">2</span><div>and 并列：<em>each new generation believes … is nothing out of the ordinary</em><span class="arrow">→</span>每一代人都以为现状很正常</div></div>
+        <div class="sb-step"><span class="sb-step-n">3</span><div>they encounter 是修饰 state of affairs 的定语从句，省略了 that</div></div>
+      </div>
+      <div class="sb-tip">💡 29题的答案就藏在这段：老人记得很多虫子，小孩不知道虫子减少了。这说明人类大脑不擅长注意到缓慢的变化（The human mind is bad at noting slow change）。</div>
+    </div>
+  </div>
+
+</div><!-- /passage -->
+
+<!-- ══════ Vocabulary ══════ -->
+<div class="panel" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')">
+    <span>生词与短语（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="vocab-list">
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('short-termism')">short-termism</span>
+          <span class="vocab-meaning">短视主义，只顾眼前</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>short-term（短期的）+ -ism（主义）。short-termism = 只关注短期利益、忽视长远后果的思维方式。</div>
+          <div class="vd-example">反义：long-term thinking 长远思维，far-sighted 有远见的</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('consequences')">consequences</span>
+          <span class="vocab-meaning">后果，结果</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>consequence = 因某事导致的后果（偏负面）。高考必考词。</div>
+          <div class="vd-example">face the <em>consequences</em> 承担后果；as a <em>consequence</em> 因此</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('at the expense of')">at the expense of</span>
+          <span class="vocab-meaning">以...为代价，牺牲了</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>expense = 代价，at the expense of sth = 以某事为代价。高考写作高频词组。</div>
+          <div class="vd-example">focusing on the present <em>at the expense of</em> their future. （课文）</div>
+          <div class="vd-example">work hard <em>at the expense of</em> one's health 以健康为代价努力工作</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('short-sighted')">short-sighted</span>
+          <span class="vocab-meaning">短视的，目光短浅的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>sight = 视力，short-sighted = 只能看到眼前，比喻"目光短浅的"。</div>
+          <div class="vd-example">this bias surfaces as <em>short-sighted</em> decisions. （课文）</div>
+          <div class="vd-example">反义：<em>far-sighted</em>（有远见的）——30题答案关键词</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('translates into')">translates into</span>
+          <span class="vocab-meaning">转变为，变成了</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>translate 本意是翻译，translate into = 转变为/导致。用法很地道。</div>
+          <div class="vd-example">it <em>translates into</em> the unwillingness to make sacrifices. （课文）</div>
+          <div class="vd-example">hard work <em>translates into</em> success. 努力转化为成功。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('make a major difference')">make a major difference</span>
+          <span class="vocab-meaning">带来很大改变，起到重要作用</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>make a difference = 起作用，带来改变。make a major difference = 带来很大的改变。</div>
+          <div class="vd-example">small sacrifices that could <em>make a major difference</em> tomorrow. （课文）</div>
+          <div class="vd-example">作文：This can <em>make a great difference</em> to our life. 这能极大改变我们的生活。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('perspectives')">perspectives</span>
+          <span class="vocab-meaning">看法，观点，视角</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>perspective = 看问题的角度和方式。高考高频词，单数 perspective 也很常见。</div>
+          <div class="vd-example">from different <em>perspectives</em> 从不同角度；from my <em>perspective</em> 从我的角度看</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('urgent')">urgent</span>
+          <span class="vocab-meaning">紧迫的，紧急的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>urgent = 需要立刻处理，非常紧急的。loud and urgent matters = 高调又紧迫的事情。</div>
+          <div class="vd-example">an <em>urgent</em> need 迫切的需求；It is <em>urgent</em> that we act now. 我们必须立刻行动。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('gradual')">gradual</span>
+          <span class="vocab-meaning">渐进的，逐渐的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>gradual = 一点一点慢慢发生的，不是突然的。副词：gradually 逐渐地。</div>
+          <div class="vd-example"><em>gradual</em> biodiversity decline. （课文）</div>
+          <div class="vd-example">The situation improved <em>gradually</em>. 情况逐渐改善了。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('dramatically')">dramatically</span>
+          <span class="vocab-meaning">急剧地，大幅度地</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>drama（戏剧）→ dramatic（戏剧性的/急剧的）→ dramatically（急剧地）。高频副词。</div>
+          <div class="vd-example">insect population has dropped <em>dramatically</em>. （课文）</div>
+          <div class="vd-example">作文：increase/decrease <em>dramatically</em> 急剧增加/减少（比 greatly 更有力）</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Questions ══════ -->
+<div class="panel" id="questionsPanel">
+  <div class="panel-header" onclick="togglePanel('questionsPanel')">
+    <span>题目解析（3题，28—30）</span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+
+    <!-- Q28 -->
+    <div class="question-item" data-answer="D">
+      <div class="question-stem">28. The author quotes Francis Cole mainly to ______.</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. draw a comparison</div>
+        <div class="question-option" data-key="B">B. introduce a topic</div>
+        <div class="question-option" data-key="C">C. evaluate a statement</div>
+        <div class="question-option" data-key="D">D. highlight a problem</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：D</div>
+        <div class="locate" data-goto="2" onclick="gotoSentence(2)">"The historian Francis Cole argues that the West has entered a period where 'only the present exists...'"</div>
+        <p>Cole 的话描述了短视主义有多严重——西方社会进入了一个"只有当下"的时代。作者引用这个话是为了强调/突出（highlight）短视主义这个问题的严重性。选 <b>D</b>。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— draw a comparison（进行比较）：引用没有在比较两个东西，而是在描述一种现象的严重性。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ B</span><span class="opt-why">— introduce a topic（引入话题）：话题在第一句已经引入了（short-termism is a problem），Cole 是在进一步强调，不是引入新话题。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ C</span><span class="opt-why">— evaluate a statement（评价一个观点）：作者没有在评价 Cole 说的对不对，而是用它来说明问题。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ D</span><span class="opt-why">— highlight a problem（突出一个问题）：用名人的话来说明短视主义问题有多严重，就是在"突出这个问题"。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q29 -->
+    <div class="question-item" data-answer="C">
+      <div class="question-stem">29. What can be inferred from the last paragraph?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. Climate change has been forgotten.</div>
+        <div class="question-option" data-key="B">B. Lessons of history are highly valued.</div>
+        <div class="question-option" data-key="C">C. The human mind is bad at noting slow change.</div>
+        <div class="question-option" data-key="D">D. Humans are unwilling to admit their shortcomings.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：C</div>
+        <div class="locate" data-goto="15" onclick="gotoSentence(15)">"...each new generation can believe the state of affairs they encounter is nothing out of the ordinary."</div>
+        <div class="locate" data-goto="17" onclick="gotoSentence(17)" style="margin-top:4px">"Children...have no idea that insect population has dropped dramatically."</div>
+        <p>最后一段讲：每一代人都以为现状是正常的（集体健忘）。老人记得车窗上爬满虫子，小孩不知道虫子减少了。这说明：昆虫数量是缓慢（gradually）下降的，人类大脑注意不到这种慢变化。可以推断出 <b>C</b>（人类大脑不擅长注意到缓慢的变化）。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— Climate change has been forgotten：文章没说气候变化被忘掉了，而是说人们不重视它。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ B</span><span class="opt-why">— Lessons of history are highly valued：恰好相反，文章说每一代人都以为现状正常，不会从历史中学习。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ C</span><span class="opt-why">— The human mind is bad at noting slow change：虫子例子直接说明这一点——变化太慢，人们察觉不到。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— Humans are unwilling to admit their shortcomings：文章没提"承认缺点"，讲的是"察觉不到慢变化"。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q30 -->
+    <div class="question-item" data-answer="A">
+      <div class="question-stem">30. What does the author intend to tell us?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. Far-sighted thinking matters to humans.</div>
+        <div class="question-option" data-key="B">B. Humans tend to make long-term sacrifices.</div>
+        <div class="question-option" data-key="C">C. Current policies facilitate future decision-making.</div>
+        <div class="question-option" data-key="D">D. Bias towards the present helps reduce near-term desires.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：A</div>
+        <p>整篇文章论证的是短视主义（short-termism）的危害——人们太关注当下，导致气候变化、生物多样性等长远问题被忽视。文章想告诉我们：我们需要有远见的思维（far-sighted thinking）。<b>A</b> 正确。</p>
+        <div class="option-list">
+          <div class="option-item correct"><span class="opt-mark">✓ A</span><span class="opt-why">— Far-sighted thinking matters：short-termism 的反面就是 far-sighted thinking，全文都在论证为什么需要长远眼光。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ B</span><span class="opt-why">— Humans tend to make long-term sacrifices：恰好相反，文章说的是人们不愿意做短期牺牲（unwillingness to make small sacrifices）。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ C</span><span class="opt-why">— Current policies facilitate future decision-making：文章没有讨论政策和决策的关系。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— Bias towards the present helps reduce near-term desires：说反了，这种偏见是问题所在，不是好事。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-score" id="quizScore"></div>
+  </div>
+</div>
+
+<!-- ══════ Review ══════ -->
+<div class="panel" id="reviewPanel">
+  <div class="panel-header" onclick="togglePanel('reviewPanel')">阅读原文<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-family:Georgia,serif;font-size:16px;line-height:2;">
+    <p style="text-indent:2em">In recent years, researchers from diverse fields have agreed that short-termism is now a significant problem in industrialised societies. The inability to engage with longer-term causes and consequences leads to some of the world's most serious problems: climate change, biodiversity collapse, and more. The historian Francis Cole argues that the West has entered a period where "only the present exists, a present characterised at once by the cruelty of the instant and by the boredom of an unending now".</p>
+    <p style="text-indent:2em">It has been proved that people have a bias towards the present, focusing on loud attractions in the moment at the expense of the health, well-being and financial stability of their future selves or community. In business, this bias surfaces as short-sighted decisions. And on slow-burning problems like climate change, it translates into the unwillingness to make small sacrifices today that could make a major difference tomorrow. Instead, all that matters is next quarter's profit, or satisfying some other near-term desires.</p>
+    <p style="text-indent:2em">These biased perspectives cannot be blamed on one single cause. It is fair to say, though, that our psychological biases play a major role. People's hesitancy to delay satisfaction is the most obvious example, but there are others. One of them is about how the most accessible information in the present affects decisions about the future. For instance, you might hear someone say: "It's cold this winter, so I needn't worry about global warming." Another is that loud and urgent matters are given too much importance, making people ignore longer-term trends that arguably matter more. This is when a pop star draws far more attention than, say, gradual biodiversity decline.</p>
+    <p style="text-indent:2em">As a psychologist once joked, if aliens wanted to weaken humanity, they wouldn't send ships; they would invent climate change. Indeed, when it comes to environmental transformations, we can develop a form of collective "poor memory", and each new generation can believe the state of affairs they encounter is nothing out of the ordinary. Older people today, for example, can remember a time with insect-covered car windscreens after long drives. Children, on the other hand, have no idea that insect population has dropped dramatically.</p>
+  </div>
+</div>
+
+<!-- ══════ 阅读技巧 ══════ -->
+<div class="panel" id="tipPanel">
+  <div class="panel-header" onclick="togglePanel('tipPanel')">阅读技巧<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-size:15px;line-height:1.8;">
+    <p><b>议论文三步读法：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li><b>第一步：</b>找论点——第一段最后一句或第一句常是论点。本文论点：short-termism is a significant problem。</li>
+      <li><b>第二步：</b>找论据——后面每一段举例说明。本文：商业决策短视、气候变化、心理偏见、集体健忘（昆虫例子）。</li>
+      <li><b>第三步：</b>推断作者意图——最后问"作者想告诉我们什么"，就是论点的反面：我们需要 far-sighted thinking（长远眼光）。</li>
+    </ul>
+    <p style="margin-top:12px"><b>引用名人话的目的：</b>高考常考"作者引用XX主要是为了___"。常见答案：highlight a problem（突出问题）/ introduce a topic（引入话题）/ support an argument（支持论点）。判断方法：看引用出现在哪里——第一段中间位置通常是 highlight，不是 introduce。</p>
+  </div>
+</div>
+
+<!-- ══════ 作文拓展 ══════ -->
+<div class="panel" id="writingPanel">
+  <div class="panel-header" onclick="togglePanel('writingPanel')">作文拓展：好句式 &amp; 好短语<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-size:15px;line-height:1.9;">
+    <p><b>可以直接用进作文的句式：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li><em>at the expense of one's health / future</em>（以健康/未来为代价）</li>
+      <li><em>make a major difference to...</em>（对...带来很大改变）</li>
+      <li><em>translate into</em>（转变为...）</li>
+      <li>短语：<em>short-sighted</em> vs <em>far-sighted</em>，<em>dramatically</em>，<em>gradual</em>，<em>at the expense of</em></li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div id="playbar">
+  <button onclick="pbPrev()" title="上一句">⏮</button>
+  <button id="pb-play" onclick="pbToggle()">▶</button>
+  <button onclick="pbNext()" title="下一句">⏭</button>
+  <span id="pb-counter">— / 18</span>
+  <select id="pb-speed" onchange="pbSetSpeed(this.value)">
+    <option value="0.8">0.8×</option>
+    <option value="1" selected>1.0×</option>
+    <option value="1.2">1.2×</option>
+  </select>
+</div>
+
+<script>
+const THEMES=['yellow','green'];
+const THEME_LABELS={yellow:'📄 书本黄',green:'🌿 护眼绿'};
+let themeIdx=parseInt(localStorage.getItem('theme')||'0');
+function applyTheme(){document.body.classList.remove('theme-yellow','theme-green');const t=THEMES[themeIdx%THEMES.length];document.body.classList.add('theme-'+t);const btn=document.getElementById('theme-btn');if(btn)btn.textContent=THEME_LABELS[t];}
+function cycleTheme(){themeIdx=(themeIdx+1)%THEMES.length;localStorage.setItem('theme',themeIdx);applyTheme();}
+applyTheme();
+
+const sentences=[
+  "In recent years, researchers from diverse fields have agreed that short-termism is now a significant problem in industrialised societies.",
+  "The inability to engage with longer-term causes and consequences leads to some of the world's most serious problems: climate change, biodiversity collapse, and more.",
+  "The historian Francis Cole argues that the West has entered a period where only the present exists, a present characterised at once by the cruelty of the instant and by the boredom of an unending now.",
+  "It has been proved that people have a bias towards the present, focusing on loud attractions in the moment at the expense of the health, well-being and financial stability of their future selves or community.",
+  "In business, this bias surfaces as short-sighted decisions.",
+  "And on slow-burning problems like climate change, it translates into the unwillingness to make small sacrifices today that could make a major difference tomorrow.",
+  "Instead, all that matters is next quarter's profit, or satisfying some other near-term desires.",
+  "These biased perspectives cannot be blamed on one single cause.",
+  "It is fair to say, though, that our psychological biases play a major role.",
+  "People's hesitancy to delay satisfaction is the most obvious example, but there are others.",
+  "One of them is about how the most accessible information in the present affects decisions about the future.",
+  "For instance, you might hear someone say: It's cold this winter, so I needn't worry about global warming.",
+  "Another is that loud and urgent matters are given too much importance, making people ignore longer-term trends that arguably matter more.",
+  "This is when a pop star draws far more attention than, say, gradual biodiversity decline.",
+  "As a psychologist once joked, if aliens wanted to weaken humanity, they wouldn't send ships; they would invent climate change.",
+  "Indeed, when it comes to environmental transformations, we can develop a form of collective poor memory, and each new generation can believe the state of affairs they encounter is nothing out of the ordinary.",
+  "Older people today, for example, can remember a time with insect-covered car windscreens after long drives.",
+  "Children, on the other hand, have no idea that insect population has dropped dramatically."
+];
+
+let activeTooltip=null;
+const ZH_AUDIO={};
+let zhPlayer=null;
+
+function phraseToSlug(phrase){return phrase.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+function playZhAudio(slug,btn){if(zhPlayer){zhPlayer.pause();zhPlayer=null;btn.textContent='🔊 听讲解';return;}const src=ZH_AUDIO[slug];if(!src)return;zhPlayer=new Audio(src);btn.textContent='⏹ 停止';zhPlayer.onended=()=>{btn.textContent='🔊 听讲解';zhPlayer=null;};zhPlayer.play();}
+
+function showTooltip(tipEl){
+  hideTooltip();
+  const raw=tipEl.getAttribute('data-tip');const[phrase,explain]=raw.split('|');const parts=explain.split('｜');
+  const slug=phraseToSlug(phrase);const hasAudio=ZH_AUDIO[slug];
+  const tooltip=document.createElement('div');tooltip.className='tooltip';
+  tooltip.innerHTML='<div class="tip-scroll">'+
+    `<div class="tip-phrase">${phrase}${tipEl.dataset.level?`<span class="level-badge badge-${tipEl.dataset.level}">${tipEl.dataset.level}</span>`:''}<span class="tip-speak" onclick="speakWord('${phrase.replace(/'/g,"\\'")}')">&#9654;</span></div>`+
+    parts.map(p=>`<div>${p.trim()}</div>`).join('')+(hasAudio?`<button class="tip-zh-play" onclick="playZhAudio('${slug}',this)">🔊 听讲解</button>`:'')+
+    '</div>';
+  document.body.appendChild(tooltip);activeTooltip=tooltip;tooltip._tip=tipEl;positionTooltip();if(!activeTooltip)return;speakWord(phrase);
+}
+
+let _safeProbe=null;
+function tooltipFrame(){
+  if(!_safeProbe){_safeProbe=document.createElement('div');_safeProbe.style.cssText='position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)';document.body.appendChild(_safeProbe);}
+  const cs=getComputedStyle(_safeProbe);const M=8;const vw=document.documentElement.clientWidth,vh=window.innerHeight;
+  let minY=M+(parseFloat(cs.paddingTop)||0);let maxY=vh-M-(parseFloat(cs.paddingBottom)||0);
+  const hdr=document.querySelector('.header');if(hdr){const b=hdr.getBoundingClientRect().bottom;if(b>0)minY=Math.max(minY,b+4);}
+  const pb=document.getElementById('playbar');if(pb&&getComputedStyle(pb).display!=='none'){maxY=Math.min(maxY,pb.getBoundingClientRect().top-4);}
+  return{minX:M+(parseFloat(cs.paddingLeft)||0),maxX:vw-M-(parseFloat(cs.paddingRight)||0),minY,maxY};
+}
+function positionTooltip(){
+  const tooltip=activeTooltip;if(!tooltip)return;const tipEl=tooltip._tip;const rects=tipEl.getClientRects();const f=tooltipFrame();
+  if(!rects.length){hideTooltip();return;}const first=rects[0],last=rects[rects.length-1];
+  if(last.bottom<f.minY-4||first.top>f.maxY+4){hideTooltip();return;}
+  const GAP=10,PAD=16;const body=tooltip.firstElementChild;
+  tooltip.style.maxWidth=Math.max(120,Math.min(520,f.maxX-f.minX))+'px';body.style.maxHeight='none';tooltip.style.left='0px';tooltip.style.top='0px';
+  const tw=tooltip.offsetWidth,naturalH=tooltip.offsetHeight;const spaceAbove=first.top-f.minY-GAP;const spaceBelow=f.maxY-last.bottom-GAP;
+  let below;if(naturalH<=spaceAbove)below=false;else if(naturalH<=spaceBelow)below=true;else below=spaceBelow>spaceAbove;
+  const avail=Math.max(60,below?spaceBelow:spaceAbove);if(naturalH>avail)body.style.maxHeight=Math.max(30,avail-PAD)+'px';
+  const r=below?last:first;const cx=r.left+r.width/2;const left=Math.max(f.minX,Math.min(cx-tw/2,f.maxX-tw));
+  let top=below?last.bottom+GAP:first.top-GAP-tooltip.offsetHeight;top=Math.max(f.minY,Math.min(top,f.maxY-tooltip.offsetHeight));
+  tooltip.classList.toggle('below',below);tooltip.style.setProperty('--arrow-left',Math.max(14,Math.min(cx-left,tw-14))+'px');tooltip.style.left=left+'px';tooltip.style.top=top+'px';
+}
+(function(){let raf=0;const re=()=>{if(!activeTooltip||raf)return;raf=requestAnimationFrame(()=>{raf=0;positionTooltip();});};
+window.addEventListener('scroll',re,{passive:true});window.addEventListener('resize',re);window.addEventListener('orientationchange',re);
+if(window.visualViewport){visualViewport.addEventListener('resize',re);visualViewport.addEventListener('scroll',re);}})();
+
+function hideTooltip(){if(zhPlayer){zhPlayer.pause();zhPlayer=null;}if(activeTooltip){activeTooltip.remove();activeTooltip=null;}}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.sentence.highlighted')&&!e.target.closest('.locate')){document.querySelectorAll('.sentence.highlighted').forEach(s=>s.classList.remove('highlighted'));}
+  const tipEl=e.target.closest('.tip');
+  if(tipEl){e.stopPropagation();if(activeTooltip&&activeTooltip._source===tipEl){hideTooltip();}else{showTooltip(tipEl);if(activeTooltip)activeTooltip._source=tipEl;}return;}
+  if(e.target.closest('.tooltip'))return;hideTooltip();
+});
+
+let pbCurrent=null,pbPlaying=false,pbSpeed=1,enPlayer=null;
+function pbStop(){if(enPlayer){enPlayer.pause();enPlayer=null;}pbPlaying=false;}
+function highlightSentence(idx){
+  document.querySelectorAll('.sentence').forEach(el=>el.classList.remove('playing'));
+  if(idx!==null&&idx>=0&&idx<sentences.length){const el=document.querySelector(`.sentence[data-idx="${idx}"]`);if(el){el.classList.add('playing');el.scrollIntoView({behavior:'smooth',block:'center'});}}
+}
+function pbUpdateUI(){document.getElementById('pb-play').textContent=pbPlaying?'⏸':'▶';document.getElementById('pb-counter').textContent=pbCurrent!==null?`${pbCurrent+1} / ${sentences.length}`:`— / ${sentences.length}`;}
+function pbPlayCurrent(){
+  pbStop();if(pbCurrent===null){pbUpdateUI();return;}
+  const src=`audio/2023北京卷-C/en-s${String(pbCurrent).padStart(2,'0')}.mp3`;
+  enPlayer=new Audio(src);enPlayer.playbackRate=pbSpeed;pbPlaying=true;highlightSentence(pbCurrent);pbUpdateUI();
+  enPlayer.onerror=()=>{const utter=new SpeechSynthesisUtterance(sentences[pbCurrent]);const voices=speechSynthesis.getVoices();utter.voice=voices.find(v=>v.lang==='en-GB')||voices.find(v=>v.lang.startsWith('en'))||null;utter.rate=pbSpeed*0.85;utter.onend=()=>{if(pbPlaying){if(pbCurrent<sentences.length-1){pbCurrent++;pbPlayCurrent();}else{pbPlaying=false;highlightSentence(null);pbUpdateUI();}}};speechSynthesis.speak(utter);enPlayer=null;};
+  enPlayer.onended=()=>{if(pbPlaying){if(pbCurrent<sentences.length-1){pbCurrent++;pbPlayCurrent();}else{pbPlaying=false;highlightSentence(null);pbUpdateUI();}}};enPlayer.play();
+}
+function pbToggle(){if(pbCurrent===null){pbCurrent=0;pbPlayCurrent();return;}if(pbPlaying){pbStop();highlightSentence(pbCurrent);pbUpdateUI();}else{pbPlayCurrent();}}
+function pbPrev(){if(pbCurrent===null)pbCurrent=0;else if(pbCurrent>0)pbCurrent--;pbPlayCurrent();}
+function pbNext(){if(pbCurrent===null)pbCurrent=0;else if(pbCurrent<sentences.length-1)pbCurrent++;pbPlayCurrent();}
+function pbSetSpeed(v){pbSpeed=parseFloat(v);if(enPlayer)enPlayer.playbackRate=pbSpeed;}
+
+document.addEventListener('click',function(e){if(e.target.closest('.tip')||e.target.closest('.tooltip'))return;const sentence=e.target.closest('.sentence.complex');if(sentence)toggleAnalysis(parseInt(sentence.dataset.idx));});
+
+function speakWord(word){
+  if(enPlayer){enPlayer.pause();enPlayer=null;}
+  const slug='en-word-'+word.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const src='audio/2023北京卷-C/'+slug+'.mp3';
+  enPlayer=new Audio(src);
+  enPlayer.onerror=function(){const utter=new SpeechSynthesisUtterance(word);const voices=speechSynthesis.getVoices();utter.voice=voices.find(v=>v.lang==='en-GB')||voices.find(v=>v.lang.startsWith('en'))||voices[0];utter.rate=0.8;speechSynthesis.speak(utter);};
+  enPlayer.play();
+}
+
+const ANALYSIS_AUDIO={};let analysisPlayer=null,analysisBtn=null;
+function playAnalysis(id,btn){if(analysisPlayer){analysisPlayer.pause();analysisPlayer=null;if(analysisBtn){analysisBtn.textContent='🔊 听讲解';analysisBtn.classList.remove('playing');}if(analysisBtn===btn){analysisBtn=null;return;}}const src=ANALYSIS_AUDIO[id];if(!src)return;analysisPlayer=new Audio(src);analysisBtn=btn;btn.textContent='⏹ 停止';btn.classList.add('playing');analysisPlayer.onended=()=>{btn.textContent='🔊 听讲解';btn.classList.remove('playing');analysisPlayer=null;analysisBtn=null;};analysisPlayer.play();}
+
+function toggleAnalysis(idx){const el=document.getElementById('analysis-'+idx);if(el)el.classList.toggle('open');}
+function togglePanel(id){document.getElementById(id).classList.toggle('open');}
+function setMode(mode){document.body.classList.remove('mode-raw','mode-study','mode-quiz','mode-annotate');if(mode!=='study')document.body.classList.add('mode-'+mode);document.querySelectorAll('.mode-step').forEach(btn=>btn.classList.toggle('active',btn.dataset.mode===mode));hideTooltip();if(mode==='quiz'){pbStop();highlightSentence(null);pbUpdateUI();resetQuiz();}}
+function resetQuiz(){document.querySelectorAll('.question-option').forEach(opt=>opt.classList.remove('selected','correct','wrong'));document.querySelectorAll('.question-item').forEach(q=>q.dataset.answered='');const score=document.getElementById('quizScore');if(score)score.classList.remove('show');}
+document.addEventListener('click',function(e){if(!document.body.classList.contains('mode-quiz'))return;const opt=e.target.closest('.question-option');if(!opt)return;const item=opt.closest('.question-item');if(item.dataset.answered)return;item.dataset.answered='true';const picked=opt.dataset.key;const correct=item.dataset.answer;if(picked===correct){opt.classList.add('correct');}else{opt.classList.add('wrong');item.querySelector(`.question-option[data-key="${correct}"]`).classList.add('correct');}const total=document.querySelectorAll('.question-item[data-answer]').length;const done=document.querySelectorAll('.question-item[data-answered="true"]').length;if(done===total)showQuizScore();});
+function showQuizScore(){const total=document.querySelectorAll('.question-item[data-answer]').length;const wrong=document.querySelectorAll('.question-option.wrong').length;const score=document.getElementById('quizScore');score.textContent=`得分：${total-wrong} / ${total}`;score.classList.add('show');}
+function gotoSentence(idx){const el=document.querySelector(`.sentence[data-idx="${idx}"]`);if(!el)return;setMode('study');document.querySelectorAll('.sentence.highlighted').forEach(s=>s.classList.remove('highlighted'));el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('highlighted');}
+function toggleQuestionAnalysis(btn){const analysis=btn.nextElementSibling;analysis.classList.toggle('open');btn.textContent=analysis.classList.contains('open')?'收起解析':'🔍 查看解析';}
+
+const SRS_PREFIX='srs_beijing_2023_C_';const SRS_INTERVALS=[1,3,7,14,30];
+function srsLoad(word){const raw=localStorage.getItem(SRS_PREFIX+word);return raw?JSON.parse(raw):null;}
+function srsSave(word,knew){const state=srsLoad(word)||{streak:0};if(knew){state.streak=(state.streak||0)+1;state.interval=SRS_INTERVALS[Math.min(state.streak-1,SRS_INTERVALS.length-1)];}else{state.streak=0;state.interval=1;}state.nextReview=Date.now()+state.interval*86400000;localStorage.setItem(SRS_PREFIX+word,JSON.stringify(state));return state;}
+function srsIsDue(state){return!state||Date.now()>=state.nextReview;}
+function srsUpdateCard(card){const state=srsLoad(card.dataset.srsWord);card.classList.remove('srs-due','srs-known');if(!state)return;card.classList.add(srsIsDue(state)?'srs-due':'srs-known');}
+function srsUpdateBadge(){const badge=document.getElementById('srs-badge');if(!badge)return;const cards=document.querySelectorAll('.vocab-card[data-srs-word]');let due=0;cards.forEach(c=>{if(srsIsDue(srsLoad(c.dataset.srsWord)))due++;});if(due===0){badge.textContent='全掌握 ✓';badge.className='srs-badge all-done';}else{badge.textContent=due+'个待复习';badge.className='srs-badge';}}
+function srsClick(word,knew,btn){srsSave(word,knew);const card=btn.closest('.vocab-card');srsUpdateCard(card);srsUpdateBadge();btn.style.opacity='0.4';setTimeout(()=>btn.style.opacity='',600);}
+function srsInit(){document.querySelectorAll('.vocab-card').forEach(card=>{const wordEl=card.querySelector('.vocab-word');if(!wordEl)return;const word=wordEl.textContent.trim();card.dataset.srsWord=word;const btns=document.createElement('div');btns.className='srs-btns';const esc=word.replace(/\\/g,'\\\\').replace(/'/g,"\\'");btns.innerHTML=`<button class="srs-btn srs-btn-know" onclick="srsClick('${esc}',true,this)">认识 ✓</button>`+`<button class="srs-btn srs-btn-forget" onclick="srsClick('${esc}',false,this)">还不会 ✗</button>`;card.querySelector('.vocab-card-head').appendChild(btns);srsUpdateCard(card);});srsUpdateBadge();}
+
+function initAnnotations(){
+  document.querySelectorAll('sup.ann-sup,.para-ann').forEach(el=>el.remove());
+  document.querySelectorAll('.passage .paragraph').forEach(para=>{
+    const seen=new Set();const items=[];let idx=1;
+    para.querySelectorAll('.tip').forEach(el=>{const tip=el.dataset.tip||'';const parts=tip.split('|');if(parts.length<2)return;const phrase=parts[0].trim();if(seen.has(phrase)){const prevIdx=items.findIndex(i=>i.phrase===phrase)+1;const sup=document.createElement('sup');sup.className='ann-sup';sup.textContent=prevIdx;el.after(sup);return;}seen.add(phrase);const sup=document.createElement('sup');sup.className='ann-sup';sup.textContent=idx;el.after(sup);const contentParts=parts[1].split('｜');const cn=contentParts[0].trim();const det=contentParts.slice(1).map(s=>s.replace(/<[^>]+>/g,'').trim()).filter(Boolean);items.push({num:idx,phrase,cn,det,level:el.dataset.level==='超纲'?'超纲':''});idx++;});
+    if(items.length===0)return;const ann=document.createElement('div');ann.className='para-ann';ann.innerHTML=items.map(i=>`<div class="pan-row"><div class="pan-head"><span class="pan-num">${i.num}</span><span class="pan-en">${i.phrase}</span><span class="pan-cn">${i.cn}</span>${i.level?`<span class="pan-lv lv-${i.level}">${i.level}</span>`:''}</div>${i.det.length?`<div class="pan-det">${i.det.map(d=>`<div>${d}</div>`).join('')}</div>`:''}</div>`).join('');
+    const trans=para.querySelector('.translation-inline');if(trans)trans.after(ann);else para.appendChild(ann);
+  });
+}
+
+pbUpdateUI();srsInit();
+document.addEventListener('DOMContentLoaded',initAnnotations);
+</script>
+</body>
+</html>

@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2023北京卷A篇精读 · IOC Young Leaders Programme</title>
+<style>
+:root{--bg:#fafaf8;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;--accent:#2563eb;--accent-light:#dbeafe;--complex-bg:#f0f6fc;--border:#e2e2e0;--card-bg:#fff;--hover-bg:#f5f5f4;--shadow:0 1px 3px rgba(0,0,0,.08);--radius:6px;}
+.theme-yellow{--bg:#f5f0e8;--card-bg:#faf6ee;--border:#ddd5bf;--complex-bg:#ece4d4;--hover-bg:#ede7d8;--accent-light:#fde8b8;}
+.theme-green{--bg:#edecea;--card-bg:#f3f2f0;--border:#d6d5d0;--complex-bg:#e5e4e0;--hover-bg:#e8e7e3;--accent-light:#dddcd6;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:60px;}
+.container{max-width:min(1100px,88vw);margin:0 auto;padding:0 20px;}
+.header{background:var(--card-bg);border-bottom:1px solid var(--border);padding:16px 0;position:sticky;top:0;z-index:100;}
+.header .container{display:flex;align-items:center;flex-wrap:wrap;gap:10px;}
+.header h1{font-size:16px;font-weight:600;flex:1;min-width:200px;}
+.header-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card-bg);color:var(--text);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.mode-steps{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.mode-step{padding:6px 12px;border:none;background:var(--card-bg);color:var(--text-secondary);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.mode-step+.mode-step{border-left:1px solid var(--border);}
+.mode-step.active{background:var(--accent);color:#fff;}
+.mode-step:hover:not(.active){background:var(--accent-light);}
+.passage{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:20px;padding:28px 32px;}
+.passage-title{text-align:center;font-family:Georgia,"Times New Roman",serif;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:20px;color:var(--text-secondary);}
+.passage-subtitle{font-family:Georgia,"Times New Roman",serif;font-size:17px;font-weight:700;margin:20px 0 10px 0;color:var(--text);border-bottom:1px solid var(--border);padding-bottom:6px;}
+.paragraph{margin-bottom:4px;text-indent:2em;}
+.req-list{margin:8px 0 4px 2em;list-style:none;}
+.req-list li{margin-bottom:2px;padding-left:1.2em;position:relative;}
+.req-list li::before{content:'•';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.sentence{font-family:Georgia,"Times New Roman",serif;font-size:18px;line-height:1.75;position:relative;transition:background .2s;border-radius:3px;cursor:pointer;}
+.sentence:hover{background:var(--hover-bg);}
+.sentence.playing{background:var(--complex-bg);border-radius:3px;}
+.sentence.complex{border-bottom:1.5px dashed #93c5fd;}
+.sentence.complex.playing{background:var(--complex-bg);}
+.tip{border-bottom:1.5px dashed var(--accent);cursor:pointer;position:relative;transition:background .15s;}
+.tip:hover{background:var(--accent-light);}
+.tip.tip-flash{outline:2px solid var(--accent);border-radius:2px;animation:tipFlash 1.6s ease-out forwards;}
+@keyframes tipFlash{0%{background:var(--accent);color:#fff;}40%{background:var(--accent-light);color:inherit;}100%{background:transparent;}}
+.tooltip{position:fixed;z-index:200;background:var(--text);color:#fff;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;line-height:1.5;padding:8px 14px;border-radius:8px;max-width:min(520px,calc(100vw - 16px));width:max-content;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:auto;animation:tipIn .15s ease-out;}
+.tooltip::after{content:'';position:absolute;bottom:-6px;left:var(--arrow-left,50%);transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text);}
+.tooltip.below::after{bottom:auto;top:-6px;border-top:none;border-bottom:6px solid var(--text);}
+.tooltip .tip-phrase{font-family:Georgia,serif;font-weight:600;color:#93c5fd;margin-bottom:2px;}
+.tooltip .tip-speak{display:inline-block;cursor:pointer;margin-left:6px;font-size:12px;opacity:.7;vertical-align:middle;}
+.tooltip .tip-speak:hover{opacity:1;}
+.level-badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:11px;font-weight:600;margin-left:6px;vertical-align:middle;font-family:-apple-system,"PingFang SC",sans-serif;}
+.badge-超纲{background:rgba(239,68,68,.25);color:#fca5a5;}
+.badge-拓展{background:rgba(251,146,60,.2);color:#fdba74;}
+.badge-选必{background:rgba(96,165,250,.2);color:#93c5fd;}
+.tooltip .tip-zh-play{display:block;margin-top:6px;padding:4px 10px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:4px;color:#93c5fd;font-size:12px;cursor:pointer;text-align:center;}
+.tooltip .tip-zh-play:hover{background:rgba(255,255,255,.25);}
+@keyframes tipIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+.analysis{display:none;margin:8px 0 12px 0;padding:12px 16px;background:#f8f9fa;border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;color:var(--text-secondary);line-height:1.7;text-indent:0;}
+.analysis.open{display:block;}
+.analysis p{margin-bottom:4px;}
+.analysis b{color:var(--text);font-size:13px;}
+.translation-inline{display:none;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;color:var(--text-muted);margin:2px 0 6px 0;text-indent:0;}
+body.compare-mode .translation-inline,body.mode-annotate .translation-inline{display:block;}
+.panel{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:16px;overflow:hidden;}
+.panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;cursor:pointer;user-select:none;font-weight:600;font-size:15px;border-bottom:1px solid transparent;transition:border-color .2s;}
+.panel-header:hover{color:var(--accent);}
+.panel-header .arrow{transition:transform .2s;font-size:12px;color:var(--text-muted);}
+.panel.open .panel-header{border-bottom-color:var(--border);}
+.panel.open .panel-header .arrow{transform:rotate(180deg);}
+.panel-body{display:none;padding:16px 24px;}
+.panel.open .panel-body{display:block;}
+.vocab-card{border-bottom:1px solid #f0f0f0;padding:12px 0;}
+.vocab-card:last-child{border-bottom:none;}
+.vocab-card-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px;}
+.vocab-word{font-family:Georgia,serif;font-weight:600;color:var(--accent);cursor:pointer;font-size:15px;}
+.vocab-word:hover{text-decoration:underline;}
+.vocab-meaning{font-size:14px;color:var(--text);}
+.vocab-extra{font-size:13px;color:var(--text-secondary);margin-top:2px;}
+.vocab-tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:3px;background:#fef3c7;color:#92400e;vertical-align:middle;}
+.vocab-tag.tag-core{background:#dcfce7;color:#166534;}
+.vocab-tag.tag-exam{background:#dbeafe;color:#1e40af;}
+.vocab-tag.tag-beyond{background:#fef3c7;color:#92400e;}
+.vocab-tag.tag-extend{background:#ffedd5;color:#c2410c;}
+.vocab-detail{display:none;margin-top:8px;padding:10px 14px;background:#f8f9fa;border-radius:var(--radius);font-size:13.5px;line-height:1.7;}
+.vocab-detail.open{display:block;}
+.vocab-detail .vd-example{color:var(--text-secondary);padding-left:16px;}
+.vocab-detail .vd-example em{color:var(--text);font-style:normal;font-weight:600;}
+.vocab-expand{font-size:12px;color:var(--accent);cursor:pointer;border:none;background:none;padding:0;margin-left:8px;}
+.vocab-expand:hover{text-decoration:underline;}
+.srs-btns{display:flex;gap:5px;margin-left:auto;}
+.srs-btn{font-size:11px;padding:2px 7px;border-radius:10px;border:1.5px solid;cursor:pointer;transition:all .15s;background:none;white-space:nowrap;}
+.srs-btn-know{border-color:#16a34a;color:#16a34a;}
+.srs-btn-know:hover{background:#dcfce7;}
+.srs-btn-forget{border-color:#dc2626;color:#dc2626;}
+.srs-btn-forget:hover{background:#fee2e2;}
+.srs-badge{font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;background:#fef2f2;color:#dc2626;}
+.srs-badge.all-done{background:#dcfce7;color:#16a34a;}
+.question-item{padding:16px 24px;border-bottom:1px solid #f0f0f0;}
+.question-item:last-child{border-bottom:none;}
+.question-stem{font-weight:600;font-size:15px;margin-bottom:8px;}
+.question-options{display:grid;grid-template-columns:1fr;gap:4px;font-size:14px;margin-bottom:8px;}
+.question-option{padding:2px 0;}
+.show-answer-btn{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--accent);cursor:pointer;background:none;border:none;padding:4px 0;}
+.show-answer-btn:hover{text-decoration:underline;}
+.question-analysis{display:none;margin-top:10px;padding:12px 16px;background:#f8f9fa;border-radius:var(--radius);font-size:14px;color:var(--text-secondary);line-height:1.7;}
+.question-analysis.open{display:block;}
+.question-analysis .answer-line{font-weight:700;color:#16a34a;margin-bottom:6px;font-size:15px;}
+.question-analysis .locate{background:#fef9c3;padding:6px 10px;border-radius:4px;margin:6px 0;font-family:Georgia,serif;font-style:italic;font-size:14px;color:var(--text);}
+.option-list{margin-top:10px;display:flex;flex-direction:column;gap:2px;}
+.option-item{padding:3px 0;font-size:13.5px;line-height:1.5;}
+.option-item.correct .opt-mark{color:#15803d;font-weight:700;}
+.option-item.wrong .opt-mark{color:#b91c1c;font-weight:700;}
+.option-item .opt-why{color:#888;font-size:12.5px;margin-left:4px;}
+.quiz-score{text-align:center;padding:16px;font-size:16px;font-weight:600;color:var(--accent);display:none;}
+.quiz-score.show{display:block;}
+#playbar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:#1a1a1a;color:#fff;display:flex;align-items:center;justify-content:center;gap:16px;padding:10px 20px;height:52px;font-size:14px;box-shadow:0 -2px 12px rgba(0,0,0,.2);}
+#playbar button{background:none;border:none;color:#fff;font-size:18px;cursor:pointer;padding:4px 8px;border-radius:4px;line-height:1;transition:background .15s;}
+#playbar button:hover{background:rgba(255,255,255,.15);}
+#pb-play{font-size:22px;}
+#pb-counter{font-size:13px;color:#aaa;min-width:52px;text-align:center;}
+#pb-speed{background:#333;border:none;color:#fff;font-size:13px;padding:3px 6px;border-radius:4px;cursor:pointer;}
+body.mode-raw .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-raw .tip:hover{background:none;}
+body.mode-raw .analysis,body.mode-raw .translation-inline,body.mode-raw .panel{display:none!important;}
+body.mode-raw .sentence.complex{border-bottom:none;}
+body.mode-raw .sentence{cursor:default;}
+body.mode-raw .sentence:hover{background:none;}
+body.mode-quiz .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-quiz .tip:hover{background:none;}
+body.mode-quiz .analysis,body.mode-quiz .translation-inline,body.mode-quiz #vocabPanel,body.mode-quiz #reviewPanel,body.mode-quiz #tipPanel,body.mode-quiz #writingPanel,body.mode-quiz #playbar{display:none!important;}
+body.mode-quiz .sentence.complex{border-bottom:none;cursor:default;}
+body.mode-quiz .sentence{cursor:default;}
+body.mode-quiz .sentence:hover{background:none;}
+body.mode-annotate .sentence.complex{border-bottom:none;}
+body.mode-annotate .sentence{cursor:default;}
+body.mode-annotate .sentence:hover{background:none;}
+body.mode-quiz #questionsPanel{display:block;}
+body.mode-quiz #questionsPanel .panel-body{display:block;}
+body.mode-quiz .question-analysis{display:none!important;}
+body.mode-quiz .show-answer-btn{display:none;}
+body.mode-quiz .question-option{cursor:pointer;padding:6px 10px;border-radius:var(--radius);border:1.5px solid transparent;transition:all .15s;}
+body.mode-quiz .question-option:hover{background:var(--accent-light);}
+body.mode-quiz .question-option.selected{border-color:var(--accent);background:var(--accent-light);}
+body.mode-quiz .question-option.correct{border-color:#16a34a;background:#dcfce7;}
+body.mode-quiz .question-option.wrong{border-color:#dc2626;background:#fee2e2;}
+.locate[data-goto]{cursor:pointer;transition:background .15s;}
+.locate[data-goto]:hover{background:#fde68a;}
+.locate[data-goto]::after{content:' ↗ 跳到原文';font-size:11px;color:var(--accent);font-family:-apple-system,sans-serif;font-style:normal;}
+.sentence.highlighted{background:#fef08a;border-radius:3px;}
+sup.ann-sup{display:none;font-size:0.6em;color:var(--accent);font-weight:700;vertical-align:super;line-height:0;margin-left:2px;font-family:system-ui,sans-serif;pointer-events:none;}
+body.mode-annotate sup.ann-sup{display:inline;}
+.para-ann{display:none;margin:16px 0 28px 0;font-family:-apple-system,"PingFang SC",sans-serif;font-size:15px;color:#333;text-indent:0;}
+body.mode-annotate .para-ann{display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:16px 18px;align-items:start;}
+.pan-row{background:#fff;border:1px solid #ece8e0;border-radius:12px;padding:16px 20px 18px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.pan-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.pan-num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
+.pan-en{font-family:Georgia,serif;font-weight:700;font-size:18px;color:#1a1a1a;}
+.pan-cn{color:var(--accent);font-weight:600;font-size:15px;}
+.pan-lv{font-size:12px;font-weight:600;padding:2px 8px;border-radius:4px;line-height:1.4;}
+.lv-超纲{background:#fee2e2;color:#b91c1c;}
+.pan-det{margin:12px 0 0 32px;color:#666;font-size:14px;line-height:1.85;}
+.pan-det div{position:relative;padding-left:12px;}
+.pan-det div+div{margin-top:8px;}
+.pan-det div::before{content:'';position:absolute;left:0;top:0.8em;width:4px;height:4px;border-radius:50%;background:#c9c3b8;}
+body.mode-quiz .para-ann,body.mode-raw .para-ann{display:none!important;}
+body.mode-quiz sup.ann-sup,body.mode-raw sup.ann-sup{display:none!important;}
+.sb-block{display:none;}
+body.mode-annotate .sb-block{display:block;margin:4px 0 28px;padding:16px 20px 18px;background:#f8f9fa;border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;font-family:-apple-system,"PingFang SC",sans-serif;text-indent:0;}
+body.mode-annotate .analysis{display:none!important;}
+body.mode-quiz .sb-block,body.mode-raw .sb-block{display:none!important;}
+.sb-title{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.08em;margin-bottom:12px;}
+.sb-sent{font-family:Georgia,serif;font-size:18px;line-height:2.3;color:#1a1a1a;background:#fff;border:1px solid #ece8e0;border-radius:10px;padding:14px 18px;}
+.sb-chip{display:inline-block;font-family:-apple-system,"PingFang SC",sans-serif;font-size:11px;font-weight:700;line-height:1;padding:4px 7px;border-radius:999px;margin-right:5px;vertical-align:3px;}
+.sb-core{font-weight:700;border-bottom:2.5px solid var(--accent);}
+.sb-core-chip{background:var(--accent);color:#fff;}
+.sb-ins{color:#9a9a9a;background:#eeebe4;border-radius:4px;padding:2px 4px;}
+.sb-ins-chip{background:#e4e0d8;color:#777;}
+.sb-rest{border-bottom:2.5px solid #4caf7a;}
+.sb-rest-chip{background:#4caf7a;color:#fff;}
+.sb-steps{margin-top:14px;display:grid;gap:10px;}
+.sb-step{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;font-size:15px;line-height:1.75;color:#333;}
+.sb-step-n{width:24px;height:24px;border-radius:50%;background:#1a1a1a;color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-top:2px;}
+.sb-step em{font-style:normal;font-family:Georgia,serif;color:#111;background:#fff;border:1px solid #ece8e0;padding:0 5px;border-radius:4px;}
+.sb-step .arrow{color:#aaa;margin:0 4px;}
+.sb-tip{margin-top:14px;font-size:14px;color:#8a6d1f;background:#fdf6e3;border-radius:8px;padding:9px 14px;}
+.container{max-width:1400px;width:100%;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right));}
+.header{padding-top:calc(16px + env(safe-area-inset-top));}
+body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
+#playbar{height:calc(52px + env(safe-area-inset-bottom));padding-bottom:calc(10px + env(safe-area-inset-bottom));padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right));}
+.passage{padding:24px 24px;}
+.tooltip .tip-scroll{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
+body.mode-annotate .passage-subtitle{display:none;}
+body.mode-annotate .req-list{display:none;}
+@media(min-width:700px){
+  .header h1{font-size:19px;}.passage-title{font-size:19px;}.header-sub{font-size:14px;}
+  .sentence{font-size:23px;line-height:1.8;}.translation-inline{font-size:18px!important;line-height:1.8;}
+  .passage-subtitle{font-size:21px;}
+  .analysis{font-size:18px;line-height:1.8;}.analysis b{font-size:16px;}.panel-header{font-size:18px;}
+  .vocab-word{font-size:20px;}.vocab-meaning{font-size:18px;}.vocab-extra{font-size:16.5px;line-height:1.7;}
+  .vocab-detail,.vd-example{font-size:16px;}.vocab-tag,.level-badge{font-size:13px;}
+  .vocab-expand,.srs-btn,.srs-badge{font-size:14px;}.question-stem{font-size:19px;}
+  .question-options{font-size:18px;}.show-answer-btn{font-size:15.5px;}
+  .question-analysis .answer-line{font-size:17px;}.option-item{font-size:16.5px;}.option-item .opt-why{font-size:15px;}
+  .tooltip{font-size:17px;line-height:1.55;}.tooltip .tip-phrase{font-size:19px;}
+  #pb-counter,#pb-speed{font-size:15px;}
+}
+@media(max-width:600px){
+  .passage{padding:18px 14px;}.sentence{font-size:16px;}
+  .panel-header,.question-item{padding-left:16px;padding-right:16px;}.panel-body{padding:12px 16px;}
+}
+</style>
+</head>
+<body class="mode-study">
+
+<div class="header">
+  <div class="container">
+    <h1>2023北京卷A篇精读 · IOC Young Leaders Programme</h1>
+    <div class="header-controls">
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="study" onclick="setMode('study')">① 精读</button>
+        <button class="mode-step" data-mode="quiz" onclick="setMode('quiz')">② 做题</button>
+        <button class="mode-step" data-mode="raw" onclick="setMode('raw')">③ 原文</button>
+        <button class="mode-step" data-mode="annotate" onclick="setMode('annotate')">④ 课本</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()" title="切换护眼色">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="passage" id="passage">
+  <div class="passage-title">A</div>
+
+  <!-- ── Paragraph 1 ── -->
+  <div class="paragraph" id="para-1">
+    <span class="sentence" data-idx="0">The <span class="tip" data-tip="International Olympic Committee|国际奥林匹克委员会（国际奥委会）｜Olympic = 奥林匹克的（来自希腊奥林匹亚山）。Committee = 委员会（commit + tee，commit = 承诺/负责，committee = 承担某项任务的委员会）。简称 IOC｜也写作：the IOC. 类似：UNESCO（联合国教科文组织）" data-level="选必">International Olympic Committee</span> (IOC) Young Leaders programme <span class="tip" data-tip="empowers|赋予...能力，使有能力做某事｜em-（使进入某种状态）+ power（能力/权力）= empower（赋予能力/授权）。empowers talents to make a positive difference = 赋予有才能的人去产生积极影响的能力｜高频！写作：Education empowers us to change the world. 教育赋予我们改变世界的能力。= enable, give power to" data-level="选必">empowers</span> talents to <span class="tip" data-tip="make a positive difference|产生积极影响，带来正面改变｜difference = 差别，make a difference = 产生影响、起作用（让事情有所不同）。positive = 积极的。make a positive difference in their communities = 在社区中产生积极影响｜高频！写作：We can make a positive difference to the world. = make an impact, have a positive effect" data-level="选必">make a positive difference</span> in their communities through sport.</span>
+    <span class="sentence" data-idx="1">Twenty-five Young Leaders are being <span class="tip" data-tip="selected|被选拔，被挑选｜select = 挑选（比 choose 更正式，常用于选拔/筛选）。are being selected = 正在被选拔（现在进行时被动语态）。every two years for a four-year period = 每两年选一批，服务四年｜搭配：selected for a programme 被选入某项目，carefully selected 经过精心筛选的" data-level="选必">selected</span> every two years for a four-year period.</span>
+    <span class="sentence" data-idx="2">They <span class="tip" data-tip="promote|推广，宣传，传播｜promote = 使（某事）前进/更广泛（pro- = 向前，mote = 移动）。promote the Olympic values = 推广/宣传奥林匹克价值观。promote 还有「晋升」的意思，要根据语境判断｜搭配：promote peace 促进和平，promote a product 推广产品，get promoted 被晋升" data-level="选必">promote</span> the Olympic values, spreading the message of sport for good.</span>
+    <div class="translation-inline">国际奥林匹克委员会（IOC）青年领袖项目赋予有才能的年轻人，让他们能够通过体育在自己的社区中产生积极影响。每两年选拔25位青年领袖，服务四年。他们推广奥林匹克价值观，传播体育向善的理念。</div>
+  </div>
+
+  <!-- ── Transition ── -->
+  <div class="paragraph" id="para-2">
+    <span class="sentence" data-idx="3">To be an IOC Young Leader, you need to first complete the <span class="tip" data-tip="4-Week Learning Sprint|四周学习冲刺｜sprint = 短跑冲刺（sprint = 全力跑，这里比喻密集的短期学习）。4-Week Learning Sprint = 一个为期四周的密集在线学习项目，是申请的第一步｜课文括号里有中文注释：冲刺。near: intensive training course">4-Week Learning Sprint</span>.</span>
+    <div class="translation-inline">要成为IOC青年领袖，你首先需要完成"四周学习冲刺"项目。</div>
+  </div>
+
+  <!-- ── Section: 4-Week Learning Sprint ── -->
+  <div class="passage-subtitle">4-Week Learning Sprint</div>
+
+  <div class="paragraph" id="para-3">
+    <span class="sentence complex" data-idx="4">The 4-Week Learning Sprint, <span class="tip" data-tip="which will take place during November 2023|将于2023年11月举行（非限制性定语从句）｜which 引导非限制性定语从句，对主语补充说明。take place = 举行，发生（= happen, occur，但 take place 多用于有计划安排的事件）。during November 2023 = 在2023年11月期间｜搭配：the event takes place next Friday 活动下周五举行" data-level="选必">which will take place during November 2023</span>, is a <span class="tip" data-tip="virtual learning programme|虚拟学习项目，线上学习项目｜virtual = 虚拟的，通过网络的（virtual reality = 虚拟现实，VR）。virtual learning programme = 通过网络/线上进行的学习项目，不是面对面的｜= online learning programme. 反义：in-person / face-to-face（面对面的）" data-level="选必">virtual learning programme</span>.</span>
+    <div class="analysis" id="analysis-4">
+      <p><b>句子结构：</b>主干是 <em>The 4-Week Learning Sprint is a virtual learning programme</em>（四周学习冲刺是一个线上学习项目）。</p>
+      <p><b>which 非限制性定语从句：</b><em>which will take place during November 2023</em> 是对主语的补充说明（2023年11月举行）。逗号 + which = 非限制性，不影响主句理解，可以先跳过。</p>
+      <p><b>与21题的关系：</b>21题问参加Sprint会做什么 → 答案 B（attend a virtual learning programme）就来自这句话。</p>
+    </div>
+    <span class="sentence" data-idx="5">The sessions can be <span class="tip" data-tip="attended live|现场参加（实时参与）｜attend = 参加、出席（attend a class = 上课）。live = 现场直播的、实时的（不是录播）。attended live = 实时在线参加（直播）。对比：watched back = 看回放｜= join in real time. 搭配：live broadcast 直播，live performance 现场表演" data-level="选必">attended live</span> or watched back after they are made available on the IOC channel.</span>
+    <span class="sentence" data-idx="6">Each week, participants will be asked to complete a <span class="tip" data-tip="topic-specific reflection task|针对特定主题的反思任务｜topic-specific = 针对某个特定话题的（topic = 主题，specific = 具体的/特定的）。reflection = 反思（reflect = 想一想，回顾）。reflection task = 让参与者思考、总结所学的作业。每周一个这样的任务｜near: a task on a specific topic. 搭配：self-reflection 自我反思" data-level="拓展">topic-specific reflection task</span>.</span>
+    <div class="translation-inline">四周学习冲刺将于2023年11月举行，是一个线上学习项目。课程可以实时参加，或在IOC频道发布后观看回放。每周，参与者将被要求完成一项针对特定主题的反思任务。</div>
+    <div class="sb-block">
+      <div class="sb-title">长难句拆解</div>
+      <div class="sb-sent">
+        <span class="sb-chip sb-core-chip">主语</span><span class="sb-core">The 4-Week Learning Sprint,</span>
+        <span class="sb-chip sb-ins-chip">补充信息 · 先跳过</span><span class="sb-ins">which will take place during November 2023,</span>
+        <span class="sb-chip sb-core-chip">谓语</span><span class="sb-core">is a virtual learning programme.</span>
+      </div>
+      <div class="sb-steps">
+        <div class="sb-step"><span class="sb-step-n">1</span><div>主干：<em>The 4-Week Learning Sprint is a virtual learning programme</em><span class="arrow">→</span>这个冲刺学习是线上项目</div></div>
+        <div class="sb-step"><span class="sb-step-n">2</span><div>which 从句补充：<em>will take place during November 2023</em><span class="arrow">→</span>在2023年11月举行</div></div>
+        <div class="sb-step"><span class="sb-step-n">3</span><div>21题：参与者会做什么？答案就是 attend a virtual learning programme（参加线上学习项目）</div></div>
+      </div>
+      <div class="sb-tip">💡 非限制性定语从句（逗号+which）补充信息，不影响主句；限制性定语从句（无逗号+which）限定范围，不能省略。</div>
+    </div>
+  </div>
+
+  <div class="paragraph" id="para-4">
+    <span class="sentence" data-idx="7">The 4-Week Learning Sprint is open to anyone, with the <span class="tip" data-tip="target audience|目标受众，目标群体｜target = 目标（靶子）。audience = 受众，观众（文中指面向的群体）。target audience = 这个项目主要针对的年龄群体（20到28岁）｜= intended audience, target group. 搭配：target audience aged 20-28 目标受众年龄在20-28岁" data-level="拓展">target audience</span> aged between 20 and 28.</span>
+    <div class="translation-inline">四周学习冲刺向所有人开放，目标受众年龄在20到28岁之间。</div>
+  </div>
+
+  <div class="paragraph" id="para-5">
+    <span class="sentence complex" data-idx="8">After successfully completing the 4-Week Learning Sprint, you will need to <span class="tip" data-tip="submit|提交（文件/申请/计划）｜submit = 把（文件、计划等）正式交出去（sub- = 在下面，mit = 发送 → 把东西"送到"审核方手里）。submit a plan = 提交一份计划。这是申请成为Young Leader的关键步骤｜搭配：submit an application 提交申请，submit a report 提交报告，submit to 服从/顺从" data-level="选必">submit</span> a plan for a <span class="tip" data-tip="sport-based project|以体育为基础的项目｜sport-based = 以体育为基础的，以运动为核心的（base = 基础，sport-based = 以体育为根基）。sport-based project = 一个围绕体育/运动开展的社区项目｜= a project centred on sport" data-level="拓展">sport-based project</span>, which you will work on if selected as an IOC Young Leader.</span>
+    <div class="analysis" id="analysis-8">
+      <p><b>句子结构：</b>状语从句 + 主句 + 定语从句。先看主干：<em>you will need to submit a plan for a sport-based project</em>（你需要提交一份运动项目计划）。</p>
+      <p><b>after 状语从句：</b><em>After successfully completing the Sprint</em> = 在成功完成冲刺学习之后，这是时间顺序。</p>
+      <p><b>which 定语从句：</b><em>which you will work on if selected as an IOC Young Leader</em> = 如果你被选为Young Leader，你将要去实施的那个计划。if selected = if you are selected（省略了you are）。</p>
+      <p><b>与22题的关系：</b>如果被选为Young Leader，你要做什么？→ work on a sport-based project（做体育项目）→ 答案 C。</p>
+    </div>
+    <div class="translation-inline">在成功完成四周学习冲刺之后，你需要提交一份体育项目计划，如果你被选为IOC青年领袖，你将付诸实施。</div>
+    <div class="sb-block">
+      <div class="sb-title">长难句拆解</div>
+      <div class="sb-sent">
+        <span class="sb-chip sb-rest-chip">时间</span><span class="sb-rest">After successfully completing the 4-Week Learning Sprint,</span>
+        <span class="sb-chip sb-core-chip">你需要</span><span class="sb-core">you will need to submit a plan for a sport-based project,</span>
+        <span class="sb-chip sb-ins-chip">补充 · 先跳过</span><span class="sb-ins">which you will work on if selected as an IOC Young Leader.</span>
+      </div>
+      <div class="sb-steps">
+        <div class="sb-step"><span class="sb-step-n">1</span><div>主干：<em>you will need to submit a plan for a sport-based project</em><span class="arrow">→</span>你需要提交一份体育项目计划</div></div>
+        <div class="sb-step"><span class="sb-step-n">2</span><div>after 状语：先完成学习冲刺，再提交计划（时间顺序）</div></div>
+        <div class="sb-step"><span class="sb-step-n">3</span><div>which 从句：<em>if selected</em> = if you are selected（if 状语从句中省略主语和be动词）→ 被选上之后要去实施这个项目</div></div>
+      </div>
+      <div class="sb-tip">💡 22题答案 C：if selected as an IOC Young Leader, you will work on a sport-based project（做体育项目）。</div>
+    </div>
+  </div>
+
+  <!-- ── Section: Requirements ── -->
+  <div class="passage-subtitle">Requirements for the Applicants</div>
+
+  <div class="paragraph" id="para-6" style="text-indent:0;">
+    <ul class="req-list">
+      <li><span class="sentence" data-idx="9">You have successfully completed the 4-Week Learning Sprint.</span></li>
+      <li><span class="sentence" data-idx="10">You have completed your high school studies.</span></li>
+      <li><span class="sentence" data-idx="11">You have at least one year of <span class="tip" data-tip="work experience|工作经验｜work experience = 在正式工作中积累的经验，区别于学校学习。at least one year of work experience = 至少一年工作经验（23题答案 B 的原文依据）｜搭配：gain work experience 积累工作经验，relevant work experience 相关工作经验" data-level="选必">work experience</span>.</span></li>
+      <li><span class="sentence" data-idx="12">You have strong <span class="tip" data-tip="public speaking skills|公开演讲能力｜public speaking = 在公众面前发表演讲（public = 公开的，speaking = 说话/演讲）。public speaking skills = 能在众人面前清晰表达的能力，很多领导力项目都要求这一点｜near: presentation skills 演讲/表达能力。搭配：improve one's public speaking skills 提升公开演讲能力" data-level="选必">public speaking skills</span>.</span></li>
+      <li><span class="sentence" data-idx="13">You are <span class="tip" data-tip="self-motivated|有自我驱动力的，不需要他人督促的｜self- = 自己（self-study 自学，self-motivated 自我激励）。motivated = 有动力的（motive = 动机）。self-motivated = 不需要别人督促，自己有内在动力去做事｜= driven, proactive. 反义：passive（被动的）. 搭配：highly self-motivated 有很强自我驱动力的" data-level="选必">self-motivated</span> and <span class="tip" data-tip="committed|有承诺的，坚定付出的｜commit = 承诺、全力投入（commit to sth = 对某事全力以赴）。committed = 承诺要做并且切实投入的。You are committed = 你是认真负责、全力投入的人｜搭配：committed to a cause 为某项事业全力以赴，highly committed 非常敬业" data-level="选必">committed</span>.</span></li>
+      <li><span class="sentence" data-idx="14">You are <span class="tip" data-tip="passionate about|对...充满热情｜passionate = 充满激情的（passion = 激情 + -ate = 形容词后缀）。passionate about sth = 对某事热情高涨、非常热衷。passionate about creating positive change = 热衷于在社区中创造积极改变｜高频！写作：I am passionate about music / science. 我对音乐/科学充满热情。= enthusiastic about, keen on" data-level="选必">passionate about</span> creating positive change in your community.</span></li>
+      <li><span class="sentence" data-idx="15">You are open to being <span class="tip" data-tip="coached and advised|被辅导和建议｜coach = 辅导（coach 是教练，这里作动词：给予专业指导）。advise = 建议，advise sb = 给某人提出建议。coached and advised by experts and peers = 乐意接受专家和同伴的辅导和建议（同伴 = peers）｜搭配：be open to feedback 乐于接受反馈，be open to new ideas 对新想法持开放态度">coached and advised</span> by experts and peers.</span></li>
+      <li><span class="sentence" data-idx="16">You are able to work with people from different <span class="tip" data-tip="backgrounds|背景，经历｜background = 背景（back = 后面，ground = 地基）。from different backgrounds = 来自不同背景/经历的（如不同国家、文化、工作经历）。这是领导力的重要素质：能与各种各样的人合作｜搭配：diverse backgrounds 多元背景，educational background 教育背景，cultural background 文化背景" data-level="选必">backgrounds</span>.</span></li>
+    </ul>
+    <div class="translation-inline">申请人要求：· 已完成四周学习冲刺；· 已完成高中学业；· 有至少一年工作经验；· 有较强的公开演讲能力；· 有自我驱动力并坚定负责；· 热衷于在社区中创造积极改变；· 乐于接受专家和同伴的辅导与建议；· 能与来自不同背景的人合作。</div>
+  </div>
+
+</div><!-- /passage -->
+
+<!-- ══════ Vocabulary ══════ -->
+<div class="panel" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')">
+    <span>生词与短语（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="vocab-list">
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('empower')">empower</span>
+          <span class="vocab-meaning">赋予能力，使有能力做某事</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>em-（使…）+ power（力量/能力）= 赋予某人能力或权力。高考写作高频词。</div>
+          <div class="vd-example">The programme <em>empowers</em> talents to make a positive difference. （课文）</div>
+          <div class="vd-example">作文：Education <em>empowers</em> us to achieve our dreams. 教育赋予我们实现梦想的能力。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('make a positive difference')">make a positive difference</span>
+          <span class="vocab-meaning">产生积极影响，带来正面改变</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>make a difference = 起作用，产生影响。make a positive difference = 带来积极的改变。高考作文高频表达。</div>
+          <div class="vd-example">empowers talents to <em>make a positive difference</em> in their communities. （课文）</div>
+          <div class="vd-example">作文：Volunteering can <em>make a positive difference</em> to society. 志愿服务能为社会带来积极影响。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('promote')">promote</span>
+          <span class="vocab-meaning">推广，宣传（也有"晋升"之意）</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>pro-（向前）+ mote（移动）= 推进，推广。promote values = 传播/推广价值观。也可以是"晋升"，看语境。</div>
+          <div class="vd-example">They <em>promote</em> the Olympic values. （课文）</div>
+          <div class="vd-example"><em>promote</em> cooperation 促进合作；get <em>promoted</em> 被晋升</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('virtual')">virtual</span>
+          <span class="vocab-meaning">虚拟的，线上的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>virtual = 通过网络/电脑模拟的，非现实的。virtual learning = 线上学习。virtual reality（VR）= 虚拟现实。</div>
+          <div class="vd-example">is a <em>virtual</em> learning programme. （课文）</div>
+          <div class="vd-example">a <em>virtual</em> meeting 线上会议；<em>virtual</em> reality 虚拟现实</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('reflection')">reflection</span>
+          <span class="vocab-meaning">反思，思考</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>reflect = 反射；也有"深思"之意。reflection = 反思，对自己行为或学习的思考总结。</div>
+          <div class="vd-example">complete a topic-specific <em>reflection</em> task. （课文）</div>
+          <div class="vd-example">self-<em>reflection</em> 自我反思；on <em>reflection</em> 经过深思</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('submit')">submit</span>
+          <span class="vocab-meaning">提交（申请/文件/计划）</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>sub-（在下面/向下）+ mit（发送）= 把文件"递交"上去。比 hand in 更正式。</div>
+          <div class="vd-example">you will need to <em>submit</em> a plan for a sport-based project. （课文）</div>
+          <div class="vd-example"><em>submit</em> an application 提交申请；<em>submit</em> a report 提交报告</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('self-motivated')">self-motivated</span>
+          <span class="vocab-meaning">有自我驱动力的，自律的</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>self-（自己）+ motivated（有动力的）= 不需要别人推动，自己有内在驱动力。</div>
+          <div class="vd-example">You are <em>self-motivated</em> and committed. （课文）</div>
+          <div class="vd-example">作文：Being <em>self-motivated</em> is key to success. 自我驱动是成功的关键。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('passionate about')">passionate about</span>
+          <span class="vocab-meaning">对...充满热情</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>passion（激情）→ passionate（充满激情的）→ passionate about sth（对某事热情高涨）。高考写作必背。</div>
+          <div class="vd-example">You are <em>passionate about</em> creating positive change. （课文）</div>
+          <div class="vd-example">作文：I am <em>passionate about</em> environmental protection. 我热爱环境保护事业。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('committed')">committed</span>
+          <span class="vocab-meaning">有承诺的，坚定投入的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>commit（承诺/全力投入）→ committed（切实承诺并投入的）。committed to a goal = 坚定地为目标努力。</div>
+          <div class="vd-example">You are self-motivated and <em>committed</em>. （课文）</div>
+          <div class="vd-example"><em>committed</em> to improving 致力于改进；a <em>committed</em> teacher 一位尽职的老师</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('backgrounds')">backgrounds</span>
+          <span class="vocab-meaning">背景，经历（来自不同背景）</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>background = 背景（成长环境、教育、文化）。from different backgrounds = 来自不同背景的人，可以是不同国家、文化、职业等。</div>
+          <div class="vd-example">work with people from different <em>backgrounds</em>. （课文）</div>
+          <div class="vd-example">diverse <em>backgrounds</em> 多元背景；cultural <em>background</em> 文化背景</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Questions ══════ -->
+<div class="panel" id="questionsPanel">
+  <div class="panel-header" onclick="togglePanel('questionsPanel')">
+    <span>题目解析（3题，21—23）</span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+
+    <!-- Q21 -->
+    <div class="question-item" data-answer="B">
+      <div class="question-stem">21. In the 4-Week Learning Sprint, participants will ______.</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. create change in their community</div>
+        <div class="question-option" data-key="B">B. attend a virtual learning programme</div>
+        <div class="question-option" data-key="C">C. meet people from different backgrounds</div>
+        <div class="question-option" data-key="D">D. promote the IOC Young Leaders project</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：B</div>
+        <div class="locate" data-goto="4" onclick="gotoSentence(4)">"The 4-Week Learning Sprint...is a virtual learning programme."</div>
+        <div class="locate" data-goto="5" onclick="gotoSentence(5)" style="margin-top:4px">"The sessions can be attended live or watched back..."</div>
+        <p>细节题，直接定位到"4-Week Learning Sprint"部分。第一句说这是一个 virtual learning programme（线上学习项目），第二句说可以 attended live（实时参加）。选 <b>B</b>（attend a virtual learning programme = 参加线上学习项目）。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— create change in their community：这是整个Young Leaders项目的目标（P1：make a positive difference in their communities），不是Sprint期间做的事。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ B</span><span class="opt-why">— attend a virtual learning programme：与课文"is a virtual learning programme / can be attended live"直接对应。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ C</span><span class="opt-why">— meet people from different backgrounds：这是申请人的要求（able to work with people from different backgrounds），不是Sprint期间的活动。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— promote the IOC Young Leaders project：Sprint是申请的前置步骤，不是用来推广Young Leaders项目的。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q22 -->
+    <div class="question-item" data-answer="C">
+      <div class="question-stem">22. If selected as an IOC Young Leader, one will need to ______.</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. complete a reflection task each week</div>
+        <div class="question-option" data-key="B">B. watch sports on the IOC channel</div>
+        <div class="question-option" data-key="C">C. work on a sport-based project</div>
+        <div class="question-option" data-key="D">D. coach and advise their peers</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：C</div>
+        <div class="locate" data-goto="8" onclick="gotoSentence(8)">"...submit a plan for a sport-based project, which you will work on if selected as an IOC Young Leader."</div>
+        <p>细节题，关键词 "if selected as an IOC Young Leader"。课文第8句明确说：提交一份体育项目计划，如果被选为Young Leader，你将"work on"（实施）它。选 <b>C</b>（work on a sport-based project）。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— complete a reflection task each week：这是Sprint期间每周要做的，不是选上后的任务。时间段不同。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ B</span><span class="opt-why">— watch sports on the IOC channel：Sprint可以在IOC频道观看回放，但这不是Young Leader的职责。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ C</span><span class="opt-why">— work on a sport-based project：直接来自课文"which you will work on if selected as an IOC Young Leader"。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— coach and advise their peers：申请人要求是"open to being coached and advised by experts and peers"，是接受辅导，不是去辅导别人。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q23 -->
+    <div class="question-item" data-answer="B">
+      <div class="question-stem">23. Which is a requirement for the applicants?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. Spreading the message of sport for good.</div>
+        <div class="question-option" data-key="B">B. Having at least one-year work experience.</div>
+        <div class="question-option" data-key="C">C. Showing great passion for project planning.</div>
+        <div class="question-option" data-key="D">D. Committing themselves to becoming an expert.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：B</div>
+        <div class="locate" data-goto="11" onclick="gotoSentence(11)">"You have at least one year of work experience."</div>
+        <p>细节题，直接对照"Requirements for the Applicants"列表。选项 B 和课文完全对应："You have at least one year of work experience" = "Having at least one-year work experience"。选 <b>B</b>。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— Spreading the message of sport for good：这是已入选的Young Leaders的职责（P1："spreading the message of sport for good"），不是申请人要求。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ B</span><span class="opt-why">— Having at least one-year work experience：与课文要求列表第三条完全对应。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ C</span><span class="opt-why">— Showing great passion for project planning：课文要求是"passionate about creating positive change in your community"（热爱在社区创造改变），不是"project planning（项目规划）"，偷换了概念。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— Committing themselves to becoming an expert：课文要求是"open to being coached and advised by experts"（乐于接受专家指导），不是自己要"成为专家"。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-score" id="quizScore"></div>
+  </div>
+</div>
+
+<!-- ══════ Review ══════ -->
+<div class="panel" id="reviewPanel">
+  <div class="panel-header" onclick="togglePanel('reviewPanel')">阅读原文<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-family:Georgia,serif;font-size:16px;line-height:2;">
+    <p style="text-indent:2em">The International Olympic Committee (IOC) Young Leaders programme empowers talents to make a positive difference in their communities through sport. Twenty-five Young Leaders are being selected every two years for a four-year period. They promote the Olympic values, spreading the message of sport for good.</p>
+    <p style="text-indent:2em">To be an IOC Young Leader, you need to first complete the 4-Week Learning Sprint.</p>
+    <p style="font-weight:700;margin:12px 0 4px 0;">4-Week Learning Sprint</p>
+    <p style="text-indent:2em">The 4-Week Learning Sprint, which will take place during November 2023, is a virtual learning programme. The sessions can be attended live or watched back after they are made available on the IOC channel. Each week, participants will be asked to complete a topic-specific reflection task.</p>
+    <p style="text-indent:2em">The 4-Week Learning Sprint is open to anyone, with the target audience aged between 20 and 28.</p>
+    <p style="text-indent:2em">After successfully completing the 4-Week Learning Sprint, you will need to submit a plan for a sport-based project, which you will work on if selected as an IOC Young Leader.</p>
+    <p style="font-weight:700;margin:12px 0 4px 0;">Requirements for the Applicants</p>
+    <ul style="margin-left:1.5em;line-height:2;">
+      <li>You have successfully completed the 4-Week Learning Sprint.</li>
+      <li>You have completed your high school studies.</li>
+      <li>You have at least one year of work experience.</li>
+      <li>You have strong public speaking skills.</li>
+      <li>You are self-motivated and committed.</li>
+      <li>You are passionate about creating positive change in your community.</li>
+      <li>You are open to being coached and advised by experts and peers.</li>
+      <li>You are able to work with people from different backgrounds.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════ 阅读技巧 ══════ -->
+<div class="panel" id="tipPanel">
+  <div class="panel-header" onclick="togglePanel('tipPanel')">阅读技巧<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-size:15px;line-height:1.8;">
+    <p><b>告示/通知类文章读法（A篇是此类文章的典型）：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li><b>第一步：看标题和分段标题。</b>本文有两个小标题："4-Week Learning Sprint"和"Requirements for the Applicants"。先扫描这些标题，知道文章分几部分、每部分讲什么。</li>
+      <li><b>第二步：看题目，带着问题读。</b>21题问"Sprint期间做什么"，直接定位到Sprint部分；22题问"选上后做什么"；23题问"申请要求"。</li>
+      <li><b>第三步：细节题要找原文依据，不能凭感觉。</b>答案一定能在文中找到对应的原句，不然就是干扰项。</li>
+    </ul>
+    <p style="margin-top:12px"><b>常见陷阱（本篇三道题都有）：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li><b>时间段混淆：</b>Sprint期间 ≠ 选上后，要注意区分不同阶段各自的要求。</li>
+      <li><b>偷换概念：</b>C（project planning）vs 课文（creating positive change in community）——看起来相似，但意思不同。</li>
+      <li><b>主体混淆：</b>D（committing to becoming an expert）vs 课文（open to being coached by experts）——变成了相反的方向。</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════ 作文拓展 ══════ -->
+<div class="panel" id="writingPanel">
+  <div class="panel-header" onclick="togglePanel('writingPanel')">作文拓展：好句式 &amp; 好短语<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-size:15px;line-height:1.9;">
+    <p><b>可以直接用进作文的高频表达：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li><em>empower sb to do sth</em>（赋予某人做某事的能力）—— Technology <em>empowers</em> us to learn more efficiently.</li>
+      <li><em>make a positive difference to / in...</em>（产生积极影响）—— Reading widely can <em>make a positive difference</em> to your writing.</li>
+      <li><em>passionate about</em>（对...充满热情）—— I am <em>passionate about</em> helping others.</li>
+      <li><em>committed to</em>（致力于...）—— We should be <em>committed to</em> protecting the environment.</li>
+      <li><em>promote</em>（推广）—— We should <em>promote</em> healthy lifestyles among young people.</li>
+    </ul>
+    <p style="margin-top:10px"><b>告示文体写作结构（如果考作文也是通知类）：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li>开头：介绍项目目的（empower / aim to / be designed to）</li>
+      <li>中间：分条说明要求/流程（Requirements: / Steps: / You should...）</li>
+      <li>结尾：欢迎参加（We welcome all applicants who... / We look forward to...）</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div id="playbar">
+  <button onclick="pbPrev()" title="上一句">⏮</button>
+  <button id="pb-play" onclick="pbToggle()">▶</button>
+  <button onclick="pbNext()" title="下一句">⏭</button>
+  <span id="pb-counter">— / 17</span>
+  <select id="pb-speed" onchange="pbSetSpeed(this.value)">
+    <option value="0.8">0.8×</option>
+    <option value="1" selected>1.0×</option>
+    <option value="1.2">1.2×</option>
+  </select>
+</div>
+
+<script>
+const THEMES=['yellow','green'];
+const THEME_LABELS={yellow:'📄 书本黄',green:'🌿 护眼绿'};
+let themeIdx=parseInt(localStorage.getItem('theme')||'0');
+function applyTheme(){document.body.classList.remove('theme-yellow','theme-green');const t=THEMES[themeIdx%THEMES.length];document.body.classList.add('theme-'+t);const btn=document.getElementById('theme-btn');if(btn)btn.textContent=THEME_LABELS[t];}
+function cycleTheme(){themeIdx=(themeIdx+1)%THEMES.length;localStorage.setItem('theme',themeIdx);applyTheme();}
+applyTheme();
+
+const sentences=[
+  "The International Olympic Committee IOC Young Leaders programme empowers talents to make a positive difference in their communities through sport.",
+  "Twenty-five Young Leaders are being selected every two years for a four-year period.",
+  "They promote the Olympic values, spreading the message of sport for good.",
+  "To be an IOC Young Leader, you need to first complete the 4-Week Learning Sprint.",
+  "The 4-Week Learning Sprint, which will take place during November 2023, is a virtual learning programme.",
+  "The sessions can be attended live or watched back after they are made available on the IOC channel.",
+  "Each week, participants will be asked to complete a topic-specific reflection task.",
+  "The 4-Week Learning Sprint is open to anyone, with the target audience aged between 20 and 28.",
+  "After successfully completing the 4-Week Learning Sprint, you will need to submit a plan for a sport-based project, which you will work on if selected as an IOC Young Leader.",
+  "You have successfully completed the 4-Week Learning Sprint.",
+  "You have completed your high school studies.",
+  "You have at least one year of work experience.",
+  "You have strong public speaking skills.",
+  "You are self-motivated and committed.",
+  "You are passionate about creating positive change in your community.",
+  "You are open to being coached and advised by experts and peers.",
+  "You are able to work with people from different backgrounds."
+];
+
+let activeTooltip=null;
+const ZH_AUDIO={};
+let zhPlayer=null;
+
+function phraseToSlug(phrase){return phrase.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+function playZhAudio(slug,btn){if(zhPlayer){zhPlayer.pause();zhPlayer=null;btn.textContent='🔊 听讲解';return;}const src=ZH_AUDIO[slug];if(!src)return;zhPlayer=new Audio(src);btn.textContent='⏹ 停止';zhPlayer.onended=()=>{btn.textContent='🔊 听讲解';zhPlayer=null;};zhPlayer.play();}
+
+function showTooltip(tipEl){
+  hideTooltip();
+  const raw=tipEl.getAttribute('data-tip');const[phrase,explain]=raw.split('|');const parts=explain.split('｜');
+  const slug=phraseToSlug(phrase);const hasAudio=ZH_AUDIO[slug];
+  const tooltip=document.createElement('div');tooltip.className='tooltip';
+  tooltip.innerHTML='<div class="tip-scroll">'+
+    `<div class="tip-phrase">${phrase}${tipEl.dataset.level?`<span class="level-badge badge-${tipEl.dataset.level}">${tipEl.dataset.level}</span>`:''}<span class="tip-speak" onclick="speakWord('${phrase.replace(/'/g,"\\'")}')">&#9654;</span></div>`+
+    parts.map(p=>`<div>${p.trim()}</div>`).join('')+(hasAudio?`<button class="tip-zh-play" onclick="playZhAudio('${slug}',this)">🔊 听讲解</button>`:'')+
+    '</div>';
+  document.body.appendChild(tooltip);activeTooltip=tooltip;tooltip._tip=tipEl;positionTooltip();if(!activeTooltip)return;speakWord(phrase);
+}
+
+let _safeProbe=null;
+function tooltipFrame(){
+  if(!_safeProbe){_safeProbe=document.createElement('div');_safeProbe.style.cssText='position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)';document.body.appendChild(_safeProbe);}
+  const cs=getComputedStyle(_safeProbe);const M=8;const vw=document.documentElement.clientWidth,vh=window.innerHeight;
+  let minY=M+(parseFloat(cs.paddingTop)||0);let maxY=vh-M-(parseFloat(cs.paddingBottom)||0);
+  const hdr=document.querySelector('.header');if(hdr){const b=hdr.getBoundingClientRect().bottom;if(b>0)minY=Math.max(minY,b+4);}
+  const pb=document.getElementById('playbar');if(pb&&getComputedStyle(pb).display!=='none'){maxY=Math.min(maxY,pb.getBoundingClientRect().top-4);}
+  return{minX:M+(parseFloat(cs.paddingLeft)||0),maxX:vw-M-(parseFloat(cs.paddingRight)||0),minY,maxY};
+}
+function positionTooltip(){
+  const tooltip=activeTooltip;if(!tooltip)return;const tipEl=tooltip._tip;const rects=tipEl.getClientRects();const f=tooltipFrame();
+  if(!rects.length){hideTooltip();return;}const first=rects[0],last=rects[rects.length-1];
+  if(last.bottom<f.minY-4||first.top>f.maxY+4){hideTooltip();return;}
+  const GAP=10,PAD=16;const body=tooltip.firstElementChild;
+  tooltip.style.maxWidth=Math.max(120,Math.min(520,f.maxX-f.minX))+'px';body.style.maxHeight='none';tooltip.style.left='0px';tooltip.style.top='0px';
+  const tw=tooltip.offsetWidth,naturalH=tooltip.offsetHeight;const spaceAbove=first.top-f.minY-GAP;const spaceBelow=f.maxY-last.bottom-GAP;
+  let below;if(naturalH<=spaceAbove)below=false;else if(naturalH<=spaceBelow)below=true;else below=spaceBelow>spaceAbove;
+  const avail=Math.max(60,below?spaceBelow:spaceAbove);if(naturalH>avail)body.style.maxHeight=Math.max(30,avail-PAD)+'px';
+  const r=below?last:first;const cx=r.left+r.width/2;const left=Math.max(f.minX,Math.min(cx-tw/2,f.maxX-tw));
+  let top=below?last.bottom+GAP:first.top-GAP-tooltip.offsetHeight;top=Math.max(f.minY,Math.min(top,f.maxY-tooltip.offsetHeight));
+  tooltip.classList.toggle('below',below);tooltip.style.setProperty('--arrow-left',Math.max(14,Math.min(cx-left,tw-14))+'px');tooltip.style.left=left+'px';tooltip.style.top=top+'px';
+}
+(function(){let raf=0;const re=()=>{if(!activeTooltip||raf)return;raf=requestAnimationFrame(()=>{raf=0;positionTooltip();});};
+window.addEventListener('scroll',re,{passive:true});window.addEventListener('resize',re);window.addEventListener('orientationchange',re);
+if(window.visualViewport){visualViewport.addEventListener('resize',re);visualViewport.addEventListener('scroll',re);}})();
+
+function hideTooltip(){if(zhPlayer){zhPlayer.pause();zhPlayer=null;}if(activeTooltip){activeTooltip.remove();activeTooltip=null;}}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.sentence.highlighted')&&!e.target.closest('.locate')){document.querySelectorAll('.sentence.highlighted').forEach(s=>s.classList.remove('highlighted'));}
+  const tipEl=e.target.closest('.tip');
+  if(tipEl){e.stopPropagation();if(activeTooltip&&activeTooltip._source===tipEl){hideTooltip();}else{showTooltip(tipEl);if(activeTooltip)activeTooltip._source=tipEl;}return;}
+  if(e.target.closest('.tooltip'))return;hideTooltip();
+});
+
+let pbCurrent=null,pbPlaying=false,pbSpeed=1,enPlayer=null;
+function pbStop(){if(enPlayer){enPlayer.pause();enPlayer=null;}pbPlaying=false;}
+function highlightSentence(idx){
+  document.querySelectorAll('.sentence').forEach(el=>el.classList.remove('playing'));
+  if(idx!==null&&idx>=0&&idx<sentences.length){const el=document.querySelector(`.sentence[data-idx="${idx}"]`);if(el){el.classList.add('playing');el.scrollIntoView({behavior:'smooth',block:'center'});}}
+}
+function pbUpdateUI(){document.getElementById('pb-play').textContent=pbPlaying?'⏸':'▶';document.getElementById('pb-counter').textContent=pbCurrent!==null?`${pbCurrent+1} / ${sentences.length}`:`— / ${sentences.length}`;}
+function pbPlayCurrent(){
+  pbStop();if(pbCurrent===null){pbUpdateUI();return;}
+  const src=`audio/2023北京卷-A/en-s${String(pbCurrent).padStart(2,'0')}.mp3`;
+  enPlayer=new Audio(src);enPlayer.playbackRate=pbSpeed;pbPlaying=true;highlightSentence(pbCurrent);pbUpdateUI();
+  enPlayer.onerror=()=>{const utter=new SpeechSynthesisUtterance(sentences[pbCurrent]);const voices=speechSynthesis.getVoices();utter.voice=voices.find(v=>v.lang==='en-GB')||voices.find(v=>v.lang.startsWith('en'))||null;utter.rate=pbSpeed*0.85;utter.onend=()=>{if(pbPlaying){if(pbCurrent<sentences.length-1){pbCurrent++;pbPlayCurrent();}else{pbPlaying=false;highlightSentence(null);pbUpdateUI();}}};speechSynthesis.speak(utter);enPlayer=null;};
+  enPlayer.onended=()=>{if(pbPlaying){if(pbCurrent<sentences.length-1){pbCurrent++;pbPlayCurrent();}else{pbPlaying=false;highlightSentence(null);pbUpdateUI();}}};enPlayer.play();
+}
+function pbToggle(){if(pbCurrent===null){pbCurrent=0;pbPlayCurrent();return;}if(pbPlaying){pbStop();highlightSentence(pbCurrent);pbUpdateUI();}else{pbPlayCurrent();}}
+function pbPrev(){if(pbCurrent===null)pbCurrent=0;else if(pbCurrent>0)pbCurrent--;pbPlayCurrent();}
+function pbNext(){if(pbCurrent===null)pbCurrent=0;else if(pbCurrent<sentences.length-1)pbCurrent++;pbPlayCurrent();}
+function pbSetSpeed(v){pbSpeed=parseFloat(v);if(enPlayer)enPlayer.playbackRate=pbSpeed;}
+
+document.addEventListener('click',function(e){if(e.target.closest('.tip')||e.target.closest('.tooltip'))return;const sentence=e.target.closest('.sentence.complex');if(sentence)toggleAnalysis(parseInt(sentence.dataset.idx));});
+
+function speakWord(word){
+  if(enPlayer){enPlayer.pause();enPlayer=null;}
+  const slug='en-word-'+word.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const src='audio/2023北京卷-A/'+slug+'.mp3';
+  enPlayer=new Audio(src);
+  enPlayer.onerror=function(){const utter=new SpeechSynthesisUtterance(word);const voices=speechSynthesis.getVoices();utter.voice=voices.find(v=>v.lang==='en-GB')||voices.find(v=>v.lang.startsWith('en'))||voices[0];utter.rate=0.8;speechSynthesis.speak(utter);};
+  enPlayer.play();
+}
+
+const ANALYSIS_AUDIO={};let analysisPlayer=null,analysisBtn=null;
+function playAnalysis(id,btn){if(analysisPlayer){analysisPlayer.pause();analysisPlayer=null;if(analysisBtn){analysisBtn.textContent='🔊 听讲解';analysisBtn.classList.remove('playing');}if(analysisBtn===btn){analysisBtn=null;return;}}const src=ANALYSIS_AUDIO[id];if(!src)return;analysisPlayer=new Audio(src);analysisBtn=btn;btn.textContent='⏹ 停止';btn.classList.add('playing');analysisPlayer.onended=()=>{btn.textContent='🔊 听讲解';btn.classList.remove('playing');analysisPlayer=null;analysisBtn=null;};analysisPlayer.play();}
+
+function toggleAnalysis(idx){const el=document.getElementById('analysis-'+idx);if(el)el.classList.toggle('open');}
+function togglePanel(id){document.getElementById(id).classList.toggle('open');}
+function setMode(mode){document.body.classList.remove('mode-raw','mode-study','mode-quiz','mode-annotate');if(mode!=='study')document.body.classList.add('mode-'+mode);document.querySelectorAll('.mode-step').forEach(btn=>btn.classList.toggle('active',btn.dataset.mode===mode));hideTooltip();if(mode==='quiz'){pbStop();highlightSentence(null);pbUpdateUI();resetQuiz();}}
+function resetQuiz(){document.querySelectorAll('.question-option').forEach(opt=>opt.classList.remove('selected','correct','wrong'));document.querySelectorAll('.question-item').forEach(q=>q.dataset.answered='');const score=document.getElementById('quizScore');if(score)score.classList.remove('show');}
+document.addEventListener('click',function(e){if(!document.body.classList.contains('mode-quiz'))return;const opt=e.target.closest('.question-option');if(!opt)return;const item=opt.closest('.question-item');if(item.dataset.answered)return;item.dataset.answered='true';const picked=opt.dataset.key;const correct=item.dataset.answer;if(picked===correct){opt.classList.add('correct');}else{opt.classList.add('wrong');item.querySelector(`.question-option[data-key="${correct}"]`).classList.add('correct');}const total=document.querySelectorAll('.question-item[data-answer]').length;const done=document.querySelectorAll('.question-item[data-answered="true"]').length;if(done===total)showQuizScore();});
+function showQuizScore(){const total=document.querySelectorAll('.question-item[data-answer]').length;const wrong=document.querySelectorAll('.question-option.wrong').length;const score=document.getElementById('quizScore');score.textContent=`得分：${total-wrong} / ${total}`;score.classList.add('show');}
+function gotoSentence(idx){const el=document.querySelector(`.sentence[data-idx="${idx}"]`);if(!el)return;setMode('study');document.querySelectorAll('.sentence.highlighted').forEach(s=>s.classList.remove('highlighted'));el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('highlighted');}
+function toggleQuestionAnalysis(btn){const analysis=btn.nextElementSibling;analysis.classList.toggle('open');btn.textContent=analysis.classList.contains('open')?'收起解析':'🔍 查看解析';}
+
+const SRS_PREFIX='srs_beijing_2023_A_';const SRS_INTERVALS=[1,3,7,14,30];
+function srsLoad(word){const raw=localStorage.getItem(SRS_PREFIX+word);return raw?JSON.parse(raw):null;}
+function srsSave(word,knew){const state=srsLoad(word)||{streak:0};if(knew){state.streak=(state.streak||0)+1;state.interval=SRS_INTERVALS[Math.min(state.streak-1,SRS_INTERVALS.length-1)];}else{state.streak=0;state.interval=1;}state.nextReview=Date.now()+state.interval*86400000;localStorage.setItem(SRS_PREFIX+word,JSON.stringify(state));return state;}
+function srsIsDue(state){return!state||Date.now()>=state.nextReview;}
+function srsUpdateCard(card){const state=srsLoad(card.dataset.srsWord);card.classList.remove('srs-due','srs-known');if(!state)return;card.classList.add(srsIsDue(state)?'srs-due':'srs-known');}
+function srsUpdateBadge(){const badge=document.getElementById('srs-badge');if(!badge)return;const cards=document.querySelectorAll('.vocab-card[data-srs-word]');let due=0;cards.forEach(c=>{if(srsIsDue(srsLoad(c.dataset.srsWord)))due++;});if(due===0){badge.textContent='全掌握 ✓';badge.className='srs-badge all-done';}else{badge.textContent=due+'个待复习';badge.className='srs-badge';}}
+function srsClick(word,knew,btn){srsSave(word,knew);const card=btn.closest('.vocab-card');srsUpdateCard(card);srsUpdateBadge();btn.style.opacity='0.4';setTimeout(()=>btn.style.opacity='',600);}
+function srsInit(){document.querySelectorAll('.vocab-card').forEach(card=>{const wordEl=card.querySelector('.vocab-word');if(!wordEl)return;const word=wordEl.textContent.trim();card.dataset.srsWord=word;const btns=document.createElement('div');btns.className='srs-btns';const esc=word.replace(/\\/g,'\\\\').replace(/'/g,"\\'");btns.innerHTML=`<button class="srs-btn srs-btn-know" onclick="srsClick('${esc}',true,this)">认识 ✓</button>`+`<button class="srs-btn srs-btn-forget" onclick="srsClick('${esc}',false,this)">还不会 ✗</button>`;card.querySelector('.vocab-card-head').appendChild(btns);srsUpdateCard(card);});srsUpdateBadge();}
+
+function initAnnotations(){
+  document.querySelectorAll('sup.ann-sup,.para-ann').forEach(el=>el.remove());
+  document.querySelectorAll('.passage .paragraph').forEach(para=>{
+    const seen=new Set();const items=[];let idx=1;
+    para.querySelectorAll('.tip').forEach(el=>{const tip=el.dataset.tip||'';const parts=tip.split('|');if(parts.length<2)return;const phrase=parts[0].trim();if(seen.has(phrase)){const prevIdx=items.findIndex(i=>i.phrase===phrase)+1;const sup=document.createElement('sup');sup.className='ann-sup';sup.textContent=prevIdx;el.after(sup);return;}seen.add(phrase);const sup=document.createElement('sup');sup.className='ann-sup';sup.textContent=idx;el.after(sup);const contentParts=parts[1].split('｜');const cn=contentParts[0].trim();const det=contentParts.slice(1).map(s=>s.replace(/<[^>]+>/g,'').trim()).filter(Boolean);items.push({num:idx,phrase,cn,det,level:el.dataset.level==='超纲'?'超纲':''});idx++;});
+    if(items.length===0)return;const ann=document.createElement('div');ann.className='para-ann';ann.innerHTML=items.map(i=>`<div class="pan-row"><div class="pan-head"><span class="pan-num">${i.num}</span><span class="pan-en">${i.phrase}</span><span class="pan-cn">${i.cn}</span>${i.level?`<span class="pan-lv lv-${i.level}">${i.level}</span>`:''}</div>${i.det.length?`<div class="pan-det">${i.det.map(d=>`<div>${d}</div>`).join('')}</div>`:''}</div>`).join('');
+    const trans=para.querySelector('.translation-inline');if(trans)trans.after(ann);else para.appendChild(ann);
+  });
+}
+
+pbUpdateUI();srsInit();
+document.addEventListener('DOMContentLoaded',initAnnotations);
+</script>
+</body>
+</html>

@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2026北京卷·D篇精读 · Chesterton's Fence</title>
+<style>
+:root {
+  --bg: #fafaf8;
+  --text: #1a1a1a;
+  --text-secondary: #555;
+  --text-muted: #888;
+  --accent: #2563eb;
+  --accent-light: #dbeafe;
+  --complex-bg: #f0f6fc;
+  --border: #e2e2e0;
+  --card-bg: #fff;
+  --hover-bg: #f5f5f4;
+  --shadow: 0 1px 3px rgba(0,0,0,.08);
+  --radius: 6px;
+}
+.theme-yellow {
+  --bg: #f5f0e8;
+  --card-bg: #faf6ee;
+  --border: #ddd5bf;
+  --complex-bg: #ece4d4;
+  --hover-bg: #ede7d8;
+  --accent-light: #fde8b8;
+}
+.theme-green {
+  --bg: #edecea;
+  --card-bg: #f3f2f0;
+  --border: #d6d5d0;
+  --complex-bg: #e5e4e0;
+  --hover-bg: #e8e7e3;
+  --accent-light: #dddcd6;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  padding-bottom: 60px;
+}
+.container { max-width: min(1100px, 88vw); margin: 0 auto; padding: 0 20px; }
+
+/* ── Header ── */
+.header {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header .container { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.header h1 { font-size: 16px; font-weight: 600; flex: 1; min-width: 200px; }
+.header-sub { font-size: 12px; color: var(--accent); font-weight: 500; background: var(--accent-light); padding: 2px 8px; border-radius: 10px; }
+.header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 6px 14px; border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--card-bg); color: var(--text); font-size: 13px;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ── Mode steps ── */
+.mode-steps { display: flex; gap: 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.mode-step {
+  padding: 6px 12px; border: none; background: var(--card-bg); color: var(--text-secondary);
+  font-size: 13px; cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.mode-step + .mode-step { border-left: 1px solid var(--border); }
+.mode-step.active { background: var(--accent); color: #fff; }
+.mode-step:hover:not(.active) { background: var(--accent-light); }
+
+/* ── Passage ── */
+.passage {
+  background: var(--card-bg); border-radius: var(--radius);
+  box-shadow: var(--shadow); margin-top: 20px; padding: 28px 32px;
+}
+.passage-title {
+  text-align: center; font-family: Georgia, "Times New Roman", serif;
+  font-size: 15px; font-weight: 700; letter-spacing: .5px;
+  margin-bottom: 20px; color: var(--text-secondary);
+}
+.passage-subtitle {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px; font-weight: 700; text-align: center;
+  margin-bottom: 16px; color: var(--text);
+}
+.restaurant-name {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700; font-size: 16px;
+  margin: 18px 0 6px 0; color: var(--text);
+}
+.paragraph { margin-bottom: 4px; text-indent: 2em; }
+.sentence {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px; line-height: 1.75;
+  position: relative; transition: background .2s; border-radius: 3px;
+  cursor: pointer;
+}
+.sentence:hover { background: var(--hover-bg); }
+.sentence.playing { background: var(--complex-bg); border-radius: 3px; }
+.sentence.complex { border-bottom: 1.5px dashed #93c5fd; }
+.sentence.complex.playing { background: var(--complex-bg); }
+
+/* ── Phrase tips ── */
+.tip {
+  border-bottom: 1.5px dashed var(--accent);
+  cursor: pointer;
+  position: relative;
+  transition: background .15s;
+}
+.tip:hover { background: var(--accent-light); }
+.tip.tip-flash { outline: 2px solid var(--accent); border-radius: 2px; animation: tipFlash 1.6s ease-out forwards; }
+@keyframes tipFlash { 0%{background:var(--accent);color:#fff;} 40%{background:var(--accent-light);color:inherit;} 100%{background:transparent;} }
+sup.ann-sup {
+  display: none;
+  font-size: 0.6em; color: var(--accent); font-weight: 700;
+  vertical-align: super; line-height: 0; margin-left: 2px;
+  font-family: system-ui, sans-serif; pointer-events: none;
+}
+body.mode-annotate sup.ann-sup { display: inline; }
+
+.para-ann {
+  display: none;
+  margin: 16px 0 28px 0;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 15px; color: #333; text-indent: 0;
+}
+body.mode-annotate .para-ann {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+  gap: 16px 18px;
+  align-items: start;
+}
+.pan-row {
+  background: #fff;
+  border: 1px solid #ece8e0;
+  border-radius: 12px;
+  padding: 16px 20px 18px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+.pan-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pan-num {
+  flex-shrink: 0;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  font-size: 12px; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.pan-en  { font-family: Georgia, serif; font-weight: 700; font-size: 18px; color: #1a1a1a; }
+.pan-cn  { color: var(--accent); font-weight: 600; font-size: 15px; }
+.pan-lv { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 4px; line-height: 1.4; }
+.lv-超纲 { background: #fee2e2; color: #b91c1c; }
+.pan-det { margin: 12px 0 0 32px; color: #666; font-size: 14px; line-height: 1.85; }
+.pan-det div { position: relative; padding-left: 12px; }
+.pan-det div + div { margin-top: 8px; }
+.pan-det div::before { content: ''; position: absolute; left: 0; top: 0.8em; width: 4px; height: 4px; border-radius: 50%; background: #c9c3b8; }
+
+
+body.mode-quiz .para-ann, body.mode-raw .para-ann { display: none !important; }
+body.mode-quiz sup.ann-sup, body.mode-raw sup.ann-sup { display: none !important; }
+
+/* Tooltip bubble */
+.tooltip {
+  position: fixed;
+  z-index: 200;
+  background: var(--text);
+  color: #fff;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 8px 14px;
+  border-radius: 8px;
+  max-width: min(520px, calc(100vw - 16px));
+  width: max-content;
+  box-shadow: 0 4px 20px rgba(0,0,0,.25);
+  pointer-events: auto;
+  animation: tipIn .15s ease-out;
+}
+.tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: var(--arrow-left, 50%);
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid var(--text);
+}
+.tooltip.below::after {
+  bottom: auto; top: -6px;
+  border-top: none;
+  border-bottom: 6px solid var(--text);
+}
+.tooltip .tip-phrase {
+  font-family: Georgia, serif;
+  font-weight: 600;
+  color: #93c5fd;
+  margin-bottom: 2px;
+}
+.tooltip .tip-speak {
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 6px;
+  font-size: 12px;
+  opacity: .7;
+  vertical-align: middle;
+}
+.tooltip .tip-speak:hover { opacity: 1; }
+.level-badge { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 11px; font-weight: 600; margin-left: 6px; vertical-align: middle; font-family: -apple-system, "PingFang SC", sans-serif; }
+.badge-超纲 { background: rgba(239,68,68,.25); color: #fca5a5; }
+.badge-拓展 { background: rgba(251,146,60,.2); color: #fdba74; }
+.badge-选必 { background: rgba(96,165,250,.2); color: #93c5fd; }
+.tooltip .tip-zh-play {
+  display: block;
+  margin-top: 6px;
+  padding: 4px 10px;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 4px;
+  color: #93c5fd;
+  font-size: 12px;
+  cursor: pointer;
+  text-align: center;
+}
+.tooltip .tip-zh-play:hover { background: rgba(255,255,255,.25); }
+@keyframes tipIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Expandable analysis ── */
+.analysis {
+  display: none; margin: 8px 0 12px 0; padding: 12px 16px;
+  background: #f8f9fa; border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 14px; color: var(--text-secondary); line-height: 1.7; text-indent: 0;
+}
+.analysis.open { display: block; }
+.analysis p { margin-bottom: 4px; }
+.analysis b { color: var(--text); font-size: 13px; }
+.analysis-play {
+  float: right; margin-left: 8px;
+  background: none; border: 1px solid var(--border); border-radius: 4px;
+  font-size: 12px; padding: 2px 8px; cursor: pointer; color: var(--accent);
+  transition: all .15s;
+}
+.analysis-play:hover { background: var(--accent-light); border-color: var(--accent); }
+.analysis-play.playing { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ── Translation ── */
+.translation-inline {
+  display: none;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 14px; color: var(--text-muted);
+  margin: 2px 0 6px 0; text-indent: 0;
+}
+body.compare-mode .translation-inline,
+body.mode-annotate .translation-inline { display: block; }
+
+/* ── Panels ── */
+.panel {
+  background: var(--card-bg); border-radius: var(--radius);
+  box-shadow: var(--shadow); margin-top: 16px; overflow: hidden;
+}
+.panel-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px; cursor: pointer; user-select: none;
+  font-weight: 600; font-size: 15px;
+  border-bottom: 1px solid transparent; transition: border-color .2s;
+}
+.panel-header:hover { color: var(--accent); }
+.panel-header .arrow { transition: transform .2s; font-size: 12px; color: var(--text-muted); }
+.panel.open .panel-header { border-bottom-color: var(--border); }
+.panel.open .panel-header .arrow { transform: rotate(180deg); }
+.panel-body { display: none; padding: 16px 24px; }
+.panel.open .panel-body { display: block; }
+
+/* Vocab cards */
+.vocab-card { border-bottom: 1px solid #f0f0f0; padding: 12px 0; }
+.vocab-card:last-child { border-bottom: none; }
+.vocab-card-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 12px; }
+.vocab-word { font-family: Georgia, serif; font-weight: 600; color: var(--accent); cursor: pointer; font-size: 15px; }
+.vocab-word:hover { text-decoration: underline; }
+.vocab-meaning { font-size: 14px; color: var(--text); }
+.vocab-extra { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+.vocab-tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 3px; background: #fef3c7; color: #92400e; vertical-align: middle; }
+.vocab-tag.tag-core { background: #dcfce7; color: #166534; }
+.vocab-tag.tag-exam { background: #dbeafe; color: #1e40af; }
+.vocab-tag.tag-beyond { background: #fef3c7; color: #92400e; }
+.vocab-tag.tag-extend { background: #ffedd5; color: #c2410c; }
+.vocab-detail { display: none; margin-top: 8px; padding: 10px 14px; background: #f8f9fa; border-radius: var(--radius); font-size: 13.5px; line-height: 1.7; }
+.vocab-detail.open { display: block; }
+.vocab-detail .vd-section { margin-bottom: 6px; }
+.vocab-detail .vd-label { font-weight: 600; color: var(--accent); margin-right: 4px; }
+.vocab-detail .vd-example { color: var(--text-secondary); padding-left: 16px; }
+.vocab-detail .vd-example em { color: var(--text); font-style: normal; font-weight: 600; }
+.vocab-expand { font-size: 12px; color: var(--accent); cursor: pointer; border: none; background: none; padding: 0; margin-left: 8px; }
+.vocab-expand:hover { text-decoration: underline; }
+
+/* ── SRS review buttons ── */
+.srs-btns { display: flex; gap: 5px; margin-left: auto; }
+.srs-btn { font-size: 11px; padding: 2px 7px; border-radius: 10px; border: 1.5px solid; cursor: pointer; transition: all .15s; background: none; white-space: nowrap; }
+.srs-btn-know  { border-color: #16a34a; color: #16a34a; }
+.srs-btn-know:hover  { background: #dcfce7; }
+.srs-btn-forget { border-color: #dc2626; color: #dc2626; }
+.srs-btn-forget:hover { background: #fee2e2; }
+.vocab-card.srs-due  .vocab-word::after { content: ' 📌'; font-size: 10px; }
+.vocab-card.srs-known .vocab-word::after { content: ' ✓';  font-size: 11px; color: #16a34a; }
+.srs-badge { font-size: 12px; font-weight: 600; padding: 1px 8px; border-radius: 10px; background: #fef2f2; color: #dc2626; }
+.srs-badge.all-done { background: #dcfce7; color: #16a34a; }
+
+/* ── Questions ── */
+.question-item { padding: 16px 24px; border-bottom: 1px solid #f0f0f0; }
+.question-item:last-child { border-bottom: none; }
+.question-stem { font-weight: 600; font-size: 15px; margin-bottom: 8px; }
+.question-options { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 24px; font-size: 14px; margin-bottom: 8px; }
+.question-option { padding: 2px 0; }
+.show-answer-btn { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; color: var(--accent); cursor: pointer; background: none; border: none; padding: 4px 0; }
+.show-answer-btn:hover { text-decoration: underline; }
+.question-analysis { display: none; margin-top: 10px; padding: 12px 16px; background: #f8f9fa; border-radius: var(--radius); font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+.question-analysis.open { display: block; }
+.question-analysis .answer-line { font-weight: 700; color: #16a34a; margin-bottom: 6px; font-size: 15px; }
+.question-analysis .locate { background: #fef9c3; padding: 6px 10px; border-radius: 4px; margin: 6px 0; font-family: Georgia, serif; font-style: italic; font-size: 14px; color: var(--text); }
+.option-list { margin-top: 10px; display: flex; flex-direction: column; gap: 2px; }
+.option-item { padding: 3px 0; font-size: 13.5px; line-height: 1.5; }
+.option-item .opt-letter { font-weight: 700; }
+.option-item .opt-mark { font-weight: 700; }
+.option-item.correct .opt-mark { color: #15803d; }
+.option-item.wrong .opt-mark { color: #b91c1c; }
+.option-item .opt-why { color: #888; font-size: 12.5px; margin-left: 4px; }
+
+/* ── Writing panel ── */
+.writing-block { margin-bottom: 20px; }
+.writing-block:last-child { margin-bottom: 0; }
+.writing-block-title { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: .04em; text-transform: uppercase; margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+.writing-phrase-list { display: flex; flex-direction: column; gap: 0; }
+.writing-phrase { padding: 10px 0; border-bottom: 1px solid #f3f3f3; font-size: 14px; }
+.writing-phrase:last-child { border-bottom: none; }
+.writing-phrase-en { font-family: Georgia, serif; font-weight: 600; color: var(--text); font-size: 15px; }
+.writing-phrase-cn { color: var(--text-secondary); font-size: 13px; margin: 2px 0; }
+.writing-phrase-src { font-size: 12px; color: #aaa; font-style: italic; }
+.writing-phrase-src em { color: var(--accent); font-style: normal; }
+.writing-phrase-use { font-size: 13px; color: #555; margin-top: 4px; padding: 5px 10px; background: var(--hover-bg); border-radius: 4px; border-left: 2px solid var(--accent); }
+.conn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+@media (max-width: 600px) { .conn-grid { grid-template-columns: 1fr; } }
+.conn-card { padding: 10px 12px; border-radius: var(--radius); background: var(--hover-bg); font-size: 13.5px; }
+.conn-card-title { font-weight: 700; font-size: 12px; letter-spacing: .04em; margin-bottom: 6px; }
+.conn-card.c-add .conn-card-title { color: #0369a1; }
+.conn-card.c-contrast .conn-card-title { color: #b45309; }
+.conn-card.c-result .conn-card-title { color: #15803d; }
+.conn-card.c-example .conn-card-title { color: #7c3aed; }
+.conn-card.c-conclude .conn-card-title { color: #be185d; }
+.conn-item { display: inline-block; margin: 2px 3px 2px 0; padding: 2px 7px; border-radius: 10px; font-size: 12.5px; font-family: Georgia, serif; }
+.conn-card.c-add .conn-item { background: #e0f2fe; color: #0369a1; }
+.conn-card.c-contrast .conn-item { background: #fef3c7; color: #92400e; }
+.conn-card.c-result .conn-item { background: #dcfce7; color: #15803d; }
+.conn-card.c-example .conn-item { background: #ede9fe; color: #6d28d9; }
+.conn-card.c-conclude .conn-item { background: #fce7f3; color: #9d174d; }
+.conn-note { font-size: 12px; color: #888; margin-top: 5px; }
+
+/* ── Review ── */
+.review-section { padding: 20px 24px; }
+.review-section h3 { font-size: 15px; margin-bottom: 12px; }
+.review-checks { display: flex; flex-wrap: wrap; gap: 12px; font-size: 14px; }
+.review-checks label { display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 6px 12px; border: 1px solid var(--border); border-radius: var(--radius); transition: all .15s; }
+.review-checks label:has(input:checked) { background: var(--accent-light); border-color: var(--accent); }
+.review-checks input { accent-color: var(--accent); }
+
+/* ── Raw mode ── */
+body.mode-raw .tip { border-bottom: none; cursor: default; pointer-events: none; }
+body.mode-raw .tip:hover { background: none; }
+body.mode-raw .analysis,
+body.mode-raw .translation-inline,
+body.mode-raw .panel { display: none !important; }
+body.mode-raw .sentence.complex { border-bottom: none; }
+body.mode-raw .sentence { cursor: default; }
+body.mode-raw .sentence:hover { background: none; }
+
+/* ── Quiz mode ── */
+body.mode-quiz .tip { border-bottom: none; cursor: default; pointer-events: none; }
+body.mode-quiz .tip:hover { background: none; }
+body.mode-quiz .analysis,
+body.mode-quiz .translation-inline,
+body.mode-quiz #vocabPanel,
+body.mode-quiz #reviewPanel,
+body.mode-quiz #tipPanel,
+body.mode-quiz #writingPanel,
+body.mode-quiz #playbar { display: none !important; }
+body.mode-quiz .sentence.complex { border-bottom: none; cursor: default; }
+body.mode-quiz .sentence { cursor: default; }
+body.mode-quiz .sentence:hover { background: none; }
+body.mode-annotate .sentence.complex { border-bottom: none; }
+body.mode-annotate .sentence { cursor: default; }
+body.mode-annotate .sentence:hover { background: none; }
+body.mode-quiz #questionsPanel { display: block; }
+body.mode-quiz #questionsPanel .panel-body { display: block; }
+body.mode-quiz .question-analysis { display: none !important; }
+body.mode-quiz .show-answer-btn { display: none; }
+body.mode-quiz .question-option { cursor: pointer; padding: 6px 10px; border-radius: var(--radius); border: 1.5px solid transparent; transition: all .15s; }
+body.mode-quiz .question-option:hover { background: var(--accent-light); }
+body.mode-quiz .question-option.selected { border-color: var(--accent); background: var(--accent-light); }
+body.mode-quiz .question-option.correct { border-color: #16a34a; background: #dcfce7; }
+body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2e2; }
+.quiz-score { text-align: center; padding: 16px; font-size: 16px; font-weight: 600; color: var(--accent); display: none; }
+.quiz-score.show { display: block; }
+
+/* ── Bottom Playbar ── */
+#playbar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+  background: #1a1a1a; color: #fff;
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  padding: 10px 20px; height: 52px;
+  font-size: 14px;
+  box-shadow: 0 -2px 12px rgba(0,0,0,.2);
+}
+#playbar button {
+  background: none; border: none; color: #fff; font-size: 18px;
+  cursor: pointer; padding: 4px 8px; border-radius: 4px; line-height: 1;
+  transition: background .15s;
+}
+#playbar button:hover { background: rgba(255,255,255,.15); }
+#pb-play { font-size: 22px; }
+#pb-counter { font-size: 13px; color: #aaa; min-width: 52px; text-align: center; }
+#pb-speed {
+  background: #333; border: none; color: #fff; font-size: 13px;
+  padding: 3px 6px; border-radius: 4px; cursor: pointer;
+}
+
+/* ── Responsive ── */
+.sentence.highlighted { background: #fef08a; border-radius: 3px; }
+@media (max-width: 600px) {
+  .passage { padding: 20px 16px; }
+  .sentence { font-size: 16px; }
+  .question-options { grid-template-columns: 1fr; }
+  .panel-header, .question-item, .review-section { padding-left: 16px; padding-right: 16px; }
+  .panel-body { padding: 12px 16px; }
+}
+
+/* ── Full-width layout + safe areas (iPad / iPhone / home-screen app) ── */
+.container {
+  max-width: 1400px; width: 100%;
+  padding-left: max(12px, env(safe-area-inset-left));
+  padding-right: max(12px, env(safe-area-inset-right));
+}
+.header { padding-top: calc(16px + env(safe-area-inset-top)); }
+body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
+#playbar {
+  height: calc(52px + env(safe-area-inset-bottom));
+  padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  padding-left: max(20px, env(safe-area-inset-left));
+  padding-right: max(20px, env(safe-area-inset-right));
+}
+.passage { padding: 24px 24px; }
+@media (max-width: 600px) {
+  .passage { padding: 18px 14px; }
+  .panel-header, .question-item, .review-section { padding-left: 14px; padding-right: 14px; }
+  .panel-body { padding: 12px 14px; }
+}
+/* Tooltip: arrow stays outside the scroll area; only the body scrolls */
+.tooltip .tip-scroll { overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+
+/* ── Larger type for iPad / desktop (>=700px). Phones keep the compact sizes. ── */
+@media (min-width: 700px) {
+  .header h1 { font-size: 19px; }
+  .passage-title { font-size: 19px; }
+  .restaurant-name { font-size: 20px; }
+  .passage h2, .passage h3 { font-size: 20px; }
+  .header-sub { font-size: 14px; }
+  .sentence { font-size: 23px; line-height: 1.8; }
+  .translation-inline { font-size: 18px !important; line-height: 1.8; }
+  .analysis { font-size: 18px; line-height: 1.8; }
+  .analysis b { font-size: 16px; }
+  .panel-header { font-size: 18px; }
+  .vocab-word { font-size: 20px; }
+  .vocab-meaning { font-size: 18px; }
+  .vocab-extra { font-size: 16.5px; line-height: 1.7; }
+  .vocab-detail, .vd-example { font-size: 16px; }
+  .vocab-tag, .level-badge { font-size: 13px; }
+  .vocab-expand, .srs-btn, .srs-badge { font-size: 14px; }
+  .question-stem { font-size: 19px; }
+  .question-options { font-size: 18px; }
+  .show-answer-btn { font-size: 15.5px; }
+  .question-analysis .answer-line { font-size: 17px; }
+  .option-item { font-size: 16.5px; }
+  .option-item .opt-why { font-size: 15px; }
+  .writing-phrase, .writing-phrase-en { font-size: 18px; }
+  .writing-phrase-cn, .writing-phrase-use { font-size: 16px; }
+  .conn-card { font-size: 16px; } .conn-item { font-size: 15px; }
+  .review-section h3 { font-size: 17px; } .review-checks { font-size: 17px; }
+  .panel-body[style] { font-size: 17px !important; }
+  .tooltip { font-size: 17px; line-height: 1.55; }
+  .tooltip .tip-phrase { font-size: 19px; }
+  .tooltip .tip-zh-play { font-size: 14px; }
+  #pb-counter, #pb-speed { font-size: 15px; }
+}
+
+/* 注解模式：长难句拆解 */
+.sb-block { display: none; }
+body.mode-annotate .sb-block {
+  display: block; margin: 4px 0 28px; padding: 16px 20px 18px;
+  background: #f8f9fa; border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-family: -apple-system, "PingFang SC", sans-serif; text-indent: 0;
+}
+body.mode-annotate .analysis { display: none !important; }
+body.mode-quiz .sb-block, body.mode-raw .sb-block { display: none !important; }
+.sb-title { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: .08em; margin-bottom: 12px; }
+.sb-sent { font-family: Georgia, serif; font-size: 18px; line-height: 2.3; color: #1a1a1a; background: #fff; border: 1px solid #ece8e0; border-radius: 10px; padding: 14px 18px; }
+.sb-chip { display: inline-block; font-family: -apple-system, "PingFang SC", sans-serif; font-size: 11px; font-weight: 700; line-height: 1; padding: 4px 7px; border-radius: 999px; margin-right: 5px; vertical-align: 3px; }
+.sb-core { font-weight: 700; border-bottom: 2.5px solid var(--accent); }
+.sb-core-chip { background: var(--accent); color: #fff; }
+.sb-ins { color: #9a9a9a; background: #eeebe4; border-radius: 4px; padding: 2px 4px; }
+.sb-ins-chip { background: #e4e0d8; color: #777; }
+.sb-rest { border-bottom: 2.5px solid #4caf7a; }
+.sb-rest-chip { background: #4caf7a; color: #fff; }
+.sb-steps { margin-top: 14px; display: grid; gap: 10px; }
+.sb-step { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; font-size: 15px; line-height: 1.75; color: #333; }
+.sb-step-n { width: 24px; height: 24px; border-radius: 50%; background: #1a1a1a; color: #fff; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; margin-top: 2px; }
+.sb-step em { font-style: normal; font-family: Georgia, serif; color: #111; background: #fff; border: 1px solid #ece8e0; padding: 0 5px; border-radius: 4px; }
+.sb-step .arrow { color: #aaa; margin: 0 4px; }
+.sb-tip { margin-top: 14px; font-size: 14px; color: #8a6d1f; background: #fdf6e3; border-radius: 8px; padding: 9px 14px; }
+
+/* 打印 */
+@media print {
+  @page { size: A4; margin: 14mm 12mm; }
+  html, body { background: #fff !important; }
+  body { padding: 0 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .header, #playbar, .panel, .tooltip { display: none !important; }
+  .passage { box-shadow: none !important; border: none !important; background: #fff !important; padding: 0 !important; margin: 0 !important; max-width: none !important; }
+  .sentence { font-size: 15px !important; line-height: 1.85 !important; }
+  .translation-inline { font-size: 12.5px !important; break-inside: avoid; }
+  body.mode-annotate .para-ann { grid-template-columns: 1fr 1fr; gap: 8px 10px; margin: 8px 0 14px; }
+  .pan-row { box-shadow: none; padding: 9px 12px 10px; break-inside: avoid; }
+  .pan-en { font-size: 14px; }
+  .pan-cn { font-size: 12.5px; }
+  .pan-det { margin: 6px 0 0 30px; font-size: 11.5px; line-height: 1.6; }
+  .pan-det div + div { margin-top: 3px; }
+  body.mode-annotate .sb-block { break-inside: avoid; padding: 12px 14px; margin: 4px 0 16px; }
+  .sb-sent { font-size: 14px; line-height: 2.1; padding: 10px 12px; }
+  .sb-step { font-size: 12.5px; line-height: 1.6; }
+  .sb-tip { font-size: 12px; }
+  .restaurant-name, h2, h3 { break-after: avoid; }
+}
+</style>
+</head>
+<body class="mode-study">
+
+<!-- Header -->
+<div class="header">
+  <div class="container">
+    <h1>D篇精读 · Chesterton's Fence</h1>
+    <div class="header-controls">
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="study" onclick="setMode('study')">① 精读</button>
+        <button class="mode-step" data-mode="quiz" onclick="setMode('quiz')">② 做题</button>
+        <button class="mode-step" data-mode="raw" onclick="setMode('raw')">③ 原文</button>
+        <button class="mode-step" data-mode="annotate" onclick="setMode('annotate')">④ 课本</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()" title="切换护眼色">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+
+<!-- Passage -->
+<div class="container">
+<div class="passage" id="passage">
+  <div class="passage-title">D</div>
+  <div class="passage-subtitle">Chesterton's Fence</div>
+
+  <!-- Para 1 -->
+  <div class="paragraph" id="para-1">
+    <span class="sentence" data-idx="0">The 21st century has created a whole range of new types of professionals that we have never had before—or if not quite new, at least newly <span class="tip" data-tip="repackaged|重新包装的｜re- = 再次，package = 包装。repackaged = 重新包装的——旧概念以新形式呈现。newly repackaged = 以新方式重新包装｜近义：rebranded 重新品牌化的" data-level="拓展">repackaged</span>.</span>
+    <span class="sentence" data-idx="1">The world has always had <span class="tip" data-tip="influential|有影响力的｜influence = 影响，influential = 有影响力的。influential people = 有影响力的人｜搭配：influential figure 有影响力的人物，influential in 在…方面有影响力" data-level="选必">influential</span> people, for instance, but only now do we have "Influencer".</span>
+    <span class="sentence complex" data-idx="2">Similarly, the corporate world has certainly known its fair share of <span class="tip" data-tip="disruption|颠覆｜disrupt = 扰乱/颠覆，disruption = 颠覆/破坏。the corporate world has known its fair share of disruption = 商业界当然经历过不少颠覆｜搭配：digital disruption 数字颠覆，cause disruption 造成混乱" data-level="拓展">disruption</span>, yet it is only in the last couple of decades that the "<span class="tip" data-tip="Disruptor|颠覆者｜disrupt = 扰乱/颠覆，disruptor = 颠覆者——通过打破现有秩序来推动变革的人。the Disruptor has become a recognisable figure = 颠覆者已成为一个可辨识的角色｜近义：revolutionary 革命者" data-level="拓展">Disruptor</span>" has become a recognisable figure in the way we talk about big business.</span>
+    <div class="analysis" id="analysis-2"><button class="analysis-play" onclick="playAnalysis('analysis-2', this)" title="听讲解">🔊 听讲解</button>
+      <p>这句的核心结构是：the corporate world has known disruption, yet it is only...that the "Disruptor" has become...。前半句用 has known its fair share of 表示"经历过不少"，yet 转折后用强调句 it is only in the last couple of decades that... 强调"颠覆者"作为一个可辨识的角色是最近二十年才出现的。</p>
+      <p>核心意思：商业界当然经历过不少颠覆，但"颠覆者"作为一个可辨识的角色是最近二十年才出现在我们谈论大企业的方式中。</p>
+    </div>
+    <div class="translation-inline">21世纪创造了一系列我们从未有过的新型职业身份——即使不完全是新的，至少是重新包装过的。比如，世界上一直都有有影响力的人，但直到现在我们才有了"网红"。同样，商业界当然经历过不少颠覆，但"颠覆者"作为一个可辨识的角色出现在我们谈论大企业的方式中，也不过是最近二十年的事。</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-ins-chip">状语</span><span class="sb-ins">Similarly,</span> <span class="sb-chip sb-core-chip">主语</span><span class="sb-core">the corporate world</span> <span class="sb-chip sb-ins-chip">修饰</span><span class="sb-ins">has certainly known its fair share of disruption,</span> <span class="sb-chip sb-rest-chip">yet 转折 + 强调句</span><span class="sb-rest">yet it is only in the last couple of decades that the "Disruptor" has become a recognisable figure in the way we talk about big business.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读前半句：<em>the corporate world has certainly known its fair share of disruption</em><span class="arrow">→</span>商业界当然经历过不少颠覆</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>yet 转折：<em>yet it is only in the last couple of decades that...</em><span class="arrow">→</span>但只是在最近二十年……（强调句：it is...that...）</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>强调句核心：<em>the "Disruptor" has become a recognisable figure</em><span class="arrow">→</span>"颠覆者"已成为一个可辨识的角色</div></div></div><div class="sb-tip">💡 「it is...that...」是强调句型，去掉 it is 和 that 后句子仍然完整。yet 在这里相当于 but，连接两个并列分句。</div></div>
+  </div>
+
+  <!-- Para 2 -->
+  <div class="paragraph" id="para-2">
+    <span class="sentence" data-idx="3">In an earlier era, the Disruptor would have been called an <span class="tip" data-tip="Innovator|创新者｜innovate = 创新，innovator = 创新者——创造新事物的人。与 Disruptor 对比：Innovator 侧重"创造"，Disruptor 侧重"破坏"｜搭配：technological innovator 技术创新者" data-level="选必">Innovator</span>.</span>
+    <span class="sentence" data-idx="4">Yet while an Innovator creates something new, the Disruptor is defined as much by what they destroy as by what they create.</span>
+    <span class="sentence" data-idx="5">The Disruptor forces change; the clean-up is somebody else's problem.</span>
+    <span class="sentence" data-idx="6">It's an attitude best <span class="tip" data-tip="summed up|概括｜sum up = 总结/概括。summed up as = 被概括为。best summed up as = 最好被概括为｜搭配：to sum up 总而言之，sum up the argument 概括论点" data-level="选必">summed up</span> as "Move fast and break things."</span>
+    <div class="translation-inline">在更早的时代，颠覆者会被称为创新者。然而，创新者创造新事物，颠覆者则既以他们创造的东西来定义，也以他们破坏的东西来定义。颠覆者强行推动变革；善后是别人的事。这种态度最好被概括为"快速行动，打破一切"。</div>
+  </div>
+
+  <!-- Para 3 -->
+  <div class="paragraph" id="para-3">
+    <span class="sentence" data-idx="7">Back in 1929, G. K. Chesterton identified the core problem with moving fast and breaking things through a thought experiment.</span>
+    <span class="sentence" data-idx="8">Imagine there is a fence along a road.</span>
+    <span class="sentence" data-idx="9">Suppose it's been there a long time, and was put there for some purpose.</span>
+    <span class="sentence" data-idx="10">But that purpose is lost over time.</span>
+    <span class="sentence" data-idx="11">To us, now, the fence seems to be nothing but an <span class="tip" data-tip="impediment|障碍｜impede = 阻碍，impediment = 障碍/妨碍物。the fence seems to be nothing but an impediment = 这道栅栏似乎只是一个障碍｜近义：obstacle, barrier, hindrance" data-level="拓展">impediment</span>.</span>
+    <span class="sentence" data-idx="12">Why not remove it?</span>
+    <div class="translation-inline">早在1929年，G·K·切斯特顿通过一个思想实验指出了"快速行动、打破一切"的核心问题。想象一下，有一道栅栏沿着道路而立。假设它已经在那里很久了，当初是为了某种目的而建造的。但那个目的随着时间流逝而失传了。对我们来说，现在这道栅栏似乎只是一个障碍。为什么不把它拆了呢？</div>
+  </div>
+
+  <!-- Para 4 -->
+  <div class="paragraph" id="para-4">
+    <span class="sentence" data-idx="13">When faced with such a fence, Chesterton thinks the fact that we can't see the point of the fence is why we should not <span class="tip" data-tip="tear it down|拆除｜tear = 撕/拆，tear down = 拆除/推倒。tear it down = 把它拆掉——指拆除栅栏或制度｜近义：demolish 拆毁，pull down 拉倒" data-level="选必">tear it down</span>.</span>
+    <span class="sentence" data-idx="14">Some fences keep foxes out of henhouses, for instance.</span>
+    <span class="sentence complex" data-idx="15">If you think you can do without the fence because you've never seen a fox, consider if the existence of the fence is precisely why you've never seen one.</span>
+    <div class="analysis" id="analysis-15"><button class="analysis-play" onclick="playAnalysis('analysis-15', this)" title="听讲解">🔊 听讲解</button>
+      <p>这句是多层嵌套的条件句：外层是 If you think...consider if...。think 后面跟宾语从句 you can do without the fence，because 引导原因状语从句。consider if 后面又引出一个条件/疑问从句：the existence of the fence is precisely why you've never seen one。逻辑链条：你以为不需要栅栏→因为从没见过狐狸→但也许正是栅栏的存在才让你没见过狐狸。</p>
+    </div>
+    <div class="translation-inline">面对这样一道栅栏，切斯特顿认为，我们看不到栅栏的意义这一事实，恰恰是我们不应该拆除它的原因。比如，有些栅栏是为了把狐狸挡在鸡舍外面。如果你觉得可以不要这道栅栏，因为你从没见过狐狸，那请想想：栅栏的存在是否恰恰就是你从没见过狐狸的原因。</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-rest-chip">If 条件</span><span class="sb-rest">If you think you can do without the fence because you've never seen a fox,</span> <span class="sb-chip sb-core-chip">主句</span><span class="sb-core">consider if the existence of the fence is precisely why you've never seen one.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>外层条件：<em>If you think...</em><span class="arrow">→</span>如果你认为……</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>think 的宾语从句：<em>you can do without the fence</em><span class="arrow">→</span>你可以不要这道栅栏</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>because 原因从句：<em>because you've never seen a fox</em><span class="arrow">→</span>因为你从没见过狐狸</div></div><div class="sb-step"><span class="sb-step-n">4</span><div>主句 + consider if 从句：<em>consider if the existence of the fence is precisely why you've never seen one</em><span class="arrow">→</span>想想栅栏的存在是否恰恰就是你从没见过狐狸的原因</div></div></div><div class="sb-tip">💡 这句话的精妙在于因果反转：你以为"没有狐狸→不需要栅栏"，但实际可能是"有栅栏→看不到狐狸"。高考阅读中常考这种逻辑推理。</div></div>
+  </div>
+
+  <!-- Para 5 -->
+  <div class="paragraph" id="para-5">
+    <span class="sentence" data-idx="16">Importantly, Chesterton is not saying that things can never be reformed.</span>
+    <span class="sentence" data-idx="17">His is a <span class="tip" data-tip="preventive|预防性的｜prevent = 预防/阻止，preventive = 预防性的。a preventive principle = 一项预防性原则——在行动前先搞清楚为什么｜近义：precautionary 预防的" data-level="拓展">preventive</span> principle rather than an outright <span class="tip" data-tip="prohibition|禁止｜prohibit = 禁止，prohibition = 禁令/禁止。an outright prohibition = 完全的禁止——Chesterton不是说绝对不能改，而是要先了解再改｜搭配：impose a prohibition 颁布禁令" data-level="拓展">prohibition</span>.</span>
+    <span class="sentence" data-idx="18">We could rephrase it like this: understand the wisdom in past decisions before you reject them.</span>
+    <span class="sentence" data-idx="19">If we're too <span class="tip" data-tip="impetuous|冲动的｜impetuous = 冲动的、鲁莽的——不假思索就行动。If we're too impetuous = 如果我们太冲动｜近义：rash 鲁莽的，hot-headed 急躁的，impulsive 冲动的" data-level="拓展">impetuous</span>, we can end up tearing out things we don't yet realise we rely upon.</span>
+    <span class="sentence" data-idx="20">But <span class="tip" data-tip="uncritical|不加批判的｜un- = 不/无，critical = 批判性的。uncritical = 不加批判的——盲目接受，不进行审视。uncritical devotion = 不加批判的忠诚/盲从｜反义：critical 批判性的" data-level="拓展">uncritical</span> <span class="tip" data-tip="devotion|执着/忠诚｜devote = 奉献/致力于，devotion = 执着/忠诚/奉献。devotion to the 'way things are done' = 对'现有做法'的执着/盲从｜搭配：devotion to duty 忠于职守" data-level="拓展">devotion</span> to the "way things are done" can also deny us the possibility of better days.</span>
+    <div class="translation-inline">重要的是，切斯特顿并不是在说事物永远不能改革。他的是一项预防性原则，而非彻底的禁令。我们可以这样换句话说：在你否定过去的决策之前，先理解其中的智慧。如果我们太冲动，最终可能会拆掉那些我们还没意识到自己依赖的东西。但对"现有做法"不加批判的执着，也会让我们失去拥有更美好未来的可能性。</div>
+  </div>
+
+  <!-- Para 6 -->
+  <div class="paragraph" id="para-6">
+    <span class="sentence complex" data-idx="21">What is required, then, is not the fearlessness of the Disruptor, but the <span class="tip" data-tip="humility|谦卑｜humble = 谦卑的，humility = 谦卑/谦逊。the humility to stop and ask questions = 停下来提问的谦卑——承认自己不是什么都懂｜搭配：with humility 以谦卑的态度" data-level="选必">humility</span> to stop and ask questions and to know that our own perspective is neither unique nor <span class="tip" data-tip="comprehensive|全面的｜comprehend = 理解，comprehensive = 全面的/综合的。our perspective is neither unique nor comprehensive = 我们的视角既不独特也不全面｜搭配：comprehensive review 全面审查" data-level="选必">comprehensive</span>.</span>
+    <div class="analysis" id="analysis-21"><button class="analysis-play" onclick="playAnalysis('analysis-21', this)" title="听讲解">🔊 听讲解</button>
+      <p>这句的核心结构是：What is required is not A, but B。What 引导主语从句（所需要的东西），then 是插入语，is 是系动词，not...but... 构成表语部分。not the fearlessness of the Disruptor 是被否定的A，but the humility to... 是被肯定的B。后面两个 and to... 并列修饰 humility。</p>
+    </div>
+    <span class="sentence" data-idx="22">Disruption can be a force for good.</span>
+    <span class="sentence" data-idx="23">It can also just leave a big mess.</span>
+    <span class="sentence" data-idx="24">We need the ability to work out which messes are worth avoiding—because however impressively fast you move, some things can't be easily unbroken.</span>
+    <div class="translation-inline">那么，我们需要的不是颠覆者的无畏，而是停下来提问的谦卑，以及认识到我们自身的视角既不独特也不全面。颠覆可以是一种积极的力量。但它也可能只留下一团糟。我们需要判断哪些混乱值得避免——因为无论你行动得多么迅速，有些东西一旦打碎就无法轻易复原。</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-core-chip">What 主语从句</span><span class="sb-core">What is required,</span> <span class="sb-chip sb-ins-chip">插入语</span><span class="sb-ins">then,</span> <span class="sb-chip sb-core-chip">is not A</span><span class="sb-core">is not the fearlessness of the Disruptor,</span> <span class="sb-chip sb-rest-chip">but B</span><span class="sb-rest">but the humility to stop and ask questions and to know that our own perspective is neither unique nor comprehensive.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先读主干：<em>What is required is not A, but B</em><span class="arrow">→</span>所需要的不是A，而是B</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>A = <em>the fearlessness of the Disruptor</em><span class="arrow">→</span>颠覆者的无畏</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>B = <em>the humility to stop and ask questions and to know that...</em><span class="arrow">→</span>停下来提问的谦卑，以及认识到……</div></div><div class="sb-step"><span class="sb-step-n">4</span><div>that 从句：<em>our own perspective is neither unique nor comprehensive</em><span class="arrow">→</span>我们的视角既不独特也不全面</div></div></div><div class="sb-tip">💡 「What...is not A but B」是议论文总结段的经典句式——先否定一种观点，再提出作者真正主张的观点。neither...nor... 表示"既不……也不……"。</div></div>
+  </div>
+</div>
+
+<!-- Vocabulary -->
+<div class="panel" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')">
+    <span>生词与短语（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="vocab-list">
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('repackaged')">repackaged</span>
+          <span class="vocab-meaning">重新包装的</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">re- = 再次，package = 包装。<em>repackaged</em> = 重新包装的——旧概念以新形式呈现。<br>newly <em>repackaged</em> 以新方式重新包装 &nbsp;·&nbsp; 近义：rebranded 重新品牌化的</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('disruption')">disruption</span>
+          <span class="vocab-meaning">颠覆，破坏</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">disrupt = 扰乱/颠覆，<em>disruption</em> = 颠覆/破坏。<br>digital <em>disruption</em> 数字颠覆 &nbsp;·&nbsp; cause <em>disruption</em> 造成混乱</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('impediment')">impediment</span>
+          <span class="vocab-meaning">障碍，妨碍物</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">impede = 阻碍，<em>impediment</em> = 障碍/妨碍物。<br>an <em>impediment</em> to progress 进步的障碍 &nbsp;·&nbsp; 近义：obstacle, barrier, hindrance</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('preventive')">preventive</span>
+          <span class="vocab-meaning">预防性的</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">prevent = 预防/阻止，<em>preventive</em> = 预防性的。<br>a <em>preventive</em> principle 预防性原则 &nbsp;·&nbsp; <em>preventive</em> measures 预防措施</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('prohibition')">prohibition</span>
+          <span class="vocab-meaning">禁止，禁令</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">prohibit = 禁止，<em>prohibition</em> = 禁令/禁止。<br>an outright <em>prohibition</em> 完全的禁止 &nbsp;·&nbsp; impose a <em>prohibition</em> 颁布禁令</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('impetuous')">impetuous</span>
+          <span class="vocab-meaning">冲动的，鲁莽的</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra"><em>impetuous</em> = 冲动的、鲁莽的——不假思索就行动。<br>近义：rash, hot-headed, impulsive &nbsp;·&nbsp; 反义：cautious 谨慎的</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('uncritical')">uncritical</span>
+          <span class="vocab-meaning">不加批判的</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">un- = 不/无，critical = 批判性的。<em>uncritical</em> = 不加批判的——盲目接受。<br><em>uncritical</em> devotion 不加批判的忠诚 &nbsp;·&nbsp; 反义：critical 批判性的</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('devotion')">devotion</span>
+          <span class="vocab-meaning">执着，忠诚，奉献</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">devote = 奉献/致力于，<em>devotion</em> = 执着/忠诚/奉献。<br><em>devotion</em> to duty 忠于职守 &nbsp;·&nbsp; blind <em>devotion</em> 盲目忠诚</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('humility')">humility</span>
+          <span class="vocab-meaning">谦卑，谦逊</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">humble = 谦卑的，<em>humility</em> = 谦卑/谦逊。<br>the <em>humility</em> to ask questions 提问的谦卑 &nbsp;·&nbsp; with <em>humility</em> 以谦卑的态度</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('comprehensive')">comprehensive</span>
+          <span class="vocab-meaning">全面的，综合的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">comprehend = 理解，<em>comprehensive</em> = 全面的/综合的。<br>a <em>comprehensive</em> review 全面审查 &nbsp;·&nbsp; neither unique nor <em>comprehensive</em> 既不独特也不全面</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Questions -->
+<div class="panel" id="questionsPanel">
+  <div class="panel-header" onclick="togglePanel('questionsPanel')">
+    题目解析（4题，31—34）
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="question-item" data-answer="A">
+      <div class="question-stem">31. Regarding Chesterton's principle, the author is________.</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. supportive</div>
+        <div class="question-option" data-key="B">B. doubtful</div>
+        <div class="question-option" data-key="C">C. conflicted</div>
+        <div class="question-option" data-key="D">D. disappointed</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：A</div>
+        <div class="locate" data-goto="18" onclick="gotoSentence(18)">"We could rephrase it like this: understand the wisdom in past decisions before you reject them."</div>
+        <p style="margin-top:8px"><b>解题思路：</b>态度题。作者在第5-6段对 Chesterton 的原则表示认同——理解过去决策的智慧再做改变，需要谦卑而非鲁莽。第6段 "What is required...is...the humility to stop and ask questions" 明确呼应了 Chesterton 的原则。</p>
+        <div class="option-list">
+          <div class="option-item correct"><span class="opt-letter">A.</span> supportive <span class="opt-mark">✓</span><span class="opt-why">作者全文论证支持 Chesterton 的预防性原则</span></div>
+          <div class="option-item wrong"><span class="opt-letter">B.</span> doubtful <span class="opt-mark">✗</span><span class="opt-why">作者没有表示怀疑，而是认同并进一步阐释</span></div>
+          <div class="option-item wrong"><span class="opt-letter">C.</span> conflicted <span class="opt-mark">✗</span><span class="opt-why">虽然作者提到 disruption 也有好的一面，但整体立场是明确支持的，不矛盾</span></div>
+          <div class="option-item wrong"><span class="opt-letter">D.</span> disappointed <span class="opt-mark">✗</span><span class="opt-why">文中没有任何失望的情感表达</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="question-item" data-answer="C">
+      <div class="question-stem">32. What does the word "impetuous" underlined in Paragraph 5 most probably mean?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. Short-sighted</div>
+        <div class="question-option" data-key="B">B. Narrow-minded</div>
+        <div class="question-option" data-key="C">C. Hot-headed</div>
+        <div class="question-option" data-key="D">D. Old-fashioned</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：C</div>
+        <div class="locate" data-goto="19" onclick="gotoSentence(19)">"If we're too impetuous, we can end up tearing out things we don't yet realise we rely upon."</div>
+        <p style="margin-top:8px"><b>解题思路：</b>词义猜测题。impetuous = 冲动的、鲁莽的。上下文"tearing out things we don't yet realise we rely upon"说明太冲动会拆掉我们需要的东西。与"Move fast and break things"呼应。Hot-headed = 急躁冲动的，最接近原意。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-letter">A.</span> Short-sighted <span class="opt-mark">✗</span><span class="opt-why">目光短浅的，强调看不到长远，但 impetuous 强调的是行动冲动</span></div>
+          <div class="option-item wrong"><span class="opt-letter">B.</span> Narrow-minded <span class="opt-mark">✗</span><span class="opt-why">思想狭隘的，与上下文不符</span></div>
+          <div class="option-item correct"><span class="opt-letter">C.</span> Hot-headed <span class="opt-mark">✓</span><span class="opt-why">急躁冲动的，与"tearing out things"的鲁莽行为一致</span></div>
+          <div class="option-item wrong"><span class="opt-letter">D.</span> Old-fashioned <span class="opt-mark">✗</span><span class="opt-why">守旧的，与语境完全相反——impetuous 的人恰恰是急于变革</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="question-item" data-answer="D">
+      <div class="question-stem">33. What can we infer from this passage about the Disruptor?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. They may clear up other people's mess.</div>
+        <div class="question-option" data-key="B">B. They are in favour of the preventive principle.</div>
+        <div class="question-option" data-key="C">C. They preserve more traditions than they break.</div>
+        <div class="question-option" data-key="D">D. They may create more problems than they solve.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：D</div>
+        <div class="locate" data-goto="5" onclick="gotoSentence(5)">"The Disruptor forces change; the clean-up is somebody else's problem."</div>
+        <p style="margin-top:8px"><b>解题思路：</b>推断题。原文多处暗示颠覆者可能制造比解决的更多的问题："the clean-up is somebody else's problem"（善后是别人的事）+ "Disruption can also just leave a big mess"（颠覆也可能只留下一团糟）+ "some things can't be easily unbroken"（有些东西无法轻易复原）。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-letter">A.</span> They may clear up other people's mess. <span class="opt-mark">✗</span><span class="opt-why">恰恰相反，原文说"the clean-up is somebody else's problem"</span></div>
+          <div class="option-item wrong"><span class="opt-letter">B.</span> They are in favour of the preventive principle. <span class="opt-mark">✗</span><span class="opt-why">预防性原则是 Chesterton 提出的，颠覆者的态度是"Move fast and break things"</span></div>
+          <div class="option-item wrong"><span class="opt-letter">C.</span> They preserve more traditions than they break. <span class="opt-mark">✗</span><span class="opt-why">颠覆者以破坏著称，不以保守传统著称</span></div>
+          <div class="option-item correct"><span class="opt-letter">D.</span> They may create more problems than they solve. <span class="opt-mark">✓</span><span class="opt-why">多处原文支持：留下一团糟、有些东西无法复原</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="question-item" data-answer="C">
+      <div class="question-stem">34. What does the author intend to tell us?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. Humility should be a driving force for human progress.</div>
+        <div class="question-option" data-key="B">B. Innovation should move forward the wheel of tradition.</div>
+        <div class="question-option" data-key="C">C. Reform should draw from the wellspring of past wisdom.</div>
+        <div class="question-option" data-key="D">D. Disruption should be given priority in social development.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：C</div>
+        <div class="locate" data-goto="18" onclick="gotoSentence(18)">"understand the wisdom in past decisions before you reject them."</div>
+        <p style="margin-top:8px"><b>解题思路：</b>主旨题。全文核心观点：改革应该汲取过去智慧的源泉。"understand the wisdom in past decisions before you reject them"（在否定之前先理解过去决策的智慧）正是文章的中心论点。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-letter">A.</span> Humility should be a driving force for human progress. <span class="opt-mark">✗</span><span class="opt-why">谦卑是手段之一，但文章核心不是谦卑推动进步，而是改革要基于理解</span></div>
+          <div class="option-item wrong"><span class="opt-letter">B.</span> Innovation should move forward the wheel of tradition. <span class="opt-mark">✗</span><span class="opt-why">文章讨论的是改革前要理解传统，不是创新推动传统前进</span></div>
+          <div class="option-item correct"><span class="opt-letter">C.</span> Reform should draw from the wellspring of past wisdom. <span class="opt-mark">✓</span><span class="opt-why">完美对应"understand the wisdom in past decisions before you reject them"</span></div>
+          <div class="option-item wrong"><span class="opt-letter">D.</span> Disruption should be given priority in social development. <span class="opt-mark">✗</span><span class="opt-why">与文章立场相反——文章批评了盲目的颠覆</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="quiz-score" id="quizScore"></div>
+  </div>
+</div>
+
+<!-- Review -->
+<div class="panel" id="reviewPanel">
+  <div class="panel-header" onclick="togglePanel('reviewPanel')">
+    本篇复盘
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="review-section">
+      <h3>我这篇的卡点：</h3>
+      <div class="review-checks">
+        <label><input type="checkbox" id="rev1"> 长难句看不懂</label>
+        <label><input type="checkbox" id="rev2"> 找不到原文证据</label>
+        <label><input type="checkbox" id="rev3"> 脑补推理</label>
+        <label><input type="checkbox" id="rev4"> 生词太多</label>
+      </div>
+      <h3 style="margin-top:16px">标记：</h3>
+      <div class="review-checks">
+        <label><input type="checkbox" id="rev5"> 待复习</label>
+        <label><input type="checkbox" id="rev6"> 已掌握</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 阅读技巧 -->
+<div class="panel" id="tipPanel">
+  <div class="panel-header" onclick="togglePanel('tipPanel')">
+    阅读技巧：议论文/思辨类文章怎么读
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body" style="font-size:15px; line-height:1.8;">
+    <p style="margin-bottom:14px;">D篇常考议论文/思辨类文章——作者围绕一个核心概念展开论证，题目考你能不能<strong>抓住论点与论据的关系、理解类比的作用、读懂转折结构</strong>。有3个核心策略：</p>
+
+    <p style="margin-bottom:6px;"><strong>① 抓住类比与思想实验</strong></p>
+    <p style="margin-bottom:14px; padding-left:16px; color:#555;">
+      本文的核心类比是 Chesterton's Fence（切斯特顿的栅栏）——用一道看似无用的栅栏来比喻那些我们不理解其价值的传统/制度。思想实验不是论点本身，而是帮你理解论点的工具。做题时要问：这个类比在说明什么道理？
+    </p>
+
+    <p style="margin-bottom:6px;"><strong>② 注意"不是A而是B"的论证结构</strong></p>
+    <p style="margin-bottom:14px; padding-left:16px; color:#555;">
+      本文两处关键对比：<em>Innovator vs. Disruptor</em>（创新者 vs. 颠覆者）和 <em>preventive principle vs. outright prohibition</em>（预防性原则 vs. 彻底禁令）。作者通过对比来精确界定自己的立场——既不是盲目反对改变，也不是支持鲁莽颠覆。这种"两边都不极端"的立场是高考议论文的常见考点。
+    </p>
+
+    <p style="margin-bottom:6px;"><strong>③ 因果逻辑链的反转</strong></p>
+    <p style="margin-bottom:0; padding-left:16px; color:#555;">
+      第4段的栅栏-狐狸论证是经典的因果反转：表面因果是"没有狐狸→不需要栅栏"，实际因果是"有栅栏→看不到狐狸"。这种逻辑推理在高考推断题中经常考到。遇到 because / why / the reason 时要特别注意因果方向是否被反转。
+    </p>
+  </div>
+</div>
+
+<!-- 作文拓展 -->
+<div class="panel" id="writingPanel">
+  <div class="panel-header" onclick="togglePanel('writingPanel')">
+    作文拓展：好句式 &amp; 连接词速查
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body" style="font-size:15px; line-height:1.8;">
+
+    <div class="writing-block">
+      <div class="writing-block-title">从文章偷来的好句式</div>
+      <div class="writing-phrase-list">
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">What is required is not A, but B</div>
+          <div class="writing-phrase-cn">所需要的不是A，而是B</div>
+          <div class="writing-phrase-src">原句：<em>What is required, then, is not the fearlessness of the Disruptor, but the humility to stop and ask questions.</em></div>
+          <div class="writing-phrase-use">作文套用：<em>What is required</em> in education <em>is not</em> blind obedience, <em>but</em> the courage to think independently. 用 What 主语从句 + not...but 对比，非常高级。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">understand the wisdom in past decisions before you reject them</div>
+          <div class="writing-phrase-cn">在否定之前先理解其中的智慧</div>
+          <div class="writing-phrase-src">原句：<em>We could rephrase it like this: understand the wisdom in past decisions before you reject them.</em></div>
+          <div class="writing-phrase-use">作文套用：We should <em>understand the wisdom in</em> traditional customs <em>before we reject them</em> as outdated. 适合写传统文化/改革类话题。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">defined as much by X as by Y</div>
+          <div class="writing-phrase-cn">既由X定义，也由Y定义</div>
+          <div class="writing-phrase-src">原句：<em>The Disruptor is defined as much by what they destroy as by what they create.</em></div>
+          <div class="writing-phrase-use">作文套用：A person is <em>defined as much by</em> how they handle failure <em>as by</em> how they celebrate success. 用 as much...as 做平行对比，体现辩证思维。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">however impressively X, some things can't be easily Y</div>
+          <div class="writing-phrase-cn">无论...多么...，有些东西无法轻易...</div>
+          <div class="writing-phrase-src">原句：<em>However impressively fast you move, some things can't be easily unbroken.</em></div>
+          <div class="writing-phrase-use">作文套用：<em>However impressively</em> technology advances, some human connections <em>can't be easily</em> replaced. 让步 + 强调，适合科技话题结尾。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">neither unique nor comprehensive</div>
+          <div class="writing-phrase-cn">既不独特也不全面</div>
+          <div class="writing-phrase-src">原句：<em>...to know that our own perspective is neither unique nor comprehensive.</em></div>
+          <div class="writing-phrase-use">作文套用：We must acknowledge that our viewpoint is <em>neither unique nor comprehensive</em>, and learn to embrace different perspectives. 用于议论文中表达谦逊和开放心态。</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="writing-block">
+      <div class="writing-block-title">连接词速查（按功能分）</div>
+      <div class="conn-grid">
+
+        <div class="conn-card c-add">
+          <div class="conn-card-title">递进 / 补充</div>
+          <span class="conn-item">furthermore</span>
+          <span class="conn-item">moreover</span>
+          <span class="conn-item">in addition</span>
+          <span class="conn-item">what's more</span>
+          <span class="conn-item">not only...but also</span>
+          <div class="conn-note">比 "also" 和 "and" 正式，议论文首选</div>
+        </div>
+
+        <div class="conn-card c-contrast">
+          <div class="conn-card-title">转折 / 对比</div>
+          <span class="conn-item">however</span>
+          <span class="conn-item">yet</span>
+          <span class="conn-item">while</span>
+          <span class="conn-item">by contrast</span>
+          <span class="conn-item">rather than</span>
+          <div class="conn-note">yet 用在句中；however 另起；by contrast 对比两个对象</div>
+        </div>
+
+        <div class="conn-card c-result">
+          <div class="conn-card-title">结果 / 因此</div>
+          <span class="conn-item">as a result</span>
+          <span class="conn-item">therefore</span>
+          <span class="conn-item">consequently</span>
+          <span class="conn-item">thus</span>
+          <div class="conn-note">thus 最简洁，thus + 分词短语直接高分</div>
+        </div>
+
+        <div class="conn-card c-example">
+          <div class="conn-card-title">举例说明</div>
+          <span class="conn-item">for instance</span>
+          <span class="conn-item">for example</span>
+          <span class="conn-item">take...for example</span>
+          <span class="conn-item">such as</span>
+          <div class="conn-note">for instance 比 for example 更口语化一点点，两者都可用</div>
+        </div>
+
+        <div class="conn-card c-conclude">
+          <div class="conn-card-title">总结 / 结尾</div>
+          <span class="conn-item">in conclusion</span>
+          <span class="conn-item">to sum up</span>
+          <span class="conn-item">in short</span>
+          <span class="conn-item">overall</span>
+          <span class="conn-item">in a word</span>
+          <div class="conn-note">结尾段第一句用，考官扫一眼就知道你会写结论</div>
+        </div>
+
+        <div class="conn-card c-add">
+          <div class="conn-card-title">顺序 / 衔接</div>
+          <span class="conn-item">first of all</span>
+          <span class="conn-item">secondly</span>
+          <span class="conn-item">finally</span>
+          <span class="conn-item">meanwhile</span>
+          <span class="conn-item">at the same time</span>
+          <div class="conn-note">列举多个原因/步骤时用，让文章结构清晰</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- .container -->
+
+<!-- Bottom Playbar -->
+<div id="playbar">
+  <button id="pb-prev" onclick="pbPrev()" title="上一句">⏮</button>
+  <button id="pb-play" onclick="pbToggle()" title="播放/暂停">▶</button>
+  <button id="pb-next" onclick="pbNext()" title="下一句">⏭</button>
+  <span id="pb-counter">— / 25</span>
+  <select id="pb-speed" onchange="pbSetSpeed(this.value)" title="播放速度">
+    <option value="0.8">0.8x</option>
+    <option value="1" selected>1.0x</option>
+    <option value="1.2">1.2x</option>
+  </select>
+</div>
+
+<script>
+// ── Theme toggle ──
+const THEMES = ['yellow', 'green'];
+const THEME_LABELS = { yellow: '📄 书本黄', green: '🌿 护眼绿' };
+let themeIdx = parseInt(localStorage.getItem('theme') || '0');
+function applyTheme() {
+  document.body.classList.remove('theme-yellow', 'theme-green');
+  const t = THEMES[themeIdx % THEMES.length];
+  document.body.classList.add('theme-' + t);
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.textContent = THEME_LABELS[t];
+}
+function cycleTheme() {
+  themeIdx = (themeIdx + 1) % THEMES.length;
+  localStorage.setItem('theme', themeIdx);
+  applyTheme();
+}
+applyTheme();
+
+const sentences = [
+  "The 21st century has created a whole range of new types of professionals that we have never had before—or if not quite new, at least newly repackaged.",
+  "The world has always had influential people, for instance, but only now do we have \"Influencer\".",
+  "Similarly, the corporate world has certainly known its fair share of disruption, yet it is only in the last couple of decades that the \"Disruptor\" has become a recognisable figure in the way we talk about big business.",
+  "In an earlier era, the Disruptor would have been called an Innovator.",
+  "Yet while an Innovator creates something new, the Disruptor is defined as much by what they destroy as by what they create.",
+  "The Disruptor forces change; the clean-up is somebody else's problem.",
+  "It's an attitude best summed up as \"Move fast and break things.\"",
+  "Back in 1929, G. K. Chesterton identified the core problem with moving fast and breaking things through a thought experiment.",
+  "Imagine there is a fence along a road.",
+  "Suppose it's been there a long time, and was put there for some purpose.",
+  "But that purpose is lost over time.",
+  "To us, now, the fence seems to be nothing but an impediment.",
+  "Why not remove it?",
+  "When faced with such a fence, Chesterton thinks the fact that we can't see the point of the fence is why we should not tear it down.",
+  "Some fences keep foxes out of henhouses, for instance.",
+  "If you think you can do without the fence because you've never seen a fox, consider if the existence of the fence is precisely why you've never seen one.",
+  "Importantly, Chesterton is not saying that things can never be reformed.",
+  "His is a preventive principle rather than an outright prohibition.",
+  "We could rephrase it like this: understand the wisdom in past decisions before you reject them.",
+  "If we're too impetuous, we can end up tearing out things we don't yet realise we rely upon.",
+  "But uncritical devotion to the \"way things are done\" can also deny us the possibility of better days.",
+  "What is required, then, is not the fearlessness of the Disruptor, but the humility to stop and ask questions and to know that our own perspective is neither unique nor comprehensive.",
+  "Disruption can be a force for good.",
+  "It can also just leave a big mess.",
+  "We need the ability to work out which messes are worth avoiding—because however impressively fast you move, some things can't be easily unbroken."
+];
+
+// ── Tooltip system ──
+let activeTooltip = null;
+
+const ANALYSIS_AUDIO = {
+  "analysis-2":   "audio/2026北京卷-D/analysis-2.mp3",
+  "analysis-15":  "audio/2026北京卷-D/analysis-15.mp3",
+  "analysis-21":  "audio/2026北京卷-D/analysis-21.mp3",
+};
+let analysisPlayer = null;
+let analysisBtn = null;
+
+function playAnalysis(id, btn) {
+  if (analysisPlayer) {
+    analysisPlayer.pause();
+    analysisPlayer = null;
+    if (analysisBtn) { analysisBtn.textContent = '🔊 听讲解'; analysisBtn.classList.remove('playing'); }
+    if (analysisBtn === btn) { analysisBtn = null; return; }
+  }
+  const src = ANALYSIS_AUDIO[id];
+  if (!src) return;
+  analysisPlayer = new Audio(src);
+  analysisBtn = btn;
+  btn.textContent = '⏹ 停止';
+  btn.classList.add('playing');
+  analysisPlayer.onended = () => { btn.textContent = '🔊 听讲解'; btn.classList.remove('playing'); analysisPlayer = null; analysisBtn = null; };
+  analysisPlayer.play();
+}
+
+const ZH_AUDIO = {};
+let zhPlayer = null;
+
+function phraseToSlug(phrase) {
+  return phrase.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function playZhAudio(slug, btn) {
+  if (zhPlayer) {
+    zhPlayer.pause();
+    zhPlayer = null;
+    btn.textContent = '🔊 听讲解';
+    return;
+  }
+  const src = ZH_AUDIO[slug];
+  if (!src) return;
+  zhPlayer = new Audio(src);
+  btn.textContent = '⏹ 停止';
+  zhPlayer.onended = () => { btn.textContent = '🔊 听讲解'; zhPlayer = null; };
+  zhPlayer.play();
+}
+
+function showTooltip(tipEl) {
+  hideTooltip();
+  const raw = tipEl.getAttribute('data-tip');
+  const [phrase, explain] = raw.split('|');
+  const parts = explain.split('｜');
+  const slug = phraseToSlug(phrase);
+  const hasAudio = ZH_AUDIO[slug];
+
+  const tooltip = document.createElement('div');
+  tooltip.className = 'tooltip';
+  tooltip.innerHTML = '<div class="tip-scroll">' +
+    `<div class="tip-phrase">${phrase}${tipEl.dataset.level ? `<span class="level-badge badge-${tipEl.dataset.level}">${tipEl.dataset.level}</span>` : ''}<span class="tip-speak" onclick="speakWord('${phrase}')">&#9654;</span></div>` +
+    parts.map(p => `<div>${p.trim()}</div>`).join('') +
+    (hasAudio ? `<button class="tip-zh-play" onclick="playZhAudio('${slug}', this)">🔊 听讲解</button>` : '') + '</div>';
+  document.body.appendChild(tooltip);
+  activeTooltip = tooltip;
+  tooltip._tip = tipEl;
+  positionTooltip();
+  if (!activeTooltip) return;
+  speakWord(phrase);
+}
+
+let _safeProbe = null;
+function tooltipFrame() {
+  if (!_safeProbe) {
+    _safeProbe = document.createElement('div');
+    _safeProbe.style.cssText = 'position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;pointer-events:none;' +
+      'padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)';
+    document.body.appendChild(_safeProbe);
+  }
+  const cs = getComputedStyle(_safeProbe);
+  const M = 8;
+  const vw = document.documentElement.clientWidth, vh = window.innerHeight;
+  let minY = M + (parseFloat(cs.paddingTop) || 0);
+  let maxY = vh - M - (parseFloat(cs.paddingBottom) || 0);
+  const hdr = document.querySelector('.header');
+  if (hdr) { const b = hdr.getBoundingClientRect().bottom; if (b > 0) minY = Math.max(minY, b + 4); }
+  const pb = document.getElementById('playbar');
+  if (pb && getComputedStyle(pb).display !== 'none') { maxY = Math.min(maxY, pb.getBoundingClientRect().top - 4); }
+  return { minX: M + (parseFloat(cs.paddingLeft) || 0), maxX: vw - M - (parseFloat(cs.paddingRight) || 0), minY, maxY };
+}
+
+function positionTooltip() {
+  const tooltip = activeTooltip;
+  if (!tooltip) return;
+  const tipEl = tooltip._tip;
+  const rects = tipEl.getClientRects();
+  const f = tooltipFrame();
+  if (!rects.length) { hideTooltip(); return; }
+  const first = rects[0], last = rects[rects.length - 1];
+  if (last.bottom < f.minY - 4 || first.top > f.maxY + 4) { hideTooltip(); return; }
+
+  const GAP = 10, PAD = 16;
+  const body = tooltip.firstElementChild;
+  tooltip.style.maxWidth = Math.max(120, Math.min(520, f.maxX - f.minX)) + 'px';
+  body.style.maxHeight = 'none';
+  tooltip.style.left = '0px'; tooltip.style.top = '0px';
+  const tw = tooltip.offsetWidth, naturalH = tooltip.offsetHeight;
+  const spaceAbove = first.top - f.minY - GAP;
+  const spaceBelow = f.maxY - last.bottom - GAP;
+  let below;
+  if (naturalH <= spaceAbove) below = false;
+  else if (naturalH <= spaceBelow) below = true;
+  else below = spaceBelow > spaceAbove;
+  const avail = Math.max(60, below ? spaceBelow : spaceAbove);
+  const th = Math.min(naturalH, avail);
+  if (naturalH > avail) body.style.maxHeight = Math.max(30, avail - PAD) + 'px';
+
+  const r = below ? last : first;
+  const cx = r.left + r.width / 2;
+  const left = Math.max(f.minX, Math.min(cx - tw / 2, f.maxX - tw));
+  let top = below ? last.bottom + GAP : first.top - GAP - tooltip.offsetHeight;
+  top = Math.max(f.minY, Math.min(top, f.maxY - tooltip.offsetHeight));
+  tooltip.classList.toggle('below', below);
+  tooltip.style.setProperty('--arrow-left', Math.max(14, Math.min(cx - left, tw - 14)) + 'px');
+  tooltip.style.left = left + 'px';
+  tooltip.style.top = top + 'px';
+}
+(function () {
+  let raf = 0;
+  const re = () => { if (!activeTooltip || raf) return; raf = requestAnimationFrame(() => { raf = 0; positionTooltip(); }); };
+  window.addEventListener('scroll', re, { passive: true });
+  window.addEventListener('resize', re);
+  window.addEventListener('orientationchange', re);
+  if (window.visualViewport) { visualViewport.addEventListener('resize', re); visualViewport.addEventListener('scroll', re); }
+})();
+
+function hideTooltip() {
+  if (zhPlayer) { zhPlayer.pause(); zhPlayer = null; }
+  if (activeTooltip) { activeTooltip.remove(); activeTooltip = null; }
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.sentence.highlighted') && !e.target.closest('.locate')) {
+    document.querySelectorAll('.sentence.highlighted').forEach(s => s.classList.remove('highlighted'));
+  }
+  const tipEl = e.target.closest('.tip');
+  if (tipEl) {
+    e.stopPropagation();
+    if (activeTooltip && activeTooltip._source === tipEl) {
+      hideTooltip();
+    } else {
+      showTooltip(tipEl);
+      if (activeTooltip) activeTooltip._source = tipEl;
+    }
+    return;
+  }
+  if (e.target.closest('.tooltip')) return;
+  hideTooltip();
+});
+
+// ── Playbar ──
+let pbCurrent = null;
+let pbPlaying = false;
+let pbSpeed = 1;
+let enPlayer = null;
+
+function pbStop() {
+  if (enPlayer) { enPlayer.pause(); enPlayer = null; }
+  pbPlaying = false;
+}
+
+function highlightSentence(idx) {
+  document.querySelectorAll('.sentence').forEach(el => el.classList.remove('playing'));
+  if (idx !== null && idx >= 0 && idx < sentences.length) {
+    const el = document.querySelector(`.sentence[data-idx="${idx}"]`);
+    if (el) {
+      el.classList.add('playing');
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+}
+
+function pbUpdateUI() {
+  const playBtn = document.getElementById('pb-play');
+  const counter = document.getElementById('pb-counter');
+  playBtn.textContent = pbPlaying ? '⏸' : '▶';
+  counter.textContent = pbCurrent !== null ? `${pbCurrent + 1} / ${sentences.length}` : `— / ${sentences.length}`;
+}
+
+function pbPlayCurrent() {
+  pbStop();
+  if (pbCurrent === null) { pbUpdateUI(); return; }
+  const src = `audio/2026北京卷-D/en-s${String(pbCurrent).padStart(2,'0')}.mp3`;
+  enPlayer = new Audio(src);
+  enPlayer.playbackRate = pbSpeed;
+  pbPlaying = true;
+  highlightSentence(pbCurrent);
+  pbUpdateUI();
+  enPlayer.onended = () => {
+    if (pbPlaying) {
+      if (pbCurrent < sentences.length - 1) {
+        pbCurrent++;
+        pbPlayCurrent();
+      } else {
+        pbPlaying = false;
+        highlightSentence(null);
+        pbUpdateUI();
+      }
+    }
+  };
+  enPlayer.onerror = () => {
+    pbPlaying = false;
+    highlightSentence(null);
+    pbUpdateUI();
+  };
+  enPlayer.play();
+}
+
+function pbToggle() {
+  if (pbCurrent === null) {
+    pbCurrent = 0;
+    pbPlayCurrent();
+    return;
+  }
+  if (pbPlaying) {
+    pbStop();
+    highlightSentence(pbCurrent);
+    pbUpdateUI();
+  } else {
+    pbPlayCurrent();
+  }
+}
+
+function pbPrev() {
+  if (pbCurrent === null) pbCurrent = 0;
+  else if (pbCurrent > 0) pbCurrent--;
+  pbPlayCurrent();
+}
+
+function pbNext() {
+  if (pbCurrent === null) pbCurrent = 0;
+  else if (pbCurrent < sentences.length - 1) pbCurrent++;
+  pbPlayCurrent();
+}
+
+function pbSetSpeed(v) {
+  pbSpeed = parseFloat(v);
+  if (enPlayer) enPlayer.playbackRate = pbSpeed;
+}
+
+function pbJumpTo(idx) {
+  pbStop();
+  pbCurrent = idx;
+  highlightSentence(idx);
+  pbUpdateUI();
+}
+
+document.addEventListener('click', function(e) {
+  if (e.target.closest('.tip') || e.target.closest('.tooltip')) return;
+  const sentence = e.target.closest('.sentence.complex');
+  if (sentence) toggleAnalysis(parseInt(sentence.dataset.idx));
+});
+
+// ── Other UI ──
+function speakWord(word) {
+  if (enPlayer) { enPlayer.pause(); enPlayer = null; }
+  const slug = 'en-word-' + word.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const src = 'audio/2026北京卷-D/' + slug + '.mp3';
+  enPlayer = new Audio(src);
+  enPlayer.onerror = function() {
+    const utter = new SpeechSynthesisUtterance(word);
+    const voices = speechSynthesis.getVoices();
+    utter.voice = voices.find(v => v.lang === 'en-GB') || voices.find(v => v.lang.startsWith('en')) || voices[0];
+    utter.rate = 0.8;
+    speechSynthesis.speak(utter);
+  };
+  enPlayer.play();
+}
+
+function highlightWord(phrase) {
+  const tips = document.querySelectorAll('.tip');
+  const matches = [];
+  const lc = phrase.toLowerCase();
+  tips.forEach(el => {
+    const tipPhrase = (el.dataset.tip || '').split('|')[0].toLowerCase();
+    if (tipPhrase === lc) matches.push(el);
+  });
+  if (!matches.length) return;
+  matches.forEach(el => {
+    el.classList.remove('tip-flash');
+    void el.offsetWidth;
+    el.classList.add('tip-flash');
+    setTimeout(() => el.classList.remove('tip-flash'), 1700);
+  });
+  matches[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function vocabClick(phrase) {
+  speakWord(phrase);
+}
+
+function initAnnotations() {
+  document.querySelectorAll('sup.ann-sup, .para-ann').forEach(el => el.remove());
+
+  document.querySelectorAll('.passage .paragraph').forEach(para => {
+    const seen = new Set();
+    const items = [];
+    let idx = 1;
+
+    para.querySelectorAll('.tip').forEach(el => {
+      const tip = el.dataset.tip || '';
+      const parts = tip.split('|');
+      if (parts.length < 2) return;
+      const phrase = parts[0].trim();
+
+      if (seen.has(phrase)) {
+        const prevIdx = items.findIndex(i => i.phrase === phrase) + 1;
+        const sup = document.createElement('sup');
+        sup.className = 'ann-sup';
+        sup.textContent = prevIdx;
+        el.after(sup);
+        return;
+      }
+      seen.add(phrase);
+
+      const sup = document.createElement('sup');
+      sup.className = 'ann-sup';
+      sup.textContent = idx;
+      el.after(sup);
+
+      const contentParts = parts[1].split('｜');
+      const cn = contentParts[0].trim();
+      const det = contentParts.slice(1).map(s => s.replace(/<[^>]+>/g, '').trim()).filter(Boolean);
+      items.push({ num: idx, phrase, cn, det, level: el.dataset.level === '超纲' ? '超纲' : '' });
+      idx++;
+    });
+
+    if (items.length === 0) return;
+
+    const ann = document.createElement('div');
+    ann.className = 'para-ann';
+    ann.innerHTML = items.map(i =>
+      `<div class="pan-row">
+        <div class="pan-head">
+          <span class="pan-num">${i.num}</span>
+          <span class="pan-en">${i.phrase}</span>
+          <span class="pan-cn">${i.cn}</span>
+          ${i.level ? `<span class="pan-lv lv-${i.level}">${i.level}</span>` : ''}
+        </div>
+        ${i.det.length ? `<div class="pan-det">${i.det.map(d => `<div>${d}</div>`).join('')}</div>` : ''}
+      </div>`
+    ).join('');
+
+    const trans = para.querySelector('.translation-inline');
+    if (trans) trans.after(ann);
+    else para.appendChild(ann);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initAnnotations);
+
+function toggleAnalysis(idx) {
+  const el = document.getElementById('analysis-' + idx);
+  if (el) el.classList.toggle('open');
+}
+
+function togglePanel(id) { document.getElementById(id).classList.toggle('open'); }
+
+function setMode(mode) {
+  document.body.classList.remove('mode-raw', 'mode-study', 'mode-quiz', 'mode-annotate');
+  if (mode !== 'study') document.body.classList.add('mode-' + mode);
+  document.querySelectorAll('.mode-step').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.mode === mode);
+  });
+  hideTooltip();
+  if (mode === 'quiz') { pbStop(); highlightSentence(null); pbUpdateUI(); resetQuiz(); }
+}
+
+// ── Quiz ──
+function resetQuiz() {
+  document.querySelectorAll('.question-option').forEach(opt => opt.classList.remove('selected','correct','wrong'));
+  document.querySelectorAll('.question-item').forEach(q => q.dataset.answered = '');
+  const score = document.getElementById('quizScore');
+  if (score) score.classList.remove('show');
+}
+
+document.addEventListener('click', function(e) {
+  if (!document.body.classList.contains('mode-quiz')) return;
+  const opt = e.target.closest('.question-option');
+  if (!opt) return;
+  const item = opt.closest('.question-item');
+  if (item.dataset.answered) return;
+  item.dataset.answered = 'true';
+  const picked = opt.dataset.key;
+  const correct = item.dataset.answer;
+  if (picked === correct) {
+    opt.classList.add('correct');
+  } else {
+    opt.classList.add('wrong');
+    item.querySelector(`.question-option[data-key="${correct}"]`).classList.add('correct');
+  }
+  const total = document.querySelectorAll('.question-item[data-answer]').length;
+  const done = document.querySelectorAll('.question-item[data-answered="true"]').length;
+  if (done === total) showQuizScore();
+});
+
+function showQuizScore() {
+  const total = document.querySelectorAll('.question-item[data-answer]').length;
+  const wrong = document.querySelectorAll('.question-option.wrong').length;
+  const score = document.getElementById('quizScore');
+  score.textContent = `得分：${total - wrong} / ${total}`;
+  score.classList.add('show');
+}
+
+function gotoSentence(idx) {
+  const el = document.querySelector(`.sentence[data-idx="${idx}"]`);
+  if (!el) return;
+  setMode('study');
+  document.querySelectorAll('.sentence.highlighted').forEach(s => s.classList.remove('highlighted'));
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  el.classList.add('highlighted');
+}
+
+function toggleQuestionAnalysis(btn) {
+  const analysis = btn.nextElementSibling;
+  analysis.classList.toggle('open');
+  btn.textContent = analysis.classList.contains('open') ? '收起解析' : '\u{1F50D} 查看解析';
+}
+
+// ── LocalStorage review ──
+function saveReview() {
+  const state = {};
+  document.querySelectorAll('.review-checks input').forEach(cb => { state[cb.id] = cb.checked; });
+  localStorage.setItem('review-beijing-2026-D', JSON.stringify(state));
+}
+function loadReview() {
+  try {
+    const state = JSON.parse(localStorage.getItem('review-beijing-2026-D'));
+    if (state) Object.keys(state).forEach(id => { const cb = document.getElementById(id); if (cb) cb.checked = state[id]; });
+  } catch(e) {}
+}
+document.querySelectorAll('.review-checks input').forEach(cb => cb.addEventListener('change', saveReview));
+loadReview();
+pbUpdateUI();
+
+// ── Spaced Repetition (SRS) ──
+const SRS_PREFIX = 'srs_beijing_2026_D_';
+const SRS_INTERVALS = [1, 3, 7, 14, 30];
+
+function srsLoad(word) {
+  const raw = localStorage.getItem(SRS_PREFIX + word);
+  return raw ? JSON.parse(raw) : null;
+}
+
+function srsSave(word, knew) {
+  const state = srsLoad(word) || { streak: 0 };
+  if (knew) {
+    state.streak = (state.streak || 0) + 1;
+    state.interval = SRS_INTERVALS[Math.min(state.streak - 1, SRS_INTERVALS.length - 1)];
+  } else {
+    state.streak = 0;
+    state.interval = 1;
+  }
+  state.nextReview = Date.now() + state.interval * 86400000;
+  localStorage.setItem(SRS_PREFIX + word, JSON.stringify(state));
+  return state;
+}
+
+function srsIsDue(state) {
+  return !state || Date.now() >= state.nextReview;
+}
+
+function srsUpdateCard(card) {
+  const state = srsLoad(card.dataset.srsWord);
+  card.classList.remove('srs-due', 'srs-known');
+  if (!state) return;
+  card.classList.add(srsIsDue(state) ? 'srs-due' : 'srs-known');
+}
+
+function srsUpdateBadge() {
+  const badge = document.getElementById('srs-badge');
+  if (!badge) return;
+  const cards = document.querySelectorAll('.vocab-card[data-srs-word]');
+  let due = 0;
+  cards.forEach(c => { if (srsIsDue(srsLoad(c.dataset.srsWord))) due++; });
+  if (due === 0) {
+    badge.textContent = '全掌握 ✓';
+    badge.className = 'srs-badge all-done';
+  } else {
+    badge.textContent = due + '个待复习';
+    badge.className = 'srs-badge';
+  }
+}
+
+function srsClick(word, knew, btn) {
+  srsSave(word, knew);
+  const card = btn.closest('.vocab-card');
+  srsUpdateCard(card);
+  srsUpdateBadge();
+  btn.style.opacity = '0.4';
+  setTimeout(() => btn.style.opacity = '', 600);
+}
+
+function srsInit() {
+  document.querySelectorAll('.vocab-card').forEach(card => {
+    const wordEl = card.querySelector('.vocab-word');
+    if (!wordEl) return;
+    const word = wordEl.textContent.trim();
+    card.dataset.srsWord = word;
+    const btns = document.createElement('div');
+    btns.className = 'srs-btns';
+    const esc = word.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    btns.innerHTML =
+      `<button class="srs-btn srs-btn-know"   onclick="srsClick('${esc}',true,this)">认识 ✓</button>` +
+      `<button class="srs-btn srs-btn-forget" onclick="srsClick('${esc}',false,this)">还不会 ✗</button>`;
+    card.querySelector('.vocab-card-head').appendChild(btns);
+    srsUpdateCard(card);
+  });
+  srsUpdateBadge();
+}
+srsInit();
+</script>
+</body>
+</html>

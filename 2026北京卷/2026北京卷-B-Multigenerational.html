@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2026北京卷·B篇精读 · Multigenerational Living</title>
+<style>
+:root {
+  --bg: #fafaf8;
+  --text: #1a1a1a;
+  --text-secondary: #555;
+  --text-muted: #888;
+  --accent: #2563eb;
+  --accent-light: #dbeafe;
+  --complex-bg: #f0f6fc;
+  --border: #e2e2e0;
+  --card-bg: #fff;
+  --hover-bg: #f5f5f4;
+  --shadow: 0 1px 3px rgba(0,0,0,.08);
+  --radius: 6px;
+}
+.theme-yellow {
+  --bg: #f5f0e8;
+  --card-bg: #faf6ee;
+  --border: #ddd5bf;
+  --complex-bg: #ece4d4;
+  --hover-bg: #ede7d8;
+  --accent-light: #fde8b8;
+}
+.theme-green {
+  --bg: #edecea;
+  --card-bg: #f3f2f0;
+  --border: #d6d5d0;
+  --complex-bg: #e5e4e0;
+  --hover-bg: #e8e7e3;
+  --accent-light: #dddcd6;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  padding-bottom: 60px;
+}
+.container { max-width: min(1100px, 88vw); margin: 0 auto; padding: 0 20px; }
+
+/* ── Header ── */
+.header {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header .container { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.header h1 { font-size: 16px; font-weight: 600; flex: 1; min-width: 200px; }
+.header-sub { font-size: 12px; color: var(--accent); font-weight: 500; background: var(--accent-light); padding: 2px 8px; border-radius: 10px; }
+.header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 6px 14px; border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--card-bg); color: var(--text); font-size: 13px;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ── Mode steps ── */
+.mode-steps { display: flex; gap: 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.mode-step {
+  padding: 6px 12px; border: none; background: var(--card-bg); color: var(--text-secondary);
+  font-size: 13px; cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.mode-step + .mode-step { border-left: 1px solid var(--border); }
+.mode-step.active { background: var(--accent); color: #fff; }
+.mode-step:hover:not(.active) { background: var(--accent-light); }
+
+/* ── Passage ── */
+.passage {
+  background: var(--card-bg); border-radius: var(--radius);
+  box-shadow: var(--shadow); margin-top: 20px; padding: 28px 32px;
+}
+.passage-title {
+  text-align: center; font-family: Georgia, "Times New Roman", serif;
+  font-size: 15px; font-weight: 700; letter-spacing: .5px;
+  margin-bottom: 20px; color: var(--text-secondary);
+}
+.passage-subtitle {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px; font-weight: 700; text-align: center;
+  margin-bottom: 16px; color: var(--text);
+}
+.restaurant-name {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700; font-size: 16px;
+  margin: 18px 0 6px 0; color: var(--text);
+}
+.paragraph { margin-bottom: 4px; text-indent: 2em; }
+.sentence {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px; line-height: 1.75;
+  position: relative; transition: background .2s; border-radius: 3px;
+  cursor: pointer;
+}
+.sentence:hover { background: var(--hover-bg); }
+.sentence.playing { background: var(--complex-bg); border-radius: 3px; }
+.sentence.complex { border-bottom: 1.5px dashed #93c5fd; }
+.sentence.complex.playing { background: var(--complex-bg); }
+
+/* ── Phrase tips ── */
+.tip {
+  border-bottom: 1.5px dashed var(--accent);
+  cursor: pointer;
+  position: relative;
+  transition: background .15s;
+}
+.tip:hover { background: var(--accent-light); }
+.tip.tip-flash { outline: 2px solid var(--accent); border-radius: 2px; animation: tipFlash 1.6s ease-out forwards; }
+@keyframes tipFlash { 0%{background:var(--accent);color:#fff;} 40%{background:var(--accent-light);color:inherit;} 100%{background:transparent;} }
+sup.ann-sup {
+  display: none;
+  font-size: 0.6em; color: var(--accent); font-weight: 700;
+  vertical-align: super; line-height: 0; margin-left: 2px;
+  font-family: system-ui, sans-serif; pointer-events: none;
+}
+body.mode-annotate sup.ann-sup { display: inline; }
+
+.para-ann {
+  display: none;
+  margin: 16px 0 28px 0;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 15px; color: #333; text-indent: 0;
+}
+body.mode-annotate .para-ann {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+  gap: 16px 18px;
+  align-items: start;
+}
+.pan-row {
+  background: #fff;
+  border: 1px solid #ece8e0;
+  border-radius: 12px;
+  padding: 16px 20px 18px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+.pan-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pan-num {
+  flex-shrink: 0;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent); color: #fff;
+  font-size: 12px; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.pan-en  { font-family: Georgia, serif; font-weight: 700; font-size: 18px; color: #1a1a1a; }
+.pan-cn  { color: var(--accent); font-weight: 600; font-size: 15px; }
+.pan-lv { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 4px; line-height: 1.4; }
+.lv-超纲 { background: #fee2e2; color: #b91c1c; }
+.pan-det { margin: 12px 0 0 32px; color: #666; font-size: 14px; line-height: 1.85; }
+.pan-det div { position: relative; padding-left: 12px; }
+.pan-det div + div { margin-top: 8px; }
+.pan-det div::before { content: ''; position: absolute; left: 0; top: 0.8em; width: 4px; height: 4px; border-radius: 50%; background: #c9c3b8; }
+
+body.mode-quiz .para-ann, body.mode-raw .para-ann { display: none !important; }
+body.mode-quiz sup.ann-sup, body.mode-raw sup.ann-sup { display: none !important; }
+
+/* Tooltip bubble */
+.tooltip {
+  position: fixed;
+  z-index: 200;
+  background: var(--text);
+  color: #fff;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 8px 14px;
+  border-radius: 8px;
+  max-width: min(520px, calc(100vw - 16px));
+  width: max-content;
+  box-shadow: 0 4px 20px rgba(0,0,0,.25);
+  pointer-events: auto;
+  animation: tipIn .15s ease-out;
+}
+.tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: var(--arrow-left, 50%);
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid var(--text);
+}
+.tooltip.below::after {
+  bottom: auto; top: -6px;
+  border-top: none;
+  border-bottom: 6px solid var(--text);
+}
+.tooltip .tip-phrase {
+  font-family: Georgia, serif;
+  font-weight: 600;
+  color: #93c5fd;
+  margin-bottom: 2px;
+}
+.tooltip .tip-speak {
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 6px;
+  font-size: 12px;
+  opacity: .7;
+  vertical-align: middle;
+}
+.tooltip .tip-speak:hover { opacity: 1; }
+.level-badge { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 11px; font-weight: 600; margin-left: 6px; vertical-align: middle; font-family: -apple-system, "PingFang SC", sans-serif; }
+.badge-超纲 { background: rgba(239,68,68,.25); color: #fca5a5; }
+.badge-拓展 { background: rgba(251,146,60,.2); color: #fdba74; }
+.badge-选必 { background: rgba(96,165,250,.2); color: #93c5fd; }
+.tooltip .tip-zh-play {
+  display: block;
+  margin-top: 6px;
+  padding: 4px 10px;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 4px;
+  color: #93c5fd;
+  font-size: 12px;
+  cursor: pointer;
+  text-align: center;
+}
+.tooltip .tip-zh-play:hover { background: rgba(255,255,255,.25); }
+@keyframes tipIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Expandable analysis ── */
+.analysis {
+  display: none; margin: 8px 0 12px 0; padding: 12px 16px;
+  background: #f8f9fa; border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 14px; color: var(--text-secondary); line-height: 1.7; text-indent: 0;
+}
+.analysis.open { display: block; }
+.analysis p { margin-bottom: 4px; }
+.analysis b { color: var(--text); font-size: 13px; }
+.analysis-play {
+  float: right; margin-left: 8px;
+  background: none; border: 1px solid var(--border); border-radius: 4px;
+  font-size: 12px; padding: 2px 8px; cursor: pointer; color: var(--accent);
+  transition: all .15s;
+}
+.analysis-play:hover { background: var(--accent-light); border-color: var(--accent); }
+.analysis-play.playing { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ── Translation ── */
+.translation-inline {
+  display: none;
+  font-family: -apple-system, "PingFang SC", sans-serif;
+  font-size: 14px; color: var(--text-muted);
+  margin: 2px 0 6px 0; text-indent: 0;
+}
+body.compare-mode .translation-inline,
+body.mode-annotate .translation-inline { display: block; }
+
+/* ── Panels ── */
+.panel {
+  background: var(--card-bg); border-radius: var(--radius);
+  box-shadow: var(--shadow); margin-top: 16px; overflow: hidden;
+}
+.panel-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px; cursor: pointer; user-select: none;
+  font-weight: 600; font-size: 15px;
+  border-bottom: 1px solid transparent; transition: border-color .2s;
+}
+.panel-header:hover { color: var(--accent); }
+.panel-header .arrow { transition: transform .2s; font-size: 12px; color: var(--text-muted); }
+.panel.open .panel-header { border-bottom-color: var(--border); }
+.panel.open .panel-header .arrow { transform: rotate(180deg); }
+.panel-body { display: none; padding: 16px 24px; }
+.panel.open .panel-body { display: block; }
+
+/* Vocab cards */
+.vocab-card { border-bottom: 1px solid #f0f0f0; padding: 12px 0; }
+.vocab-card:last-child { border-bottom: none; }
+.vocab-card-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 12px; }
+.vocab-word { font-family: Georgia, serif; font-weight: 600; color: var(--accent); cursor: pointer; font-size: 15px; }
+.vocab-word:hover { text-decoration: underline; }
+.vocab-meaning { font-size: 14px; color: var(--text); }
+.vocab-extra { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+.vocab-tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 3px; background: #fef3c7; color: #92400e; vertical-align: middle; }
+.vocab-tag.tag-core { background: #dcfce7; color: #166534; }
+.vocab-tag.tag-exam { background: #dbeafe; color: #1e40af; }
+.vocab-tag.tag-beyond { background: #fef3c7; color: #92400e; }
+.vocab-tag.tag-extend { background: #ffedd5; color: #c2410c; }
+.vocab-detail { display: none; margin-top: 8px; padding: 10px 14px; background: #f8f9fa; border-radius: var(--radius); font-size: 13.5px; line-height: 1.7; }
+.vocab-detail.open { display: block; }
+.vocab-detail .vd-section { margin-bottom: 6px; }
+.vocab-detail .vd-label { font-weight: 600; color: var(--accent); margin-right: 4px; }
+.vocab-detail .vd-example { color: var(--text-secondary); padding-left: 16px; }
+.vocab-detail .vd-example em { color: var(--text); font-style: normal; font-weight: 600; }
+.vocab-expand { font-size: 12px; color: var(--accent); cursor: pointer; border: none; background: none; padding: 0; margin-left: 8px; }
+.vocab-expand:hover { text-decoration: underline; }
+
+/* ── SRS review buttons ── */
+.srs-btns { display: flex; gap: 5px; margin-left: auto; }
+.srs-btn { font-size: 11px; padding: 2px 7px; border-radius: 10px; border: 1.5px solid; cursor: pointer; transition: all .15s; background: none; white-space: nowrap; }
+.srs-btn-know  { border-color: #16a34a; color: #16a34a; }
+.srs-btn-know:hover  { background: #dcfce7; }
+.srs-btn-forget { border-color: #dc2626; color: #dc2626; }
+.srs-btn-forget:hover { background: #fee2e2; }
+.vocab-card.srs-due  .vocab-word::after { content: ' 📌'; font-size: 10px; }
+.vocab-card.srs-known .vocab-word::after { content: ' ✓';  font-size: 11px; color: #16a34a; }
+.srs-badge { font-size: 12px; font-weight: 600; padding: 1px 8px; border-radius: 10px; background: #fef2f2; color: #dc2626; }
+.srs-badge.all-done { background: #dcfce7; color: #16a34a; }
+
+/* ── Questions ── */
+.question-item { padding: 16px 24px; border-bottom: 1px solid #f0f0f0; }
+.question-item:last-child { border-bottom: none; }
+.question-stem { font-weight: 600; font-size: 15px; margin-bottom: 8px; }
+.question-options { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 24px; font-size: 14px; margin-bottom: 8px; }
+.question-option { padding: 2px 0; }
+.show-answer-btn { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; color: var(--accent); cursor: pointer; background: none; border: none; padding: 4px 0; }
+.show-answer-btn:hover { text-decoration: underline; }
+.question-analysis { display: none; margin-top: 10px; padding: 12px 16px; background: #f8f9fa; border-radius: var(--radius); font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+.question-analysis.open { display: block; }
+.question-analysis .answer-line { font-weight: 700; color: #16a34a; margin-bottom: 6px; font-size: 15px; }
+.question-analysis .locate { background: #fef9c3; padding: 6px 10px; border-radius: 4px; margin: 6px 0; font-family: Georgia, serif; font-style: italic; font-size: 14px; color: var(--text); }
+.option-list { margin-top: 10px; display: flex; flex-direction: column; gap: 2px; }
+.option-item { padding: 3px 0; font-size: 13.5px; line-height: 1.5; }
+.option-item .opt-letter { font-weight: 700; }
+.option-item .opt-mark { font-weight: 700; }
+.option-item.correct .opt-mark { color: #15803d; }
+.option-item.wrong .opt-mark { color: #b91c1c; }
+.option-item .opt-why { color: #888; font-size: 12.5px; margin-left: 4px; }
+
+/* ── Writing panel ── */
+.writing-block { margin-bottom: 20px; }
+.writing-block:last-child { margin-bottom: 0; }
+.writing-block-title { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: .04em; text-transform: uppercase; margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+.writing-phrase-list { display: flex; flex-direction: column; gap: 0; }
+.writing-phrase { padding: 10px 0; border-bottom: 1px solid #f3f3f3; font-size: 14px; }
+.writing-phrase:last-child { border-bottom: none; }
+.writing-phrase-en { font-family: Georgia, serif; font-weight: 600; color: var(--text); font-size: 15px; }
+.writing-phrase-cn { color: var(--text-secondary); font-size: 13px; margin: 2px 0; }
+.writing-phrase-src { font-size: 12px; color: #aaa; font-style: italic; }
+.writing-phrase-src em { color: var(--accent); font-style: normal; }
+.writing-phrase-use { font-size: 13px; color: #555; margin-top: 4px; padding: 5px 10px; background: var(--hover-bg); border-radius: 4px; border-left: 2px solid var(--accent); }
+.conn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+@media (max-width: 600px) { .conn-grid { grid-template-columns: 1fr; } }
+.conn-card { padding: 10px 12px; border-radius: var(--radius); background: var(--hover-bg); font-size: 13.5px; }
+.conn-card-title { font-weight: 700; font-size: 12px; letter-spacing: .04em; margin-bottom: 6px; }
+.conn-card.c-add .conn-card-title { color: #0369a1; }
+.conn-card.c-contrast .conn-card-title { color: #b45309; }
+.conn-card.c-result .conn-card-title { color: #15803d; }
+.conn-card.c-example .conn-card-title { color: #7c3aed; }
+.conn-card.c-conclude .conn-card-title { color: #be185d; }
+.conn-item { display: inline-block; margin: 2px 3px 2px 0; padding: 2px 7px; border-radius: 10px; font-size: 12.5px; font-family: Georgia, serif; }
+.conn-card.c-add .conn-item { background: #e0f2fe; color: #0369a1; }
+.conn-card.c-contrast .conn-item { background: #fef3c7; color: #92400e; }
+.conn-card.c-result .conn-item { background: #dcfce7; color: #15803d; }
+.conn-card.c-example .conn-item { background: #ede9fe; color: #6d28d9; }
+.conn-card.c-conclude .conn-item { background: #fce7f3; color: #9d174d; }
+.conn-note { font-size: 12px; color: #888; margin-top: 5px; }
+
+/* ── Review ── */
+.review-section { padding: 20px 24px; }
+.review-section h3 { font-size: 15px; margin-bottom: 12px; }
+.review-checks { display: flex; flex-wrap: wrap; gap: 12px; font-size: 14px; }
+.review-checks label { display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 6px 12px; border: 1px solid var(--border); border-radius: var(--radius); transition: all .15s; }
+.review-checks label:has(input:checked) { background: var(--accent-light); border-color: var(--accent); }
+.review-checks input { accent-color: var(--accent); }
+
+/* ── Raw mode ── */
+body.mode-raw .tip { border-bottom: none; cursor: default; pointer-events: none; }
+body.mode-raw .tip:hover { background: none; }
+body.mode-raw .analysis,
+body.mode-raw .translation-inline,
+body.mode-raw .panel { display: none !important; }
+body.mode-raw .sentence.complex { border-bottom: none; }
+body.mode-raw .sentence { cursor: default; }
+body.mode-raw .sentence:hover { background: none; }
+
+/* ── Quiz mode ── */
+body.mode-quiz .tip { border-bottom: none; cursor: default; pointer-events: none; }
+body.mode-quiz .tip:hover { background: none; }
+body.mode-quiz .analysis,
+body.mode-quiz .translation-inline,
+body.mode-quiz #vocabPanel,
+body.mode-quiz #reviewPanel,
+body.mode-quiz #tipPanel,
+body.mode-quiz #writingPanel,
+body.mode-quiz #playbar { display: none !important; }
+body.mode-quiz .sentence.complex { border-bottom: none; cursor: default; }
+body.mode-quiz .sentence { cursor: default; }
+body.mode-quiz .sentence:hover { background: none; }
+body.mode-annotate .sentence.complex { border-bottom: none; }
+body.mode-annotate .sentence { cursor: default; }
+body.mode-annotate .sentence:hover { background: none; }
+body.mode-quiz #questionsPanel { display: block; }
+body.mode-quiz #questionsPanel .panel-body { display: block; }
+body.mode-quiz .question-analysis { display: none !important; }
+body.mode-quiz .show-answer-btn { display: none; }
+body.mode-quiz .question-option { cursor: pointer; padding: 6px 10px; border-radius: var(--radius); border: 1.5px solid transparent; transition: all .15s; }
+body.mode-quiz .question-option:hover { background: var(--accent-light); }
+body.mode-quiz .question-option.selected { border-color: var(--accent); background: var(--accent-light); }
+body.mode-quiz .question-option.correct { border-color: #16a34a; background: #dcfce7; }
+body.mode-quiz .question-option.wrong { border-color: #dc2626; background: #fee2e2; }
+.quiz-score { text-align: center; padding: 16px; font-size: 16px; font-weight: 600; color: var(--accent); display: none; }
+.quiz-score.show { display: block; }
+
+/* ── Bottom Playbar ── */
+#playbar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+  background: #1a1a1a; color: #fff;
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  padding: 10px 20px; height: 52px;
+  font-size: 14px;
+  box-shadow: 0 -2px 12px rgba(0,0,0,.2);
+}
+#playbar button {
+  background: none; border: none; color: #fff; font-size: 18px;
+  cursor: pointer; padding: 4px 8px; border-radius: 4px; line-height: 1;
+  transition: background .15s;
+}
+#playbar button:hover { background: rgba(255,255,255,.15); }
+#pb-play { font-size: 22px; }
+#pb-counter { font-size: 13px; color: #aaa; min-width: 52px; text-align: center; }
+#pb-speed {
+  background: #333; border: none; color: #fff; font-size: 13px;
+  padding: 3px 6px; border-radius: 4px; cursor: pointer;
+}
+
+/* ── Responsive ── */
+.sentence.highlighted { background: #fef08a; border-radius: 3px; }
+@media (max-width: 600px) {
+  .passage { padding: 20px 16px; }
+  .sentence { font-size: 16px; }
+  .question-options { grid-template-columns: 1fr; }
+  .panel-header, .question-item, .review-section { padding-left: 16px; padding-right: 16px; }
+  .panel-body { padding: 12px 16px; }
+}
+
+/* ── Full-width layout + safe areas ── */
+.container {
+  max-width: 1400px; width: 100%;
+  padding-left: max(12px, env(safe-area-inset-left));
+  padding-right: max(12px, env(safe-area-inset-right));
+}
+.header { padding-top: calc(16px + env(safe-area-inset-top)); }
+body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
+#playbar {
+  height: calc(52px + env(safe-area-inset-bottom));
+  padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  padding-left: max(20px, env(safe-area-inset-left));
+  padding-right: max(20px, env(safe-area-inset-right));
+}
+.passage { padding: 24px 24px; }
+@media (max-width: 600px) {
+  .passage { padding: 18px 14px; }
+  .panel-header, .question-item, .review-section { padding-left: 14px; padding-right: 14px; }
+  .panel-body { padding: 12px 14px; }
+}
+.tooltip .tip-scroll { overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+
+@media (min-width: 700px) {
+  .header h1 { font-size: 19px; }
+  .passage-title { font-size: 19px; }
+  .restaurant-name { font-size: 20px; }
+  .passage h2, .passage h3 { font-size: 20px; }
+  .header-sub { font-size: 14px; }
+  .sentence { font-size: 23px; line-height: 1.8; }
+  .translation-inline { font-size: 18px !important; line-height: 1.8; }
+  .analysis { font-size: 18px; line-height: 1.8; }
+  .analysis b { font-size: 16px; }
+  .panel-header { font-size: 18px; }
+  .vocab-word { font-size: 20px; }
+  .vocab-meaning { font-size: 18px; }
+  .vocab-extra { font-size: 16.5px; line-height: 1.7; }
+  .vocab-detail, .vd-example { font-size: 16px; }
+  .vocab-tag, .level-badge { font-size: 13px; }
+  .vocab-expand, .srs-btn, .srs-badge { font-size: 14px; }
+  .question-stem { font-size: 19px; }
+  .question-options { font-size: 18px; }
+  .show-answer-btn { font-size: 15.5px; }
+  .question-analysis .answer-line { font-size: 17px; }
+  .option-item { font-size: 16.5px; }
+  .option-item .opt-why { font-size: 15px; }
+  .writing-phrase, .writing-phrase-en { font-size: 18px; }
+  .writing-phrase-cn, .writing-phrase-use { font-size: 16px; }
+  .conn-card { font-size: 16px; } .conn-item { font-size: 15px; }
+  .review-section h3 { font-size: 17px; } .review-checks { font-size: 17px; }
+  .panel-body[style] { font-size: 17px !important; }
+  .tooltip { font-size: 17px; line-height: 1.55; }
+  .tooltip .tip-phrase { font-size: 19px; }
+  .tooltip .tip-zh-play { font-size: 14px; }
+  #pb-counter, #pb-speed { font-size: 15px; }
+}
+
+/* 注解模式：长难句拆解 */
+.sb-block { display: none; }
+body.mode-annotate .sb-block {
+  display: block; margin: 4px 0 28px; padding: 16px 20px 18px;
+  background: #f8f9fa; border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-family: -apple-system, "PingFang SC", sans-serif; text-indent: 0;
+}
+body.mode-annotate .analysis { display: none !important; }
+body.mode-quiz .sb-block, body.mode-raw .sb-block { display: none !important; }
+.sb-title { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: .08em; margin-bottom: 12px; }
+.sb-sent { font-family: Georgia, serif; font-size: 18px; line-height: 2.3; color: #1a1a1a; background: #fff; border: 1px solid #ece8e0; border-radius: 10px; padding: 14px 18px; }
+.sb-chip { display: inline-block; font-family: -apple-system, "PingFang SC", sans-serif; font-size: 11px; font-weight: 700; line-height: 1; padding: 4px 7px; border-radius: 999px; margin-right: 5px; vertical-align: 3px; }
+.sb-core { font-weight: 700; border-bottom: 2.5px solid var(--accent); }
+.sb-core-chip { background: var(--accent); color: #fff; }
+.sb-ins { color: #9a9a9a; background: #eeebe4; border-radius: 4px; padding: 2px 4px; }
+.sb-ins-chip { background: #e4e0d8; color: #777; }
+.sb-rest { border-bottom: 2.5px solid #4caf7a; }
+.sb-rest-chip { background: #4caf7a; color: #fff; }
+.sb-steps { margin-top: 14px; display: grid; gap: 10px; }
+.sb-step { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; font-size: 15px; line-height: 1.75; color: #333; }
+.sb-step-n { width: 24px; height: 24px; border-radius: 50%; background: #1a1a1a; color: #fff; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; margin-top: 2px; }
+.sb-step em { font-style: normal; font-family: Georgia, serif; color: #111; background: #fff; border: 1px solid #ece8e0; padding: 0 5px; border-radius: 4px; }
+.sb-step .arrow { color: #aaa; margin: 0 4px; }
+.sb-tip { margin-top: 14px; font-size: 14px; color: #8a6d1f; background: #fdf6e3; border-radius: 8px; padding: 9px 14px; }
+
+@media print {
+  @page { size: A4; margin: 14mm 12mm; }
+  html, body { background: #fff !important; }
+  body { padding: 0 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .header, #playbar, .panel, .tooltip { display: none !important; }
+  .passage { box-shadow: none !important; border: none !important; background: #fff !important; padding: 0 !important; margin: 0 !important; max-width: none !important; }
+  .sentence { font-size: 15px !important; line-height: 1.85 !important; }
+  .translation-inline { font-size: 12.5px !important; break-inside: avoid; }
+  body.mode-annotate .para-ann { grid-template-columns: 1fr 1fr; gap: 8px 10px; margin: 8px 0 14px; }
+  .pan-row { box-shadow: none; padding: 9px 12px 10px; break-inside: avoid; }
+  .pan-en { font-size: 14px; }
+  .pan-cn { font-size: 12.5px; }
+  .pan-det { margin: 6px 0 0 30px; font-size: 11.5px; line-height: 1.6; }
+  .pan-det div + div { margin-top: 3px; }
+  body.mode-annotate .sb-block { break-inside: avoid; padding: 12px 14px; margin: 4px 0 16px; }
+  .sb-sent { font-size: 14px; line-height: 2.1; padding: 10px 12px; }
+  .sb-step { font-size: 12.5px; line-height: 1.6; }
+  .sb-tip { font-size: 12px; }
+  .restaurant-name, h2, h3 { break-after: avoid; }
+}
+</style>
+</head>
+<body class="mode-study">
+
+<!-- ══════ Header ══════ -->
+<div class="header">
+  <div class="container">
+    <h1>B篇精读 · Multigenerational Living</h1>
+    <div class="header-controls">
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="study" onclick="setMode('study')">① 精读</button>
+        <button class="mode-step" data-mode="quiz" onclick="setMode('quiz')">② 做题</button>
+        <button class="mode-step" data-mode="raw" onclick="setMode('raw')">③ 原文</button>
+        <button class="mode-step" data-mode="annotate" onclick="setMode('annotate')">④ 课本</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()" title="切换护眼色">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Passage ══════ -->
+<div class="container">
+<div class="passage" id="passage">
+  <div class="passage-title">B</div>
+  <div class="passage-subtitle">Multigenerational Living</div>
+
+  <!-- ── Para 1 ── -->
+  <div class="paragraph" id="para-1">
+    <span class="sentence" data-idx="0">After we had twins and became a family of five, my husband and I decided to move from London back to Yorkshire, to be closer to my parents.</span>
+    <span class="sentence" data-idx="1">Around the same time, they sold their house and we decided to build them a <span class="tip" data-tip="bungalow|平房｜bungalow 指只有一层的独立小房子，常见于英国乡村。原文说在花园里给父母建一栋平房｜搭配：a detached bungalow 独栋平房" data-level="超纲">bungalow</span> (平房) in our garden.</span>
+    <span class="sentence" data-idx="2">We moved them in with us until the build was complete.</span>
+    <div class="translation-inline">我们有了双胞胎、成为五口之家后，我和丈夫决定从伦敦搬回约克郡，离我父母近一些。差不多同一时间，他们卖掉了自己的房子，我们决定在花园里给他们建一栋平房。在房子建好之前，我们先让他们搬来和我们一起住。</div>
+  </div>
+
+  <!-- ── Para 2 ── -->
+  <div class="paragraph" id="para-2">
+    <span class="sentence" data-idx="3">Packing up my parents' house felt like a <span class="tip" data-tip="massive|巨大的｜massive 形容体量或程度极大。a massive goodbye = 一次巨大的告别。比 big 更强烈｜搭配：massive change 巨大变化，massive amount 大量" data-level="拓展">massive</span> goodbye — that bedroom, those memories, the feeling of safety and shelter I always felt there.</span>
+    <span class="sentence" data-idx="4">That evening, I sat in the living room watching TV, temporarily free of my own responsibilities, lost in <span class="tip" data-tip="nostalgia|留恋/怀旧｜nostalgia 指对过去美好时光的怀念和眷恋。lost in nostalgia = 沉浸在怀旧之中｜搭配：a wave of nostalgia 一阵怀旧之情，feel nostalgia for 对……感到怀念" data-level="拓展">nostalgia</span> (留恋).</span>
+    <span class="sentence complex" data-idx="5">Even though I'm a grown woman in my 40s with my own family, it felt scary not to have "home" to go back to.</span>
+    <div class="analysis" id="analysis-5"><button class="analysis-play" onclick="playAnalysis('analysis-5', this)" title="听讲解">🔊 听讲解</button>
+      <p>这句的结构是：Even though（让步状语从句）+ it felt scary not to have "home" to go back to（主句，it做形式主语）。</p>
+      <p>Even though I'm a grown woman... 让步——虽然我已经是40多岁有自己家庭的成年女性。it felt scary not to have "home" to go back to——没有"家"可以回去这件事让人害怕。it 是形式主语，真正主语是 not to have "home" to go back to。</p>
+    </div>
+    <div class="translation-inline">收拾父母的房子感觉像一次巨大的告别——那间卧室、那些回忆、我在那里总能感受到的安全和庇护。那天晚上，我坐在客厅看电视，暂时从自己的责任中解脱出来，沉浸在留恋之中。尽管我已经是一个40多岁、有自己家庭的成年女性，没有"家"可以回去的感觉还是让人害怕。</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-rest-chip">让步状语从句</span><span class="sb-rest">Even though I'm a grown woman in my 40s with my own family,</span> <span class="sb-chip sb-core-chip">形式主语</span><span class="sb-core">it</span> <span class="sb-chip sb-core-chip">谓语</span><span class="sb-core">felt scary</span> <span class="sb-chip sb-core-chip">真正主语</span><span class="sb-core">not to have "home" to go back to.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先找主干：<em>it felt scary not to have "home" to go back to</em><span class="arrow">→</span>没有「家」可以回去，这让人害怕</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>让步状语从句：<em>Even though I'm a grown woman in my 40s with my own family</em><span class="arrow">→</span>虽然我已是40多岁有家庭的成年女性</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>it 是形式主语，真正主语是后面的不定式短语：<em>not to have "home" to go back to</em><span class="arrow">→</span>没有「家」可以回去</div></div></div><div class="sb-tip">💡 Even though 引导让步状语从句，表示「虽然/尽管」。it 做形式主语 + 不定式做真正主语是高考常考句型：It is important to learn English = 学英语很重要。</div></div>
+  </div>
+
+  <!-- ── Para 3 ── -->
+  <div class="paragraph" id="para-3">
+    <span class="sentence" data-idx="6">On our final morning in the house, we took a break from the <span class="tip" data-tip="mind-bending|令人费解的/极其复杂的｜mind = 头脑，bending = 弯曲。mind-bending 字面意思是「让大脑弯曲的」，形容事情极其复杂、令人头大｜搭配：mind-bending puzzle 令人费解的谜题" data-level="超纲">mind-bending</span>, never-ending work of packing to sit down for that last breakfast.</span>
+    <span class="sentence" data-idx="7">Mum <span class="tip" data-tip="voiced|说出｜voice 做动词时意为「说出（想法或感受）」。Mum voiced what we were all thinking = 妈妈说出了我们心里都在想的话｜搭配：voice one's opinion 表达意见，voice concern 表达担忧" data-level="拓展">voiced</span> what we were all thinking: It was strange to see the place so empty.</span>
+    <span class="sentence" data-idx="8">I worried that they'd begin to think they'd made a mistake.</span>
+    <div class="translation-inline">在房子里的最后一个早晨，我们从令人头大的、永无止境的打包工作中歇了一口气，坐下来吃最后一顿早餐。妈妈说出了我们心里都在想的话：看到这个地方如此空荡荡的，感觉很奇怪。我担心他们会开始觉得自己做了一个错误的决定。</div>
+  </div>
+
+  <!-- ── Para 4 ── -->
+  <div class="paragraph" id="para-4">
+    <span class="sentence" data-idx="9">"How do you feel?" I asked.</span>
+    <span class="sentence" data-idx="10">There was a silence as Dad continued to drink his tea, and I held my breath.</span>
+    <div class="translation-inline">"你们感觉怎么样？"我问道。一阵沉默，爸爸继续喝着茶，我屏住了呼吸。</div>
+  </div>
+
+  <!-- ── Para 5 ── -->
+  <div class="paragraph" id="para-5">
+    <span class="sentence" data-idx="11">"Well, it's pretty awesome, isn't it?" he replied.</span>
+    <span class="sentence" data-idx="12">I breathed a huge <span class="tip" data-tip="sigh of relief|如释重负的叹息｜sigh = 叹气，relief = 释然/宽慰。breathe a sigh of relief = 松了一口气，如释重负地叹了口气｜搭配：a collective sigh of relief 众人一起松了口气" data-level="拓展">sigh of relief</span>: I had expected sadness, maybe even doubt, but Dad was already looking to the future.</span>
+    <span class="sentence" data-idx="13">His response had an impact on me.</span>
+    <div class="translation-inline">"嗯，这挺棒的，不是吗？"他回答道。我如释重负地长舒了一口气：我原本预期的是伤感，甚至可能是犹豫，但爸爸已经在展望未来了。他的回答对我产生了影响。</div>
+  </div>
+
+  <!-- ── Para 6 ── -->
+  <div class="paragraph" id="para-6">
+    <span class="sentence" data-idx="14">Yes, it was a huge goodbye in so many ways, but it was also the start of something new: an adventure in <span class="tip" data-tip="multigenerational|多代人的｜multi- = 多，generation = 代，-al = 形容词后缀。multigenerational living = 多代人同住。这个词是文章的核心主题｜搭配：multigenerational household 多代同堂家庭" data-level="超纲">multigenerational</span> living.</span>
+    <span class="sentence" data-idx="15">I realised this wasn't about loss at all, but about movement and trust.</span>
+    <span class="sentence complex" data-idx="16">Hearing Dad's <span class="tip" data-tip="cheerfulness|乐观/开朗｜cheer = 欢呼/愉快，-ful = 充满，-ness = 名词后缀。cheerfulness = 乐观开朗的态度。Dad的cheerfulness让作者改变了心态｜搭配：radiate cheerfulness 散发出乐观的气质" data-level="拓展">cheerfulness</span>, I realised that what I'd been seeing as "the end of an <span class="tip" data-tip="era|时代｜era 指一个有特定特征的历史时期。the end of an era = 一个时代的终结。作者用此形容离开父母老宅的感受｜搭配：a new era 新时代，the era of 某某时代" data-level="拓展">era</span>" was actually the start of a new one.</span>
+    <div class="analysis" id="analysis-16"><button class="analysis-play" onclick="playAnalysis('analysis-16', this)" title="听讲解">🔊 听讲解</button>
+      <p>这句的结构是：Hearing Dad's cheerfulness（现在分词短语做状语）+ I realised that（主句）+ what I'd been seeing as "the end of an era" was actually the start of a new one（that引导的宾语从句，其中what引导主语从句）。</p>
+      <p>核心含义：听到爸爸的乐观态度，我意识到我一直认为的「一个时代的终结」实际上是一个新时代的开始。what I'd been seeing as... 中的过去完成进行时表示「我一直以来都把……看作」。</p>
+    </div>
+    <span class="sentence" data-idx="17">Sitting at the table, making my mini sandwich, I realised I was ready for our next <span class="tip" data-tip="chapter|篇章/阶段｜chapter 本义是「章节」，这里用作比喻，指人生的一个阶段/篇章。our next chapter = 我们的下一个人生篇章｜搭配：a new chapter in life 人生新篇章，close a chapter 翻篇" data-level="拓展">chapter</span>.</span>
+    <div class="translation-inline">是的，这在很多方面都是一次巨大的告别，但它也是某种新事物的开始：一场多代同堂生活的冒险。我意识到这根本不是关于失去，而是关于前行和信任。听到爸爸的乐观态度，我意识到我一直视为「一个时代的终结」的东西，实际上是一个新时代的开始。坐在桌旁，做着我的迷你三明治，我意识到我已经准备好迎接我们的下一个篇章了。</div>
+    <div class="sb-block"><div class="sb-title">长难句拆解</div><div class="sb-sent"><span class="sb-chip sb-rest-chip">现在分词状语</span><span class="sb-rest">Hearing Dad's cheerfulness,</span> <span class="sb-chip sb-core-chip">主句</span><span class="sb-core">I realised that</span> <span class="sb-chip sb-core-chip">what主语从句</span><span class="sb-core">what I'd been seeing as "the end of an era"</span> <span class="sb-chip sb-core-chip">谓语</span><span class="sb-core">was actually the start of a new one.</span></div><div class="sb-steps"><div class="sb-step"><span class="sb-step-n">1</span><div>先找主干：<em>I realised that … was actually the start of a new one</em><span class="arrow">→</span>我意识到……实际上是一个新的开始</div></div><div class="sb-step"><span class="sb-step-n">2</span><div>分词状语：<em>Hearing Dad's cheerfulness</em><span class="arrow">→</span>听到爸爸的乐观态度（表示时间/原因）</div></div><div class="sb-step"><span class="sb-step-n">3</span><div>what 引导宾语从句中的主语从句：<em>what I'd been seeing as "the end of an era"</em><span class="arrow">→</span>我一直视为「一个时代终结」的东西</div></div><div class="sb-step"><span class="sb-step-n">4</span><div>过去完成进行时 <em>I'd been seeing</em><span class="arrow">→</span>表示「一直以来都这样看」，强调持续性</div></div></div><div class="sb-tip">💡 现在分词做状语（Hearing …, I realised …）是高考高频句型，表示伴随、时间或原因。what 引导名词性从句 = the thing that，作文中可套用：What I learned from this experience was that …</div></div>
+  </div>
+
+</div>
+
+<!-- ══════ Vocabulary ══════ -->
+<div class="panel" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')">
+    <span>生词与短语（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="vocab-list">
+      <!-- ── 超纲 ── -->
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('bungalow')">bungalow</span>
+          <span class="vocab-meaning">平房</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
+        </div>
+        <div class="vocab-extra"><em>bungalow</em> 指只有一层的独立小房子，常见于英国乡村。build them a <em>bungalow</em> = 给他们建一栋平房<br>搭配：a detached <em>bungalow</em> 独栋平房</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('mind-bending')">mind-bending</span>
+          <span class="vocab-meaning">令人费解的/极其复杂的</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
+        </div>
+        <div class="vocab-extra">mind = 头脑，bending = 弯曲。字面意思是「让大脑弯曲的」，形容事情极其复杂、令人头大<br>搭配：<em>mind-bending</em> puzzle 令人费解的谜题 · the <em>mind-bending</em> work of packing 令人头大的打包工作</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('multigenerational')">multigenerational</span>
+          <span class="vocab-meaning">多代人的</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
+        </div>
+        <div class="vocab-extra">multi- = 多，generation = 代，-al = 形容词后缀。<em>multigenerational</em> living = 多代同堂生活<br>搭配：<em>multigenerational</em> household 多代同堂家庭</div>
+      </div>
+      <!-- ── 拓展 ── -->
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('massive')">massive</span>
+          <span class="vocab-meaning">巨大的</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">a <em>massive</em> goodbye = 一次巨大的告别。<em>massive</em> 比 big 更强烈，强调体量或程度极大<br>搭配：<em>massive</em> change 巨大变化 · <em>massive</em> amount 大量</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('nostalgia')">nostalgia</span>
+          <span class="vocab-meaning">留恋/怀旧</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">lost in <em>nostalgia</em> = 沉浸在怀旧之中。<em>nostalgia</em> 指对过去美好时光的怀念和眷恋<br>搭配：a wave of <em>nostalgia</em> 一阵怀旧之情 · feel <em>nostalgia</em> for 对……感到怀念</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('voiced')">voiced</span>
+          <span class="vocab-meaning">说出</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">voice 做动词时意为「说出（想法或感受）」。Mum <em>voiced</em> what we were all thinking = 妈妈说出了我们心里都在想的话<br>搭配：<em>voice</em> one's opinion 表达意见 · <em>voice</em> concern 表达担忧</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('sigh of relief')">sigh of relief</span>
+          <span class="vocab-meaning">如释重负的叹息</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">sigh = 叹气，relief = 释然/宽慰。breathe a <em>sigh of relief</em> = 松了一口气，如释重负地叹了口气<br>搭配：a collective <em>sigh of relief</em> 众人一起松了口气 · a huge <em>sigh of relief</em> 大大地松了口气</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('cheerfulness')">cheerfulness</span>
+          <span class="vocab-meaning">乐观/开朗</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">cheer = 欢呼/愉快，-ful = 充满，-ness = 名词后缀。Dad's <em>cheerfulness</em> = 爸爸的乐观态度<br>搭配：radiate <em>cheerfulness</em> 散发出乐观的气质</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('era')">era</span>
+          <span class="vocab-meaning">时代</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">the end of an <em>era</em> = 一个时代的终结。<em>era</em> 指一个有特定特征的历史时期<br>搭配：a new <em>era</em> 新时代 · the <em>era</em> of … 某某时代</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('chapter')">chapter</span>
+          <span class="vocab-meaning">篇章/阶段</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra"><em>chapter</em> 本义是「章节」，这里比喻人生的一个阶段。our next <em>chapter</em> = 我们的下一个人生篇章<br>搭配：a new <em>chapter</em> in life 人生新篇章 · close a <em>chapter</em> 翻篇</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Questions ══════ -->
+<div class="panel" id="questionsPanel">
+  <div class="panel-header" onclick="togglePanel('questionsPanel')">
+    题目解析（4题，24—27）
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="question-item" data-answer="B">
+      <div class="question-stem">24. After they had twins, the author and her husband decided to________.</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. visit her parents</div>
+        <div class="question-option" data-key="B">B. move back to Yorkshire</div>
+        <div class="question-option" data-key="C">C. rent a house for the family</div>
+        <div class="question-option" data-key="D">D. raise their children in London</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：B</div>
+        <div class="locate" data-goto="0" onclick="gotoSentence(0)">"After we had twins and became a family of five, my husband and I decided to move from London back to Yorkshire, to be closer to my parents."</div>
+        <p style="margin-top:8px"><b>解题思路：</b>原文第一句直接说"decided to move from London back to Yorkshire"，完全对应B选项。属于细节题，原文原词复现。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-letter">A.</span> visit her parents <span class="opt-mark">✗</span><span class="opt-why">是搬回去住在父母附近，不是去探望</span></div>
+          <div class="option-item correct"><span class="opt-letter">B.</span> move back to Yorkshire <span class="opt-mark">✓</span><span class="opt-why">原文原词：decided to move from London back to Yorkshire</span></div>
+          <div class="option-item wrong"><span class="opt-letter">C.</span> rent a house for the family <span class="opt-mark">✗</span><span class="opt-why">文中未提及租房</span></div>
+          <div class="option-item wrong"><span class="opt-letter">D.</span> raise their children in London <span class="opt-mark">✗</span><span class="opt-why">恰恰相反，他们离开了伦敦</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="question-item" data-answer="C">
+      <div class="question-stem">25. During the breakfast, the author worried that________.</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. she might lose her shelter in the future</div>
+        <div class="question-option" data-key="B">B. there would be too much work in packing</div>
+        <div class="question-option" data-key="C">C. her parents might regret selling their house</div>
+        <div class="question-option" data-key="D">D. it would be hard to live a multigenerational life</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：C</div>
+        <div class="locate" data-goto="8" onclick="gotoSentence(8)">"I worried that they'd begin to think they'd made a mistake."</div>
+        <p style="margin-top:8px"><b>解题思路：</b>原文明确写到"I worried that they'd begin to think they'd made a mistake"——担心父母会觉得自己做错了决定（即后悔卖房）。C选项"regret selling their house"是对原文的同义转述。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-letter">A.</span> she might lose her shelter in the future <span class="opt-mark">✗</span><span class="opt-why">「失去庇护」是作者自己在第2段的感受，不是早餐时的担忧</span></div>
+          <div class="option-item wrong"><span class="opt-letter">B.</span> there would be too much work in packing <span class="opt-mark">✗</span><span class="opt-why">打包的辛苦是事实描述，不是她担忧的内容</span></div>
+          <div class="option-item correct"><span class="opt-letter">C.</span> her parents might regret selling their house <span class="opt-mark">✓</span><span class="opt-why">they'd made a mistake = 后悔卖房，完全对应</span></div>
+          <div class="option-item wrong"><span class="opt-letter">D.</span> it would be hard to live a multigenerational life <span class="opt-mark">✗</span><span class="opt-why">多代同堂的困难在文中从未被提及为担忧</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="question-item" data-answer="A">
+      <div class="question-stem">26. How did the author feel after hearing her dad's response?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. Uplifted.</div>
+        <div class="question-option" data-key="B">B. Puzzled.</div>
+        <div class="question-option" data-key="C">C. Concerned.</div>
+        <div class="question-option" data-key="D">D. Honoured.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：A</div>
+        <div class="locate" data-goto="12" onclick="gotoSentence(12)">"I breathed a huge sigh of relief: I had expected sadness, maybe even doubt, but Dad was already looking to the future."</div>
+        <div class="locate" data-goto="16" onclick="gotoSentence(16)" style="margin-top:4px">"Hearing Dad's cheerfulness, I realised that what I'd been seeing as 'the end of an era' was actually the start of a new one."</div>
+        <p style="margin-top:8px"><b>解题思路：</b>Dad说"pretty awesome"，作者"breathed a huge sigh of relief"（如释重负），并受到鼓舞，意识到这是新篇章的开始，最后说"I was ready for our next chapter"。Uplifted = 振奋的、受鼓舞的，完美对应。</p>
+        <div class="option-list">
+          <div class="option-item correct"><span class="opt-letter">A.</span> Uplifted <span class="opt-mark">✓</span><span class="opt-why">sigh of relief + 意识到新开始 + ready for next chapter = 受鼓舞/振奋</span></div>
+          <div class="option-item wrong"><span class="opt-letter">B.</span> Puzzled <span class="opt-mark">✗</span><span class="opt-why">作者虽然意外但没有困惑，而是立刻受到感染</span></div>
+          <div class="option-item wrong"><span class="opt-letter">C.</span> Concerned <span class="opt-mark">✗</span><span class="opt-why">担忧是听到回答之前的状态，听到后是释然和振奋</span></div>
+          <div class="option-item wrong"><span class="opt-letter">D.</span> Honoured <span class="opt-mark">✗</span><span class="opt-why">荣幸/受宠若惊与语境不符，作者感受是被鼓舞</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="question-item" data-answer="C">
+      <div class="question-stem">27. What does the story mainly tell us?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. Silence is the best cure for nostalgia.</div>
+        <div class="question-option" data-key="B">B. Distance makes the heart grow fonder.</div>
+        <div class="question-option" data-key="C">C. Optimism lights the path for tomorrow.</div>
+        <div class="question-option" data-key="D">D. Parenting sets the pace of a child's growth.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">&#128270; 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：C</div>
+        <div class="locate" data-goto="11" onclick="gotoSentence(11)">"'Well, it's pretty awesome, isn't it?' he replied."</div>
+        <div class="locate" data-goto="16" onclick="gotoSentence(16)" style="margin-top:4px">"Hearing Dad's cheerfulness, I realised that what I'd been seeing as 'the end of an era' was actually the start of a new one."</div>
+        <p style="margin-top:8px"><b>解题思路：</b>全文主旨——Dad的乐观态度（cheerfulness / "pretty awesome"）让作者从留恋过去转向拥抱未来，意识到这不是终结而是新开始。C选项"Optimism lights the path for tomorrow"（乐观照亮明天的路）完美概括了这一主题。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-letter">A.</span> Silence is the best cure for nostalgia <span class="opt-mark">✗</span><span class="opt-why">文中的沉默只是短暂的等待，不是治愈怀旧的方式</span></div>
+          <div class="option-item wrong"><span class="opt-letter">B.</span> Distance makes the heart grow fonder <span class="opt-mark">✗</span><span class="opt-why">文章讲的是搬到一起住，不是远离</span></div>
+          <div class="option-item correct"><span class="opt-letter">C.</span> Optimism lights the path for tomorrow <span class="opt-mark">✓</span><span class="opt-why">Dad的乐观 → 作者从留恋过去转向拥抱未来 = 乐观照亮明天</span></div>
+          <div class="option-item wrong"><span class="opt-letter">D.</span> Parenting sets the pace of a child's growth <span class="opt-mark">✗</span><span class="opt-why">文章不是在讨论育儿方式对孩子成长的影响</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="quiz-score" id="quizScore"></div>
+  </div>
+</div>
+
+<!-- ══════ Review ══════ -->
+<div class="panel" id="reviewPanel">
+  <div class="panel-header" onclick="togglePanel('reviewPanel')">
+    本篇复盘
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="review-section">
+      <h3>我这篇的卡点：</h3>
+      <div class="review-checks">
+        <label><input type="checkbox" id="rev1"> 长难句看不懂</label>
+        <label><input type="checkbox" id="rev2"> 找不到原文证据</label>
+        <label><input type="checkbox" id="rev3"> 脑补推理</label>
+        <label><input type="checkbox" id="rev4"> 生词太多</label>
+      </div>
+      <h3 style="margin-top:16px">标记：</h3>
+      <div class="review-checks">
+        <label><input type="checkbox" id="rev5"> 待复习</label>
+        <label><input type="checkbox" id="rev6"> 已掌握</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ 阅读技巧 ══════ -->
+<div class="panel" id="tipPanel">
+  <div class="panel-header" onclick="togglePanel('tipPanel')">
+    阅读技巧：家庭/情感叙事类文章怎么读
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body" style="font-size:15px; line-height:1.8;">
+    <p style="margin-bottom:14px;">B篇常考"个人叙事/情感感悟"类——作者通过亲身经历得出人生道理。本文是典型的家庭生活叙事。有3个核心策略：</p>
+
+    <p style="margin-bottom:6px;"><strong>① 抓住情感转折点</strong></p>
+    <p style="margin-bottom:14px; padding-left:16px; color:#555;">
+      叙事类文章一定有一个turning point（转折点）。本文的转折点是Dad说"it's pretty awesome, isn't it?"——从此作者的心态从留恋与担忧转向乐观与期待。找到转折点，前后的"情感变化"就清楚了：之前不舍过去 → 之后拥抱未来。
+    </p>
+
+    <p style="margin-bottom:6px;"><strong>② 关注末段的总结句</strong></p>
+    <p style="margin-bottom:14px; padding-left:16px; color:#555;">
+      感悟类文章的核心观点通常在<b>最后一两句</b>。本文末段连续三个 "I realised" 层层推进：① 不是失去，而是前行和信任 ② 不是终结，而是新的开始 ③ 我准备好了。Q27主旨题直接考的就是这些感悟。做题时先看末段，事半功倍。
+    </p>
+
+    <p style="margin-bottom:6px;"><strong>③ 注意"谁的情感"和"什么时候"</strong></p>
+    <p style="margin-bottom:0; padding-left:16px; color:#555;">
+      本文有多处情感描写，做题时要注意区分<b>是谁的情感</b>以及<b>发生在什么时候</b>。比如Q26问的是"听到Dad回答之后"的感受，不能选"听到之前"的担忧（Concerned）。又如Q25问的是"早餐时"的担忧，不能选第2段"那天晚上"的感受。时间线很重要：收拾房子 → 当晚怀旧 → 最后早餐 → Dad回答 → 作者感悟。
+    </p>
+  </div>
+</div>
+
+<!-- ══════ 作文拓展 ══════ -->
+<div class="panel" id="writingPanel">
+  <div class="panel-header" onclick="togglePanel('writingPanel')">
+    作文拓展：好句式 &amp; 连接词速查
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body" style="font-size:15px; line-height:1.8;">
+
+    <div class="writing-block">
+      <div class="writing-block-title">从文章偷来的好句式</div>
+      <div class="writing-phrase-list">
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">Even though ..., it felt scary not to have ...</div>
+          <div class="writing-phrase-cn">虽然……，没有……的感觉还是让人害怕（Even though让步 + it做形式主语）</div>
+          <div class="writing-phrase-src">原句：<em>Even though I'm a grown woman in my 40s with my own family, it felt scary not to have "home" to go back to.</em></div>
+          <div class="writing-phrase-use">作文套用：<em>Even though</em> we live in the digital age, <em>it feels</em> lonely <em>not to have</em> real friends around. 写情感类作文时表达矛盾心理，非常好用。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">Hearing / Seeing ..., I realised that ...</div>
+          <div class="writing-phrase-cn">听到/看到……，我意识到……（现在分词状语 + 主句）</div>
+          <div class="writing-phrase-src">原句：<em>Hearing Dad's cheerfulness, I realised that what I'd been seeing as "the end of an era" was actually the start of a new one.</em></div>
+          <div class="writing-phrase-use">作文套用：<em>Seeing</em> my mother's tired smile, <em>I realised that</em> love often comes in the quietest forms. 写亲情/感悟类作文，一句话搞定转折。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">This wasn't about A at all, but about B.</div>
+          <div class="writing-phrase-cn">这根本不是关于A，而是关于B（否定+肯定，对比深刻）</div>
+          <div class="writing-phrase-src">原句：<em>I realised this wasn't about loss at all, but about movement and trust.</em></div>
+          <div class="writing-phrase-use">作文套用：The competition <em>wasn't about</em> winning <em>at all, but about</em> pushing our limits and growing together. 议论文/叙事文中升华观点用。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">... not A, but B</div>
+          <div class="writing-phrase-cn">不是A，而是B（经典对比）</div>
+          <div class="writing-phrase-src">原句：<em>it was also the start of something new: an adventure in multigenerational living.</em></div>
+          <div class="writing-phrase-use">作文套用：Moving to a new city was <em>not</em> an ending, <em>but</em> a beginning full of possibilities. 展示辩证思维，升华结尾。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">I was ready for our next chapter.</div>
+          <div class="writing-phrase-cn">我已准备好迎接下一个篇章（chapter比喻人生阶段）</div>
+          <div class="writing-phrase-src">原句：<em>Sitting at the table, making my mini sandwich, I realised I was ready for our next chapter.</em></div>
+          <div class="writing-phrase-use">作文套用：Standing at the school gate for the last time, I knew I <em>was ready for</em> the <em>next chapter</em> of my life. 毕业/成长类作文结尾，简洁有力。</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="writing-block">
+      <div class="writing-block-title">连接词速查（按功能分）</div>
+      <div class="conn-grid">
+
+        <div class="conn-card c-add">
+          <div class="conn-card-title">递进 / 补充</div>
+          <span class="conn-item">furthermore</span>
+          <span class="conn-item">moreover</span>
+          <span class="conn-item">in addition</span>
+          <span class="conn-item">what's more</span>
+          <span class="conn-item">not only...but also</span>
+          <div class="conn-note">比 "also" 和 "and" 正式，议论文首选</div>
+        </div>
+
+        <div class="conn-card c-contrast">
+          <div class="conn-card-title">转折 / 对比</div>
+          <span class="conn-item">however</span>
+          <span class="conn-item">yet</span>
+          <span class="conn-item">instead</span>
+          <span class="conn-item">in contrast</span>
+          <span class="conn-item">on the other hand</span>
+          <div class="conn-note">本文多处用 but / even though 来表示情感转折</div>
+        </div>
+
+        <div class="conn-card c-result">
+          <div class="conn-card-title">结果 / 因此</div>
+          <span class="conn-item">as a result</span>
+          <span class="conn-item">therefore</span>
+          <span class="conn-item">consequently</span>
+          <span class="conn-item">thus</span>
+          <div class="conn-note">thus 最简洁，thus + 分词短语直接高分</div>
+        </div>
+
+        <div class="conn-card c-example">
+          <div class="conn-card-title">举例说明</div>
+          <span class="conn-item">for instance</span>
+          <span class="conn-item">for example</span>
+          <span class="conn-item">take...for example</span>
+          <span class="conn-item">such as</span>
+          <div class="conn-note">for instance 比 for example 更口语化一点点，两者都可用</div>
+        </div>
+
+        <div class="conn-card c-conclude">
+          <div class="conn-card-title">总结 / 结尾</div>
+          <span class="conn-item">in conclusion</span>
+          <span class="conn-item">to sum up</span>
+          <span class="conn-item">in short</span>
+          <span class="conn-item">overall</span>
+          <span class="conn-item">in a word</span>
+          <div class="conn-note">结尾段第一句用，考官扫一眼就知道你会写结论</div>
+        </div>
+
+        <div class="conn-card c-add">
+          <div class="conn-card-title">顺序 / 衔接</div>
+          <span class="conn-item">first of all</span>
+          <span class="conn-item">secondly</span>
+          <span class="conn-item">finally</span>
+          <span class="conn-item">meanwhile</span>
+          <span class="conn-item">at the same time</span>
+          <div class="conn-note">列举多个原因/步骤时用，让文章结构清晰</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- .container -->
+
+<!-- ══════ Bottom Playbar ══════ -->
+<div id="playbar">
+  <button id="pb-prev" onclick="pbPrev()" title="上一句">⏮</button>
+  <button id="pb-play" onclick="pbToggle()" title="播放/暂停">▶</button>
+  <button id="pb-next" onclick="pbNext()" title="下一句">⏭</button>
+  <span id="pb-counter">— / 18</span>
+  <select id="pb-speed" onchange="pbSetSpeed(this.value)" title="播放速度">
+    <option value="0.8">0.8x</option>
+    <option value="1" selected>1.0x</option>
+    <option value="1.2">1.2x</option>
+  </select>
+</div>
+
+<script>
+// ── Theme toggle ──
+const THEMES = ['yellow', 'green'];
+const THEME_LABELS = { yellow: '📄 书本黄', green: '🌿 护眼绿' };
+let themeIdx = parseInt(localStorage.getItem('theme') || '0');
+function applyTheme() {
+  document.body.classList.remove('theme-yellow', 'theme-green');
+  const t = THEMES[themeIdx % THEMES.length];
+  document.body.classList.add('theme-' + t);
+  const btn = document.getElementById('theme-btn');
+  if (btn) btn.textContent = THEME_LABELS[t];
+}
+function cycleTheme() {
+  themeIdx = (themeIdx + 1) % THEMES.length;
+  localStorage.setItem('theme', themeIdx);
+  applyTheme();
+}
+applyTheme();
+
+const sentences = [
+  "After we had twins and became a family of five, my husband and I decided to move from London back to Yorkshire, to be closer to my parents.",
+  "Around the same time, they sold their house and we decided to build them a bungalow in our garden.",
+  "We moved them in with us until the build was complete.",
+  "Packing up my parents' house felt like a massive goodbye — that bedroom, those memories, the feeling of safety and shelter I always felt there.",
+  "That evening, I sat in the living room watching TV, temporarily free of my own responsibilities, lost in nostalgia.",
+  "Even though I'm a grown woman in my 40s with my own family, it felt scary not to have 'home' to go back to.",
+  "On our final morning in the house, we took a break from the mind-bending, never-ending work of packing to sit down for that last breakfast.",
+  "Mum voiced what we were all thinking: It was strange to see the place so empty.",
+  "I worried that they'd begin to think they'd made a mistake.",
+  "'How do you feel?' I asked.",
+  "There was a silence as Dad continued to drink his tea, and I held my breath.",
+  "'Well, it's pretty awesome, isn't it?' he replied.",
+  "I breathed a huge sigh of relief: I had expected sadness, maybe even doubt, but Dad was already looking to the future.",
+  "His response had an impact on me.",
+  "Yes, it was a huge goodbye in so many ways, but it was also the start of something new: an adventure in multigenerational living.",
+  "I realised this wasn't about loss at all, but about movement and trust.",
+  "Hearing Dad's cheerfulness, I realised that what I'd been seeing as 'the end of an era' was actually the start of a new one.",
+  "Sitting at the table, making my mini sandwich, I realised I was ready for our next chapter."
+];
+
+// ── Tooltip system ──
+let activeTooltip = null;
+
+const ANALYSIS_AUDIO = {
+  "analysis-5":  "audio/2026北京卷-B/analysis-5.mp3",
+  "analysis-16": "audio/2026北京卷-B/analysis-16.mp3",
+};
+let analysisPlayer = null;
+let analysisBtn = null;
+
+function playAnalysis(id, btn) {
+  if (analysisPlayer) {
+    analysisPlayer.pause();
+    analysisPlayer = null;
+    if (analysisBtn) { analysisBtn.textContent = '🔊 听讲解'; analysisBtn.classList.remove('playing'); }
+    if (analysisBtn === btn) { analysisBtn = null; return; }
+  }
+  const src = ANALYSIS_AUDIO[id];
+  if (!src) return;
+  analysisPlayer = new Audio(src);
+  analysisBtn = btn;
+  btn.textContent = '⏹ 停止';
+  btn.classList.add('playing');
+  analysisPlayer.onended = () => { btn.textContent = '🔊 听讲解'; btn.classList.remove('playing'); analysisPlayer = null; analysisBtn = null; };
+  analysisPlayer.play();
+}
+
+const ZH_AUDIO = {};
+let zhPlayer = null;
+
+function phraseToSlug(phrase) {
+  return phrase.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function playZhAudio(slug, btn) {
+  if (zhPlayer) {
+    zhPlayer.pause();
+    zhPlayer = null;
+    btn.textContent = '🔊 听讲解';
+    return;
+  }
+  const src = ZH_AUDIO[slug];
+  if (!src) return;
+  zhPlayer = new Audio(src);
+  btn.textContent = '⏹ 停止';
+  zhPlayer.onended = () => { btn.textContent = '🔊 听讲解'; zhPlayer = null; };
+  zhPlayer.play();
+}
+
+function showTooltip(tipEl) {
+  hideTooltip();
+  const raw = tipEl.getAttribute('data-tip');
+  const [phrase, explain] = raw.split('|');
+  const parts = explain.split('｜');
+  const slug = phraseToSlug(phrase);
+  const hasAudio = ZH_AUDIO[slug];
+
+  const tooltip = document.createElement('div');
+  tooltip.className = 'tooltip';
+  tooltip.innerHTML = '<div class="tip-scroll">' +
+    `<div class="tip-phrase">${phrase}${tipEl.dataset.level ? `<span class="level-badge badge-${tipEl.dataset.level}">${tipEl.dataset.level}</span>` : ''}<span class="tip-speak" onclick="speakWord('${phrase}')">&#9654;</span></div>` +
+    parts.map(p => `<div>${p.trim()}</div>`).join('') +
+    (hasAudio ? `<button class="tip-zh-play" onclick="playZhAudio('${slug}', this)">🔊 听讲解</button>` : '') + '</div>';
+  document.body.appendChild(tooltip);
+  activeTooltip = tooltip;
+  tooltip._tip = tipEl;
+  positionTooltip();
+  if (!activeTooltip) return;
+  speakWord(phrase);
+}
+
+let _safeProbe = null;
+function tooltipFrame() {
+  if (!_safeProbe) {
+    _safeProbe = document.createElement('div');
+    _safeProbe.style.cssText = 'position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;pointer-events:none;' +
+      'padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)';
+    document.body.appendChild(_safeProbe);
+  }
+  const cs = getComputedStyle(_safeProbe);
+  const M = 8;
+  const vw = document.documentElement.clientWidth, vh = window.innerHeight;
+  let minY = M + (parseFloat(cs.paddingTop) || 0);
+  let maxY = vh - M - (parseFloat(cs.paddingBottom) || 0);
+  const hdr = document.querySelector('.header');
+  if (hdr) { const b = hdr.getBoundingClientRect().bottom; if (b > 0) minY = Math.max(minY, b + 4); }
+  const pb = document.getElementById('playbar');
+  if (pb && getComputedStyle(pb).display !== 'none') { maxY = Math.min(maxY, pb.getBoundingClientRect().top - 4); }
+  return { minX: M + (parseFloat(cs.paddingLeft) || 0), maxX: vw - M - (parseFloat(cs.paddingRight) || 0), minY, maxY };
+}
+
+function positionTooltip() {
+  const tooltip = activeTooltip;
+  if (!tooltip) return;
+  const tipEl = tooltip._tip;
+  const rects = tipEl.getClientRects();
+  const f = tooltipFrame();
+  if (!rects.length) { hideTooltip(); return; }
+  const first = rects[0], last = rects[rects.length - 1];
+  if (last.bottom < f.minY - 4 || first.top > f.maxY + 4) { hideTooltip(); return; }
+
+  const GAP = 10, PAD = 16;
+  const body = tooltip.firstElementChild;
+  tooltip.style.maxWidth = Math.max(120, Math.min(520, f.maxX - f.minX)) + 'px';
+  body.style.maxHeight = 'none';
+  tooltip.style.left = '0px'; tooltip.style.top = '0px';
+  const tw = tooltip.offsetWidth, naturalH = tooltip.offsetHeight;
+  const spaceAbove = first.top - f.minY - GAP;
+  const spaceBelow = f.maxY - last.bottom - GAP;
+  let below;
+  if (naturalH <= spaceAbove) below = false;
+  else if (naturalH <= spaceBelow) below = true;
+  else below = spaceBelow > spaceAbove;
+  const avail = Math.max(60, below ? spaceBelow : spaceAbove);
+  const th = Math.min(naturalH, avail);
+  if (naturalH > avail) body.style.maxHeight = Math.max(30, avail - PAD) + 'px';
+
+  const r = below ? last : first;
+  const cx = r.left + r.width / 2;
+  const left = Math.max(f.minX, Math.min(cx - tw / 2, f.maxX - tw));
+  let top = below ? last.bottom + GAP : first.top - GAP - tooltip.offsetHeight;
+  top = Math.max(f.minY, Math.min(top, f.maxY - tooltip.offsetHeight));
+  tooltip.classList.toggle('below', below);
+  tooltip.style.setProperty('--arrow-left', Math.max(14, Math.min(cx - left, tw - 14)) + 'px');
+  tooltip.style.left = left + 'px';
+  tooltip.style.top = top + 'px';
+}
+(function () {
+  let raf = 0;
+  const re = () => { if (!activeTooltip || raf) return; raf = requestAnimationFrame(() => { raf = 0; positionTooltip(); }); };
+  window.addEventListener('scroll', re, { passive: true });
+  window.addEventListener('resize', re);
+  window.addEventListener('orientationchange', re);
+  if (window.visualViewport) { visualViewport.addEventListener('resize', re); visualViewport.addEventListener('scroll', re); }
+})();
+
+function hideTooltip() {
+  if (zhPlayer) { zhPlayer.pause(); zhPlayer = null; }
+  if (activeTooltip) { activeTooltip.remove(); activeTooltip = null; }
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.sentence.highlighted') && !e.target.closest('.locate')) {
+    document.querySelectorAll('.sentence.highlighted').forEach(s => s.classList.remove('highlighted'));
+  }
+  const tipEl = e.target.closest('.tip');
+  if (tipEl) {
+    e.stopPropagation();
+    if (activeTooltip && activeTooltip._source === tipEl) {
+      hideTooltip();
+    } else {
+      showTooltip(tipEl);
+      if (activeTooltip) activeTooltip._source = tipEl;
+    }
+    return;
+  }
+  if (e.target.closest('.tooltip')) return;
+  hideTooltip();
+});
+
+// ── Playbar ──
+let pbCurrent = null;
+let pbPlaying = false;
+let pbSpeed = 1;
+let enPlayer = null;
+
+function pbStop() {
+  if (enPlayer) { enPlayer.pause(); enPlayer = null; }
+  pbPlaying = false;
+}
+
+function highlightSentence(idx) {
+  document.querySelectorAll('.sentence').forEach(el => el.classList.remove('playing'));
+  if (idx !== null && idx >= 0 && idx < sentences.length) {
+    const el = document.querySelector(`.sentence[data-idx="${idx}"]`);
+    if (el) {
+      el.classList.add('playing');
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+}
+
+function pbUpdateUI() {
+  const playBtn = document.getElementById('pb-play');
+  const counter = document.getElementById('pb-counter');
+  playBtn.textContent = pbPlaying ? '⏸' : '▶';
+  counter.textContent = pbCurrent !== null ? `${pbCurrent + 1} / ${sentences.length}` : `— / ${sentences.length}`;
+}
+
+function pbPlayCurrent() {
+  pbStop();
+  if (pbCurrent === null) { pbUpdateUI(); return; }
+  const src = `audio/2026北京卷-B/en-s${String(pbCurrent).padStart(2,'0')}.mp3`;
+  enPlayer = new Audio(src);
+  enPlayer.playbackRate = pbSpeed;
+  pbPlaying = true;
+  highlightSentence(pbCurrent);
+  pbUpdateUI();
+  enPlayer.onended = () => {
+    if (pbPlaying) {
+      if (pbCurrent < sentences.length - 1) {
+        pbCurrent++;
+        pbPlayCurrent();
+      } else {
+        pbPlaying = false;
+        highlightSentence(null);
+        pbUpdateUI();
+      }
+    }
+  };
+  enPlayer.onerror = () => {
+    pbPlaying = false;
+    highlightSentence(null);
+    pbUpdateUI();
+  };
+  enPlayer.play();
+}
+
+function pbToggle() {
+  if (pbCurrent === null) {
+    pbCurrent = 0;
+    pbPlayCurrent();
+    return;
+  }
+  if (pbPlaying) {
+    pbStop();
+    highlightSentence(pbCurrent);
+    pbUpdateUI();
+  } else {
+    pbPlayCurrent();
+  }
+}
+
+function pbPrev() {
+  if (pbCurrent === null) pbCurrent = 0;
+  else if (pbCurrent > 0) pbCurrent--;
+  pbPlayCurrent();
+}
+
+function pbNext() {
+  if (pbCurrent === null) pbCurrent = 0;
+  else if (pbCurrent < sentences.length - 1) pbCurrent++;
+  pbPlayCurrent();
+}
+
+function pbSetSpeed(v) {
+  pbSpeed = parseFloat(v);
+  if (enPlayer) enPlayer.playbackRate = pbSpeed;
+}
+
+function pbJumpTo(idx) {
+  pbStop();
+  pbCurrent = idx;
+  highlightSentence(idx);
+  pbUpdateUI();
+}
+
+document.addEventListener('click', function(e) {
+  if (e.target.closest('.tip') || e.target.closest('.tooltip')) return;
+  const sentence = e.target.closest('.sentence.complex');
+  if (sentence) toggleAnalysis(parseInt(sentence.dataset.idx));
+});
+
+// ── Other UI ──
+function speakWord(word) {
+  if (enPlayer) { enPlayer.pause(); enPlayer = null; }
+  const slug = 'en-word-' + word.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  const src = 'audio/2026北京卷-B/' + slug + '.mp3';
+  enPlayer = new Audio(src);
+  enPlayer.onerror = function() {
+    const utter = new SpeechSynthesisUtterance(word);
+    const voices = speechSynthesis.getVoices();
+    utter.voice = voices.find(v => v.lang === 'en-GB') || voices.find(v => v.lang.startsWith('en')) || voices[0];
+    utter.rate = 0.8;
+    speechSynthesis.speak(utter);
+  };
+  enPlayer.play();
+}
+
+function highlightWord(phrase) {
+  const tips = document.querySelectorAll('.tip');
+  const matches = [];
+  const lc = phrase.toLowerCase();
+  tips.forEach(el => {
+    const tipPhrase = (el.dataset.tip || '').split('|')[0].toLowerCase();
+    if (tipPhrase === lc) matches.push(el);
+  });
+  if (!matches.length) return;
+  matches.forEach(el => {
+    el.classList.remove('tip-flash');
+    void el.offsetWidth;
+    el.classList.add('tip-flash');
+    setTimeout(() => el.classList.remove('tip-flash'), 1700);
+  });
+  matches[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function vocabClick(phrase) {
+  speakWord(phrase);
+}
+
+function initAnnotations() {
+  document.querySelectorAll('sup.ann-sup, .para-ann').forEach(el => el.remove());
+
+  document.querySelectorAll('.passage .paragraph').forEach(para => {
+    const seen = new Set();
+    const items = [];
+    let idx = 1;
+
+    para.querySelectorAll('.tip').forEach(el => {
+      const tip = el.dataset.tip || '';
+      const parts = tip.split('|');
+      if (parts.length < 2) return;
+      const phrase = parts[0].trim();
+
+      if (seen.has(phrase)) {
+        const prevIdx = items.findIndex(i => i.phrase === phrase) + 1;
+        const sup = document.createElement('sup');
+        sup.className = 'ann-sup';
+        sup.textContent = prevIdx;
+        el.after(sup);
+        return;
+      }
+      seen.add(phrase);
+
+      const sup = document.createElement('sup');
+      sup.className = 'ann-sup';
+      sup.textContent = idx;
+      el.after(sup);
+
+      const contentParts = parts[1].split('｜');
+      const cn = contentParts[0].trim();
+      const det = contentParts.slice(1).map(s => s.replace(/<[^>]+>/g, '').trim()).filter(Boolean);
+      items.push({ num: idx, phrase, cn, det, level: el.dataset.level === '超纲' ? '超纲' : '' });
+      idx++;
+    });
+
+    if (items.length === 0) return;
+
+    const ann = document.createElement('div');
+    ann.className = 'para-ann';
+    ann.innerHTML = items.map(i =>
+      `<div class="pan-row">
+        <div class="pan-head">
+          <span class="pan-num">${i.num}</span>
+          <span class="pan-en">${i.phrase}</span>
+          <span class="pan-cn">${i.cn}</span>
+          ${i.level ? `<span class="pan-lv lv-${i.level}">${i.level}</span>` : ''}
+        </div>
+        ${i.det.length ? `<div class="pan-det">${i.det.map(d => `<div>${d}</div>`).join('')}</div>` : ''}
+      </div>`
+    ).join('');
+
+    const trans = para.querySelector('.translation-inline');
+    if (trans) trans.after(ann);
+    else para.appendChild(ann);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initAnnotations);
+
+function toggleAnalysis(idx) {
+  const el = document.getElementById('analysis-' + idx);
+  if (el) el.classList.toggle('open');
+}
+
+function togglePanel(id) { document.getElementById(id).classList.toggle('open'); }
+
+function setMode(mode) {
+  document.body.classList.remove('mode-raw', 'mode-study', 'mode-quiz', 'mode-annotate');
+  if (mode !== 'study') document.body.classList.add('mode-' + mode);
+  document.querySelectorAll('.mode-step').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.mode === mode);
+  });
+  hideTooltip();
+  if (mode === 'quiz') { pbStop(); highlightSentence(null); pbUpdateUI(); resetQuiz(); }
+}
+
+// ── Quiz ──
+function resetQuiz() {
+  document.querySelectorAll('.question-option').forEach(opt => opt.classList.remove('selected','correct','wrong'));
+  document.querySelectorAll('.question-item').forEach(q => q.dataset.answered = '');
+  const score = document.getElementById('quizScore');
+  if (score) score.classList.remove('show');
+}
+
+document.addEventListener('click', function(e) {
+  if (!document.body.classList.contains('mode-quiz')) return;
+  const opt = e.target.closest('.question-option');
+  if (!opt) return;
+  const item = opt.closest('.question-item');
+  if (item.dataset.answered) return;
+  item.dataset.answered = 'true';
+  const picked = opt.dataset.key;
+  const correct = item.dataset.answer;
+  if (picked === correct) {
+    opt.classList.add('correct');
+  } else {
+    opt.classList.add('wrong');
+    item.querySelector(`.question-option[data-key="${correct}"]`).classList.add('correct');
+  }
+  const total = document.querySelectorAll('.question-item[data-answer]').length;
+  const done = document.querySelectorAll('.question-item[data-answered="true"]').length;
+  if (done === total) showQuizScore();
+});
+
+function showQuizScore() {
+  const total = document.querySelectorAll('.question-item[data-answer]').length;
+  const wrong = document.querySelectorAll('.question-option.wrong').length;
+  const score = document.getElementById('quizScore');
+  score.textContent = `得分：${total - wrong} / ${total}`;
+  score.classList.add('show');
+}
+
+function gotoSentence(idx) {
+  const el = document.querySelector(`.sentence[data-idx="${idx}"]`);
+  if (!el) return;
+  setMode('study');
+  document.querySelectorAll('.sentence.highlighted').forEach(s => s.classList.remove('highlighted'));
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  el.classList.add('highlighted');
+}
+
+function toggleQuestionAnalysis(btn) {
+  const analysis = btn.nextElementSibling;
+  analysis.classList.toggle('open');
+  btn.textContent = analysis.classList.contains('open') ? '收起解析' : '\u{1F50D} 查看解析';
+}
+
+// ── LocalStorage review ──
+function saveReview() {
+  const state = {};
+  document.querySelectorAll('.review-checks input').forEach(cb => { state[cb.id] = cb.checked; });
+  localStorage.setItem('review-beijing-2026-B', JSON.stringify(state));
+}
+function loadReview() {
+  try {
+    const state = JSON.parse(localStorage.getItem('review-beijing-2026-B'));
+    if (state) Object.keys(state).forEach(id => { const cb = document.getElementById(id); if (cb) cb.checked = state[id]; });
+  } catch(e) {}
+}
+document.querySelectorAll('.review-checks input').forEach(cb => cb.addEventListener('change', saveReview));
+loadReview();
+pbUpdateUI();
+
+// ── Spaced Repetition (SRS) ──
+const SRS_PREFIX = 'srs_beijing_2026_B_';
+const SRS_INTERVALS = [1, 3, 7, 14, 30];
+
+function srsLoad(word) {
+  const raw = localStorage.getItem(SRS_PREFIX + word);
+  return raw ? JSON.parse(raw) : null;
+}
+
+function srsSave(word, knew) {
+  const state = srsLoad(word) || { streak: 0 };
+  if (knew) {
+    state.streak = (state.streak || 0) + 1;
+    state.interval = SRS_INTERVALS[Math.min(state.streak - 1, SRS_INTERVALS.length - 1)];
+  } else {
+    state.streak = 0;
+    state.interval = 1;
+  }
+  state.nextReview = Date.now() + state.interval * 86400000;
+  localStorage.setItem(SRS_PREFIX + word, JSON.stringify(state));
+  return state;
+}
+
+function srsIsDue(state) {
+  return !state || Date.now() >= state.nextReview;
+}
+
+function srsUpdateCard(card) {
+  const state = srsLoad(card.dataset.srsWord);
+  card.classList.remove('srs-due', 'srs-known');
+  if (!state) return;
+  card.classList.add(srsIsDue(state) ? 'srs-due' : 'srs-known');
+}
+
+function srsUpdateBadge() {
+  const badge = document.getElementById('srs-badge');
+  if (!badge) return;
+  const cards = document.querySelectorAll('.vocab-card[data-srs-word]');
+  let due = 0;
+  cards.forEach(c => { if (srsIsDue(srsLoad(c.dataset.srsWord))) due++; });
+  if (due === 0) {
+    badge.textContent = '全掌握 ✓';
+    badge.className = 'srs-badge all-done';
+  } else {
+    badge.textContent = due + '个待复习';
+    badge.className = 'srs-badge';
+  }
+}
+
+function srsClick(word, knew, btn) {
+  srsSave(word, knew);
+  const card = btn.closest('.vocab-card');
+  srsUpdateCard(card);
+  srsUpdateBadge();
+  btn.style.opacity = '0.4';
+  setTimeout(() => btn.style.opacity = '', 600);
+}
+
+function srsInit() {
+  document.querySelectorAll('.vocab-card').forEach(card => {
+    const wordEl = card.querySelector('.vocab-word');
+    if (!wordEl) return;
+    const word = wordEl.textContent.trim();
+    card.dataset.srsWord = word;
+    const btns = document.createElement('div');
+    btns.className = 'srs-btns';
+    const esc = word.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    btns.innerHTML =
+      `<button class="srs-btn srs-btn-know"   onclick="srsClick('${esc}',true,this)">认识 ✓</button>` +
+      `<button class="srs-btn srs-btn-forget" onclick="srsClick('${esc}',false,this)">还不会 ✗</button>`;
+    card.querySelector('.vocab-card-head').appendChild(btns);
+    srsUpdateCard(card);
+  });
+  srsUpdateBadge();
+}
+srsInit();
+</script>
+</body>
+</html>

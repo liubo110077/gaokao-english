@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2024北京卷D篇精读 · The Roots of Morality</title>
+<style>
+:root{--bg:#fafaf8;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;--accent:#2563eb;--accent-light:#dbeafe;--complex-bg:#f0f6fc;--border:#e2e2e0;--card-bg:#fff;--hover-bg:#f5f5f4;--shadow:0 1px 3px rgba(0,0,0,.08);--radius:6px;}
+.theme-yellow{--bg:#f5f0e8;--card-bg:#faf6ee;--border:#ddd5bf;--complex-bg:#ece4d4;--hover-bg:#ede7d8;--accent-light:#fde8b8;}
+.theme-green{--bg:#edecea;--card-bg:#f3f2f0;--border:#d6d5d0;--complex-bg:#e5e4e0;--hover-bg:#e8e7e3;--accent-light:#dddcd6;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:60px;}
+.container{max-width:min(1100px,88vw);margin:0 auto;padding:0 20px;}
+.header{background:var(--card-bg);border-bottom:1px solid var(--border);padding:16px 0;position:sticky;top:0;z-index:100;}
+.header .container{display:flex;align-items:center;flex-wrap:wrap;gap:10px;}
+.header h1{font-size:16px;font-weight:600;flex:1;min-width:200px;}
+.header-sub{font-size:12px;color:var(--accent);font-weight:500;background:var(--accent-light);padding:2px 8px;border-radius:10px;}
+.header-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card-bg);color:var(--text);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.mode-steps{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.mode-step{padding:6px 12px;border:none;background:var(--card-bg);color:var(--text-secondary);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.mode-step+.mode-step{border-left:1px solid var(--border);}
+.mode-step.active{background:var(--accent);color:#fff;}
+.mode-step:hover:not(.active){background:var(--accent-light);}
+.passage{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:20px;padding:28px 32px;}
+.passage-title{text-align:center;font-family:Georgia,"Times New Roman",serif;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:20px;color:var(--text-secondary);}
+.paragraph{margin-bottom:4px;text-indent:2em;}
+.sentence{font-family:Georgia,"Times New Roman",serif;font-size:18px;line-height:1.75;position:relative;transition:background .2s;border-radius:3px;cursor:pointer;}
+.sentence:hover{background:var(--hover-bg);}
+.sentence.playing{background:var(--complex-bg);border-radius:3px;}
+.sentence.complex{border-bottom:1.5px dashed #93c5fd;}
+.sentence.complex.playing{background:var(--complex-bg);}
+.tip{border-bottom:1.5px dashed var(--accent);cursor:pointer;position:relative;transition:background .15s;}
+.tip:hover{background:var(--accent-light);}
+.tip.tip-flash{outline:2px solid var(--accent);border-radius:2px;animation:tipFlash 1.6s ease-out forwards;}
+@keyframes tipFlash{0%{background:var(--accent);color:#fff;}40%{background:var(--accent-light);color:inherit;}100%{background:transparent;}}
+.tooltip{position:fixed;z-index:200;background:var(--text);color:#fff;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;line-height:1.5;padding:8px 14px;border-radius:8px;max-width:min(520px,calc(100vw - 16px));width:max-content;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:auto;animation:tipIn .15s ease-out;}
+.tooltip::after{content:'';position:absolute;bottom:-6px;left:var(--arrow-left,50%);transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text);}
+.tooltip.below::after{bottom:auto;top:-6px;border-top:none;border-bottom:6px solid var(--text);}
+.tooltip .tip-phrase{font-family:Georgia,serif;font-weight:600;color:#93c5fd;margin-bottom:2px;}
+.tooltip .tip-speak{display:inline-block;cursor:pointer;margin-left:6px;font-size:12px;opacity:.7;vertical-align:middle;}
+.tooltip .tip-speak:hover{opacity:1;}
+.level-badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:11px;font-weight:600;margin-left:6px;vertical-align:middle;font-family:-apple-system,"PingFang SC",sans-serif;}
+.badge-超纲{background:rgba(239,68,68,.25);color:#fca5a5;}
+.badge-拓展{background:rgba(251,146,60,.2);color:#fdba74;}
+.badge-选必{background:rgba(96,165,250,.2);color:#93c5fd;}
+.tooltip .tip-zh-play{display:block;margin-top:6px;padding:4px 10px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:4px;color:#93c5fd;font-size:12px;cursor:pointer;text-align:center;}
+.tooltip .tip-zh-play:hover{background:rgba(255,255,255,.25);}
+@keyframes tipIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+.analysis{display:none;margin:8px 0 12px 0;padding:12px 16px;background:#f8f9fa;border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;color:var(--text-secondary);line-height:1.7;text-indent:0;}
+.analysis.open{display:block;}
+.analysis p{margin-bottom:4px;}
+.analysis b{color:var(--text);font-size:13px;}
+.translation-inline{display:none;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;color:var(--text-muted);margin:2px 0 6px 0;text-indent:0;}
+body.compare-mode .translation-inline,body.mode-annotate .translation-inline{display:block;}
+.panel{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:16px;overflow:hidden;}
+.panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;cursor:pointer;user-select:none;font-weight:600;font-size:15px;border-bottom:1px solid transparent;transition:border-color .2s;}
+.panel-header:hover{color:var(--accent);}
+.panel-header .arrow{transition:transform .2s;font-size:12px;color:var(--text-muted);}
+.panel.open .panel-header{border-bottom-color:var(--border);}
+.panel.open .panel-header .arrow{transform:rotate(180deg);}
+.panel-body{display:none;padding:16px 24px;}
+.panel.open .panel-body{display:block;}
+.vocab-card{border-bottom:1px solid #f0f0f0;padding:12px 0;}
+.vocab-card:last-child{border-bottom:none;}
+.vocab-card-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px;}
+.vocab-word{font-family:Georgia,serif;font-weight:600;color:var(--accent);cursor:pointer;font-size:15px;}
+.vocab-word:hover{text-decoration:underline;}
+.vocab-meaning{font-size:14px;color:var(--text);}
+.vocab-extra{font-size:13px;color:var(--text-secondary);margin-top:2px;}
+.vocab-tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:3px;background:#fef3c7;color:#92400e;vertical-align:middle;}
+.vocab-tag.tag-core{background:#dcfce7;color:#166534;}
+.vocab-tag.tag-exam{background:#dbeafe;color:#1e40af;}
+.vocab-tag.tag-beyond{background:#fef3c7;color:#92400e;}
+.vocab-tag.tag-extend{background:#ffedd5;color:#c2410c;}
+.vocab-detail{display:none;margin-top:8px;padding:10px 14px;background:#f8f9fa;border-radius:var(--radius);font-size:13.5px;line-height:1.7;}
+.vocab-detail.open{display:block;}
+.vocab-detail .vd-example{color:var(--text-secondary);padding-left:16px;}
+.vocab-detail .vd-example em{color:var(--text);font-style:normal;font-weight:600;}
+.vocab-expand{font-size:12px;color:var(--accent);cursor:pointer;border:none;background:none;padding:0;margin-left:8px;}
+.vocab-expand:hover{text-decoration:underline;}
+.srs-btns{display:flex;gap:5px;margin-left:auto;}
+.srs-btn{font-size:11px;padding:2px 7px;border-radius:10px;border:1.5px solid;cursor:pointer;transition:all .15s;background:none;white-space:nowrap;}
+.srs-btn-know{border-color:#16a34a;color:#16a34a;}
+.srs-btn-know:hover{background:#dcfce7;}
+.srs-btn-forget{border-color:#dc2626;color:#dc2626;}
+.srs-btn-forget:hover{background:#fee2e2;}
+.srs-badge{font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;background:#fef2f2;color:#dc2626;}
+.srs-badge.all-done{background:#dcfce7;color:#16a34a;}
+.analysis-play{float:right;margin-left:8px;background:none;border:1px solid var(--border);border-radius:4px;font-size:12px;padding:2px 8px;cursor:pointer;color:var(--accent);transition:all .15s;}
+.analysis-play:hover{background:var(--accent-light);border-color:var(--accent);}
+.analysis-play.playing{background:var(--accent);color:#fff;border-color:var(--accent);}
+.question-item{padding:16px 24px;border-bottom:1px solid #f0f0f0;}
+.question-item:last-child{border-bottom:none;}
+.question-stem{font-weight:600;font-size:15px;margin-bottom:8px;}
+.question-options{display:grid;grid-template-columns:1fr;gap:4px;font-size:14px;margin-bottom:8px;}
+.question-option{padding:2px 0;}
+.show-answer-btn{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--accent);cursor:pointer;background:none;border:none;padding:4px 0;}
+.show-answer-btn:hover{text-decoration:underline;}
+.question-analysis{display:none;margin-top:10px;padding:12px 16px;background:#f8f9fa;border-radius:var(--radius);font-size:14px;color:var(--text-secondary);line-height:1.7;}
+.question-analysis.open{display:block;}
+.question-analysis .answer-line{font-weight:700;color:#16a34a;margin-bottom:6px;font-size:15px;}
+.question-analysis .locate{background:#fef9c3;padding:6px 10px;border-radius:4px;margin:6px 0;font-family:Georgia,serif;font-style:italic;font-size:14px;color:var(--text);}
+.option-list{margin-top:10px;display:flex;flex-direction:column;gap:2px;}
+.option-item{padding:3px 0;font-size:13.5px;line-height:1.5;}
+.option-item .opt-letter{font-weight:700;}
+.option-item.correct .opt-mark{color:#15803d;font-weight:700;}
+.option-item.wrong .opt-mark{color:#b91c1c;font-weight:700;}
+.option-item .opt-why{color:#888;font-size:12.5px;margin-left:4px;}
+.quiz-score{text-align:center;padding:16px;font-size:16px;font-weight:600;color:var(--accent);display:none;}
+.quiz-score.show{display:block;}
+#playbar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:#1a1a1a;color:#fff;display:flex;align-items:center;justify-content:center;gap:16px;padding:10px 20px;height:52px;font-size:14px;box-shadow:0 -2px 12px rgba(0,0,0,.2);}
+#playbar button{background:none;border:none;color:#fff;font-size:18px;cursor:pointer;padding:4px 8px;border-radius:4px;line-height:1;transition:background .15s;}
+#playbar button:hover{background:rgba(255,255,255,.15);}
+#pb-play{font-size:22px;}
+#pb-counter{font-size:13px;color:#aaa;min-width:52px;text-align:center;}
+#pb-speed{background:#333;border:none;color:#fff;font-size:13px;padding:3px 6px;border-radius:4px;cursor:pointer;}
+body.mode-raw .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-raw .tip:hover{background:none;}
+body.mode-raw .analysis,body.mode-raw .translation-inline,body.mode-raw .panel{display:none!important;}
+body.mode-raw .sentence.complex{border-bottom:none;}
+body.mode-raw .sentence{cursor:default;}
+body.mode-raw .sentence:hover{background:none;}
+body.mode-quiz .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-quiz .tip:hover{background:none;}
+body.mode-quiz .analysis,body.mode-quiz .translation-inline,body.mode-quiz #vocabPanel,body.mode-quiz #reviewPanel,body.mode-quiz #tipPanel,body.mode-quiz #writingPanel,body.mode-quiz #playbar{display:none!important;}
+body.mode-quiz .sentence.complex{border-bottom:none;cursor:default;}
+body.mode-quiz .sentence{cursor:default;}
+body.mode-quiz .sentence:hover{background:none;}
+body.mode-annotate .sentence.complex{border-bottom:none;}
+body.mode-annotate .sentence{cursor:default;}
+body.mode-annotate .sentence:hover{background:none;}
+body.mode-quiz #questionsPanel{display:block;}
+body.mode-quiz #questionsPanel .panel-body{display:block;}
+body.mode-quiz .question-analysis{display:none!important;}
+body.mode-quiz .show-answer-btn{display:none;}
+body.mode-quiz .question-option{cursor:pointer;padding:6px 10px;border-radius:var(--radius);border:1.5px solid transparent;transition:all .15s;}
+body.mode-quiz .question-option:hover{background:var(--accent-light);}
+body.mode-quiz .question-option.selected{border-color:var(--accent);background:var(--accent-light);}
+body.mode-quiz .question-option.correct{border-color:#16a34a;background:#dcfce7;}
+body.mode-quiz .question-option.wrong{border-color:#dc2626;background:#fee2e2;}
+.locate[data-goto]{cursor:pointer;transition:background .15s;}
+.locate[data-goto]:hover{background:#fde68a;}
+.locate[data-goto]::after{content:' ↗ 跳到原文';font-size:11px;color:var(--accent);font-family:-apple-system,sans-serif;font-style:normal;}
+.sentence.highlighted{background:#fef08a;border-radius:3px;}
+sup.ann-sup{display:none;font-size:0.6em;color:var(--accent);font-weight:700;vertical-align:super;line-height:0;margin-left:2px;font-family:system-ui,sans-serif;pointer-events:none;}
+body.mode-annotate sup.ann-sup{display:inline;}
+.para-ann{display:none;margin:16px 0 28px 0;font-family:-apple-system,"PingFang SC",sans-serif;font-size:15px;color:#333;text-indent:0;}
+body.mode-annotate .para-ann{display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:16px 18px;align-items:start;}
+.pan-row{background:#fff;border:1px solid #ece8e0;border-radius:12px;padding:16px 20px 18px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.pan-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.pan-num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
+.pan-en{font-family:Georgia,serif;font-weight:700;font-size:18px;color:#1a1a1a;}
+.pan-cn{color:var(--accent);font-weight:600;font-size:15px;}
+.pan-lv{font-size:12px;font-weight:600;padding:2px 8px;border-radius:4px;line-height:1.4;}
+.lv-超纲{background:#fee2e2;color:#b91c1c;}
+.pan-det{margin:12px 0 0 32px;color:#666;font-size:14px;line-height:1.85;}
+.pan-det div{position:relative;padding-left:12px;}
+.pan-det div+div{margin-top:8px;}
+.pan-det div::before{content:'';position:absolute;left:0;top:0.8em;width:4px;height:4px;border-radius:50%;background:#c9c3b8;}
+body.mode-quiz .para-ann,body.mode-raw .para-ann{display:none!important;}
+body.mode-quiz sup.ann-sup,body.mode-raw sup.ann-sup{display:none!important;}
+.sb-block{display:none;}
+body.mode-annotate .sb-block{display:block;margin:4px 0 28px;padding:16px 20px 18px;background:#f8f9fa;border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;font-family:-apple-system,"PingFang SC",sans-serif;text-indent:0;}
+body.mode-annotate .analysis{display:none!important;}
+body.mode-quiz .sb-block,body.mode-raw .sb-block{display:none!important;}
+.sb-title{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.08em;margin-bottom:12px;}
+.sb-sent{font-family:Georgia,serif;font-size:18px;line-height:2.3;color:#1a1a1a;background:#fff;border:1px solid #ece8e0;border-radius:10px;padding:14px 18px;}
+.sb-chip{display:inline-block;font-family:-apple-system,"PingFang SC",sans-serif;font-size:11px;font-weight:700;line-height:1;padding:4px 7px;border-radius:999px;margin-right:5px;vertical-align:3px;}
+.sb-core{font-weight:700;border-bottom:2.5px solid var(--accent);}
+.sb-core-chip{background:var(--accent);color:#fff;}
+.sb-ins{color:#9a9a9a;background:#eeebe4;border-radius:4px;padding:2px 4px;}
+.sb-ins-chip{background:#e4e0d8;color:#777;}
+.sb-rest{border-bottom:2.5px solid #4caf7a;}
+.sb-rest-chip{background:#4caf7a;color:#fff;}
+.sb-steps{margin-top:14px;display:grid;gap:10px;}
+.sb-step{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;font-size:15px;line-height:1.75;color:#333;}
+.sb-step-n{width:24px;height:24px;border-radius:50%;background:#1a1a1a;color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-top:2px;}
+.sb-step em{font-style:normal;font-family:Georgia,serif;color:#111;background:#fff;border:1px solid #ece8e0;padding:0 5px;border-radius:4px;}
+.sb-step .arrow{color:#aaa;margin:0 4px;}
+.sb-tip{margin-top:14px;font-size:14px;color:#8a6d1f;background:#fdf6e3;border-radius:8px;padding:9px 14px;}
+.container{max-width:1400px;width:100%;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right));}
+.header{padding-top:calc(16px + env(safe-area-inset-top));}
+body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
+#playbar{height:calc(52px + env(safe-area-inset-bottom));padding-bottom:calc(10px + env(safe-area-inset-bottom));padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right));}
+.passage{padding:24px 24px;}
+.tooltip .tip-scroll{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
+@media(min-width:700px){
+  .header h1{font-size:19px;}.passage-title{font-size:19px;}.header-sub{font-size:14px;}
+  .sentence{font-size:23px;line-height:1.8;}.translation-inline{font-size:18px!important;line-height:1.8;}
+  .analysis{font-size:18px;line-height:1.8;}.analysis b{font-size:16px;}.panel-header{font-size:18px;}
+  .vocab-word{font-size:20px;}.vocab-meaning{font-size:18px;}.vocab-extra{font-size:16.5px;line-height:1.7;}
+  .vocab-detail,.vd-example{font-size:16px;}.vocab-tag,.level-badge{font-size:13px;}
+  .vocab-expand,.srs-btn,.srs-badge{font-size:14px;}.question-stem{font-size:19px;}
+  .question-options{font-size:18px;}.show-answer-btn{font-size:15.5px;}
+  .question-analysis .answer-line{font-size:17px;}.option-item{font-size:16.5px;}.option-item .opt-why{font-size:15px;}
+  .tooltip{font-size:17px;line-height:1.55;}.tooltip .tip-phrase{font-size:19px;}
+  #pb-counter,#pb-speed{font-size:15px;}
+}
+@media(max-width:600px){
+  .passage{padding:18px 14px;}.sentence{font-size:16px;}
+  .panel-header,.question-item{padding-left:16px;padding-right:16px;}.panel-body{padding:12px 16px;}
+}
+</style>
+</head>
+<body class="mode-study">
+
+<div class="header">
+  <div class="container">
+    <h1>2024北京卷D篇精读 · The Roots of Morality</h1>
+    <div class="header-controls">
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="study" onclick="setMode('study')">① 精读</button>
+        <button class="mode-step" data-mode="quiz" onclick="setMode('quiz')">② 做题</button>
+        <button class="mode-step" data-mode="raw" onclick="setMode('raw')">③ 原文</button>
+        <button class="mode-step" data-mode="annotate" onclick="setMode('annotate')">④ 课本</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()" title="切换护眼色">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="passage" id="passage">
+  <div class="passage-title">D</div>
+
+  <!-- ── Paragraph 1 ── -->
+  <div class="paragraph" id="para-1">
+    <span class="sentence complex" data-idx="0">Franz Boas's description of <span class="tip" data-tip="Inuit|因纽特人（北极地区原住民）｜Inuit 是生活在加拿大北部、格陵兰等北极地区的原住民族。课文括号里注了「因纽特人」。这里用他们做例子，说明早期人类可能的道德规范｜文化常识：Inuit 不等于 Eskimo（爱斯基摩人），后者现在被认为不礼貌" data-level="拓展">Inuit</span> (因纽特人) life in the 19th century <span class="tip" data-tip="illustrates|说明，展示，阐明｜illustrate = 用例子来说明/解释（不只是「画插图」！）。illustrates the probable moral code = 说明了早期人类可能的道德准则。illustrate 是高考高频词，注意区分和 explain 的区别：illustrate 强调用具体例子来说明｜= demonstrates, shows. 搭配：illustrate a point 用例子说明一个观点" data-level="选必">illustrates</span> the probable <span class="tip" data-tip="moral code|道德准则，行为规范｜moral = 道德的，code = 准则/法典。moral code = 一套关于什么是对、什么是错的行为规范。the probable moral code of early humans = 早期人类可能的道德准则｜near: ethical standards, code of conduct. 搭配：follow a moral code 遵守道德准则" data-level="选必">moral code</span> of early humans.</span>
+    <div class="analysis" id="analysis-0">
+      <p><b>句子结构：</b>主干是 <em>Franz Boas's description illustrates the probable moral code of early humans</em>（弗朗茨·博厄斯的描述说明了早期人类可能的道德准则）。</p>
+      <p><b>of Inuit life in the 19th century：</b>是对 description 的修饰，说明描述的内容是19世纪因纽特人的生活。</p>
+      <p><b>illustrates：</b>用例子来说明。这里通过因纽特人的例子，来推断早期人类的道德准则是什么样的。</p>
+    </div>
+    <span class="sentence" data-idx="1">Here, <span class="tip" data-tip="norms|规范，准则（社会行为的标准）｜norm = 大家默认的标准/规矩（课文括号注了「规范」）。norms were unwritten = 规范没有被写下来，但大家心知肚明。social norms = 社会规范｜= standards, rules. 搭配：cultural norms 文化规范；social norms 社会规范" data-level="选必">norms</span> (规范) were unwritten and rarely expressed clearly, but were well understood and <span class="tip" data-tip="taken to heart|铭记在心，认真对待｜take sth to heart = 把某事放在心上，认真对待（不是字面的「拿到心脏」）。were taken to heart = 被认真对待，铭记于心。因纽特人虽然不写下规范，但大家都认真遵守｜= remembered deeply, taken seriously. 搭配：take advice to heart 把建议记在心上" data-level="拓展">taken to heart</span>.</span>
+    <span class="sentence" data-idx="2">Dishonest and violent behaviours were <span class="tip" data-tip="disapproved of|不赞成，反对｜disapprove = 不赞成（dis- = 不，approve = 赞成）。disapproved of = 被不赞成、被反对。不诚实和暴力行为在因纽特社会中是被反对的｜= condemned, frowned upon. 搭配：disapprove of sb's behaviour 不赞成某人的行为" data-level="选必">disapproved of</span>; leadership, marriage and interactions with other groups were loosely governed by <span class="tip" data-tip="traditions|传统，惯例｜tradition = 传统（代代相传的做法/信念）。loosely governed by traditions = 被传统松散地管理/约束着。注意 loosely = 松散地，不是严格管理，而是大致遵循传统｜= customs, established practices. 32题关键词！" data-level="选必">traditions</span>.</span>
+    <span class="sentence" data-idx="3">Conflict was often resolved in <span class="tip" data-tip="musical battles|音乐对决（用唱歌比赛来解决冲突）｜因纽特人传统上会用唱歌比赛来解决争端，而不是打架。这是一种和平的冲突解决方式，体现了他们的实用道德观｜文化常识：这种方式叫 song duel（歌曲对决），在因纽特文化中真实存在" data-level="拓展">musical battles</span>.</span>
+    <span class="sentence" data-idx="4">Because arguing angrily leads to chaos, it was strongly discouraged.</span>
+    <span class="sentence" data-idx="5">With life in the unforgiving Northern Canada being so demanding, the Inuit's practical approach to morality made good sense.</span>
+    <div class="translation-inline">弗朗茨·博厄斯对19世纪因纽特人生活的描述，说明了早期人类可能的道德准则。在那里，规范没有被写下来，也很少被清楚地表达，但被充分理解并铭记在心。不诚实和暴力的行为受到反对；领导权、婚姻和与其他群体的交往被传统松散地约束着。冲突经常在音乐对决中解决。因为愤怒地争吵会导致混乱，所以被强烈反对。由于在严酷的加拿大北部生活非常艰苦，因纽特人对道德的务实态度是很合理的。</div>
+    <div class="sb-block">
+      <div class="sb-title">长难句拆解</div>
+      <div class="sb-sent">
+        <span class="sb-chip sb-core-chip">主语</span><span class="sb-core">Franz Boas's description</span>
+        <span class="sb-chip sb-ins-chip">修饰 · 什么描述</span><span class="sb-ins">of Inuit life in the 19th century</span>
+        <span class="sb-chip sb-core-chip">谓语</span><span class="sb-core">illustrates</span>
+        <span class="sb-chip sb-rest-chip">宾语</span><span class="sb-rest">the probable moral code of early humans.</span>
+      </div>
+      <div class="sb-steps">
+        <div class="sb-step"><span class="sb-step-n">1</span><div>主干：<em>Franz Boas's description illustrates the probable moral code</em><span class="arrow">→</span>博厄斯的描述说明了可能的道德准则</div></div>
+        <div class="sb-step"><span class="sb-step-n">2</span><div>of Inuit life in the 19th century 修饰 description<span class="arrow">→</span>关于19世纪因纽特人生活的描述</div></div>
+        <div class="sb-step"><span class="sb-step-n">3</span><div>of early humans 修饰 moral code<span class="arrow">→</span>早期人类的道德准则</div></div>
+      </div>
+      <div class="sb-tip">💡 32题考点：第二句说 leadership, marriage... were loosely governed by traditions（传统松散地约束着），说明 Inuit 道德准则的基础是社会传统（social tradition）。</div>
+    </div>
+  </div>
+
+  <!-- ── Paragraph 2 ── -->
+  <div class="paragraph" id="para-2">
+    <span class="sentence complex" data-idx="6">The similarity of moral <span class="tip" data-tip="virtues|美德，品德（被社会推崇的好品质）｜virtue = 美德（与 vice 恶习 相对）。moral virtues = 道德上被推崇的品质，如诚实、勇气、谦逊等。The similarity of moral virtues across cultures = 不同文化之间道德美德的相似性｜= good qualities, merits. 搭配：a man of virtue 品德高尚的人" data-level="选必">virtues</span> across cultures is striking, even though the relative ranking of the virtues may vary with a social group's history and environment.</span>
+    <div class="analysis" id="analysis-6">
+      <p><b>句子结构：</b>主干是 <em>The similarity of moral virtues across cultures is striking</em>（不同文化之间道德美德的相似性是惊人的）。</p>
+      <p><b>even though 让步从句：</b><em>even though the relative ranking may vary</em> = 即使美德的相对排名可能因社会群体的历史和环境而不同。主句说「相似」，让步从句说「虽然排名会变」，强调的是底层的共同性。</p>
+      <p><b>与33题的关系：</b>这段的核心观点——道德规范是普遍的，源于人类基本需求（basic human needs）。33题 B 选项正确。</p>
+    </div>
+    <span class="sentence" data-idx="7">Typically, cruelty and cheating are discouraged, while cooperation, humbleness and courage are praised.</span>
+    <span class="sentence complex" data-idx="8">These universal norms far <span class="tip" data-tip="pre-date|早于，先于（时间上比...更早）｜pre- = 在...之前，date = 日期。pre-date = 在时间上早于...。These norms pre-date the concept of any moralising religion = 这些规范比任何说教性宗教的概念出现得更早｜= come before, precede. 搭配：pre-date written history 早于有文字记载的历史" data-level="拓展">pre-date</span> the concept of any <span class="tip" data-tip="moralising religion|说教性宗教（教人道德规范的宗教）｜moralise = 说教、讲道德道理（moral + ise）。moralising religion = 以教导道德为特征的宗教。这里说：普遍道德规范出现的时间远早于任何说教性宗教或成文法律｜near: religion that teaches morality" data-level="拓展">moralising religion</span> or written law.</span>
+    <span class="sentence complex" data-idx="9">Instead, they are rooted in the similarity of basic human needs and our shared <span class="tip" data-tip="mechanisms|机制，机理（事物运作的方式）｜mechanism = 机制（mechanic = 机械的，mechanism = 运作的方式/过程）。shared mechanisms for learning and problem solving = 我们共有的学习和解决问题的机制。这里说道德规范源于人类共同的需求和共同的学习机制｜= processes, systems. 搭配：defence mechanism 防御机制" data-level="选必">mechanisms</span> for learning and problem solving.</span>
+    <div class="analysis" id="analysis-9">
+      <p><b>rooted in：</b>根植于...，源于...。they are rooted in the similarity of basic human needs = 它们（普遍规范）根植于人类基本需求的相似性。</p>
+      <p><b>33题定位句：</b>题目问「从文章可以得知什么？」B选项说「Basic human needs lead to universal norms（基本人类需求导致了普遍规范）」，正好对应这句话。</p>
+    </div>
+    <span class="sentence" data-idx="10">Our social <span class="tip" data-tip="instincts|本能（天生的行为倾向）｜instinct = 本能（课文括号注了「本能」）。social instincts = 社会本能，即人天生就有的社交行为倾向，比如想要被群体接纳。include the intense desire to belong = 包括强烈的归属感需求｜= innate tendencies, natural impulses. 搭配：survival instinct 生存本能" data-level="选必">instincts</span> (本能) include the intense desire to belong.</span>
+    <span class="sentence" data-idx="11">The approval of others is rewarding, while their disapproval is strongly disliked.</span>
+    <span class="sentence complex" data-idx="12">These social emotions prepare our brains to shape our behaviour according to the <span class="tip" data-tip="norms and values|规范和价值观｜norms = 行为规范（大家默认的标准），values = 价值观（什么是重要的、好的）。shape our behaviour according to the norms and values = 按照我们家庭和社区的规范和价值观来塑造我们的行为｜搭配：family values 家庭价值观；cultural norms 文化规范" data-level="选必">norms and values</span> of our family and our community.</span>
+    <span class="sentence" data-idx="13">More generally, social instincts motivate us to learn how to behave in a socially complex world.</span>
+    <div class="translation-inline">不同文化之间道德美德的相似性是惊人的，即使美德的相对排名可能因社会群体的历史和环境而不同。通常，残忍和欺骗受到反对，而合作、谦逊和勇气受到赞扬。这些普遍规范远早于任何说教性宗教或成文法律的概念。相反，它们根植于人类基本需求的相似性以及我们共有的学习和解决问题的机制。我们的社会本能包括强烈的归属感需求。他人的赞许是令人愉快的，而他人的不赞许则令人非常反感。这些社会情感使我们的大脑准备好根据家庭和社区的规范和价值观来塑造行为。更广泛地说，社会本能激励我们学习如何在社会复杂的世界中行事。</div>
+    <div class="sb-block">
+      <div class="sb-title">长难句拆解</div>
+      <div class="sb-sent">
+        <span class="sb-chip sb-core-chip">主干</span><span class="sb-core">The similarity of moral virtues across cultures is striking,</span>
+        <span class="sb-chip sb-ins-chip">让步 · even though</span><span class="sb-ins">even though the relative ranking of the virtues may vary</span>
+        <span class="sb-chip sb-rest-chip">随什么变</span><span class="sb-rest">with a social group's history and environment.</span>
+      </div>
+      <div class="sb-steps">
+        <div class="sb-step"><span class="sb-step-n">1</span><div>主干：<em>The similarity is striking</em><span class="arrow">→</span>相似性是惊人的</div></div>
+        <div class="sb-step"><span class="sb-step-n">2</span><div>of moral virtues across cultures 修饰 similarity<span class="arrow">→</span>跨文化的道德美德之间的相似性</div></div>
+        <div class="sb-step"><span class="sb-step-n">3</span><div>even though 让步：虽然相对排名可能因历史和环境而变化<span class="arrow">→</span>但底层的共同性是惊人的</div></div>
+      </div>
+      <div class="sb-tip">💡 33题考点：第8-9句说这些普遍规范 are rooted in the similarity of basic human needs，因此 B「Basic human needs lead to universal norms」正确。</div>
+    </div>
+  </div>
+
+  <!-- ── Paragraph 3 ── -->
+  <div class="paragraph" id="para-3">
+    <span class="sentence complex" data-idx="14">The mechanism involves a <span class="tip" data-tip="repurposed|被重新利用的，改作他用的｜re- = 再次，purpose = 目的/用途。repurposed = 被重新利用的（原本用于一个功能，后来被改用到另一个功能上）。a repurposed reward system = 一个被重新利用的奖励系统（原来用于自我照顾，后来被用于社会行为）｜= reused, adapted for a new purpose" data-level="拓展">repurposed</span> reward system originally used to develop habits important for self-care.</span>
+    <div class="analysis" id="analysis-14">
+      <p><b>句子结构：</b>主干是 <em>The mechanism involves a repurposed reward system</em>（这个机制涉及一个被重新利用的奖励系统）。</p>
+      <p><b>originally used to develop habits important for self-care：</b>后置定语修饰 reward system，说明这个奖励系统原本是用来发展对自我照顾很重要的习惯的。</p>
+      <p><b>repurposed（核心词汇）：</b>re- + purpose = 把原本用于一件事的东西改用到另一件事上。大脑的奖励系统原本服务于生存本能，后来被「改装」用于社会行为习惯的养成。</p>
+    </div>
+    <span class="sentence" data-idx="15">Our brains use the system to <span class="tip" data-tip="acquire|获得，习得（通过学习/经验获得）｜acquire = 获得（不是天生有，而是后天学到/得到的）。acquire behavioural patterns = 习得行为模式。我们的大脑用奖励系统来学习安全的回家路线、高效的觅食方式等行为模式｜= gain, pick up, develop. 搭配：acquire knowledge 获得知识；acquire a habit 养成习惯" data-level="选必">acquire</span> behavioural patterns regarding safe routes home, efficient food gathering and dangers to avoid.</span>
+    <span class="sentence" data-idx="16">Good habits save time, energy and sometimes your life.</span>
+    <span class="sentence" data-idx="17">Good social habits do something similar in a social context.</span>
+    <span class="sentence" data-idx="18">We learn to tell the truth, even when lying is <span class="tip" data-tip="self-serving|利己的，为自己谋利的｜self = 自己，serving = 服务的。self-serving = 只为自己利益服务的。even when lying is self-serving = 即使撒谎对自己有利的时候（我们也学会了说真话）｜= selfish, serving one's own interests. 反义：selfless 无私的" data-level="拓展">self-serving</span>; we help a grandparent even when it is inconvenient.</span>
+    <span class="sentence" data-idx="19">We acquire what we call a sense of right and wrong.</span>
+    <div class="translation-inline">这个机制涉及一个被重新利用的奖励系统，该系统原本用于发展对自我照顾很重要的习惯。我们的大脑用这个系统来习得关于安全回家路线、高效觅食和需要避免的危险等方面的行为模式。好的习惯节省时间、精力，有时甚至能救命。好的社会习惯在社会情境中也起到类似的作用。我们学会了说真话，即使撒谎对自己有利；我们帮助祖父母，即使这样做不方便。我们习得了所谓的是非感。</div>
+  </div>
+
+  <!-- ── Paragraph 4 ── -->
+  <div class="paragraph" id="para-4">
+    <span class="sentence" data-idx="20">Social benefits are accompanied by social demands: we must get along, but not put up with too much.</span>
+    <span class="sentence" data-idx="21">Hence <span class="tip" data-tip="self-discipline|自律，自我约束｜self = 自己，discipline = 纪律/约束。self-discipline = 自律，自我约束的能力。Hence self-discipline is advantageous = 因此自律是有利的。社会要求我们既要合群，又不能忍受过分的事，所以自律很重要｜= self-control, self-restraint. 搭配：develop self-discipline 培养自律能力" data-level="选必">self-discipline</span> is <span class="tip" data-tip="advantageous|有利的，有优势的｜advantage = 优势/好处（advantageous = 有优势的、有利的）。self-discipline is advantageous = 自律是有利的。在社会生活中，自律给人带来优势｜= beneficial, favourable. 反义：disadvantageous 不利的. 搭配：It is advantageous to do sth 做某事是有利的" data-level="选必">advantageous</span>.</span>
+    <span class="sentence complex" data-idx="22">In humans, a greatly enlarged brain boosts <span class="tip" data-tip="self-control|自控力，自我控制能力｜self = 自己，control = 控制。self-control = 自我控制的能力。a greatly enlarged brain boosts self-control = 大大增大的大脑增强了自控力。人类大脑比其他动物大得多，这也增强了自控和解决问题的能力｜= willpower, restraint. 搭配：exercise self-control 实施自我控制" data-level="选必">self-control</span>, just as it boosts problem-solving skills in the social as well as the physical world.</span>
+    <div class="analysis" id="analysis-22">
+      <p><b>句子结构：</b>主干是 <em>a greatly enlarged brain boosts self-control</em>（大大增大的大脑增强了自控力）。</p>
+      <p><b>just as... as well as...：</b>just as it boosts problem-solving skills = 正如它增强了解决问题的能力一样。in the social as well as the physical world = 在社会世界和物理世界中都是如此。</p>
+      <p><b>这段与34题的关系：</b>文章从因纽特人讲到普遍规范，再到大脑机制和自律——全文讨论的是道德的根源（roots），因此标题应为 D「The Roots of Morality」。</p>
+    </div>
+    <span class="sentence complex" data-idx="23">These abilities are strengthened by our <span class="tip" data-tip="capacity for language|语言能力｜capacity = 能力/容量（能做某事的潜力）。capacity for language = 语言方面的能力。our capacity for language = 我们的语言能力。正是语言能力使社会实践能以非常不明显的方式发展｜= ability to use language, linguistic capability. 搭配：capacity for learning 学习能力" data-level="选必">capacity for language</span>, which allows social practices to develop in extremely <span class="tip" data-tip="unobvious|不明显的，不显而易见的｜un- = 不，obvious = 明显的。unobvious = 不明显的。develop in extremely unobvious ways = 以极其不明显的方式发展。语言让社会行为规范能以非常微妙、不易察觉的方式传播和发展｜= subtle, not apparent. 搭配：in unobvious ways 以不明显的方式" data-level="拓展">unobvious</span> ways.</span>
+    <div class="translation-inline">社会利益伴随着社会要求：我们必须相处融洽，但又不能忍受太多。因此自律是有利的。在人类身上，大大增大的大脑增强了自控力，正如它增强了社会世界和物理世界中的问题解决能力一样。这些能力被我们的语言能力所加强，语言能力使社会实践能以极其不明显的方式发展。</div>
+    <div class="sb-block">
+      <div class="sb-title">长难句拆解</div>
+      <div class="sb-sent">
+        <span class="sb-chip sb-core-chip">主干</span><span class="sb-core">a greatly enlarged brain boosts self-control,</span>
+        <span class="sb-chip sb-ins-chip">类比 · just as</span><span class="sb-ins">just as it boosts problem-solving skills</span>
+        <span class="sb-chip sb-rest-chip">在哪些方面</span><span class="sb-rest">in the social as well as the physical world.</span>
+      </div>
+      <div class="sb-steps">
+        <div class="sb-step"><span class="sb-step-n">1</span><div>主干：<em>a greatly enlarged brain boosts self-control</em><span class="arrow">→</span>增大的大脑增强了自控力</div></div>
+        <div class="sb-step"><span class="sb-step-n">2</span><div>just as 引出类比：正如它也增强了解决问题的能力一样</div></div>
+        <div class="sb-step"><span class="sb-step-n">3</span><div>as well as 连接两个领域：社会世界和物理世界</div></div>
+      </div>
+      <div class="sb-tip">💡 34题选 D：全文从因纽特人的例子 → 跨文化的普遍规范 → 大脑的奖励系统 → 自律与语言，层层追溯道德的根源，所以最佳标题是「The Roots of Morality」。</div>
+    </div>
+  </div>
+
+</div><!-- /passage -->
+
+<!-- ══════ Vocabulary ══════ -->
+<div class="panel" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')">
+    <span>生词与短语（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="vocab-list">
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('illustrates')">illustrates</span>
+          <span class="vocab-meaning">说明，阐明（用例子解释）</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>illustrate = 用例子来说明/解释（不只是「画插图」！）。illustrates the probable moral code = 说明了可能的道德准则。</div>
+          <div class="vd-example">Franz Boas's description <em>illustrates</em> the probable moral code of early humans. （课文）</div>
+          <div class="vd-example">This example <em>illustrates</em> the importance of teamwork. 这个例子说明了团队合作的重要性。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('moral code')">moral code</span>
+          <span class="vocab-meaning">道德准则，行为规范</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>moral = 道德的，code = 准则/法典。moral code = 一套关于什么是对、什么是错的行为规范。</div>
+          <div class="vd-example">...illustrates the probable <em>moral code</em> of early humans. （课文）</div>
+          <div class="vd-example">Every culture has its own <em>moral code</em>. 每种文化都有自己的道德准则。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('norms')">norms</span>
+          <span class="vocab-meaning">规范，准则（社会行为的标准）</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>norm = 大家默认的标准/规矩。social norms = 社会规范。课文说规范虽然 unwritten 但被大家 taken to heart。</div>
+          <div class="vd-example">Here, <em>norms</em> were unwritten and rarely expressed clearly. （课文）</div>
+          <div class="vd-example">作文：Social <em>norms</em> differ from culture to culture. 社会规范因文化而异。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('virtues')">virtues</span>
+          <span class="vocab-meaning">美德，品德</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>virtue = 美德（与 vice 恶习 相对）。moral virtues = 道德美德，如诚实、勇气、谦逊等。</div>
+          <div class="vd-example">The similarity of moral <em>virtues</em> across cultures is striking. （课文）</div>
+          <div class="vd-example">Patience is a <em>virtue</em>. 耐心是一种美德。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('mechanisms')">mechanisms</span>
+          <span class="vocab-meaning">机制，机理（事物运作的方式）</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>mechanism = 机制（mechanic = 机械的，mechanism = 运作的方式/过程）。shared mechanisms = 共有的机制。</div>
+          <div class="vd-example">...our shared <em>mechanisms</em> for learning and problem solving. （课文）</div>
+          <div class="vd-example">the brain's reward <em>mechanism</em> 大脑的奖励机制</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('instincts')">instincts</span>
+          <span class="vocab-meaning">本能（天生的行为倾向）</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>instinct = 本能（天生就有的、不需要学习的行为倾向）。social instincts = 社会本能。</div>
+          <div class="vd-example">Our social <em>instincts</em> include the intense desire to belong. （课文）</div>
+          <div class="vd-example">Animals act on <em>instinct</em> to survive. 动物凭本能生存。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('repurposed')">repurposed</span>
+          <span class="vocab-meaning">被重新利用的，改作他用的</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>re-（再次）+ purpose（目的）= 把原本用于一件事的东西改用到另一件事上。大脑奖励系统被「改装」用于社会行为。</div>
+          <div class="vd-example">The mechanism involves a <em>repurposed</em> reward system. （课文）</div>
+          <div class="vd-example">The old factory was <em>repurposed</em> as a museum. 老工厂被改造成了博物馆。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('acquire')">acquire</span>
+          <span class="vocab-meaning">获得，习得（通过学习/经验）</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>acquire = 获得（不是天生有，而是后天学到/得到的）。acquire behavioural patterns = 习得行为模式。</div>
+          <div class="vd-example">Our brains use the system to <em>acquire</em> behavioural patterns. （课文）</div>
+          <div class="vd-example">Children <em>acquire</em> language naturally. 儿童自然地习得语言。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('self-discipline')">self-discipline</span>
+          <span class="vocab-meaning">自律，自我约束</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>self = 自己，discipline = 纪律/约束。self-discipline = 自律。社会要求我们既要合群，又不能忍受过分的事，所以自律很重要。</div>
+          <div class="vd-example">Hence <em>self-discipline</em> is advantageous. （课文）</div>
+          <div class="vd-example">作文：<em>Self-discipline</em> is the key to success. 自律是成功的关键。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('advantageous')">advantageous</span>
+          <span class="vocab-meaning">有利的，有优势的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>advantage（优势）+ -ous（形容词后缀）= advantageous（有利的）。反义：disadvantageous 不利的。</div>
+          <div class="vd-example">Hence self-discipline is <em>advantageous</em>. （课文）</div>
+          <div class="vd-example">It would be <em>advantageous</em> to arrive early. 早到会是有利的。</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Questions ══════ -->
+<div class="panel" id="questionsPanel">
+  <div class="panel-header" onclick="togglePanel('questionsPanel')">
+    <span>题目解析（3题，32—34）</span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+
+    <!-- Q32 -->
+    <div class="question-item" data-answer="C">
+      <div class="question-stem">32. What can be inferred about the forming of the Inuit's moral code?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. Living conditions were the drive.</div>
+        <div class="question-option" data-key="B">B. Unwritten rules were the target.</div>
+        <div class="question-option" data-key="C">C. Social tradition was the basis.</div>
+        <div class="question-option" data-key="D">D. Honesty was the key.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：C</div>
+        <div class="locate" data-goto="2" onclick="gotoSentence(2)">"leadership, marriage and interactions with other groups were loosely governed by traditions."</div>
+        <p>推断题。第一段明确说领导权、婚姻和与其他群体的交往都「被传统松散地约束着」（loosely governed by traditions）。这说明因纽特人道德准则的形成基础是社会传统。选 <b>C</b>。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— Living conditions were the drive：文章最后提到严酷环境让「务实态度」有道理，但没有说生活条件是道德准则形成的「驱动力」（drive），偷换了概念。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ B</span><span class="opt-why">— Unwritten rules were the target：规范是 unwritten 的，但这是描述规范的形式，不是形成的「目标」。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ C</span><span class="opt-why">— Social tradition was the basis：loosely governed by traditions = 被传统松散地约束，传统是因纽特人道德准则的基础。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— Honesty was the key：Dishonest behaviours were disapproved of，但文章没说诚实是道德准则形成的「关键」。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q33 -->
+    <div class="question-item" data-answer="B">
+      <div class="question-stem">33. What can we learn from this passage?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. Inconveniences are the cause of telling lies.</div>
+        <div class="question-option" data-key="B">B. Basic human needs lead to universal norms.</div>
+        <div class="question-option" data-key="C">C. Language capacity is limited by self-control.</div>
+        <div class="question-option" data-key="D">D. Written laws have great influence on virtues.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：B</div>
+        <div class="locate" data-goto="9" onclick="gotoSentence(9)">"Instead, they are rooted in the similarity of basic human needs and our shared mechanisms for learning and problem solving."</div>
+        <p>细节推断题。第二段第8-9句明确说：这些普遍规范（universal norms）远早于任何宗教或法律，它们「根植于人类基本需求的相似性」（rooted in the similarity of basic human needs）。B选项「Basic human needs lead to universal norms（基本人类需求导致了普遍规范）」正好对应这句话。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— Inconveniences are the cause of telling lies：文章说 we help a grandparent even when inconvenient，但 inconvenience 不是撒谎的原因，逻辑说反了。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ B</span><span class="opt-why">— Basic human needs lead to universal norms：直接对应 rooted in the similarity of basic human needs，正确。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ C</span><span class="opt-why">— Language capacity is limited by self-control：文章说语言能力 strengthens 这些能力，不是被自控力限制。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— Written laws have great influence on virtues：文章说普遍规范 far pre-date written law（远早于成文法律），成文法律对美德的影响不大。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q34 -->
+    <div class="question-item" data-answer="D">
+      <div class="question-stem">34. Which would be the best title for this passage?</div>
+      <div class="question-options" style="grid-template-columns: repeat(2,1fr);">
+        <div class="question-option" data-key="A">A. Virtues: Bridges Across Cultures</div>
+        <div class="question-option" data-key="B">B. The Values of Self-discipline</div>
+        <div class="question-option" data-key="C">C. Brains: Walls Against Chaos</div>
+        <div class="question-option" data-key="D">D. The Roots of Morality</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：D</div>
+        <div class="locate" data-goto="9" onclick="gotoSentence(9)">"Instead, they are rooted in the similarity of basic human needs..."</div>
+        <div class="locate" data-goto="14" onclick="gotoSentence(14)" style="margin-top:4px">"The mechanism involves a repurposed reward system originally used to develop habits important for self-care."</div>
+        <p>标题题。全文的逻辑线：因纽特人的例子（道德准则的具体表现）→ 跨文化的美德相似性（普遍规范的存在）→ 根植于人类基本需求和学习机制（规范的根源）→ 大脑奖励系统的「改装」（生物学根源）→ 自律和语言（进一步发展）。全文层层追溯道德的根源，「The Roots of Morality」（道德的根源）最好地概括了全文主旨。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— Virtues: Bridges Across Cultures：跨文化的美德相似性只是文章的一部分内容，不是全文主旨。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ B</span><span class="opt-why">— The Values of Self-discipline：自律只在最后一段提到，不能概括全文。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ C</span><span class="opt-why">— Brains: Walls Against Chaos：大脑机制只是文章讨论的一个方面，且文章没有用「抵挡混乱的墙」这个比喻。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ D</span><span class="opt-why">— The Roots of Morality：全文从因纽特人到普遍规范再到大脑机制，层层追溯道德的根源，完美概括主旨。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-score" id="quizScore"></div>
+  </div>
+</div>
+
+<!-- ══════ Review ══════ -->
+<div class="panel" id="reviewPanel">
+  <div class="panel-header" onclick="togglePanel('reviewPanel')">阅读原文<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-family:Georgia,serif;font-size:16px;line-height:2;">
+    <p style="text-indent:2em">Franz Boas's description of Inuit life in the 19th century illustrates the probable moral code of early humans. Here, norms were unwritten and rarely expressed clearly, but were well understood and taken to heart. Dishonest and violent behaviours were disapproved of; leadership, marriage and interactions with other groups were loosely governed by traditions. Conflict was often resolved in musical battles. Because arguing angrily leads to chaos, it was strongly discouraged. With life in the unforgiving Northern Canada being so demanding, the Inuit's practical approach to morality made good sense.</p>
+    <p style="text-indent:2em">The similarity of moral virtues across cultures is striking, even though the relative ranking of the virtues may vary with a social group's history and environment. Typically, cruelty and cheating are discouraged, while cooperation, humbleness and courage are praised. These universal norms far pre-date the concept of any moralising religion or written law. Instead, they are rooted in the similarity of basic human needs and our shared mechanisms for learning and problem solving. Our social instincts include the intense desire to belong. The approval of others is rewarding, while their disapproval is strongly disliked. These social emotions prepare our brains to shape our behaviour according to the norms and values of our family and our community. More generally, social instincts motivate us to learn how to behave in a socially complex world.</p>
+    <p style="text-indent:2em">The mechanism involves a repurposed reward system originally used to develop habits important for self-care. Our brains use the system to acquire behavioural patterns regarding safe routes home, efficient food gathering and dangers to avoid. Good habits save time, energy and sometimes your life. Good social habits do something similar in a social context. We learn to tell the truth, even when lying is self-serving; we help a grandparent even when it is inconvenient. We acquire what we call a sense of right and wrong.</p>
+    <p style="text-indent:2em">Social benefits are accompanied by social demands: we must get along, but not put up with too much. Hence self-discipline is advantageous. In humans, a greatly enlarged brain boosts self-control, just as it boosts problem-solving skills in the social as well as the physical world. These abilities are strengthened by our capacity for language, which allows social practices to develop in extremely unobvious ways.</p>
+  </div>
+</div>
+
+<!-- ══════ 阅读技巧 ══════ -->
+<div class="panel" id="tipPanel">
+  <div class="panel-header" onclick="togglePanel('tipPanel')">阅读技巧<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-size:15px;line-height:1.8;">
+    <p><b>推断题的做法（32题）：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li><b>找定位句：</b>题目问 Inuit's moral code 的形成，定位到第一段 loosely governed by traditions。</li>
+      <li><b>区分「描述」与「原因」：</b>A选项说 living conditions 是 drive，但文章只是说严酷环境让「务实态度有道理」，并非说环境驱动了道德的形成。C选项说 tradition 是 basis，对应 governed by traditions，更准确。</li>
+      <li><b>注意偷换概念：</b>出题者常把文中的「描述性信息」变成「因果关系」来干扰，需要仔细辨别。</li>
+    </ul>
+    <p style="margin-top:12px"><b>细节推断题的做法（33题）：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li><b>逐选项排查：</b>把每个选项回到原文验证，找到对应的句子看是否一致。</li>
+      <li><b>B选项定位：</b>rooted in the similarity of basic human needs = 根植于基本人类需求 → basic human needs lead to universal norms，完美对应。</li>
+    </ul>
+    <p style="margin-top:12px"><b>标题题的做法（34题）：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li>标题 = 文章核心观点的浓缩。需要概括全文，而非只覆盖某一段。</li>
+      <li>这篇：从因纽特人的例子 → 跨文化规范 → 大脑机制 → 语言能力，全文在追溯道德的起源/根源。</li>
+      <li>D「The Roots of Morality」完美覆盖全文脉络。其他选项只涉及部分内容。</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════ 作文拓展 ══════ -->
+<div class="panel" id="writingPanel">
+  <div class="panel-header" onclick="togglePanel('writingPanel')">作文拓展：好句式 &amp; 好短语<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-size:15px;line-height:1.9;">
+    <p><b>可以直接用进作文的句式：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li><em>be rooted in</em>（根植于）—— Success is rooted in hard work. 成功根植于努力。</li>
+      <li><em>far pre-date</em>（远早于）—— These customs far pre-date modern laws. 这些习俗远早于现代法律。</li>
+      <li><em>be accompanied by</em>（伴随着）—— Progress is always accompanied by challenges. 进步总是伴随着挑战。</li>
+      <li><em>motivate sb to do sth</em>（激励某人做某事）—— His story motivated me to study harder. 他的故事激励我更努力学习。</li>
+      <li><em>acquire a sense of</em>（培养/获得一种...的意识）—— We should acquire a sense of responsibility. 我们应该培养责任感。</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div id="playbar">
+  <button onclick="pbPrev()" title="上一句">⏮</button>
+  <button id="pb-play" onclick="pbToggle()">▶</button>
+  <button onclick="pbNext()" title="下一句">⏭</button>
+  <span id="pb-counter">— / 24</span>
+  <select id="pb-speed" onchange="pbSetSpeed(this.value)">
+    <option value="0.8">0.8×</option>
+    <option value="1" selected>1.0×</option>
+    <option value="1.2">1.2×</option>
+  </select>
+</div>
+
+<script>
+const THEMES=['yellow','green'];
+const THEME_LABELS={yellow:'📄 书本黄',green:'🌿 护眼绿'};
+let themeIdx=parseInt(localStorage.getItem('theme')||'0');
+function applyTheme(){document.body.classList.remove('theme-yellow','theme-green');const t=THEMES[themeIdx%THEMES.length];document.body.classList.add('theme-'+t);const btn=document.getElementById('theme-btn');if(btn)btn.textContent=THEME_LABELS[t];}
+function cycleTheme(){themeIdx=(themeIdx+1)%THEMES.length;localStorage.setItem('theme',themeIdx);applyTheme();}
+applyTheme();
+
+const sentences=[
+  "Franz Boas's description of Inuit life in the 19th century illustrates the probable moral code of early humans.",
+  "Here, norms were unwritten and rarely expressed clearly, but were well understood and taken to heart.",
+  "Dishonest and violent behaviours were disapproved of; leadership, marriage and interactions with other groups were loosely governed by traditions.",
+  "Conflict was often resolved in musical battles.",
+  "Because arguing angrily leads to chaos, it was strongly discouraged.",
+  "With life in the unforgiving Northern Canada being so demanding, the Inuit's practical approach to morality made good sense.",
+  "The similarity of moral virtues across cultures is striking, even though the relative ranking of the virtues may vary with a social group's history and environment.",
+  "Typically, cruelty and cheating are discouraged, while cooperation, humbleness and courage are praised.",
+  "These universal norms far pre-date the concept of any moralising religion or written law.",
+  "Instead, they are rooted in the similarity of basic human needs and our shared mechanisms for learning and problem solving.",
+  "Our social instincts include the intense desire to belong.",
+  "The approval of others is rewarding, while their disapproval is strongly disliked.",
+  "These social emotions prepare our brains to shape our behaviour according to the norms and values of our family and our community.",
+  "More generally, social instincts motivate us to learn how to behave in a socially complex world.",
+  "The mechanism involves a repurposed reward system originally used to develop habits important for self-care.",
+  "Our brains use the system to acquire behavioural patterns regarding safe routes home, efficient food gathering and dangers to avoid.",
+  "Good habits save time, energy and sometimes your life.",
+  "Good social habits do something similar in a social context.",
+  "We learn to tell the truth, even when lying is self-serving; we help a grandparent even when it is inconvenient.",
+  "We acquire what we call a sense of right and wrong.",
+  "Social benefits are accompanied by social demands: we must get along, but not put up with too much.",
+  "Hence self-discipline is advantageous.",
+  "In humans, a greatly enlarged brain boosts self-control, just as it boosts problem-solving skills in the social as well as the physical world.",
+  "These abilities are strengthened by our capacity for language, which allows social practices to develop in extremely unobvious ways."
+];
+
+let activeTooltip=null;
+const ZH_AUDIO={};
+let zhPlayer=null;
+
+function phraseToSlug(phrase){return phrase.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+function playZhAudio(slug,btn){if(zhPlayer){zhPlayer.pause();zhPlayer=null;btn.textContent='🔊 听讲解';return;}const src=ZH_AUDIO[slug];if(!src)return;zhPlayer=new Audio(src);btn.textContent='⏹ 停止';zhPlayer.onended=()=>{btn.textContent='🔊 听讲解';zhPlayer=null;};zhPlayer.play();}
+
+function showTooltip(tipEl){
+  hideTooltip();
+  const raw=tipEl.getAttribute('data-tip');const[phrase,explain]=raw.split('|');const parts=explain.split('｜');
+  const slug=phraseToSlug(phrase);const hasAudio=ZH_AUDIO[slug];
+  const tooltip=document.createElement('div');tooltip.className='tooltip';
+  tooltip.innerHTML='<div class="tip-scroll">'+
+    `<div class="tip-phrase">${phrase}${tipEl.dataset.level?`<span class="level-badge badge-${tipEl.dataset.level}">${tipEl.dataset.level}</span>`:''}<span class="tip-speak" onclick="speakWord('${phrase.replace(/'/g,"\\'")}')">&#9654;</span></div>`+
+    parts.map(p=>`<div>${p.trim()}</div>`).join('')+(hasAudio?`<button class="tip-zh-play" onclick="playZhAudio('${slug}',this)">🔊 听讲解</button>`:'')+
+    '</div>';
+  document.body.appendChild(tooltip);activeTooltip=tooltip;tooltip._tip=tipEl;positionTooltip();if(!activeTooltip)return;speakWord(phrase);
+}
+
+let _safeProbe=null;
+function tooltipFrame(){
+  if(!_safeProbe){_safeProbe=document.createElement('div');_safeProbe.style.cssText='position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)';document.body.appendChild(_safeProbe);}
+  const cs=getComputedStyle(_safeProbe);const M=8;const vw=document.documentElement.clientWidth,vh=window.innerHeight;
+  let minY=M+(parseFloat(cs.paddingTop)||0);let maxY=vh-M-(parseFloat(cs.paddingBottom)||0);
+  const hdr=document.querySelector('.header');if(hdr){const b=hdr.getBoundingClientRect().bottom;if(b>0)minY=Math.max(minY,b+4);}
+  const pb=document.getElementById('playbar');if(pb&&getComputedStyle(pb).display!=='none'){maxY=Math.min(maxY,pb.getBoundingClientRect().top-4);}
+  return{minX:M+(parseFloat(cs.paddingLeft)||0),maxX:vw-M-(parseFloat(cs.paddingRight)||0),minY,maxY};
+}
+function positionTooltip(){
+  const tooltip=activeTooltip;if(!tooltip)return;const tipEl=tooltip._tip;const rects=tipEl.getClientRects();const f=tooltipFrame();
+  if(!rects.length){hideTooltip();return;}const first=rects[0],last=rects[rects.length-1];
+  if(last.bottom<f.minY-4||first.top>f.maxY+4){hideTooltip();return;}
+  const GAP=10,PAD=16;const body=tooltip.firstElementChild;
+  tooltip.style.maxWidth=Math.max(120,Math.min(520,f.maxX-f.minX))+'px';body.style.maxHeight='none';tooltip.style.left='0px';tooltip.style.top='0px';
+  const tw=tooltip.offsetWidth,naturalH=tooltip.offsetHeight;const spaceAbove=first.top-f.minY-GAP;const spaceBelow=f.maxY-last.bottom-GAP;
+  let below;if(naturalH<=spaceAbove)below=false;else if(naturalH<=spaceBelow)below=true;else below=spaceBelow>spaceAbove;
+  const avail=Math.max(60,below?spaceBelow:spaceAbove);if(naturalH>avail)body.style.maxHeight=Math.max(30,avail-PAD)+'px';
+  const r=below?last:first;const cx=r.left+r.width/2;const left=Math.max(f.minX,Math.min(cx-tw/2,f.maxX-tw));
+  let top=below?last.bottom+GAP:first.top-GAP-tooltip.offsetHeight;top=Math.max(f.minY,Math.min(top,f.maxY-tooltip.offsetHeight));
+  tooltip.classList.toggle('below',below);tooltip.style.setProperty('--arrow-left',Math.max(14,Math.min(cx-left,tw-14))+'px');tooltip.style.left=left+'px';tooltip.style.top=top+'px';
+}
+(function(){let raf=0;const re=()=>{if(!activeTooltip||raf)return;raf=requestAnimationFrame(()=>{raf=0;positionTooltip();});};
+window.addEventListener('scroll',re,{passive:true});window.addEventListener('resize',re);window.addEventListener('orientationchange',re);
+if(window.visualViewport){visualViewport.addEventListener('resize',re);visualViewport.addEventListener('scroll',re);}})();
+
+function hideTooltip(){if(zhPlayer){zhPlayer.pause();zhPlayer=null;}if(activeTooltip){activeTooltip.remove();activeTooltip=null;}}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.sentence.highlighted')&&!e.target.closest('.locate')){document.querySelectorAll('.sentence.highlighted').forEach(s=>s.classList.remove('highlighted'));}
+  const tipEl=e.target.closest('.tip');
+  if(tipEl){e.stopPropagation();if(activeTooltip&&activeTooltip._source===tipEl){hideTooltip();}else{showTooltip(tipEl);if(activeTooltip)activeTooltip._source=tipEl;}return;}
+  if(e.target.closest('.tooltip'))return;hideTooltip();
+});
+
+let pbCurrent=null,pbPlaying=false,pbSpeed=1,enPlayer=null;
+function pbStop(){if(enPlayer){enPlayer.pause();enPlayer=null;}pbPlaying=false;}
+function highlightSentence(idx){
+  document.querySelectorAll('.sentence').forEach(el=>el.classList.remove('playing'));
+  if(idx!==null&&idx>=0&&idx<sentences.length){const el=document.querySelector(`.sentence[data-idx="${idx}"]`);if(el){el.classList.add('playing');el.scrollIntoView({behavior:'smooth',block:'center'});}}
+}
+function pbUpdateUI(){document.getElementById('pb-play').textContent=pbPlaying?'⏸':'▶';document.getElementById('pb-counter').textContent=pbCurrent!==null?`${pbCurrent+1} / ${sentences.length}`:`— / ${sentences.length}`;}
+function pbPlayCurrent(){
+  pbStop();if(pbCurrent===null){pbUpdateUI();return;}
+  const src=`audio/2024北京卷-D/en-s${String(pbCurrent).padStart(2,'0')}.mp3`;
+  enPlayer=new Audio(src);enPlayer.playbackRate=pbSpeed;pbPlaying=true;highlightSentence(pbCurrent);pbUpdateUI();
+  enPlayer.onerror=()=>{const utter=new SpeechSynthesisUtterance(sentences[pbCurrent]);const voices=speechSynthesis.getVoices();utter.voice=voices.find(v=>v.lang==='en-GB')||voices.find(v=>v.lang.startsWith('en'))||null;utter.rate=pbSpeed*0.85;utter.onend=()=>{if(pbPlaying){if(pbCurrent<sentences.length-1){pbCurrent++;pbPlayCurrent();}else{pbPlaying=false;highlightSentence(null);pbUpdateUI();}}};speechSynthesis.speak(utter);enPlayer=null;};
+  enPlayer.onended=()=>{if(pbPlaying){if(pbCurrent<sentences.length-1){pbCurrent++;pbPlayCurrent();}else{pbPlaying=false;highlightSentence(null);pbUpdateUI();}}};enPlayer.play();
+}
+function pbToggle(){if(pbCurrent===null){pbCurrent=0;pbPlayCurrent();return;}if(pbPlaying){pbStop();highlightSentence(pbCurrent);pbUpdateUI();}else{pbPlayCurrent();}}
+function pbPrev(){if(pbCurrent===null)pbCurrent=0;else if(pbCurrent>0)pbCurrent--;pbPlayCurrent();}
+function pbNext(){if(pbCurrent===null)pbCurrent=0;else if(pbCurrent<sentences.length-1)pbCurrent++;pbPlayCurrent();}
+function pbSetSpeed(v){pbSpeed=parseFloat(v);if(enPlayer)enPlayer.playbackRate=pbSpeed;}
+
+document.addEventListener('click',function(e){if(e.target.closest('.tip')||e.target.closest('.tooltip'))return;const sentence=e.target.closest('.sentence.complex');if(sentence)toggleAnalysis(parseInt(sentence.dataset.idx));});
+
+function speakWord(word){
+  if(enPlayer){enPlayer.pause();enPlayer=null;}
+  const slug='en-word-'+word.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const src='audio/2024北京卷-D/'+slug+'.mp3';
+  enPlayer=new Audio(src);
+  enPlayer.onerror=function(){const utter=new SpeechSynthesisUtterance(word);const voices=speechSynthesis.getVoices();utter.voice=voices.find(v=>v.lang==='en-GB')||voices.find(v=>v.lang.startsWith('en'))||voices[0];utter.rate=0.8;speechSynthesis.speak(utter);};
+  enPlayer.play();
+}
+
+const ANALYSIS_AUDIO={};let analysisPlayer=null,analysisBtn=null;
+function playAnalysis(id,btn){if(analysisPlayer){analysisPlayer.pause();analysisPlayer=null;if(analysisBtn){analysisBtn.textContent='🔊 听讲解';analysisBtn.classList.remove('playing');}if(analysisBtn===btn){analysisBtn=null;return;}}const src=ANALYSIS_AUDIO[id];if(!src)return;analysisPlayer=new Audio(src);analysisBtn=btn;btn.textContent='⏹ 停止';btn.classList.add('playing');analysisPlayer.onended=()=>{btn.textContent='🔊 听讲解';btn.classList.remove('playing');analysisPlayer=null;analysisBtn=null;};analysisPlayer.play();}
+
+function toggleAnalysis(idx){const el=document.getElementById('analysis-'+idx);if(el)el.classList.toggle('open');}
+function togglePanel(id){document.getElementById(id).classList.toggle('open');}
+function setMode(mode){document.body.classList.remove('mode-raw','mode-study','mode-quiz','mode-annotate');if(mode!=='study')document.body.classList.add('mode-'+mode);document.querySelectorAll('.mode-step').forEach(btn=>btn.classList.toggle('active',btn.dataset.mode===mode));hideTooltip();if(mode==='quiz'){pbStop();highlightSentence(null);pbUpdateUI();resetQuiz();}}
+function resetQuiz(){document.querySelectorAll('.question-option').forEach(opt=>opt.classList.remove('selected','correct','wrong'));document.querySelectorAll('.question-item').forEach(q=>q.dataset.answered='');const score=document.getElementById('quizScore');if(score)score.classList.remove('show');}
+document.addEventListener('click',function(e){if(!document.body.classList.contains('mode-quiz'))return;const opt=e.target.closest('.question-option');if(!opt)return;const item=opt.closest('.question-item');if(item.dataset.answered)return;item.dataset.answered='true';const picked=opt.dataset.key;const correct=item.dataset.answer;if(picked===correct){opt.classList.add('correct');}else{opt.classList.add('wrong');item.querySelector(`.question-option[data-key="${correct}"]`).classList.add('correct');}const total=document.querySelectorAll('.question-item[data-answer]').length;const done=document.querySelectorAll('.question-item[data-answered="true"]').length;if(done===total)showQuizScore();});
+function showQuizScore(){const total=document.querySelectorAll('.question-item[data-answer]').length;const wrong=document.querySelectorAll('.question-option.wrong').length;const score=document.getElementById('quizScore');score.textContent=`得分：${total-wrong} / ${total}`;score.classList.add('show');}
+function gotoSentence(idx){const el=document.querySelector(`.sentence[data-idx="${idx}"]`);if(!el)return;setMode('study');document.querySelectorAll('.sentence.highlighted').forEach(s=>s.classList.remove('highlighted'));el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('highlighted');}
+function toggleQuestionAnalysis(btn){const analysis=btn.nextElementSibling;analysis.classList.toggle('open');btn.textContent=analysis.classList.contains('open')?'收起解析':'🔍 查看解析';}
+
+const SRS_PREFIX='srs_beijing_2024_D_';const SRS_INTERVALS=[1,3,7,14,30];
+function srsLoad(word){const raw=localStorage.getItem(SRS_PREFIX+word);return raw?JSON.parse(raw):null;}
+function srsSave(word,knew){const state=srsLoad(word)||{streak:0};if(knew){state.streak=(state.streak||0)+1;state.interval=SRS_INTERVALS[Math.min(state.streak-1,SRS_INTERVALS.length-1)];}else{state.streak=0;state.interval=1;}state.nextReview=Date.now()+state.interval*86400000;localStorage.setItem(SRS_PREFIX+word,JSON.stringify(state));return state;}
+function srsIsDue(state){return!state||Date.now()>=state.nextReview;}
+function srsUpdateCard(card){const state=srsLoad(card.dataset.srsWord);card.classList.remove('srs-due','srs-known');if(!state)return;card.classList.add(srsIsDue(state)?'srs-due':'srs-known');}
+function srsUpdateBadge(){const badge=document.getElementById('srs-badge');if(!badge)return;const cards=document.querySelectorAll('.vocab-card[data-srs-word]');let due=0;cards.forEach(c=>{if(srsIsDue(srsLoad(c.dataset.srsWord)))due++;});if(due===0){badge.textContent='全掌握 ✓';badge.className='srs-badge all-done';}else{badge.textContent=due+'个待复习';badge.className='srs-badge';}}
+function srsClick(word,knew,btn){srsSave(word,knew);const card=btn.closest('.vocab-card');srsUpdateCard(card);srsUpdateBadge();btn.style.opacity='0.4';setTimeout(()=>btn.style.opacity='',600);}
+function srsInit(){document.querySelectorAll('.vocab-card').forEach(card=>{const wordEl=card.querySelector('.vocab-word');if(!wordEl)return;const word=wordEl.textContent.trim();card.dataset.srsWord=word;const btns=document.createElement('div');btns.className='srs-btns';const esc=word.replace(/\\/g,'\\\\').replace(/'/g,"\\'");btns.innerHTML=`<button class="srs-btn srs-btn-know" onclick="srsClick('${esc}',true,this)">认识 ✓</button>`+`<button class="srs-btn srs-btn-forget" onclick="srsClick('${esc}',false,this)">还不会 ✗</button>`;card.querySelector('.vocab-card-head').appendChild(btns);srsUpdateCard(card);});srsUpdateBadge();}
+
+function vocabClick(word){
+  const tips=document.querySelectorAll('.tip');
+  for(const tip of tips){
+    const raw=tip.getAttribute('data-tip')||'';
+    const phrase=raw.split('|')[0].trim().toLowerCase();
+    if(phrase===word.toLowerCase()){
+      tip.scrollIntoView({behavior:'smooth',block:'center'});
+      tip.classList.add('tip-flash');
+      setTimeout(()=>tip.classList.remove('tip-flash'),1800);
+      return;
+    }
+  }
+}
+
+function initAnnotations(){
+  document.querySelectorAll('sup.ann-sup,.para-ann').forEach(el=>el.remove());
+  document.querySelectorAll('.passage .paragraph').forEach(para=>{
+    const seen=new Set();const items=[];let idx=1;
+    para.querySelectorAll('.tip').forEach(el=>{const tip=el.dataset.tip||'';const parts=tip.split('|');if(parts.length<2)return;const phrase=parts[0].trim();if(seen.has(phrase)){const prevIdx=items.findIndex(i=>i.phrase===phrase)+1;const sup=document.createElement('sup');sup.className='ann-sup';sup.textContent=prevIdx;el.after(sup);return;}seen.add(phrase);const sup=document.createElement('sup');sup.className='ann-sup';sup.textContent=idx;el.after(sup);const contentParts=parts[1].split('｜');const cn=contentParts[0].trim();const det=contentParts.slice(1).map(s=>s.replace(/<[^>]+>/g,'').trim()).filter(Boolean);items.push({num:idx,phrase,cn,det,level:el.dataset.level==='超纲'?'超纲':''});idx++;});
+    if(items.length===0)return;const ann=document.createElement('div');ann.className='para-ann';ann.innerHTML=items.map(i=>`<div class="pan-row"><div class="pan-head"><span class="pan-num">${i.num}</span><span class="pan-en">${i.phrase}</span><span class="pan-cn">${i.cn}</span>${i.level?`<span class="pan-lv lv-${i.level}">${i.level}</span>`:''}</div>${i.det.length?`<div class="pan-det">${i.det.map(d=>`<div>${d}</div>`).join('')}</div>`:''}</div>`).join('');
+    const trans=para.querySelector('.translation-inline');if(trans)trans.after(ann);else para.appendChild(ann);
+  });
+}
+
+pbUpdateUI();srsInit();
+document.addEventListener('DOMContentLoaded',initAnnotations);
+</script>
+</body>
+</html>

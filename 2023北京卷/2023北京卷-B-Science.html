@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2023北京卷B篇精读 · A Rejection Can Be a Redirection</title>
+<style>
+:root {
+  --bg: #fafaf8; --text: #1a1a1a; --text-secondary: #555; --text-muted: #888;
+  --accent: #2563eb; --accent-light: #dbeafe; --complex-bg: #f0f6fc;
+  --border: #e2e2e0; --card-bg: #fff; --hover-bg: #f5f5f4;
+  --shadow: 0 1px 3px rgba(0,0,0,.08); --radius: 6px;
+}
+.theme-yellow { --bg:#f5f0e8;--card-bg:#faf6ee;--border:#ddd5bf;--complex-bg:#ece4d4;--hover-bg:#ede7d8;--accent-light:#fde8b8; }
+.theme-green  { --bg:#edecea;--card-bg:#f3f2f0;--border:#d6d5d0;--complex-bg:#e5e4e0;--hover-bg:#e8e7e3;--accent-light:#dddcd6; }
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:60px;}
+.container{max-width:min(1100px,88vw);margin:0 auto;padding:0 20px;}
+.header{background:var(--card-bg);border-bottom:1px solid var(--border);padding:16px 0;position:sticky;top:0;z-index:100;}
+.header .container{display:flex;align-items:center;flex-wrap:wrap;gap:10px;}
+.header h1{font-size:16px;font-weight:600;flex:1;min-width:200px;}
+.header-sub{font-size:12px;color:var(--accent);font-weight:500;background:var(--accent-light);padding:2px 8px;border-radius:10px;}
+.header-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card-bg);color:var(--text);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.mode-steps{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.mode-step{padding:6px 12px;border:none;background:var(--card-bg);color:var(--text-secondary);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.mode-step+.mode-step{border-left:1px solid var(--border);}
+.mode-step.active{background:var(--accent);color:#fff;}
+.mode-step:hover:not(.active){background:var(--accent-light);}
+.passage{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:20px;padding:28px 32px;}
+.passage-title{text-align:center;font-family:Georgia,"Times New Roman",serif;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:20px;color:var(--text-secondary);}
+.paragraph{margin-bottom:4px;text-indent:2em;}
+.sentence{font-family:Georgia,"Times New Roman",serif;font-size:18px;line-height:1.75;position:relative;transition:background .2s;border-radius:3px;cursor:pointer;}
+.sentence:hover{background:var(--hover-bg);}
+.sentence.playing{background:var(--complex-bg);border-radius:3px;}
+.sentence.complex{border-bottom:1.5px dashed #93c5fd;}
+.sentence.complex.playing{background:var(--complex-bg);}
+.tip{border-bottom:1.5px dashed var(--accent);cursor:pointer;position:relative;transition:background .15s;}
+.tip:hover{background:var(--accent-light);}
+.tip.tip-flash{outline:2px solid var(--accent);border-radius:2px;animation:tipFlash 1.6s ease-out forwards;}
+@keyframes tipFlash{0%{background:var(--accent);color:#fff;}40%{background:var(--accent-light);color:inherit;}100%{background:transparent;}}
+.tooltip{position:fixed;z-index:200;background:var(--text);color:#fff;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;line-height:1.5;padding:8px 14px;border-radius:8px;max-width:min(520px,calc(100vw - 16px));width:max-content;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:auto;animation:tipIn .15s ease-out;}
+.tooltip::after{content:'';position:absolute;bottom:-6px;left:var(--arrow-left,50%);transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text);}
+.tooltip.below::after{bottom:auto;top:-6px;border-top:none;border-bottom:6px solid var(--text);}
+.tooltip .tip-phrase{font-family:Georgia,serif;font-weight:600;color:#93c5fd;margin-bottom:2px;}
+.tooltip .tip-speak{display:inline-block;cursor:pointer;margin-left:6px;font-size:12px;opacity:.7;vertical-align:middle;}
+.tooltip .tip-speak:hover{opacity:1;}
+.level-badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:11px;font-weight:600;margin-left:6px;vertical-align:middle;font-family:-apple-system,"PingFang SC",sans-serif;}
+.badge-超纲{background:rgba(239,68,68,.25);color:#fca5a5;}
+.badge-拓展{background:rgba(251,146,60,.2);color:#fdba74;}
+.badge-选必{background:rgba(96,165,250,.2);color:#93c5fd;}
+.tooltip .tip-zh-play{display:block;margin-top:6px;padding:4px 10px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:4px;color:#93c5fd;font-size:12px;cursor:pointer;text-align:center;}
+.tooltip .tip-zh-play:hover{background:rgba(255,255,255,.25);}
+@keyframes tipIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+.analysis{display:none;margin:8px 0 12px 0;padding:12px 16px;background:#f8f9fa;border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;color:var(--text-secondary);line-height:1.7;text-indent:0;}
+.analysis.open{display:block;}
+.analysis p{margin-bottom:4px;}
+.analysis b{color:var(--text);font-size:13px;}
+.translation-inline{display:none;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;color:var(--text-muted);margin:2px 0 6px 0;text-indent:0;}
+body.compare-mode .translation-inline,body.mode-annotate .translation-inline{display:block;}
+.panel{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:16px;overflow:hidden;}
+.panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;cursor:pointer;user-select:none;font-weight:600;font-size:15px;border-bottom:1px solid transparent;transition:border-color .2s;}
+.panel-header:hover{color:var(--accent);}
+.panel-header .arrow{transition:transform .2s;font-size:12px;color:var(--text-muted);}
+.panel.open .panel-header{border-bottom-color:var(--border);}
+.panel.open .panel-header .arrow{transform:rotate(180deg);}
+.panel-body{display:none;padding:16px 24px;}
+.panel.open .panel-body{display:block;}
+.vocab-card{border-bottom:1px solid #f0f0f0;padding:12px 0;}
+.vocab-card:last-child{border-bottom:none;}
+.vocab-card-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px;}
+.vocab-word{font-family:Georgia,serif;font-weight:600;color:var(--accent);cursor:pointer;font-size:15px;}
+.vocab-word:hover{text-decoration:underline;}
+.vocab-meaning{font-size:14px;color:var(--text);}
+.vocab-extra{font-size:13px;color:var(--text-secondary);margin-top:2px;}
+.vocab-tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:3px;background:#fef3c7;color:#92400e;vertical-align:middle;}
+.vocab-tag.tag-core{background:#dcfce7;color:#166534;}
+.vocab-tag.tag-exam{background:#dbeafe;color:#1e40af;}
+.vocab-tag.tag-beyond{background:#fef3c7;color:#92400e;}
+.vocab-tag.tag-extend{background:#ffedd5;color:#c2410c;}
+.vocab-detail{display:none;margin-top:8px;padding:10px 14px;background:#f8f9fa;border-radius:var(--radius);font-size:13.5px;line-height:1.7;}
+.vocab-detail.open{display:block;}
+.vocab-detail .vd-example{color:var(--text-secondary);padding-left:16px;}
+.vocab-detail .vd-example em{color:var(--text);font-style:normal;font-weight:600;}
+.vocab-expand{font-size:12px;color:var(--accent);cursor:pointer;border:none;background:none;padding:0;margin-left:8px;}
+.vocab-expand:hover{text-decoration:underline;}
+.srs-btns{display:flex;gap:5px;margin-left:auto;}
+.srs-btn{font-size:11px;padding:2px 7px;border-radius:10px;border:1.5px solid;cursor:pointer;transition:all .15s;background:none;white-space:nowrap;}
+.srs-btn-know{border-color:#16a34a;color:#16a34a;}
+.srs-btn-know:hover{background:#dcfce7;}
+.srs-btn-forget{border-color:#dc2626;color:#dc2626;}
+.srs-btn-forget:hover{background:#fee2e2;}
+.srs-badge{font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;background:#fef2f2;color:#dc2626;}
+.srs-badge.all-done{background:#dcfce7;color:#16a34a;}
+.analysis-play{float:right;margin-left:8px;background:none;border:1px solid var(--border);border-radius:4px;font-size:12px;padding:2px 8px;cursor:pointer;color:var(--accent);transition:all .15s;}
+.analysis-play:hover{background:var(--accent-light);border-color:var(--accent);}
+.analysis-play.playing{background:var(--accent);color:#fff;border-color:var(--accent);}
+.question-item{padding:16px 24px;border-bottom:1px solid #f0f0f0;}
+.question-item:last-child{border-bottom:none;}
+.question-stem{font-weight:600;font-size:15px;margin-bottom:8px;}
+.question-options{display:grid;grid-template-columns:1fr 1fr;gap:4px 24px;font-size:14px;margin-bottom:8px;}
+.question-option{padding:2px 0;}
+.show-answer-btn{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--accent);cursor:pointer;background:none;border:none;padding:4px 0;}
+.show-answer-btn:hover{text-decoration:underline;}
+.question-analysis{display:none;margin-top:10px;padding:12px 16px;background:#f8f9fa;border-radius:var(--radius);font-size:14px;color:var(--text-secondary);line-height:1.7;}
+.question-analysis.open{display:block;}
+.question-analysis .answer-line{font-weight:700;color:#16a34a;margin-bottom:6px;font-size:15px;}
+.question-analysis .locate{background:#fef9c3;padding:6px 10px;border-radius:4px;margin:6px 0;font-family:Georgia,serif;font-style:italic;font-size:14px;color:var(--text);}
+.option-list{margin-top:10px;display:flex;flex-direction:column;gap:2px;}
+.option-item{padding:3px 0;font-size:13.5px;line-height:1.5;}
+.option-item .opt-letter{font-weight:700;}
+.option-item.correct .opt-mark{color:#15803d;font-weight:700;}
+.option-item.wrong .opt-mark{color:#b91c1c;font-weight:700;}
+.option-item .opt-why{color:#888;font-size:12.5px;margin-left:4px;}
+.quiz-score{text-align:center;padding:16px;font-size:16px;font-weight:600;color:var(--accent);display:none;}
+.quiz-score.show{display:block;}
+#playbar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:#1a1a1a;color:#fff;display:flex;align-items:center;justify-content:center;gap:16px;padding:10px 20px;height:52px;font-size:14px;box-shadow:0 -2px 12px rgba(0,0,0,.2);}
+#playbar button{background:none;border:none;color:#fff;font-size:18px;cursor:pointer;padding:4px 8px;border-radius:4px;line-height:1;transition:background .15s;}
+#playbar button:hover{background:rgba(255,255,255,.15);}
+#pb-play{font-size:22px;}
+#pb-counter{font-size:13px;color:#aaa;min-width:52px;text-align:center;}
+#pb-speed{background:#333;border:none;color:#fff;font-size:13px;padding:3px 6px;border-radius:4px;cursor:pointer;}
+body.mode-raw .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-raw .tip:hover{background:none;}
+body.mode-raw .analysis,body.mode-raw .translation-inline,body.mode-raw .panel{display:none!important;}
+body.mode-raw .sentence.complex{border-bottom:none;}
+body.mode-raw .sentence{cursor:default;}
+body.mode-raw .sentence:hover{background:none;}
+body.mode-quiz .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-quiz .tip:hover{background:none;}
+body.mode-quiz .analysis,body.mode-quiz .translation-inline,body.mode-quiz #vocabPanel,body.mode-quiz #reviewPanel,body.mode-quiz #tipPanel,body.mode-quiz #writingPanel,body.mode-quiz #playbar{display:none!important;}
+body.mode-quiz .sentence.complex{border-bottom:none;cursor:default;}
+body.mode-quiz .sentence{cursor:default;}
+body.mode-quiz .sentence:hover{background:none;}
+body.mode-annotate .sentence.complex{border-bottom:none;}
+body.mode-annotate .sentence{cursor:default;}
+body.mode-annotate .sentence:hover{background:none;}
+body.mode-quiz #questionsPanel{display:block;}
+body.mode-quiz #questionsPanel .panel-body{display:block;}
+body.mode-quiz .question-analysis{display:none!important;}
+body.mode-quiz .show-answer-btn{display:none;}
+body.mode-quiz .question-option{cursor:pointer;padding:6px 10px;border-radius:var(--radius);border:1.5px solid transparent;transition:all .15s;}
+body.mode-quiz .question-option:hover{background:var(--accent-light);}
+body.mode-quiz .question-option.selected{border-color:var(--accent);background:var(--accent-light);}
+body.mode-quiz .question-option.correct{border-color:#16a34a;background:#dcfce7;}
+body.mode-quiz .question-option.wrong{border-color:#dc2626;background:#fee2e2;}
+.locate[data-goto]{cursor:pointer;transition:background .15s;}
+.locate[data-goto]:hover{background:#fde68a;}
+.locate[data-goto]::after{content:' ↗ 跳到原文';font-size:11px;color:var(--accent);font-family:-apple-system,sans-serif;font-style:normal;}
+.sentence.highlighted{background:#fef08a;border-radius:3px;}
+sup.ann-sup{display:none;font-size:0.6em;color:var(--accent);font-weight:700;vertical-align:super;line-height:0;margin-left:2px;font-family:system-ui,sans-serif;pointer-events:none;}
+body.mode-annotate sup.ann-sup{display:inline;}
+.para-ann{display:none;margin:16px 0 28px 0;font-family:-apple-system,"PingFang SC",sans-serif;font-size:15px;color:#333;text-indent:0;}
+body.mode-annotate .para-ann{display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:16px 18px;align-items:start;}
+.pan-row{background:#fff;border:1px solid #ece8e0;border-radius:12px;padding:16px 20px 18px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.pan-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.pan-num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
+.pan-en{font-family:Georgia,serif;font-weight:700;font-size:18px;color:#1a1a1a;}
+.pan-cn{color:var(--accent);font-weight:600;font-size:15px;}
+.pan-lv{font-size:12px;font-weight:600;padding:2px 8px;border-radius:4px;line-height:1.4;}
+.lv-超纲{background:#fee2e2;color:#b91c1c;}
+.pan-det{margin:12px 0 0 32px;color:#666;font-size:14px;line-height:1.85;}
+.pan-det div{position:relative;padding-left:12px;}
+.pan-det div+div{margin-top:8px;}
+.pan-det div::before{content:'';position:absolute;left:0;top:0.8em;width:4px;height:4px;border-radius:50%;background:#c9c3b8;}
+body.mode-quiz .para-ann,body.mode-raw .para-ann{display:none!important;}
+body.mode-quiz sup.ann-sup,body.mode-raw sup.ann-sup{display:none!important;}
+.sb-block{display:none;}
+body.mode-annotate .sb-block{display:block;margin:4px 0 28px;padding:16px 20px 18px;background:#f8f9fa;border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;font-family:-apple-system,"PingFang SC",sans-serif;text-indent:0;}
+body.mode-annotate .analysis{display:none!important;}
+body.mode-quiz .sb-block,body.mode-raw .sb-block{display:none!important;}
+.sb-title{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.08em;margin-bottom:12px;}
+.sb-sent{font-family:Georgia,serif;font-size:18px;line-height:2.3;color:#1a1a1a;background:#fff;border:1px solid #ece8e0;border-radius:10px;padding:14px 18px;}
+.sb-chip{display:inline-block;font-family:-apple-system,"PingFang SC",sans-serif;font-size:11px;font-weight:700;line-height:1;padding:4px 7px;border-radius:999px;margin-right:5px;vertical-align:3px;}
+.sb-core{font-weight:700;border-bottom:2.5px solid var(--accent);}
+.sb-core-chip{background:var(--accent);color:#fff;}
+.sb-ins{color:#9a9a9a;background:#eeebe4;border-radius:4px;padding:2px 4px;}
+.sb-ins-chip{background:#e4e0d8;color:#777;}
+.sb-rest{border-bottom:2.5px solid #4caf7a;}
+.sb-rest-chip{background:#4caf7a;color:#fff;}
+.sb-steps{margin-top:14px;display:grid;gap:10px;}
+.sb-step{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;font-size:15px;line-height:1.75;color:#333;}
+.sb-step-n{width:24px;height:24px;border-radius:50%;background:#1a1a1a;color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-top:2px;}
+.sb-step em{font-style:normal;font-family:Georgia,serif;color:#111;background:#fff;border:1px solid #ece8e0;padding:0 5px;border-radius:4px;}
+.sb-step .arrow{color:#aaa;margin:0 4px;}
+.sb-tip{margin-top:14px;font-size:14px;color:#8a6d1f;background:#fdf6e3;border-radius:8px;padding:9px 14px;}
+.container{max-width:1400px;width:100%;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right));}
+.header{padding-top:calc(16px + env(safe-area-inset-top));}
+body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
+#playbar{height:calc(52px + env(safe-area-inset-bottom));padding-bottom:calc(10px + env(safe-area-inset-bottom));padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right));}
+.passage{padding:24px 24px;}
+.tooltip .tip-scroll{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
+@media(min-width:700px){
+  .header h1{font-size:19px;}.passage-title{font-size:19px;}.header-sub{font-size:14px;}
+  .sentence{font-size:23px;line-height:1.8;}.translation-inline{font-size:18px!important;line-height:1.8;}
+  .analysis{font-size:18px;line-height:1.8;}.analysis b{font-size:16px;}.panel-header{font-size:18px;}
+  .vocab-word{font-size:20px;}.vocab-meaning{font-size:18px;}.vocab-extra{font-size:16.5px;line-height:1.7;}
+  .vocab-detail,.vd-example{font-size:16px;}.vocab-tag,.level-badge{font-size:13px;}
+  .vocab-expand,.srs-btn,.srs-badge{font-size:14px;}.question-stem{font-size:19px;}
+  .question-options{font-size:18px;}.show-answer-btn{font-size:15.5px;}
+  .question-analysis .answer-line{font-size:17px;}.option-item{font-size:16.5px;}.option-item .opt-why{font-size:15px;}
+  .tooltip{font-size:17px;line-height:1.55;}.tooltip .tip-phrase{font-size:19px;}
+  #pb-counter,#pb-speed{font-size:15px;}
+}
+@media(max-width:600px){
+  .passage{padding:18px 14px;}.sentence{font-size:16px;}.question-options{grid-template-columns:1fr;}
+  .panel-header,.question-item{padding-left:16px;padding-right:16px;}.panel-body{padding:12px 16px;}
+}
+@media print{
+  @page{size:A4;margin:14mm 12mm;}
+  html,body{background:#fff!important;}
+  body{padding:0!important;}
+  .header,#playbar,.panel,.tooltip{display:none!important;}
+  .passage{box-shadow:none!important;border:none!important;background:#fff!important;padding:0!important;margin:0!important;max-width:none!important;}
+  .sentence{font-size:15px!important;line-height:1.85!important;}
+}
+</style>
+</head>
+<body class="mode-study">
+
+<div class="header">
+  <div class="container">
+    <h1>2023北京卷B篇精读 · A Rejection Can Be a Redirection</h1>
+    <div class="header-controls">
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="study" onclick="setMode('study')">① 精读</button>
+        <button class="mode-step" data-mode="quiz" onclick="setMode('quiz')">② 做题</button>
+        <button class="mode-step" data-mode="raw" onclick="setMode('raw')">③ 原文</button>
+        <button class="mode-step" data-mode="annotate" onclick="setMode('annotate')">④ 课本</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()" title="切换护眼色">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="passage" id="passage">
+  <div class="passage-title">B</div>
+
+  <!-- ── Paragraph 1 ── -->
+  <div class="paragraph" id="para-1">
+    <span class="sentence" data-idx="0">Sitting in the garden for my friend's birthday, I felt a <span class="tip" data-tip="buzz|振动感，嗡嗡声｜buzz 本来是蜜蜂飞的嗡嗡声。手机振动时也有这种感觉，所以 felt a buzz = 感觉到一阵振动。原文括号里给出了中文「振动」">buzz</span> in my pocket.</span>
+    <span class="sentence" data-idx="1">My <span class="tip" data-tip="heart raced|心跳加速（表示紧张）｜race = 跑，race 有「快速跳动」的意思。My heart raced = 我的心跳加速，说明看到发件人名字时非常紧张｜near-synonym: My heart beat fast. 是24题的关键：心跳加速 = anxious（紧张的）">heart raced</span> when I saw the email sender's name.</span>
+    <span class="sentence" data-idx="2">The email <span class="tip" data-tip="started off|以...开头，开门见山地说｜start off = 以某种方式开始。The email started off with... = 邮件一开始就写道...｜搭配：start off by saying 开门见山地说；start off on the right foot 开门红">started off</span>: "Dear Mr Green, thank you for your interest" and "the <span class="tip" data-tip="review process|审核过程｜review = 审查、评审（你可能见过 book review 书评）。process = 过程。The review process took longer = 审核花了更长时间，这是委婉拒绝前常用的说法" data-level="选必">review process</span> took longer than expected."</span>
+    <span class="sentence" data-idx="3">It ended with "We are sorry to inform you…" and my vision <span class="tip" data-tip="blurred|模糊了｜blur = 变模糊。vision blurred = 视线模糊，说明作者眼眶含泪或十分震惊。原文括号里给出了中文「模糊」">blurred</span>.</span>
+    <span class="sentence complex" data-idx="4">The <span class="tip" data-tip="position|职位，名额｜position 在这里不是「位置」而是「职位、机会名额」。The position = 那个职位/那个机会｜= job, role. 搭配：apply for a position 申请职位" data-level="选必">position</span>—<span class="tip" data-tip="measuring soil quality|测量土壤质量｜measure = 测量，soil = 土壤（像 soil = 泥土），quality = 质量。measuring soil quality in the Sahara Desert = 在撒哈拉沙漠测量土壤质量">measuring soil quality</span> in the Sahara Desert as part of an <span class="tip" data-tip="undergraduate research programme|本科研究项目｜under = 在...之下，graduate = 毕业生；undergraduate = 还没本科毕业的学生。undergraduate research programme = 本科阶段参与的科研项目｜= undergrad research program" data-level="拓展">undergraduate research programme</span>—had felt like the answer I had <span class="tip" data-tip="spent years looking for|花了多年在寻找的｜spend time doing = 花时间做某事。had spent years looking for = 此前已经花了多年在寻找（过去完成时，表示在此之前已经进行很久了）｜这是作者心目中梦寐以求的机会">spent years looking for</span>.</span>
+    <div class="analysis" id="analysis-4">
+      <p><b>破折号的作用：</b>两个破折号（—…—）夹住的部分是插入说明，相当于括号。<em>measuring soil quality in the Sahara Desert as part of an undergraduate research programme</em> 是在解释 the position 是什么职位——跳过这部分，主干是：<em>The position had felt like the answer I had spent years looking for.</em>（那个职位曾感觉就是我花了多年寻找的答案。）</p>
+      <p><b>过去完成时 had felt / had spent：</b>两个 had + 过去分词，表示在过去某个时间点（收到拒信）之前，作者就已经认为这是梦寐以求的机会了。</p>
+      <p><b>the answer I had spent years looking for：</b>这是一个省略了 that 的定语从句，修饰 the answer。= the answer that I had spent years looking for。</p>
+    </div>
+    <div class="translation-inline">我坐在花园里，正在参加朋友的生日派对，口袋里突然传来一阵振动。看到发件人名字时，我的心跳加速。邮件开头写道："亲爱的Green先生，感谢您的申请，审核比预期花了更长时间。"结尾是"我们很遗憾地通知您……"，我的视线模糊了。那个职位——作为本科研究项目的一部分，在撒哈拉沙漠测量土壤质量——曾是我花了多年在寻找的答案。</div>
+    <div class="sb-block">
+      <div class="sb-title">长难句拆解</div>
+      <div class="sb-sent">
+        <span class="sb-chip sb-core-chip">什么</span><span class="sb-core">The position</span>
+        <span class="sb-chip sb-ins-chip">插入说明 · 先跳过</span><span class="sb-ins">— measuring soil quality in the Sahara Desert as part of an undergraduate research programme —</span>
+        <span class="sb-chip sb-core-chip">怎么样</span><span class="sb-core">had felt like the answer</span>
+        <span class="sb-chip sb-rest-chip">什么答案</span><span class="sb-rest">I had spent years looking for.</span>
+      </div>
+      <div class="sb-steps">
+        <div class="sb-step"><span class="sb-step-n">1</span><div>先找主干：<em>The position … had felt like the answer I had spent years looking for</em><span class="arrow">→</span>那个职位感觉就是我花了多年寻找的答案</div></div>
+        <div class="sb-step"><span class="sb-step-n">2</span><div>回头看破折号里说的是什么职位：<em>measuring soil quality in the Sahara Desert …</em><span class="arrow">→</span>在撒哈拉沙漠测量土壤质量的本科研究项目</div></div>
+      </div>
+      <div class="sb-tip">💡 两个破折号（—…—）等于括号，夹住的是补充说明，直接先跳过，读完主句再回来看。</div>
+    </div>
+  </div>
+
+  <!-- ── Paragraph 2 ── -->
+  <div class="paragraph" id="para-2">
+    <span class="sentence" data-idx="5">I had <span class="tip" data-tip="put...into|在...上投入（时间、精力等）｜put = 放进去，put time/energy into sth = 把时间/精力放进某件事里 = 投入到某件事中｜had put so much time and emotional energy into applying = 在申请上投入了大量时间和精力（过去完成时，强调之前已经做了很多）">put</span> so much time and <span class="tip" data-tip="emotional energy|情感上的精力，心血｜emotional = 情感的（emotion 是情绪，你可能见过）。emotional energy = 感情上付出的心血，不只是时间，还有心理投入｜搭配：put emotional energy into 在情感上投入">emotional energy</span> into applying, and I thought the <span class="tip" data-tip="rejection|拒绝；拒信｜reject（动词）= 拒绝，rejection（名词）= 被拒绝这件事 / 一封拒信。the rejection = 这次被拒。高考必考词形变化：reject → rejection｜搭配：face rejection 面对拒绝，receive a rejection 收到拒信" data-level="选必">rejection</span> meant the <span class="tip" data-tip="end of the road|走到头了，没有路了｜road = 路。end of the road = 路的尽头。习语：走投无路，彻底结束了。作者以为科研生涯就此终结｜= the end, no way out">end of the road</span> for my science career.</span>
+    <div class="translation-inline">我在申请上投入了大量时间和心血，心想这封拒信意味着我的科研生涯走到了尽头。</div>
+  </div>
+
+  <!-- ── Paragraph 3 ── -->
+  <div class="paragraph" id="para-3">
+    <span class="sentence complex" data-idx="6">So I was shocked when, not long after the email, Professor Mary Devon, <span class="tip" data-tip="who was running the programme|非限制性定语从句，说明Devon是谁｜who 引导定语从句，补充说明 Professor Devon 的身份：她就是负责这个项目的人。run the programme = 负责/主持这个项目">who was running the programme</span>, invited me to <span class="tip" data-tip="observe|观察；参观，旁听｜observe = 看、观察，比 watch 更正式一点。invited me to observe = 邀请我去参观/观看。observe the work being done = 看正在进行中的工作｜名词：observation 观察" data-level="选必">observe</span> the work being done in her lab.</span>
+    <div class="analysis" id="analysis-6">
+      <p><b>句子主干：</b>I was shocked when … Professor Mary Devon … invited me to observe the work.（作者很震惊，因为Devon邀请他参观实验室工作。）</p>
+      <p><b>两处插入：</b>① <em>not long after the email</em>（收到邮件后不久）——时间插入，夹在 when 和主语之间，可以先跳过。② <em>who was running the programme</em>（她负责这个项目）——非限制性定语从句，补充说明Devon是谁，逗号夹住，可以先跳过。</p>
+      <p><b>the work being done：</b>being done 是现在分词被动式，修饰 work。= the work that was being done in her lab（实验室里正在进行的工作）。</p>
+    </div>
+    <span class="sentence" data-idx="7">I <span class="tip" data-tip="jumped at the chance|立刻抓住机会，毫不犹豫答应｜jump = 跳。jump at a chance = 跳向机会 = 立刻抓住，毫不犹豫答应。表示对机会非常渴望｜= grab the chance. 搭配：jump at the opportunity 抓住机会">jumped at the chance</span>, and a few weeks later I was equally shocked—and overjoyed—when she invited me to talk with her about <span class="tip" data-tip="potential|潜在的，可能的｜potential = 还没有实现但有可能的。potential projects = 可能开展的、还没确定的项目｜名词也是 potential：She has great potential. 她很有潜力。搭配：potential problems 潜在的问题" data-level="选必">potential</span> projects I could <span class="tip" data-tip="pursue|追求，从事｜pursue = 追，努力去得到某样东西或实现某个目标。projects I could pursue = 我可以在实验室里从事的项目｜搭配：pursue a career 从事某职业，pursue a goal 追求目标，pursue one's dream 追梦" data-level="选必">pursue</span> in her lab.</span>
+    <span class="sentence" data-idx="8">What she <span class="tip" data-tip="proposed|提议，建议｜propose = 提出、建议。What she proposed = 她提议/建议的东西｜名词：proposal 提案。近义：suggest（更口语）｜搭配：propose a plan 提出一个方案" data-level="选必">proposed</span> didn't seem as exciting as the original project I had applied to, but I was going to <span class="tip" data-tip="give it my all|全力以赴，把全部投入进去｜all = 全部。give it my all = 把我全部都给进去 = 全力以赴，不留余力｜= do my best, give 100%. 写作文可以用：give it your all = 全力以赴">give it my all</span>.</span>
+    <div class="translation-inline">我感到十分震惊——就在收到拒信后不久，项目负责人Professor Mary Devon竟然邀请我去她的实验室参观工作。我立刻答应了。几周后，当她邀请我和她谈谈我可以在实验室里从事的潜在项目时，我再次感到震惊，同时又欣喜万分。她提出的方向似乎不如我最初申请的项目那么令人兴奋，但我打算全力以赴。</div>
+    <div class="sb-block">
+      <div class="sb-title">长难句拆解</div>
+      <div class="sb-sent">
+        <span class="sb-chip sb-core-chip">谁</span><span class="sb-core">I was shocked</span>
+        <span class="sb-chip sb-rest-chip">什么时候</span><span class="sb-rest">when</span>
+        <span class="sb-chip sb-ins-chip">时间 · 先跳过</span><span class="sb-ins">not long after the email,</span>
+        <span class="sb-chip sb-core-chip">谁</span><span class="sb-core">Professor Mary Devon,</span>
+        <span class="sb-chip sb-ins-chip">补充她是谁 · 先跳过</span><span class="sb-ins">who was running the programme,</span>
+        <span class="sb-chip sb-core-chip">干了什么</span><span class="sb-core">invited me to observe the work being done in her lab.</span>
+      </div>
+      <div class="sb-steps">
+        <div class="sb-step"><span class="sb-step-n">1</span><div>先找主干：<em>I was shocked when … Professor Devon invited me to observe</em><span class="arrow">→</span>Devon邀请我参观，作者很震惊</div></div>
+        <div class="sb-step"><span class="sb-step-n">2</span><div>时间插入：<em>not long after the email</em><span class="arrow">→</span>收到拒信后不久</div></div>
+        <div class="sb-step"><span class="sb-step-n">3</span><div>补充Devon身份：<em>who was running the programme</em><span class="arrow">→</span>她就是项目负责人</div></div>
+      </div>
+      <div class="sb-tip">💡 两处逗号夹住的成分都是插入说明，可以先跳过找到主句动词 invited，再回头补充细节。</div>
+    </div>
+  </div>
+
+  <!-- ── Paragraph 4 ── -->
+  <div class="paragraph" id="para-4">
+    <span class="sentence" data-idx="9">I found myself working with a <span class="tip" data-tip="robotics|机器人学｜robot（机器人）你认识。robotics = 研究机器人的学科。a robotics professor = 机器人学教授｜形容词：robotic 机器人的，像机器人一样的" data-level="拓展">robotics</span> professor on <span class="tip" data-tip="techniques|技术，具体方法｜technique = 做某件事的具体方法/技术手段，比 method 更专业一些。techniques for collecting data = 收集数据的方法｜搭配：use a technique 使用某种方法，develop techniques 开发方法" data-level="选必">techniques</span> for collecting data from the desert <span class="tip" data-tip="remotely|远程地，不在现场地｜remote = 远的（remote control = 遥控器，你认识）。remotely = 从远处，不用去现场。collecting data remotely = 远程收集数据，不用真的去沙漠现场｜near: from a distance">remotely</span>.</span>
+    <span class="sentence complex" data-idx="10">That project, which I could complete from my sofa instead of in the burning heat of the desert, <span class="tip" data-tip="not only...but|不仅...还...｜not only A but (also) B = 不仅A，还B。两个动词并列：not only survived … but worked = 不仅熬过了封控，还在传统方法失败的地方取得了成功" data-level="选必">not only</span> <span class="tip" data-tip="survived the lockdown|熬过了封控期｜survive = 活下来，度过困难时期（survive a war/disaster）。lockdown = 封控、封城（新冠期间常见词）。survived the lockdown = 顺利度过了封控期，没有被中断" data-level="拓展">survived the lockdown</span> but worked where traditional methods didn't.</span>
+    <div class="analysis" id="analysis-10">
+      <p><b>句子主干：</b>That project not only survived the lockdown but worked where traditional methods didn't.（那个项目不仅熬过了封控，还在传统方法失败的地方成功了。）</p>
+      <p><b>which 从句：</b><em>which I could complete from my sofa instead of in the burning heat of the desert</em>——非限制性定语从句，补充说明：这个项目我可以坐在沙发上完成，不用去沙漠。逗号夹住，先跳过。</p>
+      <p><b>not only...but：</b>not only A but B 是固定结构，这里 A = survived the lockdown，B = worked where traditional methods didn't（在传统方法失败的地方成功了）。找到 not only 就去找配对的 but。</p>
+    </div>
+    <span class="sentence" data-idx="11">In the end, I had a new scientific interest to <span class="tip" data-tip="pursue|追求，从事（同第7句）｜这里再次出现 pursue：I had a new scientific interest to pursue = 我有了一个新的科研方向去追求。呼应了第7句的 pursue，说明这段经历给了作者新的方向">pursue</span>.</span>
+    <div class="translation-inline">我发现自己和一位机器人学教授合作，研究远程从沙漠采集数据的技术。那个项目我可以坐在沙发上完成，完全不用去烈日炙烤的沙漠，它不仅熬过了封控期，还在传统方法失败的地方取得了成功。最终，我找到了一个新的科研兴趣去追寻。</div>
+    <div class="sb-block">
+      <div class="sb-title">长难句拆解</div>
+      <div class="sb-sent">
+        <span class="sb-chip sb-core-chip">什么</span><span class="sb-core">That project,</span>
+        <span class="sb-chip sb-ins-chip">补充 · 先跳过</span><span class="sb-ins">which I could complete from my sofa instead of in the burning heat of the desert,</span>
+        <span class="sb-chip sb-core-chip">不仅</span><span class="sb-core">not only survived the lockdown</span>
+        <span class="sb-chip sb-core-chip">还</span><span class="sb-core">but worked where traditional methods didn't.</span>
+      </div>
+      <div class="sb-steps">
+        <div class="sb-step"><span class="sb-step-n">1</span><div>先找主干：<em>That project not only survived … but worked</em><span class="arrow">→</span>那个项目不仅熬过了封控，还成功了</div></div>
+        <div class="sb-step"><span class="sb-step-n">2</span><div>where traditional methods didn't：<em>在传统方法失败的地方</em><span class="arrow">→</span>填补了传统方法做不到的空缺</div></div>
+        <div class="sb-step"><span class="sb-step-n">3</span><div>which 从句补充：<em>坐在沙发上就能完成，不用去沙漠</em></div></div>
+      </div>
+      <div class="sb-tip">💡 看到 not only，立刻去找后面的 but，它们是一对，AB 两个动词都属于主语 That project。</div>
+    </div>
+  </div>
+
+  <!-- ── Paragraph 5 ── -->
+  <div class="paragraph" id="para-5">
+    <span class="sentence" data-idx="12">When I applied to <span class="tip" data-tip="graduate school|研究生院｜graduate = 本科毕业生（已经毕业）。graduate school = 给本科毕业生继续深造的学校 = 研究生院｜相比：undergraduate = 本科阶段（还没毕业）。申请研究生 = apply to graduate school" data-level="选必">graduate school</span>, I found three programmes promising to allow me to follow my <span class="tip" data-tip="desired|心仪的，希望得到的｜desire = 渴望、想要（动词/名词）。desired = 心仪的、自己想要的。desired research direction = 心仪的研究方向，自己真正想走的方向｜搭配：desired result 期望的结果，desired goal 目标" data-level="选必">desired</span> research direction.</span>
+    <span class="sentence" data-idx="13">And I applied with the same <span class="tip" data-tip="anxious excitement|既紧张又期待的感觉｜anxious = 焦虑的、紧张的；excitement = 兴奋。两种感觉同时有 = 既紧张又期待。申请时既害怕失败又很兴奋，这两个词放在一起形成矛盾但真实的感受">anxious excitement</span> as before.</span>
+    <span class="sentence" data-idx="14">When I was rejected from one that had seemed like a <span class="tip" data-tip="perfect fit|完美匹配，非常合适｜fit = 合适、匹配（a good fit = 很合适）。a perfect fit = 完全匹配。the programme that had seemed like a perfect fit = 看起来和自己完全匹配的那个项目">perfect fit</span>, it was <span class="tip" data-tip="undoubtedly|毫无疑问地｜doubt = 怀疑（no doubt = 毫无疑问）。un- = 没有，undoubtedly = 没有任何怀疑地 = 毫无疑问地｜= without a doubt. 写作：Undoubtedly, ... 毫无疑问，...（作文开头用）" data-level="选必">undoubtedly</span> difficult.</span>
+    <span class="sentence" data-idx="15">But this time I had the perspective to <span class="tip" data-tip="keep...from|防止...发生，阻止...｜keep sb/sth from doing = 阻止某人/某事做某事。keep it from sending me into panic = 不让这件事让我陷入恐慌｜= stop sth from happening. 搭配：keep him from leaving 阻止他离开" data-level="选必">keep</span> it from sending me into panic.</span>
+    <span class="sentence" data-idx="16">It helped that in the end I was accepted into one of the other programmes I was also excited about.</span>
+    <div class="translation-inline">申请研究生院时，我找到了三个有望让我沿着心仪方向深造的项目。我带着和以前一样的既紧张又兴奋的心情提交了申请。当我被一个看起来完美契合的项目拒绝时，确实很难受。但这次我有了足够的心态，不再让这件事让我陷入恐慌。最终，我被另一个同样让我兴奋的项目录取了——这也是一种安慰。</div>
+  </div>
+
+  <!-- ── Paragraph 6 ── -->
+  <div class="paragraph" id="para-6">
+    <span class="sentence complex" data-idx="17"><span class="tip" data-tip="Rather than|而不是，不是...而是...｜rather = 更；rather than = 比起...宁愿，表示对比和取舍。Rather than setting plans in stone = 不再把计划定死了，不是把计划刻在石头上｜高考写作必备：I prefer to do A rather than do B. 我宁愿做A而不是B">Rather than</span> <span class="tip" data-tip="setting plans in stone|把计划定死，一成不变｜stone = 石头，set in stone = 刻在石头上，不可改变。set plans in stone = 把计划固定死，不留余地｜near: set something in stone. 习语，整体记。">setting plans in stone</span>, I've learned that sometimes I need to take the opportunities that are offered, even if they don't sound perfect at the time, and <span class="tip" data-tip="make the most of|充分利用，把...用到最大｜most = 最多。make the most of sth = 把某样东西利用到最大程度 = 充分利用。= take full advantage of｜高频！写作必备：make the most of every opportunity 充分利用每一个机会。make the most of your time 充分利用时间">make the most of</span> them.</span>
+    <div class="analysis" id="analysis-17">
+      <p><b>句子主干：</b>I've learned that I need to take the opportunities and make the most of them.（我明白了需要抓住机会并充分利用它们。）</p>
+      <p><b>Rather than：</b>开头的 Rather than setting plans in stone 是对比，意思是"不再把计划定死了"——用来引出作者的改变。</p>
+      <p><b>两个动词并列：</b>take the opportunities … and make the most of them——and 连接的是 take 和 make，都属于 I need to 下面的动词。</p>
+      <p><b>even if：</b>即使（they don't sound perfect at the time）——even if 引导让步状语，意思是"就算当时听起来不完美"也要去抓住。</p>
+    </div>
+    <div class="translation-inline">我明白了，与其把计划定死，有时候我需要抓住眼前给出的机会，哪怕当时听起来并不完美，然后充分利用它。</div>
+    <div class="sb-block">
+      <div class="sb-title">长难句拆解</div>
+      <div class="sb-sent">
+        <span class="sb-chip sb-ins-chip">对比 · 先跳过</span><span class="sb-ins">Rather than setting plans in stone,</span>
+        <span class="sb-chip sb-core-chip">谁</span><span class="sb-core">I've learned that</span>
+        <span class="sb-chip sb-core-chip">需要做什么</span><span class="sb-core">I need to take the opportunities</span>
+        <span class="sb-chip sb-ins-chip">让步 · 先跳过</span><span class="sb-ins">that are offered, even if they don't sound perfect at the time,</span>
+        <span class="sb-chip sb-core-chip">还要</span><span class="sb-core">and make the most of them.</span>
+      </div>
+      <div class="sb-steps">
+        <div class="sb-step"><span class="sb-step-n">1</span><div>先找主干：<em>I've learned that I need to take the opportunities and make the most of them</em><span class="arrow">→</span>要抓住机会，然后充分利用</div></div>
+        <div class="sb-step"><span class="sb-step-n">2</span><div>Rather than 对比：<em>不把计划定死</em><span class="arrow">→</span>要灵活，不固执</div></div>
+        <div class="sb-step"><span class="sb-step-n">3</span><div>even if 让步：<em>即使当时听起来不完美</em><span class="arrow">→</span>不要因为不完美就放弃</div></div>
+      </div>
+      <div class="sb-tip">💡 Rather than A, B = B 而不是 A。and 连接的是 take 和 make，都是主句 I need to 后面的动词。</div>
+    </div>
+  </div>
+
+</div><!-- /passage -->
+
+<!-- ══════ Vocabulary ══════ -->
+<div class="panel" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')">
+    <span>生词与短语（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="vocab-list">
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('heart raced')">heart raced</span>
+          <span class="vocab-meaning">心跳加速（表紧张）</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>race = 快速跑动，heart raced = 心快速跳动 = 心跳加速，常用来表达紧张或激动。</div>
+          <div class="vd-example">My <em>heart raced</em> when I saw the email sender's name. （课文）</div>
+          <div class="vd-example">近义：My heart beat fast. / My heart was pounding.</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('rejection')">rejection</span>
+          <span class="vocab-meaning">拒绝；拒信</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>动词 reject（拒绝）→ 名词 rejection（被拒绝 / 一封拒信）。高考常考词形变化。</div>
+          <div class="vd-example">the <em>rejection</em> meant the end of the road for my science career. （课文）</div>
+          <div class="vd-example">面对拒绝：face <em>rejection</em>；收到拒信：receive a <em>rejection</em></div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('end of the road')">end of the road</span>
+          <span class="vocab-meaning">走投无路，走到头了</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>road = 路，end of the road = 路的尽头。习语，表示"结束了、没有办法了"。</div>
+          <div class="vd-example">the <em>end of the road</em> for my science career （课文）</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('jumped at the chance')">jumped at the chance</span>
+          <span class="vocab-meaning">立刻抓住机会</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>jump at = 跳向，jump at a chance = 立刻抓住机会，毫不犹豫答应。</div>
+          <div class="vd-example">I <em>jumped at the chance</em>. （课文）</div>
+          <div class="vd-example">= grab the chance. 也可说：jump at the opportunity.</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('pursue')">pursue</span>
+          <span class="vocab-meaning">追求，从事</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>pursue = 追，努力去得到某样东西。可以接职业、梦想、目标。</div>
+          <div class="vd-example">projects I could <em>pursue</em> in her lab. （课文）</div>
+          <div class="vd-example"><em>pursue</em> a career 从事某职业；<em>pursue</em> a goal 追求目标；<em>pursue</em> one's dream 追梦</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('give it my all')">give it my all</span>
+          <span class="vocab-meaning">全力以赴</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>all = 全部，give it my all = 把我全部都给进去 = 全力以赴，不留余力。</div>
+          <div class="vd-example">I was going to <em>give it my all</em>. （课文）</div>
+          <div class="vd-example">= do my best. 写作：<em>give it your all</em> 全力以赴。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('undoubtedly')">undoubtedly</span>
+          <span class="vocab-meaning">毫无疑问地</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>doubt = 怀疑，un- = 没有，undoubtedly = 没有任何怀疑地 = 毫无疑问地。</div>
+          <div class="vd-example">it was <em>undoubtedly</em> difficult. （课文）</div>
+          <div class="vd-example">作文开头：<em>Undoubtedly</em>, ... 毫无疑问，...（= Without a doubt, ...）</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('rather than')">rather than</span>
+          <span class="vocab-meaning">而不是，不是...而是...</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>rather than = 比起...宁愿，表示取舍和对比。Rather than A, B = B 而不是 A。</div>
+          <div class="vd-example"><em>Rather than</em> setting plans in stone, I've learned to take opportunities. （课文）</div>
+          <div class="vd-example">高考写作：I prefer to do A <em>rather than</em> do B. 我宁愿做A而不是B。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('make the most of')">make the most of</span>
+          <span class="vocab-meaning">充分利用</span>
+          <span class="vocab-tag tag-core">高频</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>most = 最多，make the most of sth = 把某样东西用到最大程度 = 充分利用。</div>
+          <div class="vd-example"><em>make the most of</em> them. （课文）</div>
+          <div class="vd-example"><em>make the most of</em> every opportunity 充分利用每一个机会</div>
+          <div class="vd-example"><em>make the most of</em> your time 好好利用时间（= take full advantage of）</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('potential')">potential</span>
+          <span class="vocab-meaning">潜在的；潜力</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>potential = 还没实现但有可能的。形容词：potential problems 潜在的问题。名词：great potential 很大潜力。</div>
+          <div class="vd-example"><em>potential</em> projects I could pursue in her lab. （课文）</div>
+          <div class="vd-example">She has great <em>potential</em>. 她很有潜力。（名词用法）</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Questions ══════ -->
+<div class="panel" id="questionsPanel">
+  <div class="panel-header" onclick="togglePanel('questionsPanel')">
+    <span>题目解析（4题，24—27）</span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+
+    <!-- Q24 -->
+    <div class="question-item" data-answer="A">
+      <div class="question-stem">24. How did the author feel upon seeing the email sender's name?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. Anxious.</div>
+        <div class="question-option" data-key="B">B. Angry.</div>
+        <div class="question-option" data-key="C">C. Surprised.</div>
+        <div class="question-option" data-key="D">D. Settled.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：A</div>
+        <div class="locate" data-goto="1" onclick="gotoSentence(1)">"My heart raced when I saw the email sender's name."</div>
+        <p>题目问"作者看到发件人名字时什么感受"。原文说 My heart raced（心跳加速），心跳加速是紧张/焦虑（anxious）的典型身体反应。选 <b>A</b>。</p>
+        <div class="option-list">
+          <div class="option-item correct"><span class="opt-mark">✓ A</span><span class="opt-why">— heart raced = 心跳加速，这是 anxious（焦虑/紧张）的直接体现。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ B</span><span class="opt-why">— Angry（愤怒）：文中没有愤怒的信号，拒信让作者伤心/难受，不是愤怒。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ C</span><span class="opt-why">— Surprised（惊讶）：看到发件人名字时是紧张，不是惊讶；后来看到Devon的邀请才是 shocked（惊讶）。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— Settled（平静的）：完全相反，心跳加速说明根本不平静。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q25 -->
+    <div class="question-item" data-answer="D">
+      <div class="question-stem">25. After talking with Professor Devon, the author decided to ______.</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. criticise the review process</div>
+        <div class="question-option" data-key="B">B. stay longer in the Sahara Desert</div>
+        <div class="question-option" data-key="C">C. apply to the original project again</div>
+        <div class="question-option" data-key="D">D. put his heart and soul into the lab work</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：D</div>
+        <div class="locate" data-goto="8" onclick="gotoSentence(8)">"What she proposed didn't seem as exciting as the original project I had applied to, but I was going to give it my all."</div>
+        <p>虽然Devon提出的方向没有原来那么令人兴奋，但作者说 give it my all（全力以赴）。give it my all = put his heart and soul into it = D。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— 文中没有提到批评审核过程。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ B</span><span class="opt-why">— 作者根本没去沙漠，项目是远程做的。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ C</span><span class="opt-why">— 文中没提要重新申请原来的项目，恰恰相反，他接受了新方向。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ D</span><span class="opt-why">— give it my all = put his heart and soul into it = 全力以赴地做实验室工作。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q26 -->
+    <div class="question-item" data-answer="B">
+      <div class="question-stem">26. According to the author, the project with the robotics professor was ______.</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. demanding</div>
+        <div class="question-option" data-key="B">B. inspiring</div>
+        <div class="question-option" data-key="C">C. misleading</div>
+        <div class="question-option" data-key="D">D. amusing</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：B</div>
+        <div class="locate" data-goto="11" onclick="gotoSentence(11)">"In the end, I had a new scientific interest to pursue."</div>
+        <p>机器人学项目让作者最终找到了"a new scientific interest to pursue"（一个新的科研兴趣去追寻）。这个项目给了他新的方向和动力，这就是 inspiring（激励人的、令人振奋的）。选 <b>B</b>。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— demanding（艰难费力的）：文中没有说这个项目特别难做，重点是它成功了。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ B</span><span class="opt-why">— inspiring（激励的）：项目让作者找到了新的科研兴趣和方向，正是受到了启发。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ C</span><span class="opt-why">— misleading（误导的）：项目是成功的，根本没有误导。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— amusing（好玩的）：重点是科研成果和新兴趣，不是好玩。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q27 -->
+    <div class="question-item" data-answer="C">
+      <div class="question-stem">27. What can we learn from this passage?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. An invitation is a reputation.</div>
+        <div class="question-option" data-key="B">B. An innovation is a resolution.</div>
+        <div class="question-option" data-key="C">C. A rejection can be a redirection.</div>
+        <div class="question-option" data-key="D">D. A reflection can be a restriction.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：C</div>
+        <div class="locate" data-goto="17" onclick="gotoSentence(17)">"Rather than setting plans in stone, I've learned that sometimes I need to take the opportunities that are offered, even if they don't sound perfect at the time, and make the most of them."</div>
+        <p>整篇文章讲的是：被拒绝 → 意外转机 → 更好的结果。作者从拒信中得到了新机会和新方向。<b>C</b>（A rejection can be a redirection，被拒可以是一次转向）完美概括全文主旨。这四个选项都用了押韵的写法（-tion），只有 C 和文章内容相符。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— invitation / reputation：文章讲的不是"邀请等于名声"。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ B</span><span class="opt-why">— innovation / resolution：文章没有讲创新与决心的关系。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ C</span><span class="opt-why">— rejection（被拒）可以是 redirection（新方向）：这就是整篇文章的核心教训。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— reflection / restriction：文章没有说反思会带来限制。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-score" id="quizScore"></div>
+  </div>
+</div>
+
+<!-- ══════ Review ══════ -->
+<div class="panel" id="reviewPanel">
+  <div class="panel-header" onclick="togglePanel('reviewPanel')">阅读原文<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-family:Georgia,serif;font-size:16px;line-height:2;">
+    <p style="text-indent:2em">Sitting in the garden for my friend's birthday, I felt a buzz in my pocket. My heart raced when I saw the email sender's name. The email started off: "Dear Mr Green, thank you for your interest" and "the review process took longer than expected." It ended with "We are sorry to inform you…" and my vision blurred. The position—measuring soil quality in the Sahara Desert as part of an undergraduate research programme—had felt like the answer I had spent years looking for.</p>
+    <p style="text-indent:2em">I had put so much time and emotional energy into applying, and I thought the rejection meant the end of the road for my science career.</p>
+    <p style="text-indent:2em">So I was shocked when, not long after the email, Professor Mary Devon, who was running the programme, invited me to observe the work being done in her lab. I jumped at the chance, and a few weeks later I was equally shocked—and overjoyed—when she invited me to talk with her about potential projects I could pursue in her lab. What she proposed didn't seem as exciting as the original project I had applied to, but I was going to give it my all.</p>
+    <p style="text-indent:2em">I found myself working with a robotics professor on techniques for collecting data from the desert remotely. That project, which I could complete from my sofa instead of in the burning heat of the desert, not only survived the lockdown but worked where traditional methods didn't. In the end, I had a new scientific interest to pursue.</p>
+    <p style="text-indent:2em">When I applied to graduate school, I found three programmes promising to allow me to follow my desired research direction. And I applied with the same anxious excitement as before. When I was rejected from one that had seemed like a perfect fit, it was undoubtedly difficult. But this time I had the perspective to keep it from sending me into panic. It helped that in the end I was accepted into one of the other programmes I was also excited about.</p>
+    <p style="text-indent:2em">Rather than setting plans in stone, I've learned that sometimes I need to take the opportunities that are offered, even if they don't sound perfect at the time, and make the most of them.</p>
+  </div>
+</div>
+
+<!-- ══════ 阅读技巧 ══════ -->
+<div class="panel" id="tipPanel">
+  <div class="panel-header" onclick="togglePanel('tipPanel')">阅读技巧<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-size:15px;line-height:1.8;">
+    <p><b>记叙文阅读策略：</b>这类文章考"情感变化"和"道理"。读时注意：</p>
+    <ul style="margin:8px 0 0 20px;">
+      <li>情感词（shocked, overjoyed, anxious, difficult）→ 直接对应情感类题目</li>
+      <li>转折词（but, however, yet）→ 后面往往是重点，故事在这里转向</li>
+      <li>最后一段 → 通常是"作者从中得到的道理"，主旨题答案在这里</li>
+    </ul>
+    <p style="margin-top:12px"><b>本文故事线：</b>收到拒信（低谷）→ 意外邀请（转机）→ 新项目成功（收获）→ 研究生申请再次被拒→ 最终录取 → 结论：被拒可以是新方向。</p>
+  </div>
+</div>
+
+<!-- ══════ 作文拓展 ══════ -->
+<div class="panel" id="writingPanel">
+  <div class="panel-header" onclick="togglePanel('writingPanel')">作文拓展：好句式 &amp; 好短语<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-size:15px;line-height:1.9;">
+    <p><b>可以直接用进作文的句子和短语：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li><em>Rather than setting plans in stone, I've learned to make the most of the opportunities offered.</em>（不把计划定死，充分利用眼前的机会）</li>
+      <li><em>I was going to give it my all.</em>（我打算全力以赴）</li>
+      <li><em>A rejection can be a redirection.</em>（被拒可以是一次新方向）</li>
+      <li>短语：<em>jump at the chance</em>，<em>make the most of</em>，<em>pursue a goal</em>，<em>rather than</em></li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div id="playbar">
+  <button onclick="pbPrev()" title="上一句">⏮</button>
+  <button id="pb-play" onclick="pbToggle()">▶</button>
+  <button onclick="pbNext()" title="下一句">⏭</button>
+  <span id="pb-counter">— / 18</span>
+  <select id="pb-speed" onchange="pbSetSpeed(this.value)">
+    <option value="0.8">0.8×</option>
+    <option value="1" selected>1.0×</option>
+    <option value="1.2">1.2×</option>
+  </select>
+</div>
+
+<script>
+const THEMES=['yellow','green'];
+const THEME_LABELS={yellow:'📄 书本黄',green:'🌿 护眼绿'};
+let themeIdx=parseInt(localStorage.getItem('theme')||'0');
+function applyTheme(){document.body.classList.remove('theme-yellow','theme-green');const t=THEMES[themeIdx%THEMES.length];document.body.classList.add('theme-'+t);const btn=document.getElementById('theme-btn');if(btn)btn.textContent=THEME_LABELS[t];}
+function cycleTheme(){themeIdx=(themeIdx+1)%THEMES.length;localStorage.setItem('theme',themeIdx);applyTheme();}
+applyTheme();
+
+const sentences=[
+  "Sitting in the garden for my friend's birthday, I felt a buzz in my pocket.",
+  "My heart raced when I saw the email sender's name.",
+  "The email started off: Dear Mr Green, thank you for your interest and the review process took longer than expected.",
+  "It ended with We are sorry to inform you and my vision blurred.",
+  "The position—measuring soil quality in the Sahara Desert as part of an undergraduate research programme—had felt like the answer I had spent years looking for.",
+  "I had put so much time and emotional energy into applying, and I thought the rejection meant the end of the road for my science career.",
+  "So I was shocked when, not long after the email, Professor Mary Devon, who was running the programme, invited me to observe the work being done in her lab.",
+  "I jumped at the chance, and a few weeks later I was equally shocked—and overjoyed—when she invited me to talk with her about potential projects I could pursue in her lab.",
+  "What she proposed didn't seem as exciting as the original project I had applied to, but I was going to give it my all.",
+  "I found myself working with a robotics professor on techniques for collecting data from the desert remotely.",
+  "That project, which I could complete from my sofa instead of in the burning heat of the desert, not only survived the lockdown but worked where traditional methods didn't.",
+  "In the end, I had a new scientific interest to pursue.",
+  "When I applied to graduate school, I found three programmes promising to allow me to follow my desired research direction.",
+  "And I applied with the same anxious excitement as before.",
+  "When I was rejected from one that had seemed like a perfect fit, it was undoubtedly difficult.",
+  "But this time I had the perspective to keep it from sending me into panic.",
+  "It helped that in the end I was accepted into one of the other programmes I was also excited about.",
+  "Rather than setting plans in stone, I've learned that sometimes I need to take the opportunities that are offered, even if they don't sound perfect at the time, and make the most of them."
+];
+
+let activeTooltip=null;
+const ZH_AUDIO={};
+let zhPlayer=null;
+
+function phraseToSlug(phrase){return phrase.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+
+function playZhAudio(slug,btn){
+  if(zhPlayer){zhPlayer.pause();zhPlayer=null;btn.textContent='🔊 听讲解';return;}
+  const src=ZH_AUDIO[slug];if(!src)return;
+  zhPlayer=new Audio(src);btn.textContent='⏹ 停止';
+  zhPlayer.onended=()=>{btn.textContent='🔊 听讲解';zhPlayer=null;};
+  zhPlayer.play();
+}
+
+function showTooltip(tipEl){
+  hideTooltip();
+  const raw=tipEl.getAttribute('data-tip');
+  const[phrase,explain]=raw.split('|');
+  const parts=explain.split('｜');
+  const slug=phraseToSlug(phrase);
+  const hasAudio=ZH_AUDIO[slug];
+  const tooltip=document.createElement('div');
+  tooltip.className='tooltip';
+  tooltip.innerHTML='<div class="tip-scroll">'+
+    `<div class="tip-phrase">${phrase}${tipEl.dataset.level?`<span class="level-badge badge-${tipEl.dataset.level}">${tipEl.dataset.level}</span>`:''}<span class="tip-speak" onclick="speakWord('${phrase.replace(/'/g,"\\'")}')">&#9654;</span></div>`+
+    parts.map(p=>`<div>${p.trim()}</div>`).join('')+
+    (hasAudio?`<button class="tip-zh-play" onclick="playZhAudio('${slug}',this)">🔊 听讲解</button>`:'')+
+    '</div>';
+  document.body.appendChild(tooltip);
+  activeTooltip=tooltip;tooltip._tip=tipEl;
+  positionTooltip();
+  if(!activeTooltip)return;
+  speakWord(phrase);
+}
+
+let _safeProbe=null;
+function tooltipFrame(){
+  if(!_safeProbe){_safeProbe=document.createElement('div');_safeProbe.style.cssText='position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)';document.body.appendChild(_safeProbe);}
+  const cs=getComputedStyle(_safeProbe);const M=8;const vw=document.documentElement.clientWidth,vh=window.innerHeight;
+  let minY=M+(parseFloat(cs.paddingTop)||0);let maxY=vh-M-(parseFloat(cs.paddingBottom)||0);
+  const hdr=document.querySelector('.header');if(hdr){const b=hdr.getBoundingClientRect().bottom;if(b>0)minY=Math.max(minY,b+4);}
+  const pb=document.getElementById('playbar');if(pb&&getComputedStyle(pb).display!=='none'){maxY=Math.min(maxY,pb.getBoundingClientRect().top-4);}
+  return{minX:M+(parseFloat(cs.paddingLeft)||0),maxX:vw-M-(parseFloat(cs.paddingRight)||0),minY,maxY};
+}
+
+function positionTooltip(){
+  const tooltip=activeTooltip;if(!tooltip)return;
+  const tipEl=tooltip._tip;const rects=tipEl.getClientRects();const f=tooltipFrame();
+  if(!rects.length){hideTooltip();return;}
+  const first=rects[0],last=rects[rects.length-1];
+  if(last.bottom<f.minY-4||first.top>f.maxY+4){hideTooltip();return;}
+  const GAP=10,PAD=16;const body=tooltip.firstElementChild;
+  tooltip.style.maxWidth=Math.max(120,Math.min(520,f.maxX-f.minX))+'px';
+  body.style.maxHeight='none';tooltip.style.left='0px';tooltip.style.top='0px';
+  const tw=tooltip.offsetWidth,naturalH=tooltip.offsetHeight;
+  const spaceAbove=first.top-f.minY-GAP;const spaceBelow=f.maxY-last.bottom-GAP;
+  let below;if(naturalH<=spaceAbove)below=false;else if(naturalH<=spaceBelow)below=true;else below=spaceBelow>spaceAbove;
+  const avail=Math.max(60,below?spaceBelow:spaceAbove);const th=Math.min(naturalH,avail);
+  if(naturalH>avail)body.style.maxHeight=Math.max(30,avail-PAD)+'px';
+  const r=below?last:first;const cx=r.left+r.width/2;
+  const left=Math.max(f.minX,Math.min(cx-tw/2,f.maxX-tw));
+  let top=below?last.bottom+GAP:first.top-GAP-tooltip.offsetHeight;
+  top=Math.max(f.minY,Math.min(top,f.maxY-tooltip.offsetHeight));
+  tooltip.classList.toggle('below',below);
+  tooltip.style.setProperty('--arrow-left',Math.max(14,Math.min(cx-left,tw-14))+'px');
+  tooltip.style.left=left+'px';tooltip.style.top=top+'px';
+}
+(function(){let raf=0;const re=()=>{if(!activeTooltip||raf)return;raf=requestAnimationFrame(()=>{raf=0;positionTooltip();});};
+window.addEventListener('scroll',re,{passive:true});window.addEventListener('resize',re);window.addEventListener('orientationchange',re);
+if(window.visualViewport){visualViewport.addEventListener('resize',re);visualViewport.addEventListener('scroll',re);}})();
+
+function hideTooltip(){
+  if(zhPlayer){zhPlayer.pause();zhPlayer=null;}
+  if(activeTooltip){activeTooltip.remove();activeTooltip=null;}
+}
+
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.sentence.highlighted')&&!e.target.closest('.locate')){
+    document.querySelectorAll('.sentence.highlighted').forEach(s=>s.classList.remove('highlighted'));
+  }
+  const tipEl=e.target.closest('.tip');
+  if(tipEl){e.stopPropagation();if(activeTooltip&&activeTooltip._source===tipEl){hideTooltip();}else{showTooltip(tipEl);if(activeTooltip)activeTooltip._source=tipEl;}return;}
+  if(e.target.closest('.tooltip'))return;
+  hideTooltip();
+});
+
+let pbCurrent=null,pbPlaying=false,pbSpeed=1,enPlayer=null;
+function pbStop(){if(enPlayer){enPlayer.pause();enPlayer=null;}pbPlaying=false;}
+
+function highlightSentence(idx){
+  document.querySelectorAll('.sentence').forEach(el=>el.classList.remove('playing'));
+  if(idx!==null&&idx>=0&&idx<sentences.length){
+    const el=document.querySelector(`.sentence[data-idx="${idx}"]`);
+    if(el){el.classList.add('playing');el.scrollIntoView({behavior:'smooth',block:'center'});}
+  }
+}
+
+function pbUpdateUI(){
+  document.getElementById('pb-play').textContent=pbPlaying?'⏸':'▶';
+  document.getElementById('pb-counter').textContent=pbCurrent!==null?`${pbCurrent+1} / ${sentences.length}`:`— / ${sentences.length}`;
+}
+
+function pbPlayCurrent(){
+  pbStop();if(pbCurrent===null){pbUpdateUI();return;}
+  const src=`audio/2023北京卷-B/en-s${String(pbCurrent).padStart(2,'0')}.mp3`;
+  enPlayer=new Audio(src);enPlayer.playbackRate=pbSpeed;pbPlaying=true;
+  highlightSentence(pbCurrent);pbUpdateUI();
+  enPlayer.onerror=()=>{
+    const utter=new SpeechSynthesisUtterance(sentences[pbCurrent]);
+    const voices=speechSynthesis.getVoices();
+    utter.voice=voices.find(v=>v.lang==='en-GB')||voices.find(v=>v.lang.startsWith('en'))||null;
+    utter.rate=pbSpeed*0.85;
+    utter.onend=()=>{if(pbPlaying){if(pbCurrent<sentences.length-1){pbCurrent++;pbPlayCurrent();}else{pbPlaying=false;highlightSentence(null);pbUpdateUI();}}};
+    speechSynthesis.speak(utter);enPlayer=null;
+  };
+  enPlayer.onended=()=>{if(pbPlaying){if(pbCurrent<sentences.length-1){pbCurrent++;pbPlayCurrent();}else{pbPlaying=false;highlightSentence(null);pbUpdateUI();}}};
+  enPlayer.play();
+}
+
+function pbToggle(){if(pbCurrent===null){pbCurrent=0;pbPlayCurrent();return;}if(pbPlaying){pbStop();highlightSentence(pbCurrent);pbUpdateUI();}else{pbPlayCurrent();}}
+function pbPrev(){if(pbCurrent===null)pbCurrent=0;else if(pbCurrent>0)pbCurrent--;pbPlayCurrent();}
+function pbNext(){if(pbCurrent===null)pbCurrent=0;else if(pbCurrent<sentences.length-1)pbCurrent++;pbPlayCurrent();}
+function pbSetSpeed(v){pbSpeed=parseFloat(v);if(enPlayer)enPlayer.playbackRate=pbSpeed;}
+
+document.addEventListener('click',function(e){
+  if(e.target.closest('.tip')||e.target.closest('.tooltip'))return;
+  const sentence=e.target.closest('.sentence.complex');
+  if(sentence)toggleAnalysis(parseInt(sentence.dataset.idx));
+});
+
+function speakWord(word){
+  if(enPlayer){enPlayer.pause();enPlayer=null;}
+  const slug='en-word-'+word.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const src='audio/2023北京卷-B/'+slug+'.mp3';
+  enPlayer=new Audio(src);
+  enPlayer.onerror=function(){
+    const utter=new SpeechSynthesisUtterance(word);
+    const voices=speechSynthesis.getVoices();
+    utter.voice=voices.find(v=>v.lang==='en-GB')||voices.find(v=>v.lang.startsWith('en'))||voices[0];
+    utter.rate=0.8;speechSynthesis.speak(utter);
+  };
+  enPlayer.play();
+}
+
+const ANALYSIS_AUDIO={};
+let analysisPlayer=null,analysisBtn=null;
+function playAnalysis(id,btn){
+  if(analysisPlayer){analysisPlayer.pause();analysisPlayer=null;if(analysisBtn){analysisBtn.textContent='🔊 听讲解';analysisBtn.classList.remove('playing');}if(analysisBtn===btn){analysisBtn=null;return;}}
+  const src=ANALYSIS_AUDIO[id];if(!src)return;
+  analysisPlayer=new Audio(src);analysisBtn=btn;btn.textContent='⏹ 停止';btn.classList.add('playing');
+  analysisPlayer.onended=()=>{btn.textContent='🔊 听讲解';btn.classList.remove('playing');analysisPlayer=null;analysisBtn=null;};
+  analysisPlayer.play();
+}
+
+function toggleAnalysis(idx){const el=document.getElementById('analysis-'+idx);if(el)el.classList.toggle('open');}
+function togglePanel(id){document.getElementById(id).classList.toggle('open');}
+
+function setMode(mode){
+  document.body.classList.remove('mode-raw','mode-study','mode-quiz','mode-annotate');
+  if(mode!=='study')document.body.classList.add('mode-'+mode);
+  document.querySelectorAll('.mode-step').forEach(btn=>btn.classList.toggle('active',btn.dataset.mode===mode));
+  hideTooltip();
+  if(mode==='quiz'){pbStop();highlightSentence(null);pbUpdateUI();resetQuiz();}
+}
+
+function resetQuiz(){
+  document.querySelectorAll('.question-option').forEach(opt=>opt.classList.remove('selected','correct','wrong'));
+  document.querySelectorAll('.question-item').forEach(q=>q.dataset.answered='');
+  const score=document.getElementById('quizScore');if(score)score.classList.remove('show');
+}
+
+document.addEventListener('click',function(e){
+  if(!document.body.classList.contains('mode-quiz'))return;
+  const opt=e.target.closest('.question-option');if(!opt)return;
+  const item=opt.closest('.question-item');if(item.dataset.answered)return;
+  item.dataset.answered='true';const picked=opt.dataset.key;const correct=item.dataset.answer;
+  if(picked===correct){opt.classList.add('correct');}else{opt.classList.add('wrong');item.querySelector(`.question-option[data-key="${correct}"]`).classList.add('correct');}
+  const total=document.querySelectorAll('.question-item[data-answer]').length;
+  const done=document.querySelectorAll('.question-item[data-answered="true"]').length;
+  if(done===total)showQuizScore();
+});
+
+function showQuizScore(){
+  const total=document.querySelectorAll('.question-item[data-answer]').length;
+  const wrong=document.querySelectorAll('.question-option.wrong').length;
+  const score=document.getElementById('quizScore');
+  score.textContent=`得分：${total-wrong} / ${total}`;score.classList.add('show');
+}
+
+function gotoSentence(idx){
+  const el=document.querySelector(`.sentence[data-idx="${idx}"]`);if(!el)return;
+  setMode('study');document.querySelectorAll('.sentence.highlighted').forEach(s=>s.classList.remove('highlighted'));
+  el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('highlighted');
+}
+
+function toggleQuestionAnalysis(btn){
+  const analysis=btn.nextElementSibling;analysis.classList.toggle('open');
+  btn.textContent=analysis.classList.contains('open')?'收起解析':'🔍 查看解析';
+}
+
+const SRS_PREFIX='srs_beijing_2023_B_';
+const SRS_INTERVALS=[1,3,7,14,30];
+function srsLoad(word){const raw=localStorage.getItem(SRS_PREFIX+word);return raw?JSON.parse(raw):null;}
+function srsSave(word,knew){
+  const state=srsLoad(word)||{streak:0};
+  if(knew){state.streak=(state.streak||0)+1;state.interval=SRS_INTERVALS[Math.min(state.streak-1,SRS_INTERVALS.length-1)];}
+  else{state.streak=0;state.interval=1;}
+  state.nextReview=Date.now()+state.interval*86400000;
+  localStorage.setItem(SRS_PREFIX+word,JSON.stringify(state));return state;
+}
+function srsIsDue(state){return!state||Date.now()>=state.nextReview;}
+function srsUpdateCard(card){
+  const state=srsLoad(card.dataset.srsWord);card.classList.remove('srs-due','srs-known');
+  if(!state)return;card.classList.add(srsIsDue(state)?'srs-due':'srs-known');
+}
+function srsUpdateBadge(){
+  const badge=document.getElementById('srs-badge');if(!badge)return;
+  const cards=document.querySelectorAll('.vocab-card[data-srs-word]');let due=0;
+  cards.forEach(c=>{if(srsIsDue(srsLoad(c.dataset.srsWord)))due++;});
+  if(due===0){badge.textContent='全掌握 ✓';badge.className='srs-badge all-done';}
+  else{badge.textContent=due+'个待复习';badge.className='srs-badge';}
+}
+function srsClick(word,knew,btn){
+  srsSave(word,knew);const card=btn.closest('.vocab-card');srsUpdateCard(card);srsUpdateBadge();
+  btn.style.opacity='0.4';setTimeout(()=>btn.style.opacity='',600);
+}
+function srsInit(){
+  document.querySelectorAll('.vocab-card').forEach(card=>{
+    const wordEl=card.querySelector('.vocab-word');if(!wordEl)return;
+    const word=wordEl.textContent.trim();card.dataset.srsWord=word;
+    const btns=document.createElement('div');btns.className='srs-btns';
+    const esc=word.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    btns.innerHTML=`<button class="srs-btn srs-btn-know" onclick="srsClick('${esc}',true,this)">认识 ✓</button>`+
+      `<button class="srs-btn srs-btn-forget" onclick="srsClick('${esc}',false,this)">还不会 ✗</button>`;
+    card.querySelector('.vocab-card-head').appendChild(btns);srsUpdateCard(card);
+  });srsUpdateBadge();
+}
+
+function initAnnotations(){
+  document.querySelectorAll('sup.ann-sup,.para-ann').forEach(el=>el.remove());
+  document.querySelectorAll('.passage .paragraph').forEach(para=>{
+    const seen=new Set();const items=[];let idx=1;
+    para.querySelectorAll('.tip').forEach(el=>{
+      const tip=el.dataset.tip||'';const parts=tip.split('|');if(parts.length<2)return;
+      const phrase=parts[0].trim();
+      if(seen.has(phrase)){
+        const prevIdx=items.findIndex(i=>i.phrase===phrase)+1;
+        const sup=document.createElement('sup');sup.className='ann-sup';sup.textContent=prevIdx;el.after(sup);return;
+      }
+      seen.add(phrase);const sup=document.createElement('sup');sup.className='ann-sup';sup.textContent=idx;el.after(sup);
+      const contentParts=parts[1].split('｜');const cn=contentParts[0].trim();
+      const det=contentParts.slice(1).map(s=>s.replace(/<[^>]+>/g,'').trim()).filter(Boolean);
+      items.push({num:idx,phrase,cn,det,level:el.dataset.level==='超纲'?'超纲':''});idx++;
+    });
+    if(items.length===0)return;
+    const ann=document.createElement('div');ann.className='para-ann';
+    ann.innerHTML=items.map(i=>`<div class="pan-row"><div class="pan-head"><span class="pan-num">${i.num}</span><span class="pan-en">${i.phrase}</span><span class="pan-cn">${i.cn}</span>${i.level?`<span class="pan-lv lv-${i.level}">${i.level}</span>`:''}</div>${i.det.length?`<div class="pan-det">${i.det.map(d=>`<div>${d}</div>`).join('')}</div>`:''}</div>`).join('');
+    const trans=para.querySelector('.translation-inline');if(trans)trans.after(ann);else para.appendChild(ann);
+  });
+}
+
+pbUpdateUI();srsInit();
+document.addEventListener('DOMContentLoaded',initAnnotations);
+</script>
+</body>
+</html>

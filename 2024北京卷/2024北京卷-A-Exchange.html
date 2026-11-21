@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2024北京卷A篇精读 · Language Exchange Programme</title>
+<style>
+:root{--bg:#fafaf8;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;--accent:#2563eb;--accent-light:#dbeafe;--complex-bg:#f0f6fc;--border:#e2e2e0;--card-bg:#fff;--hover-bg:#f5f5f4;--shadow:0 1px 3px rgba(0,0,0,.08);--radius:6px;}
+.theme-yellow{--bg:#f5f0e8;--card-bg:#faf6ee;--border:#ddd5bf;--complex-bg:#ece4d4;--hover-bg:#ede7d8;--accent-light:#fde8b8;}
+.theme-green{--bg:#edecea;--card-bg:#f3f2f0;--border:#d6d5d0;--complex-bg:#e5e4e0;--hover-bg:#e8e7e3;--accent-light:#dddcd6;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:60px;}
+.container{max-width:min(1100px,88vw);margin:0 auto;padding:0 20px;}
+.header{background:var(--card-bg);border-bottom:1px solid var(--border);padding:16px 0;position:sticky;top:0;z-index:100;}
+.header .container{display:flex;align-items:center;flex-wrap:wrap;gap:10px;}
+.header h1{font-size:16px;font-weight:600;flex:1;min-width:200px;}
+.header-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card-bg);color:var(--text);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.mode-steps{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.mode-step{padding:6px 12px;border:none;background:var(--card-bg);color:var(--text-secondary);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.mode-step+.mode-step{border-left:1px solid var(--border);}
+.mode-step.active{background:var(--accent);color:#fff;}
+.mode-step:hover:not(.active){background:var(--accent-light);}
+.passage{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:20px;padding:28px 32px;}
+.passage-title{text-align:center;font-family:Georgia,"Times New Roman",serif;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:20px;color:var(--text-secondary);}
+.passage-subtitle{font-family:Georgia,"Times New Roman",serif;font-size:17px;font-weight:700;margin:20px 0 10px 0;color:var(--text);border-bottom:1px solid var(--border);padding-bottom:6px;}
+.paragraph{margin-bottom:4px;text-indent:2em;}
+.req-list{margin:8px 0 4px 2em;list-style:none;}
+.req-list li{margin-bottom:2px;padding-left:1.2em;position:relative;}
+.req-list li::before{content:'•';position:absolute;left:0;color:var(--accent);font-weight:700;}
+.sentence{font-family:Georgia,"Times New Roman",serif;font-size:18px;line-height:1.75;position:relative;transition:background .2s;border-radius:3px;cursor:pointer;}
+.sentence:hover{background:var(--hover-bg);}
+.sentence.playing{background:var(--complex-bg);border-radius:3px;}
+.sentence.complex{border-bottom:1.5px dashed #93c5fd;}
+.sentence.complex.playing{background:var(--complex-bg);}
+.tip{border-bottom:1.5px dashed var(--accent);cursor:pointer;position:relative;transition:background .15s;}
+.tip:hover{background:var(--accent-light);}
+.tip.tip-flash{outline:2px solid var(--accent);border-radius:2px;animation:tipFlash 1.6s ease-out forwards;}
+@keyframes tipFlash{0%{background:var(--accent);color:#fff;}40%{background:var(--accent-light);color:inherit;}100%{background:transparent;}}
+.tooltip{position:fixed;z-index:200;background:var(--text);color:#fff;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;line-height:1.5;padding:8px 14px;border-radius:8px;max-width:min(520px,calc(100vw - 16px));width:max-content;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:auto;animation:tipIn .15s ease-out;}
+.tooltip::after{content:'';position:absolute;bottom:-6px;left:var(--arrow-left,50%);transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text);}
+.tooltip.below::after{bottom:auto;top:-6px;border-top:none;border-bottom:6px solid var(--text);}
+.tooltip .tip-phrase{font-family:Georgia,serif;font-weight:600;color:#93c5fd;margin-bottom:2px;}
+.tooltip .tip-speak{display:inline-block;cursor:pointer;margin-left:6px;font-size:12px;opacity:.7;vertical-align:middle;}
+.tooltip .tip-speak:hover{opacity:1;}
+.level-badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:11px;font-weight:600;margin-left:6px;vertical-align:middle;font-family:-apple-system,"PingFang SC",sans-serif;}
+.badge-超纲{background:rgba(239,68,68,.25);color:#fca5a5;}
+.badge-拓展{background:rgba(251,146,60,.2);color:#fdba74;}
+.badge-选必{background:rgba(96,165,250,.2);color:#93c5fd;}
+.tooltip .tip-zh-play{display:block;margin-top:6px;padding:4px 10px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:4px;color:#93c5fd;font-size:12px;cursor:pointer;text-align:center;}
+.tooltip .tip-zh-play:hover{background:rgba(255,255,255,.25);}
+@keyframes tipIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+.analysis{display:none;margin:8px 0 12px 0;padding:12px 16px;background:#f8f9fa;border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;color:var(--text-secondary);line-height:1.7;text-indent:0;}
+.analysis.open{display:block;}
+.analysis p{margin-bottom:4px;}
+.analysis b{color:var(--text);font-size:13px;}
+.translation-inline{display:none;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;color:var(--text-muted);margin:2px 0 6px 0;text-indent:0;}
+body.compare-mode .translation-inline,body.mode-annotate .translation-inline{display:block;}
+.panel{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:16px;overflow:hidden;}
+.panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;cursor:pointer;user-select:none;font-weight:600;font-size:15px;border-bottom:1px solid transparent;transition:border-color .2s;}
+.panel-header:hover{color:var(--accent);}
+.panel-header .arrow{transition:transform .2s;font-size:12px;color:var(--text-muted);}
+.panel.open .panel-header{border-bottom-color:var(--border);}
+.panel.open .panel-header .arrow{transform:rotate(180deg);}
+.panel-body{display:none;padding:16px 24px;}
+.panel.open .panel-body{display:block;}
+.vocab-card{border-bottom:1px solid #f0f0f0;padding:12px 0;}
+.vocab-card:last-child{border-bottom:none;}
+.vocab-card-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px;}
+.vocab-word{font-family:Georgia,serif;font-weight:600;color:var(--accent);cursor:pointer;font-size:15px;}
+.vocab-word:hover{text-decoration:underline;}
+.vocab-meaning{font-size:14px;color:var(--text);}
+.vocab-extra{font-size:13px;color:var(--text-secondary);margin-top:2px;}
+.vocab-tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:3px;background:#fef3c7;color:#92400e;vertical-align:middle;}
+.vocab-tag.tag-core{background:#dcfce7;color:#166534;}
+.vocab-tag.tag-exam{background:#dbeafe;color:#1e40af;}
+.vocab-tag.tag-beyond{background:#fef3c7;color:#92400e;}
+.vocab-tag.tag-extend{background:#ffedd5;color:#c2410c;}
+.vocab-detail{display:none;margin-top:8px;padding:10px 14px;background:#f8f9fa;border-radius:var(--radius);font-size:13.5px;line-height:1.7;}
+.vocab-detail.open{display:block;}
+.vocab-detail .vd-example{color:var(--text-secondary);padding-left:16px;}
+.vocab-detail .vd-example em{color:var(--text);font-style:normal;font-weight:600;}
+.vocab-expand{font-size:12px;color:var(--accent);cursor:pointer;border:none;background:none;padding:0;margin-left:8px;}
+.vocab-expand:hover{text-decoration:underline;}
+.srs-btns{display:flex;gap:5px;margin-left:auto;}
+.srs-btn{font-size:11px;padding:2px 7px;border-radius:10px;border:1.5px solid;cursor:pointer;transition:all .15s;background:none;white-space:nowrap;}
+.srs-btn-know{border-color:#16a34a;color:#16a34a;}
+.srs-btn-know:hover{background:#dcfce7;}
+.srs-btn-forget{border-color:#dc2626;color:#dc2626;}
+.srs-btn-forget:hover{background:#fee2e2;}
+.srs-badge{font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;background:#fef2f2;color:#dc2626;}
+.srs-badge.all-done{background:#dcfce7;color:#16a34a;}
+.question-item{padding:16px 24px;border-bottom:1px solid #f0f0f0;}
+.question-item:last-child{border-bottom:none;}
+.question-stem{font-weight:600;font-size:15px;margin-bottom:8px;}
+.question-options{display:grid;grid-template-columns:1fr;gap:4px;font-size:14px;margin-bottom:8px;}
+.question-option{padding:2px 0;}
+.show-answer-btn{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--accent);cursor:pointer;background:none;border:none;padding:4px 0;}
+.show-answer-btn:hover{text-decoration:underline;}
+.question-analysis{display:none;margin-top:10px;padding:12px 16px;background:#f8f9fa;border-radius:var(--radius);font-size:14px;color:var(--text-secondary);line-height:1.7;}
+.question-analysis.open{display:block;}
+.question-analysis .answer-line{font-weight:700;color:#16a34a;margin-bottom:6px;font-size:15px;}
+.question-analysis .locate{background:#fef9c3;padding:6px 10px;border-radius:4px;margin:6px 0;font-family:Georgia,serif;font-style:italic;font-size:14px;color:var(--text);}
+.option-list{margin-top:10px;display:flex;flex-direction:column;gap:2px;}
+.option-item{padding:3px 0;font-size:13.5px;line-height:1.5;}
+.option-item.correct .opt-mark{color:#15803d;font-weight:700;}
+.option-item.wrong .opt-mark{color:#b91c1c;font-weight:700;}
+.option-item .opt-why{color:#888;font-size:12.5px;margin-left:4px;}
+.quiz-score{text-align:center;padding:16px;font-size:16px;font-weight:600;color:var(--accent);display:none;}
+.quiz-score.show{display:block;}
+#playbar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:#1a1a1a;color:#fff;display:flex;align-items:center;justify-content:center;gap:16px;padding:10px 20px;height:52px;font-size:14px;box-shadow:0 -2px 12px rgba(0,0,0,.2);}
+#playbar button{background:none;border:none;color:#fff;font-size:18px;cursor:pointer;padding:4px 8px;border-radius:4px;line-height:1;transition:background .15s;}
+#playbar button:hover{background:rgba(255,255,255,.15);}
+#pb-play{font-size:22px;}
+#pb-counter{font-size:13px;color:#aaa;min-width:52px;text-align:center;}
+#pb-speed{background:#333;border:none;color:#fff;font-size:13px;padding:3px 6px;border-radius:4px;cursor:pointer;}
+body.mode-raw .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-raw .tip:hover{background:none;}
+body.mode-raw .analysis,body.mode-raw .translation-inline,body.mode-raw .panel{display:none!important;}
+body.mode-raw .sentence.complex{border-bottom:none;}
+body.mode-raw .sentence{cursor:default;}
+body.mode-raw .sentence:hover{background:none;}
+body.mode-quiz .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-quiz .tip:hover{background:none;}
+body.mode-quiz .analysis,body.mode-quiz .translation-inline,body.mode-quiz #vocabPanel,body.mode-quiz #reviewPanel,body.mode-quiz #tipPanel,body.mode-quiz #writingPanel,body.mode-quiz #playbar{display:none!important;}
+body.mode-quiz .sentence.complex{border-bottom:none;cursor:default;}
+body.mode-quiz .sentence{cursor:default;}
+body.mode-quiz .sentence:hover{background:none;}
+body.mode-annotate .sentence.complex{border-bottom:none;}
+body.mode-annotate .sentence{cursor:default;}
+body.mode-annotate .sentence:hover{background:none;}
+body.mode-quiz #questionsPanel{display:block;}
+body.mode-quiz #questionsPanel .panel-body{display:block;}
+body.mode-quiz .question-analysis{display:none!important;}
+body.mode-quiz .show-answer-btn{display:none;}
+body.mode-quiz .question-option{cursor:pointer;padding:6px 10px;border-radius:var(--radius);border:1.5px solid transparent;transition:all .15s;}
+body.mode-quiz .question-option:hover{background:var(--accent-light);}
+body.mode-quiz .question-option.selected{border-color:var(--accent);background:var(--accent-light);}
+body.mode-quiz .question-option.correct{border-color:#16a34a;background:#dcfce7;}
+body.mode-quiz .question-option.wrong{border-color:#dc2626;background:#fee2e2;}
+.locate[data-goto]{cursor:pointer;transition:background .15s;}
+.locate[data-goto]:hover{background:#fde68a;}
+.locate[data-goto]::after{content:' ↗ 跳到原文';font-size:11px;color:var(--accent);font-family:-apple-system,sans-serif;font-style:normal;}
+.sentence.highlighted{background:#fef08a;border-radius:3px;}
+sup.ann-sup{display:none;font-size:0.6em;color:var(--accent);font-weight:700;vertical-align:super;line-height:0;margin-left:2px;font-family:system-ui,sans-serif;pointer-events:none;}
+body.mode-annotate sup.ann-sup{display:inline;}
+.para-ann{display:none;margin:16px 0 28px 0;font-family:-apple-system,"PingFang SC",sans-serif;font-size:15px;color:#333;text-indent:0;}
+body.mode-annotate .para-ann{display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:16px 18px;align-items:start;}
+.pan-row{background:#fff;border:1px solid #ece8e0;border-radius:12px;padding:16px 20px 18px;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.pan-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.pan-num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
+.pan-en{font-family:Georgia,serif;font-weight:700;font-size:18px;color:#1a1a1a;}
+.pan-cn{color:var(--accent);font-weight:600;font-size:15px;}
+.pan-lv{font-size:12px;font-weight:600;padding:2px 8px;border-radius:4px;line-height:1.4;}
+.lv-超纲{background:#fee2e2;color:#b91c1c;}
+.pan-det{margin:12px 0 0 32px;color:#666;font-size:14px;line-height:1.85;}
+.pan-det div{position:relative;padding-left:12px;}
+.pan-det div+div{margin-top:8px;}
+.pan-det div::before{content:'';position:absolute;left:0;top:0.8em;width:4px;height:4px;border-radius:50%;background:#c9c3b8;}
+body.mode-quiz .para-ann,body.mode-raw .para-ann{display:none!important;}
+body.mode-quiz sup.ann-sup,body.mode-raw sup.ann-sup{display:none!important;}
+.sb-block{display:none;}
+body.mode-annotate .sb-block{display:block;margin:4px 0 28px;padding:16px 20px 18px;background:#f8f9fa;border-left:3px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;font-family:-apple-system,"PingFang SC",sans-serif;text-indent:0;}
+body.mode-annotate .analysis{display:none!important;}
+body.mode-quiz .sb-block,body.mode-raw .sb-block{display:none!important;}
+.sb-title{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.08em;margin-bottom:12px;}
+.sb-sent{font-family:Georgia,serif;font-size:18px;line-height:2.3;color:#1a1a1a;background:#fff;border:1px solid #ece8e0;border-radius:10px;padding:14px 18px;}
+.sb-chip{display:inline-block;font-family:-apple-system,"PingFang SC",sans-serif;font-size:11px;font-weight:700;line-height:1;padding:4px 7px;border-radius:999px;margin-right:5px;vertical-align:3px;}
+.sb-core{font-weight:700;border-bottom:2.5px solid var(--accent);}
+.sb-core-chip{background:var(--accent);color:#fff;}
+.sb-ins{color:#9a9a9a;background:#eeebe4;border-radius:4px;padding:2px 4px;}
+.sb-ins-chip{background:#e4e0d8;color:#777;}
+.sb-rest{border-bottom:2.5px solid #4caf7a;}
+.sb-rest-chip{background:#4caf7a;color:#fff;}
+.sb-steps{margin-top:14px;display:grid;gap:10px;}
+.sb-step{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:start;font-size:15px;line-height:1.75;color:#333;}
+.sb-step-n{width:24px;height:24px;border-radius:50%;background:#1a1a1a;color:#fff;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-top:2px;}
+.sb-step em{font-style:normal;font-family:Georgia,serif;color:#111;background:#fff;border:1px solid #ece8e0;padding:0 5px;border-radius:4px;}
+.sb-step .arrow{color:#aaa;margin:0 4px;}
+.sb-tip{margin-top:14px;font-size:14px;color:#8a6d1f;background:#fdf6e3;border-radius:8px;padding:9px 14px;}
+.container{max-width:1400px;width:100%;padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right));}
+.header{padding-top:calc(16px + env(safe-area-inset-top));}
+body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
+#playbar{height:calc(52px + env(safe-area-inset-bottom));padding-bottom:calc(10px + env(safe-area-inset-bottom));padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right));}
+.passage{padding:24px 24px;}
+.tooltip .tip-scroll{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
+body.mode-annotate .passage-subtitle{display:none;}
+body.mode-annotate .req-list{display:none;}
+@media(min-width:700px){
+  .header h1{font-size:19px;}.passage-title{font-size:19px;}.header-sub{font-size:14px;}
+  .sentence{font-size:23px;line-height:1.8;}.translation-inline{font-size:18px!important;line-height:1.8;}
+  .passage-subtitle{font-size:21px;}
+  .analysis{font-size:18px;line-height:1.8;}.analysis b{font-size:16px;}.panel-header{font-size:18px;}
+  .vocab-word{font-size:20px;}.vocab-meaning{font-size:18px;}.vocab-extra{font-size:16.5px;line-height:1.7;}
+  .vocab-detail,.vd-example{font-size:16px;}.vocab-tag,.level-badge{font-size:13px;}
+  .vocab-expand,.srs-btn,.srs-badge{font-size:14px;}.question-stem{font-size:19px;}
+  .question-options{font-size:18px;}.show-answer-btn{font-size:15.5px;}
+  .question-analysis .answer-line{font-size:17px;}.option-item{font-size:16.5px;}.option-item .opt-why{font-size:15px;}
+  .tooltip{font-size:17px;line-height:1.55;}.tooltip .tip-phrase{font-size:19px;}
+  #pb-counter,#pb-speed{font-size:15px;}
+}
+@media(max-width:600px){
+  .passage{padding:18px 14px;}.sentence{font-size:16px;}
+  .panel-header,.question-item{padding-left:16px;padding-right:16px;}.panel-body{padding:12px 16px;}
+}
+</style>
+</head>
+<body class="mode-quiz">
+
+<div class="header">
+  <div class="container">
+    <h1>2024北京卷A篇精读 · Language Exchange Programme</h1>
+    <div class="header-controls">
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="quiz" onclick="setMode('quiz')">① 做题</button>
+        <button class="mode-step" data-mode="study" onclick="setMode('study')">② 精读</button>
+        <button class="mode-step" data-mode="raw" onclick="setMode('raw')">③ 原文</button>
+        <button class="mode-step" data-mode="annotate" onclick="setMode('annotate')">④ 课本</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()" title="切换护眼色">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+<div class="passage" id="passage">
+  <div class="passage-title">A</div>
+
+  <!-- ── Paragraph 1: Introduction ── -->
+  <div class="paragraph" id="para-1">
+    <span class="sentence complex" data-idx="0">The Language Exchange Programme allows students in pairs to communicate in two different languages they wish to share and learn each week.</span>
+    <div class="analysis" id="analysis-0">
+      <p><b>句子结构：</b>主干是 <em>The Programme allows students to communicate</em>（项目允许学生进行交流）。</p>
+      <p><b>in pairs：</b>以两人一组的方式。</p>
+      <p><b>they wish to share and learn：</b>省略了 that 的定语从句，修饰 two different languages（他们希望分享和学习的两种不同语言）。</p>
+      <p><b>与21题的关系：</b>21题问学生在项目中将做什么 → 学生以两人一组进行语言交流，即 practise their language skills（练习语言技能）→ 答案 D。</p>
+    </div>
+    <span class="sentence" data-idx="1">Students record short entries after each partner meeting noting the language skills <span class="tip" data-tip="practised|练习过的（过去分词作后置定语）｜practise = 练习（英式拼写，美式为 practice）。the language skills practised = 练习过的语言技能。noting 是现在分词作伴随状语，表示"记录下..."｜搭配：practise speaking 练习口语，practise a skill 练习一项技能" data-level="选必">practised</span> and the topics discussed.</span>
+    <span class="sentence complex" data-idx="2">Each pair of students meets three times throughout the term with a teacher who decides if the exchange is <span class="tip" data-tip="effective|有效的，起作用的｜effect（效果/影响）+ -ive（形容词后缀）= effective（产生效果的、有效的）。decides if the exchange is effective = 判断这次语言交换是否有效｜搭配：effective method 有效方法，cost-effective 性价比高的。反义：ineffective 无效的" data-level="选必">effective</span>.</span>
+    <div class="analysis" id="analysis-2">
+      <p><b>句子结构：</b>主干是 <em>Each pair of students meets three times with a teacher</em>（每组学生和老师见三次面）。</p>
+      <p><b>throughout the term：</b>在整个学期期间（时间状语）。</p>
+      <p><b>who 定语从句：</b><em>who decides if the exchange is effective</em> = 由这位老师来判断交换是否有效。who 修饰 a teacher。</p>
+      <p><b>注意：</b>21题选项 B（evaluate the exchange）有迷惑性，但原文说的是 teacher 来 decide，不是学生来评估。21题选项 C（meet teachers each week）也有迷惑性，原文是 three times throughout the term，不是每周。</p>
+    </div>
+    <span class="sentence" data-idx="3">Students who successfully complete the programme will receive one credit each.</span>
+    <div class="translation-inline">语言交换项目允许学生两人一组，每周用他们希望分享和学习的两种不同语言进行交流。学生在每次搭档会面后记录简短的条目，记下练习过的语言技能和讨论的话题。每组学生在整个学期中与老师见三次面，由老师判断交换是否有效。成功完成项目的学生将各获得一个学分。</div>
+    <div class="sb-block">
+      <div class="sb-title">长难句拆解</div>
+      <div class="sb-sent">
+        <span class="sb-chip sb-core-chip">主语</span><span class="sb-core">The Language Exchange Programme</span>
+        <span class="sb-chip sb-core-chip">谓语</span><span class="sb-core">allows students in pairs to communicate</span>
+        <span class="sb-chip sb-rest-chip">宾语</span><span class="sb-rest">in two different languages</span>
+        <span class="sb-chip sb-ins-chip">定语从句</span><span class="sb-ins">they wish to share and learn</span>
+        <span class="sb-chip sb-rest-chip">时间</span><span class="sb-rest">each week.</span>
+      </div>
+      <div class="sb-steps">
+        <div class="sb-step"><span class="sb-step-n">1</span><div>主干：<em>The Programme allows students to communicate in two different languages</em><span class="arrow">→</span>项目允许学生用两种不同语言交流</div></div>
+        <div class="sb-step"><span class="sb-step-n">2</span><div>定语从句：<em>they wish to share and learn</em><span class="arrow">→</span>他们希望分享和学习的（修饰 languages）</div></div>
+        <div class="sb-step"><span class="sb-step-n">3</span><div>21题：学生做什么？→ communicate in two different languages = practise their language skills（练习语言技能）→ 答案 D</div></div>
+      </div>
+      <div class="sb-tip">💡 allow sb to do sth（允许某人做某事）是高考常考的动词不定式结构。</div>
+    </div>
+  </div>
+
+  <!-- ── Section: Requirements for completion ── -->
+  <div class="passage-subtitle">Requirements for completion</div>
+
+  <div class="paragraph" id="para-2" style="text-indent:0;">
+    <ul class="req-list">
+      <li><span class="sentence" data-idx="4">One welcoming session on the second Friday of the term</span></li>
+      <li><span class="sentence" data-idx="5">18 weekly one-hour pair meetings</span></li>
+      <li><span class="sentence" data-idx="6">Weekly progress reports for all pair meetings</span></li>
+      <li><span class="sentence" data-idx="7">At least three pair-teacher meetings</span></li>
+      <li><span class="sentence" data-idx="8">One five-minute final video</span></li>
+    </ul>
+    <div class="translation-inline">完成项目的要求：· 学期第二个周五参加一次欢迎会；· 18次每周一小时的搭档会议；· 所有搭档会议的每周进度报告；· 至少三次搭档-教师会议；· 一个五分钟的最终视频。</div>
+  </div>
+
+  <!-- ── Section: Sign up! ── -->
+  <div class="passage-subtitle">Sign up!</div>
+
+  <div class="paragraph" id="para-3">
+    <span class="sentence" data-idx="9">The sign-up and <span class="tip" data-tip="registration|注册，登记｜register（注册/登记）→ registration（名词：注册过程）。the sign-up and registration process = 报名和注册流程。sign-up = 报名（第一步），registration = 正式注册（第二步）｜搭配：registration form 登记表，registration fee 注册费" data-level="选必">registration</span> process is as follows:</span>
+    <div class="translation-inline">报名和注册流程如下：</div>
+  </div>
+
+  <div class="paragraph" id="para-4" style="text-indent:0;">
+    <ul class="req-list">
+      <li><span class="sentence" data-idx="10">Students sign up and <span class="tip" data-tip="indicate|表明，指出｜indicate = 指出/表明（in- = 向内，-dic- = 说/指 → 指出来）。indicate the languages they can share = 说明/标注他们能分享的语言。这是报名时需要做的事情（23题考点）｜搭配：indicate interest 表示兴趣，indicate a preference 表明偏好，as indicated 如所示" data-level="选必">indicate</span> the languages they can share and languages they are interested in learning.</span></li>
+      <li><span class="sentence" data-idx="11">Based on the information entered by each student, <span class="tip" data-tip="potential|潜在的，可能的｜potent（有力量的）+ -ial（形容词后缀）= potential（有潜力的、可能的）。potential pairs = 可能匹配的搭档组合，即根据信息初步筛选出来的配对｜搭配：potential risk 潜在风险，potential customer 潜在客户，have the potential to 有...的潜力" data-level="选必">potential</span> pairs are identified.</span></li>
+      <li><span class="sentence" data-idx="12"><span class="tip" data-tip="Proficiency|熟练程度，精通水平｜proficient（熟练的）→ proficiency（名词：熟练度）。Proficiency levels = 语言熟练程度等级。通过课程作业或分班测试来确认学生的语言水平｜搭配：language proficiency 语言水平，proficiency test 水平测试，achieve proficiency in 达到精通" data-level="拓展">Proficiency</span> (熟练) levels are confirmed through coursework or <span class="tip" data-tip="placement tests|分班测试，水平测试｜placement = 放置/安排（place + -ment），这里指根据水平"安排"到合适的级别。placement test = 测试你的水平然后安排到合适级别的考试，常见于语言学校入学｜搭配：placement exam 分班考试，job placement 工作安排" data-level="拓展">placement</span> tests.</span></li>
+      <li><span class="sentence complex" data-idx="13">Once a pair has been <span class="tip" data-tip="determined|确定，判定｜determine = 确定/决定（de- = 完全，-term- = 界限 → 完全确定下来）。determined to be suitable = 被确认为合适的。这里是被动语态，指学校方面确认这对搭档是否合适｜搭配：determine the cause 确定原因，be determined to do 下定决心做某事（注意语义不同）" data-level="选必">determined</span> to be suitable, the students will be contacted <span class="tip" data-tip="individually|单独地，逐个地｜individual（个人的）+ -ly（副词后缀）= individually（逐一地、分别地）。contacted individually = 单独联系每个学生（不是群发通知，而是一对一通知）｜搭配：treat individually 个别对待，individually wrapped 单独包装的" data-level="选必">individually</span> with a special permission number to register for the programme.</span>
+        <div class="analysis" id="analysis-13">
+          <p><b>句子结构：</b>Once 引导时间状语从句 + 主句。</p>
+          <p><b>Once 从句：</b><em>Once a pair has been determined to be suitable</em> = 一旦某对搭档被确认为合适的。</p>
+          <p><b>主句：</b><em>the students will be contacted individually with a special permission number to register</em> = 学生将被单独联系，获得一个特殊许可号用来注册。</p>
+          <p><b>注意：</b>23题选项 C（Make individual contact）有迷惑性，但原文是学生"被"联系（be contacted），不是学生主动去联系。</p>
+        </div>
+      </li>
+    </ul>
+    <div class="translation-inline">· 学生报名并注明他们能分享的语言和有兴趣学习的语言。· 根据每位学生输入的信息，识别出潜在的配对。· 通过课程作业或分班测试确认熟练程度。· 一旦确认某对搭档合适，将单独联系学生，提供特殊许可号以注册该项目。</div>
+    <div class="sb-block">
+      <div class="sb-title">长难句拆解</div>
+      <div class="sb-sent">
+        <span class="sb-chip sb-rest-chip">条件</span><span class="sb-rest">Once a pair has been determined to be suitable,</span>
+        <span class="sb-chip sb-core-chip">主句</span><span class="sb-core">the students will be contacted individually</span>
+        <span class="sb-chip sb-ins-chip">目的</span><span class="sb-ins">with a special permission number to register for the programme.</span>
+      </div>
+      <div class="sb-steps">
+        <div class="sb-step"><span class="sb-step-n">1</span><div>主干：<em>the students will be contacted individually</em><span class="arrow">→</span>学生将被单独联系</div></div>
+        <div class="sb-step"><span class="sb-step-n">2</span><div>once 条件：<em>a pair has been determined to be suitable</em><span class="arrow">→</span>一旦配对被确认为合适</div></div>
+        <div class="sb-step"><span class="sb-step-n">3</span><div>目的：<em>with a special permission number to register</em><span class="arrow">→</span>带着特殊许可号去注册</div></div>
+      </div>
+      <div class="sb-tip">💡 注意被动语态：students will be contacted（学生被联系），不是学生主动联系别人。23题选项C的干扰就在这里。</div>
+    </div>
+  </div>
+
+  <!-- ── Section: Reminders ── -->
+  <div class="passage-subtitle">Reminders</div>
+
+  <div class="paragraph" id="para-5">
+    <span class="sentence" data-idx="14">Signing up for the programme does not automatically mean that you will be able to register and <span class="tip" data-tip="participate|参加，参与｜part（部分）+ -icip- + -ate（动词后缀）= participate（参与其中，成为一部分）。able to register and participate = 能够注册并参加。participate 比 join 更正式｜搭配：participate in a programme 参加一个项目，active participation 积极参与" data-level="选必">participate</span>.</span>
+    <span class="sentence" data-idx="15">Pairs are matched by languages of interest and proficiency levels.</span>
+    <span class="sentence complex" data-idx="16">Since there are many factors involved in the pairing process, not all students who sign up will be matched with a partner and be able to register for the programme.</span>
+    <div class="analysis" id="analysis-16">
+      <p><b>句子结构：</b>Since 引导原因状语从句 + 主句。</p>
+      <p><b>Since 从句：</b><em>Since there are many factors involved in the pairing process</em> = 由于配对过程中涉及许多因素。</p>
+      <p><b>主句：</b><em>not all students who sign up will be matched</em> = 并非所有报名的学生都会被匹配到搭档。注意 not all = 并非所有（部分否定），不是"所有人都不会"。</p>
+      <p><b>理解要点：</b>报名 ≠ 一定能参加，因为配对受很多因素影响。</p>
+    </div>
+    <div class="translation-inline">报名参加该项目并不自动意味着你就能注册和参与。配对是根据感兴趣的语言和熟练程度来匹配的。由于配对过程中涉及许多因素，并非所有报名的学生都能匹配到搭档并注册该项目。</div>
+    <div class="sb-block">
+      <div class="sb-title">长难句拆解</div>
+      <div class="sb-sent">
+        <span class="sb-chip sb-rest-chip">原因</span><span class="sb-rest">Since there are many factors involved in the pairing process,</span>
+        <span class="sb-chip sb-core-chip">主句</span><span class="sb-core">not all students who sign up will be matched with a partner</span>
+        <span class="sb-chip sb-core-chip">并列</span><span class="sb-core">and be able to register for the programme.</span>
+      </div>
+      <div class="sb-steps">
+        <div class="sb-step"><span class="sb-step-n">1</span><div>主干：<em>not all students will be matched</em><span class="arrow">→</span>并非所有学生都能被匹配（部分否定）</div></div>
+        <div class="sb-step"><span class="sb-step-n">2</span><div>who 定语从句：<em>who sign up</em><span class="arrow">→</span>报名的（限定哪些学生）</div></div>
+        <div class="sb-step"><span class="sb-step-n">3</span><div>since 原因：配对过程涉及许多因素，所以不是人人都能匹配成功</div></div>
+      </div>
+      <div class="sb-tip">💡 not all = 并非所有（部分否定），不等于 none（全部否定）。高考常考的否定表达。</div>
+    </div>
+  </div>
+
+</div><!-- /passage -->
+
+<!-- ══════ Vocabulary ══════ -->
+<div class="panel" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')">
+    <span>生词与短语（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="vocab-list">
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('proficiency')">proficiency</span>
+          <span class="vocab-meaning">熟练程度，精通水平</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>proficient（熟练的）→ proficiency（熟练度）。常见于语言水平测试场景。</div>
+          <div class="vd-example"><em>Proficiency</em> levels are confirmed through coursework or placement tests. （课文）</div>
+          <div class="vd-example">language <em>proficiency</em> 语言水平；achieve <em>proficiency</em> in English 达到英语精通水平</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('placement')">placement</span>
+          <span class="vocab-meaning">分班，安排；放置</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>place（放置/安排）+ -ment（名词后缀）= placement（安置、分班）。placement test = 分班测试/水平测试。</div>
+          <div class="vd-example">confirmed through coursework or <em>placement</em> tests. （课文）</div>
+          <div class="vd-example"><em>placement</em> exam 分班考试；job <em>placement</em> 就业安排</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('registration')">registration</span>
+          <span class="vocab-meaning">注册，登记</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>register（注册/登记）→ registration（名词：注册过程）。sign-up 是报名，registration 是正式注册。</div>
+          <div class="vd-example">The sign-up and <em>registration</em> process is as follows. （课文）</div>
+          <div class="vd-example"><em>registration</em> form 登记表；<em>registration</em> fee 注册费；online <em>registration</em> 在线注册</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('indicate')">indicate</span>
+          <span class="vocab-meaning">表明，指出，标注</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>in-（向内）+ -dic-（说/指）+ -ate = indicate（指出/表明）。indicate the languages = 标注/说明语言。</div>
+          <div class="vd-example">Students sign up and <em>indicate</em> the languages they can share. （课文）</div>
+          <div class="vd-example"><em>indicate</em> interest 表示兴趣；as <em>indicated</em> 如所示；<em>indicate</em> a preference 表明偏好</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('potential')">potential</span>
+          <span class="vocab-meaning">潜在的，可能的；潜力</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>potent（有力量的）+ -ial = potential（有潜力的/可能的）。既可以做形容词也可以做名词。</div>
+          <div class="vd-example"><em>potential</em> pairs are identified. （课文）</div>
+          <div class="vd-example"><em>potential</em> risk 潜在风险；have the <em>potential</em> to succeed 有成功的潜力</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('determined')">determined</span>
+          <span class="vocab-meaning">确定的；坚定的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>determine = 确定/决定。本文中 determined to be suitable = 被确认为合适的（被动语态）。另一个常见意思：be determined to do = 下定决心做某事。</div>
+          <div class="vd-example">Once a pair has been <em>determined</em> to be suitable. （课文）</div>
+          <div class="vd-example"><em>determine</em> the cause 确定原因；be <em>determined</em> to win 决心要赢</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('individually')">individually</span>
+          <span class="vocab-meaning">单独地，逐个地</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>individual（个人的/个别的）+ -ly = individually（逐一地、分别地）。contacted individually = 单独联系。</div>
+          <div class="vd-example">the students will be contacted <em>individually</em>. （课文）</div>
+          <div class="vd-example">treat <em>individually</em> 个别对待；<em>individually</em> wrapped 单独包装的</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('participation')">participation</span>
+          <span class="vocab-meaning">参加，参与</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>participate（参与）→ participation（名词：参与）。part（部分）+ -icip- + -ation = 成为一部分。</div>
+          <div class="vd-example">you will be able to register and <em>participate</em>. （课文，动词形式）</div>
+          <div class="vd-example">active <em>participation</em> 积极参与；class <em>participation</em> 课堂参与</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('requirements')">requirements</span>
+          <span class="vocab-meaning">要求，必要条件</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>require（要求/需要）→ requirement（名词：必须满足的条件）。Requirements for completion = 完成项目需要满足的条件。</div>
+          <div class="vd-example"><em>Requirements</em> for completion. （课文小标题）</div>
+          <div class="vd-example">meet the <em>requirements</em> 满足要求；entry <em>requirements</em> 入学要求</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('effective')">effective</span>
+          <span class="vocab-meaning">有效的，起作用的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>effect（效果/影响）+ -ive（形容词后缀）= effective（有效的、产生效果的）。反义词：ineffective。</div>
+          <div class="vd-example">a teacher who decides if the exchange is <em>effective</em>. （课文）</div>
+          <div class="vd-example"><em>effective</em> method 有效方法；cost-<em>effective</em> 性价比高的；<em>effective</em> communication 有效沟通</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════ Questions ══════ -->
+<div class="panel" id="questionsPanel">
+  <div class="panel-header" onclick="togglePanel('questionsPanel')">
+    <span>题目解析（3题，21—23）</span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+
+    <!-- Q21 -->
+    <div class="question-item" data-answer="D">
+      <div class="question-stem">21. In the programme, students will _________.</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. chair daily meetings</div>
+        <div class="question-option" data-key="B">B. evaluate the exchange</div>
+        <div class="question-option" data-key="C">C. meet teachers each week</div>
+        <div class="question-option" data-key="D">D. practise their language skills</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：D</div>
+        <div class="locate" data-goto="0" onclick="gotoSentence(0)">"The Language Exchange Programme allows students in pairs to communicate in two different languages they wish to share and learn each week."</div>
+        <p>细节题。文章开头说项目允许学生"communicate in two different languages"（用两种不同语言交流），学生在每次会面后记录"the language skills practised"（练习过的语言技能）。选 <b>D</b>（practise their language skills = 练习语言技能）。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— chair daily meetings：原文是"weekly"（每周），不是daily（每天）；且学生是参加会议，不是主持（chair）。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ B</span><span class="opt-why">— evaluate the exchange：原文说"a teacher who decides if the exchange is effective"，是老师来判断，不是学生来评估。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ C</span><span class="opt-why">— meet teachers each week：原文是"meets three times throughout the term"（整个学期见三次），不是每周见老师。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ D</span><span class="opt-why">— practise their language skills：与课文"communicate in two different languages"和"the language skills practised"直接对应。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q22 -->
+    <div class="question-item" data-answer="B">
+      <div class="question-stem">22. To complete the programme, students are required to _________.</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. develop tests</div>
+        <div class="question-option" data-key="B">B. participate in pair meetings</div>
+        <div class="question-option" data-key="C">C. welcome new students</div>
+        <div class="question-option" data-key="D">D. work on weekly videos</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：B</div>
+        <div class="locate" data-goto="5" onclick="gotoSentence(5)">"18 weekly one-hour pair meetings"</div>
+        <p>细节题，直接对照"Requirements for completion"列表。列表中明确要求"18 weekly one-hour pair meetings"（18次每周一小时的搭档会议）。选 <b>B</b>（participate in pair meetings = 参加搭档会议）。</p>
+        <div class="option-list">
+          <div class="option-item wrong"><span class="opt-mark">✗ A</span><span class="opt-why">— develop tests：原文提到"placement tests"（分班测试），但那是在注册阶段确认水平用的，不是学生自己开发测试。</span></div>
+          <div class="option-item correct"><span class="opt-mark">✓ B</span><span class="opt-why">— participate in pair meetings：与Requirements列表中的"18 weekly one-hour pair meetings"直接对应。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ C</span><span class="opt-why">— welcome new students：原文是"One welcoming session"（一次欢迎会），是学生参加欢迎会，不是去欢迎新生。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— work on weekly videos：原文是"One five-minute final video"（一个最终视频），不是每周做视频。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q23 -->
+    <div class="question-item" data-answer="A">
+      <div class="question-stem">23. What do students need to do during the registration?</div>
+      <div class="question-options">
+        <div class="question-option" data-key="A">A. Indicate their languages of interest.</div>
+        <div class="question-option" data-key="B">B. Select their own coursework.</div>
+        <div class="question-option" data-key="C">C. Make individual contact.</div>
+        <div class="question-option" data-key="D">D. Choose their partners.</div>
+      </div>
+      <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
+      <div class="question-analysis">
+        <div class="answer-line">答案：A</div>
+        <div class="locate" data-goto="10" onclick="gotoSentence(10)">"Students sign up and indicate the languages they can share and languages they are interested in learning."</div>
+        <p>细节题，定位到"Sign up!"部分第一条。学生报名时需要"indicate the languages they can share and languages they are interested in learning"（标注能分享的语言和想学的语言）。选 <b>A</b>（Indicate their languages of interest = 标注感兴趣的语言）。</p>
+        <div class="option-list">
+          <div class="option-item correct"><span class="opt-mark">✓ A</span><span class="opt-why">— Indicate their languages of interest：与课文"indicate the languages...they are interested in learning"直接对应。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ B</span><span class="opt-why">— Select their own coursework：原文提到 coursework 是用来确认 proficiency levels 的，不是学生自己选课。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ C</span><span class="opt-why">— Make individual contact：原文说"students will be contacted individually"（学生被单独联系），是被动的，不是学生主动联系。</span></div>
+          <div class="option-item wrong"><span class="opt-mark">✗ D</span><span class="opt-why">— Choose their partners：原文说配对是根据信息"identified"（识别出来的），不是学生自己选择搭档。</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-score" id="quizScore"></div>
+  </div>
+</div>
+
+<!-- ══════ Review ══════ -->
+<div class="panel" id="reviewPanel">
+  <div class="panel-header" onclick="togglePanel('reviewPanel')">阅读原文<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-family:Georgia,serif;font-size:16px;line-height:2;">
+    <p style="text-indent:2em">The Language Exchange Programme allows students in pairs to communicate in two different languages they wish to share and learn each week. Students record short entries after each partner meeting noting the language skills practised and the topics discussed. Each pair of students meets three times throughout the term with a teacher who decides if the exchange is effective. Students who successfully complete the programme will receive one credit each.</p>
+    <p style="font-weight:700;margin:12px 0 4px 0;">Requirements for completion</p>
+    <ul style="margin-left:1.5em;line-height:2;">
+      <li>One welcoming session on the second Friday of the term</li>
+      <li>18 weekly one-hour pair meetings</li>
+      <li>Weekly progress reports for all pair meetings</li>
+      <li>At least three pair-teacher meetings</li>
+      <li>One five-minute final video</li>
+    </ul>
+    <p style="font-weight:700;margin:12px 0 4px 0;">Sign up!</p>
+    <p style="text-indent:2em">The sign-up and registration process is as follows:</p>
+    <ul style="margin-left:1.5em;line-height:2;">
+      <li>Students sign up and indicate the languages they can share and languages they are interested in learning.</li>
+      <li>Based on the information entered by each student, potential pairs are identified.</li>
+      <li>Proficiency levels are confirmed through coursework or placement tests.</li>
+      <li>Once a pair has been determined to be suitable, the students will be contacted individually with a special permission number to register for the programme.</li>
+    </ul>
+    <p style="font-weight:700;margin:12px 0 4px 0;">Reminders</p>
+    <p style="text-indent:2em">Signing up for the programme does not automatically mean that you will be able to register and participate. Pairs are matched by languages of interest and proficiency levels. Since there are many factors involved in the pairing process, not all students who sign up will be matched with a partner and be able to register for the programme.</p>
+  </div>
+</div>
+
+<!-- ══════ 阅读技巧 ══════ -->
+<div class="panel" id="tipPanel">
+  <div class="panel-header" onclick="togglePanel('tipPanel')">阅读技巧<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-size:15px;line-height:1.8;">
+    <p><b>告示/通知类文章读法（A篇是此类文章的典型）：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li><b>第一步：看标题和分段标题。</b>本文有三个小标题："Requirements for completion""Sign up!""Reminders"。先扫描这些标题，知道文章分几部分、每部分讲什么。</li>
+      <li><b>第二步：看题目，带着问题读。</b>21题问"学生在项目中做什么"，定位到第一段；22题问"完成项目需要什么"，定位到Requirements部分；23题问"注册时做什么"，定位到Sign up部分。</li>
+      <li><b>第三步：细节题要找原文依据，不能凭感觉。</b>答案一定能在文中找到对应的原句，不然就是干扰项。</li>
+    </ul>
+    <p style="margin-top:12px"><b>常见陷阱（本篇三道题都有）：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li><b>主体混淆：</b>21-B（evaluate the exchange）看似合理，但课文说的是 teacher 来 decide，不是学生来评估。</li>
+      <li><b>频率偷换：</b>21-C（meet teachers each week）vs 课文（meets three times throughout the term）——"每周"被偷换了。</li>
+      <li><b>主被动混淆：</b>23-C（Make individual contact）vs 课文（be contacted individually）——学生是"被"联系的，不是主动联系。</li>
+      <li><b>细节偷换：</b>22-D（weekly videos）vs 课文（One five-minute final video）——"一个最终视频"被偷换成了"每周视频"。</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════ 作文拓展 ══════ -->
+<div class="panel" id="writingPanel">
+  <div class="panel-header" onclick="togglePanel('writingPanel')">作文拓展：好句式 &amp; 好短语<span class="arrow">&#9660;</span></div>
+  <div class="panel-body" style="font-size:15px;line-height:1.9;">
+    <p><b>可以直接用进作文的高频表达：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li><em>indicate</em>（表明/标注）—— The data <em>indicates</em> that students benefit from language exchange.</li>
+      <li><em>participate in</em>（参加）—— I <em>participated in</em> a language exchange programme last year.</li>
+      <li><em>be determined to be</em>（被确认为）—— The method was <em>determined to be</em> effective.</li>
+      <li><em>requirements for</em>（...的要求）—— The <em>requirements for</em> the competition are as follows.</li>
+      <li><em>potential</em>（潜在的）—— Language learning has great <em>potential</em> to broaden our horizons.</li>
+    </ul>
+    <p style="margin-top:10px"><b>通知/告示类写作结构：</b></p>
+    <ul style="margin:8px 0 0 20px;">
+      <li>开头：介绍项目目的（The programme allows / aims to / is designed to...）</li>
+      <li>中间：分条说明要求/流程（Requirements: / The process is as follows: / Students are required to...）</li>
+      <li>结尾：提醒注意事项（Please note that... / Signing up does not automatically mean...）</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div id="playbar">
+  <button onclick="pbPrev()" title="上一句">⏮</button>
+  <button id="pb-play" onclick="pbToggle()">▶</button>
+  <button onclick="pbNext()" title="下一句">⏭</button>
+  <span id="pb-counter">— / 17</span>
+  <select id="pb-speed" onchange="pbSetSpeed(this.value)">
+    <option value="0.8">0.8×</option>
+    <option value="1" selected>1.0×</option>
+    <option value="1.2">1.2×</option>
+  </select>
+</div>
+
+<script>
+const THEMES=['yellow','green'];
+const THEME_LABELS={yellow:'📄 书本黄',green:'🌿 护眼绿'};
+let themeIdx=parseInt(localStorage.getItem('theme')||'0');
+function applyTheme(){document.body.classList.remove('theme-yellow','theme-green');const t=THEMES[themeIdx%THEMES.length];document.body.classList.add('theme-'+t);const btn=document.getElementById('theme-btn');if(btn)btn.textContent=THEME_LABELS[t];}
+function cycleTheme(){themeIdx=(themeIdx+1)%THEMES.length;localStorage.setItem('theme',themeIdx);applyTheme();}
+applyTheme();
+
+const sentences=[
+  "The Language Exchange Programme allows students in pairs to communicate in two different languages they wish to share and learn each week.",
+  "Students record short entries after each partner meeting noting the language skills practised and the topics discussed.",
+  "Each pair of students meets three times throughout the term with a teacher who decides if the exchange is effective.",
+  "Students who successfully complete the programme will receive one credit each.",
+  "One welcoming session on the second Friday of the term.",
+  "18 weekly one-hour pair meetings.",
+  "Weekly progress reports for all pair meetings.",
+  "At least three pair-teacher meetings.",
+  "One five-minute final video.",
+  "The sign-up and registration process is as follows.",
+  "Students sign up and indicate the languages they can share and languages they are interested in learning.",
+  "Based on the information entered by each student, potential pairs are identified.",
+  "Proficiency levels are confirmed through coursework or placement tests.",
+  "Once a pair has been determined to be suitable, the students will be contacted individually with a special permission number to register for the programme.",
+  "Signing up for the programme does not automatically mean that you will be able to register and participate.",
+  "Pairs are matched by languages of interest and proficiency levels.",
+  "Since there are many factors involved in the pairing process, not all students who sign up will be matched with a partner and be able to register for the programme."
+];
+
+let activeTooltip=null;
+const ZH_AUDIO={};
+let zhPlayer=null;
+
+function phraseToSlug(phrase){return phrase.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+function playZhAudio(slug,btn){if(zhPlayer){zhPlayer.pause();zhPlayer=null;btn.textContent='🔊 听讲解';return;}const src=ZH_AUDIO[slug];if(!src)return;zhPlayer=new Audio(src);btn.textContent='⏹ 停止';zhPlayer.onended=()=>{btn.textContent='🔊 听讲解';zhPlayer=null;};zhPlayer.play();}
+
+function showTooltip(tipEl){
+  hideTooltip();
+  const raw=tipEl.getAttribute('data-tip');const[phrase,explain]=raw.split('|');const parts=explain.split('｜');
+  const slug=phraseToSlug(phrase);const hasAudio=ZH_AUDIO[slug];
+  const tooltip=document.createElement('div');tooltip.className='tooltip';
+  tooltip.innerHTML='<div class="tip-scroll">'+
+    `<div class="tip-phrase">${phrase}${tipEl.dataset.level?`<span class="level-badge badge-${tipEl.dataset.level}">${tipEl.dataset.level}</span>`:''}<span class="tip-speak" onclick="speakWord('${phrase.replace(/'/g,"\\'")}')">&#9654;</span></div>`+
+    parts.map(p=>`<div>${p.trim()}</div>`).join('')+(hasAudio?`<button class="tip-zh-play" onclick="playZhAudio('${slug}',this)">🔊 听讲解</button>`:'')+
+    '</div>';
+  document.body.appendChild(tooltip);activeTooltip=tooltip;tooltip._tip=tipEl;positionTooltip();if(!activeTooltip)return;speakWord(phrase);
+}
+
+let _safeProbe=null;
+function tooltipFrame(){
+  if(!_safeProbe){_safeProbe=document.createElement('div');_safeProbe.style.cssText='position:fixed;left:0;top:0;width:0;height:0;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)';document.body.appendChild(_safeProbe);}
+  const cs=getComputedStyle(_safeProbe);const M=8;const vw=document.documentElement.clientWidth,vh=window.innerHeight;
+  let minY=M+(parseFloat(cs.paddingTop)||0);let maxY=vh-M-(parseFloat(cs.paddingBottom)||0);
+  const hdr=document.querySelector('.header');if(hdr){const b=hdr.getBoundingClientRect().bottom;if(b>0)minY=Math.max(minY,b+4);}
+  const pb=document.getElementById('playbar');if(pb&&getComputedStyle(pb).display!=='none'){maxY=Math.min(maxY,pb.getBoundingClientRect().top-4);}
+  return{minX:M+(parseFloat(cs.paddingLeft)||0),maxX:vw-M-(parseFloat(cs.paddingRight)||0),minY,maxY};
+}
+function positionTooltip(){
+  const tooltip=activeTooltip;if(!tooltip)return;const tipEl=tooltip._tip;const rects=tipEl.getClientRects();const f=tooltipFrame();
+  if(!rects.length){hideTooltip();return;}const first=rects[0],last=rects[rects.length-1];
+  if(last.bottom<f.minY-4||first.top>f.maxY+4){hideTooltip();return;}
+  const GAP=10,PAD=16;const body=tooltip.firstElementChild;
+  tooltip.style.maxWidth=Math.max(120,Math.min(520,f.maxX-f.minX))+'px';body.style.maxHeight='none';tooltip.style.left='0px';tooltip.style.top='0px';
+  const tw=tooltip.offsetWidth,naturalH=tooltip.offsetHeight;const spaceAbove=first.top-f.minY-GAP;const spaceBelow=f.maxY-last.bottom-GAP;
+  let below;if(naturalH<=spaceAbove)below=false;else if(naturalH<=spaceBelow)below=true;else below=spaceBelow>spaceAbove;
+  const avail=Math.max(60,below?spaceBelow:spaceAbove);if(naturalH>avail)body.style.maxHeight=Math.max(30,avail-PAD)+'px';
+  const r=below?last:first;const cx=r.left+r.width/2;const left=Math.max(f.minX,Math.min(cx-tw/2,f.maxX-tw));
+  let top=below?last.bottom+GAP:first.top-GAP-tooltip.offsetHeight;top=Math.max(f.minY,Math.min(top,f.maxY-tooltip.offsetHeight));
+  tooltip.classList.toggle('below',below);tooltip.style.setProperty('--arrow-left',Math.max(14,Math.min(cx-left,tw-14))+'px');tooltip.style.left=left+'px';tooltip.style.top=top+'px';
+}
+(function(){let raf=0;const re=()=>{if(!activeTooltip||raf)return;raf=requestAnimationFrame(()=>{raf=0;positionTooltip();});};
+window.addEventListener('scroll',re,{passive:true});window.addEventListener('resize',re);window.addEventListener('orientationchange',re);
+if(window.visualViewport){visualViewport.addEventListener('resize',re);visualViewport.addEventListener('scroll',re);}})();
+
+function hideTooltip(){if(zhPlayer){zhPlayer.pause();zhPlayer=null;}if(activeTooltip){activeTooltip.remove();activeTooltip=null;}}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.sentence.highlighted')&&!e.target.closest('.locate')){document.querySelectorAll('.sentence.highlighted').forEach(s=>s.classList.remove('highlighted'));}
+  const tipEl=e.target.closest('.tip');
+  if(tipEl){e.stopPropagation();if(activeTooltip&&activeTooltip._source===tipEl){hideTooltip();}else{showTooltip(tipEl);if(activeTooltip)activeTooltip._source=tipEl;}return;}
+  if(e.target.closest('.tooltip'))return;hideTooltip();
+});
+
+let pbCurrent=null,pbPlaying=false,pbSpeed=1,enPlayer=null;
+function pbStop(){if(enPlayer){enPlayer.pause();enPlayer=null;}pbPlaying=false;}
+function highlightSentence(idx){
+  document.querySelectorAll('.sentence').forEach(el=>el.classList.remove('playing'));
+  if(idx!==null&&idx>=0&&idx<sentences.length){const el=document.querySelector(`.sentence[data-idx="${idx}"]`);if(el){el.classList.add('playing');el.scrollIntoView({behavior:'smooth',block:'center'});}}
+}
+function pbUpdateUI(){document.getElementById('pb-play').textContent=pbPlaying?'⏸':'▶';document.getElementById('pb-counter').textContent=pbCurrent!==null?`${pbCurrent+1} / ${sentences.length}`:`— / ${sentences.length}`;}
+function pbPlayCurrent(){
+  pbStop();if(pbCurrent===null){pbUpdateUI();return;}
+  const src=`audio/2024北京卷-A/en-s${String(pbCurrent).padStart(2,'0')}.mp3`;
+  enPlayer=new Audio(src);enPlayer.playbackRate=pbSpeed;pbPlaying=true;highlightSentence(pbCurrent);pbUpdateUI();
+  enPlayer.onerror=()=>{const utter=new SpeechSynthesisUtterance(sentences[pbCurrent]);const voices=speechSynthesis.getVoices();utter.voice=voices.find(v=>v.lang==='en-GB')||voices.find(v=>v.lang.startsWith('en'))||null;utter.rate=pbSpeed*0.85;utter.onend=()=>{if(pbPlaying){if(pbCurrent<sentences.length-1){pbCurrent++;pbPlayCurrent();}else{pbPlaying=false;highlightSentence(null);pbUpdateUI();}}};speechSynthesis.speak(utter);enPlayer=null;};
+  enPlayer.onended=()=>{if(pbPlaying){if(pbCurrent<sentences.length-1){pbCurrent++;pbPlayCurrent();}else{pbPlaying=false;highlightSentence(null);pbUpdateUI();}}};enPlayer.play();
+}
+function pbToggle(){if(pbCurrent===null){pbCurrent=0;pbPlayCurrent();return;}if(pbPlaying){pbStop();highlightSentence(pbCurrent);pbUpdateUI();}else{pbPlayCurrent();}}
+function pbPrev(){if(pbCurrent===null)pbCurrent=0;else if(pbCurrent>0)pbCurrent--;pbPlayCurrent();}
+function pbNext(){if(pbCurrent===null)pbCurrent=0;else if(pbCurrent<sentences.length-1)pbCurrent++;pbPlayCurrent();}
+function pbSetSpeed(v){pbSpeed=parseFloat(v);if(enPlayer)enPlayer.playbackRate=pbSpeed;}
+
+document.addEventListener('click',function(e){if(e.target.closest('.tip')||e.target.closest('.tooltip'))return;const sentence=e.target.closest('.sentence.complex');if(sentence)toggleAnalysis(parseInt(sentence.dataset.idx));});
+
+function speakWord(word){
+  if(enPlayer){enPlayer.pause();enPlayer=null;}
+  const slug='en-word-'+word.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const src='audio/2024北京卷-A/'+slug+'.mp3';
+  enPlayer=new Audio(src);
+  enPlayer.onerror=function(){const utter=new SpeechSynthesisUtterance(word);const voices=speechSynthesis.getVoices();utter.voice=voices.find(v=>v.lang==='en-GB')||voices.find(v=>v.lang.startsWith('en'))||voices[0];utter.rate=0.8;speechSynthesis.speak(utter);};
+  enPlayer.play();
+}
+
+const ANALYSIS_AUDIO={};let analysisPlayer=null,analysisBtn=null;
+function playAnalysis(id,btn){if(analysisPlayer){analysisPlayer.pause();analysisPlayer=null;if(analysisBtn){analysisBtn.textContent='🔊 听讲解';analysisBtn.classList.remove('playing');}if(analysisBtn===btn){analysisBtn=null;return;}}const src=ANALYSIS_AUDIO[id];if(!src)return;analysisPlayer=new Audio(src);analysisBtn=btn;btn.textContent='⏹ 停止';btn.classList.add('playing');analysisPlayer.onended=()=>{btn.textContent='🔊 听讲解';btn.classList.remove('playing');analysisPlayer=null;analysisBtn=null;};analysisPlayer.play();}
+
+function toggleAnalysis(idx){const el=document.getElementById('analysis-'+idx);if(el)el.classList.toggle('open');}
+function togglePanel(id){document.getElementById(id).classList.toggle('open');}
+function setMode(mode){document.body.classList.remove('mode-raw','mode-study','mode-quiz','mode-annotate');if(mode==='study')document.body.classList.add('mode-study');else if(mode!=='study')document.body.classList.add('mode-'+mode);document.querySelectorAll('.mode-step').forEach(btn=>btn.classList.toggle('active',btn.dataset.mode===mode));hideTooltip();if(mode==='quiz'){pbStop();highlightSentence(null);pbUpdateUI();resetQuiz();}}
+function resetQuiz(){document.querySelectorAll('.question-option').forEach(opt=>opt.classList.remove('selected','correct','wrong'));document.querySelectorAll('.question-item').forEach(q=>q.dataset.answered='');const score=document.getElementById('quizScore');if(score)score.classList.remove('show');}
+document.addEventListener('click',function(e){if(!document.body.classList.contains('mode-quiz'))return;const opt=e.target.closest('.question-option');if(!opt)return;const item=opt.closest('.question-item');if(item.dataset.answered)return;item.dataset.answered='true';const picked=opt.dataset.key;const correct=item.dataset.answer;if(picked===correct){opt.classList.add('correct');}else{opt.classList.add('wrong');item.querySelector(`.question-option[data-key="${correct}"]`).classList.add('correct');}const total=document.querySelectorAll('.question-item[data-answer]').length;const done=document.querySelectorAll('.question-item[data-answered="true"]').length;if(done===total)showQuizScore();});
+function showQuizScore(){const total=document.querySelectorAll('.question-item[data-answer]').length;const wrong=document.querySelectorAll('.question-option.wrong').length;const score=document.getElementById('quizScore');score.textContent=`得分：${total-wrong} / ${total}`;score.classList.add('show');}
+function gotoSentence(idx){const el=document.querySelector(`.sentence[data-idx="${idx}"]`);if(!el)return;setMode('study');document.querySelectorAll('.sentence.highlighted').forEach(s=>s.classList.remove('highlighted'));el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('highlighted');}
+function toggleQuestionAnalysis(btn){const analysis=btn.nextElementSibling;analysis.classList.toggle('open');btn.textContent=analysis.classList.contains('open')?'收起解析':'🔍 查看解析';}
+
+const SRS_PREFIX='srs_beijing_2024_A_';const SRS_INTERVALS=[1,3,7,14,30];
+function srsLoad(word){const raw=localStorage.getItem(SRS_PREFIX+word);return raw?JSON.parse(raw):null;}
+function srsSave(word,knew){const state=srsLoad(word)||{streak:0};if(knew){state.streak=(state.streak||0)+1;state.interval=SRS_INTERVALS[Math.min(state.streak-1,SRS_INTERVALS.length-1)];}else{state.streak=0;state.interval=1;}state.nextReview=Date.now()+state.interval*86400000;localStorage.setItem(SRS_PREFIX+word,JSON.stringify(state));return state;}
+function srsIsDue(state){return!state||Date.now()>=state.nextReview;}
+function srsUpdateCard(card){const state=srsLoad(card.dataset.srsWord);card.classList.remove('srs-due','srs-known');if(!state)return;card.classList.add(srsIsDue(state)?'srs-due':'srs-known');}
+function srsUpdateBadge(){const badge=document.getElementById('srs-badge');if(!badge)return;const cards=document.querySelectorAll('.vocab-card[data-srs-word]');let due=0;cards.forEach(c=>{if(srsIsDue(srsLoad(c.dataset.srsWord)))due++;});if(due===0){badge.textContent='全掌握 ✓';badge.className='srs-badge all-done';}else{badge.textContent=due+'个待复习';badge.className='srs-badge';}}
+function srsClick(word,knew,btn){srsSave(word,knew);const card=btn.closest('.vocab-card');srsUpdateCard(card);srsUpdateBadge();btn.style.opacity='0.4';setTimeout(()=>btn.style.opacity='',600);}
+function srsInit(){document.querySelectorAll('.vocab-card').forEach(card=>{const wordEl=card.querySelector('.vocab-word');if(!wordEl)return;const word=wordEl.textContent.trim();card.dataset.srsWord=word;const btns=document.createElement('div');btns.className='srs-btns';const esc=word.replace(/\\/g,'\\\\').replace(/'/g,"\\'");btns.innerHTML=`<button class="srs-btn srs-btn-know" onclick="srsClick('${esc}',true,this)">认识 ✓</button>`+`<button class="srs-btn srs-btn-forget" onclick="srsClick('${esc}',false,this)">还不会 ✗</button>`;card.querySelector('.vocab-card-head').appendChild(btns);srsUpdateCard(card);});srsUpdateBadge();}
+
+function vocabClick(word){
+  speakWord(word);
+  const tips=document.querySelectorAll('.tip');
+  for(const tip of tips){
+    const raw=tip.getAttribute('data-tip')||'';
+    const phrase=raw.split('|')[0].trim().toLowerCase();
+    if(phrase===word.toLowerCase()){
+      tip.classList.add('tip-flash');
+      tip.scrollIntoView({behavior:'smooth',block:'center'});
+      setTimeout(()=>tip.classList.remove('tip-flash'),1800);
+      break;
+    }
+  }
+}
+
+function initAnnotations(){
+  document.querySelectorAll('sup.ann-sup,.para-ann').forEach(el=>el.remove());
+  document.querySelectorAll('.passage .paragraph').forEach(para=>{
+    const seen=new Set();const items=[];let idx=1;
+    para.querySelectorAll('.tip').forEach(el=>{const tip=el.dataset.tip||'';const parts=tip.split('|');if(parts.length<2)return;const phrase=parts[0].trim();if(seen.has(phrase)){const prevIdx=items.findIndex(i=>i.phrase===phrase)+1;const sup=document.createElement('sup');sup.className='ann-sup';sup.textContent=prevIdx;el.after(sup);return;}seen.add(phrase);const sup=document.createElement('sup');sup.className='ann-sup';sup.textContent=idx;el.after(sup);const contentParts=parts[1].split('｜');const cn=contentParts[0].trim();const det=contentParts.slice(1).map(s=>s.replace(/<[^>]+>/g,'').trim()).filter(Boolean);items.push({num:idx,phrase,cn,det,level:el.dataset.level==='超纲'?'超纲':''});idx++;});
+    if(items.length===0)return;const ann=document.createElement('div');ann.className='para-ann';ann.innerHTML=items.map(i=>`<div class="pan-row"><div class="pan-head"><span class="pan-num">${i.num}</span><span class="pan-en">${i.phrase}</span><span class="pan-cn">${i.cn}</span>${i.level?`<span class="pan-lv lv-${i.level}">${i.level}</span>`:''}</div>${i.det.length?`<div class="pan-det">${i.det.map(d=>`<div>${d}</div>`).join('')}</div>`:''}</div>`).join('');
+    const trans=para.querySelector('.translation-inline');if(trans)trans.after(ann);else para.appendChild(ann);
+  });
+}
+
+pbUpdateUI();srsInit();
+document.addEventListener('DOMContentLoaded',initAnnotations);
+</script>
+</body>
+</html>

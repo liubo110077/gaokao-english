@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2026北京卷完形填空 · Jealousy Between Friends</title>
+<style>
+:root{--bg:#fafaf8;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;--accent:#2563eb;--accent-light:#dbeafe;--border:#e2e2e0;--card-bg:#fff;--hover-bg:#f5f5f4;--shadow:0 1px 3px rgba(0,0,0,.08);--radius:6px;}
+.theme-yellow{--bg:#f5f0e8;--card-bg:#faf6ee;--border:#ddd5bf;--hover-bg:#ede7d8;--accent-light:#fde8b8;}
+.theme-green{--bg:#edecea;--card-bg:#f3f2f0;--border:#d6d5d0;--hover-bg:#e8e7e3;--accent-light:#dddcd6;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:60px;}
+.container{max-width:1400px;width:100%;margin:0 auto;padding:0 max(12px,env(safe-area-inset-left)) 0 max(12px,env(safe-area-inset-right));}
+.header{background:var(--card-bg);border-bottom:1px solid var(--border);padding:16px 0;padding-top:calc(16px + env(safe-area-inset-top));position:sticky;top:0;z-index:100;}
+.header .container{display:flex;align-items:center;flex-wrap:wrap;gap:10px;}
+.header h1{font-size:16px;font-weight:600;flex:1;min-width:200px;}
+.header-sub{font-size:12px;color:var(--accent);font-weight:500;background:var(--accent-light);padding:2px 8px;border-radius:10px;}
+.header-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card-bg);color:var(--text);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.mode-steps{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.mode-step{padding:6px 12px;border:none;background:var(--card-bg);color:var(--text-secondary);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.mode-step+.mode-step{border-left:1px solid var(--border);}
+.mode-step.active{background:var(--accent);color:#fff;}
+.mode-step:hover:not(.active){background:var(--accent-light);}
+.passage{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:20px;padding:28px 32px;}
+.passage-title{text-align:center;font-family:Georgia,serif;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;color:var(--text-secondary);}
+.passage-subtitle{text-align:center;font-size:13px;margin-bottom:20px;color:var(--text-muted);}
+.paragraph{margin-bottom:14px;font-family:Georgia,serif;font-size:18px;line-height:1.9;text-indent:2em;}
+.cloze-select{font-family:Georgia,serif;font-size:15px;border:2px solid var(--accent);border-radius:4px;padding:2px 4px;background:var(--accent-light);color:var(--accent);cursor:pointer;min-width:110px;vertical-align:middle;}
+.cloze-select.sel-correct{border-color:#16a34a;background:#dcfce7;color:#15803d;}
+.cloze-select.sel-wrong{border-color:#dc2626;background:#fee2e2;color:#b91c1c;}
+.cloze-answer{font-family:Georgia,serif;font-weight:700;color:#16a34a;background:#dcfce7;padding:1px 10px;border-radius:4px;border:1.5px solid #16a34a;}
+.blank-num{font-size:12px;font-weight:700;color:var(--text-muted);margin-right:3px;font-family:-apple-system,sans-serif;vertical-align:middle;}
+body.mode-quiz .blank-quiz{display:inline;}
+body.mode-quiz .blank-ans{display:none;}
+body.mode-analysis .blank-quiz{display:none;}
+body.mode-analysis .blank-ans{display:inline;}
+.quiz-btn{display:block;width:100%;padding:11px;border-radius:var(--radius);border:none;font-size:15px;font-weight:600;cursor:pointer;text-align:center;background:var(--accent);color:#fff;margin-top:16px;transition:opacity .15s;}
+.quiz-btn:hover{opacity:.9;}
+body.mode-analysis .quiz-actions{display:none;}
+.quiz-score{text-align:center;padding:16px;font-size:16px;font-weight:600;color:var(--accent);display:none;margin-top:12px;background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);}
+.quiz-score.show{display:block;}
+.panel{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:16px;overflow:hidden;}
+.panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;cursor:pointer;user-select:none;font-weight:600;font-size:15px;border-bottom:1px solid transparent;transition:border-color .2s;}
+.panel-header:hover{color:var(--accent);}
+.panel-header .arrow{transition:transform .2s;font-size:12px;color:var(--text-muted);}
+.panel.open .panel-header{border-bottom-color:var(--border);}
+.panel.open .panel-header .arrow{transform:rotate(180deg);}
+.panel-body{display:none;padding:16px 24px;}
+.panel.open .panel-body{display:block;}
+.vocab-card{border-bottom:1px solid #f0f0f0;padding:12px 0;}
+.vocab-card:last-child{border-bottom:none;}
+.vocab-card-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px;}
+.vocab-word{font-family:Georgia,serif;font-weight:600;color:var(--accent);cursor:pointer;font-size:15px;}
+.vocab-word:hover{text-decoration:underline;}
+.vocab-meaning{font-size:14px;color:var(--text);}
+.vocab-tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:3px;background:#fef3c7;color:#92400e;vertical-align:middle;}
+.vocab-tag.tag-core{background:#dcfce7;color:#166534;}
+.vocab-tag.tag-exam{background:#dbeafe;color:#1e40af;}
+.vocab-tag.tag-extend{background:#ffedd5;color:#c2410c;}
+.vocab-extra{font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.75;}
+.vocab-extra .vd-example{color:var(--text-secondary);padding-left:16px;}
+.vocab-extra .vd-example em{color:var(--text);font-style:normal;font-weight:600;}
+.vocab-card.srs-due .vocab-word::after{content:' 📌';font-size:10px;}
+.vocab-card.srs-known .vocab-word::after{content:' ✓';font-size:11px;color:#16a34a;}
+body.mode-quiz #vocabPanel{display:none!important;}
+.tip{border-bottom:1.5px dashed var(--accent);cursor:pointer;position:relative;transition:background .15s;}
+.tip:hover{background:var(--accent-light);}
+.tooltip{position:fixed;z-index:200;background:var(--text);color:#fff;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;line-height:1.5;padding:8px 14px;border-radius:8px;max-width:min(520px,calc(100vw - 16px));width:max-content;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:auto;animation:tipIn .15s ease-out;}
+.tooltip::after{content:'';position:absolute;bottom:-6px;left:var(--arrow-left,50%);transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text);}
+.tooltip.below::after{bottom:auto;top:-6px;border-top:none;border-bottom:6px solid var(--text);}
+.tooltip .tip-phrase{font-family:Georgia,serif;font-weight:600;color:#93c5fd;margin-bottom:2px;}
+.tooltip .tip-speak{display:inline-block;cursor:pointer;margin-left:6px;font-size:12px;opacity:.7;vertical-align:middle;}
+.tooltip .tip-speak:hover{opacity:1;}
+@keyframes tipIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+body.mode-quiz .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-quiz .tip:hover{background:none;}
+.srs-btns{display:flex;gap:5px;margin-left:auto;}
+.srs-btn{font-size:11px;padding:2px 7px;border-radius:10px;border:1.5px solid;cursor:pointer;transition:all .15s;background:none;white-space:nowrap;}
+.srs-btn-know{border-color:#16a34a;color:#16a34a;}
+.srs-btn-know:hover{background:#dcfce7;}
+.srs-btn-forget{border-color:#dc2626;color:#dc2626;}
+.srs-btn-forget:hover{background:#fee2e2;}
+.srs-badge{font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;background:#fef2f2;color:#dc2626;}
+.srs-badge.all-done{background:#dcfce7;color:#16a34a;}
+.analysis-item{padding:16px 24px;border-bottom:1px solid #f0f0f0;}
+.analysis-item:last-child{border-bottom:none;}
+.analysis-answer{font-weight:700;color:#16a34a;font-size:15px;margin-bottom:6px;}
+.analysis-logic{font-size:14px;color:var(--text-secondary);line-height:1.75;margin-top:4px;}
+.analysis-logic b{color:var(--text);}
+body.mode-quiz .analysis-panel{display:none!important;}
+@media(min-width:700px){
+  .header h1{font-size:19px;}.paragraph{font-size:23px;line-height:1.9;}
+  .cloze-select{font-size:18px;min-width:140px;}.panel-header{font-size:18px;}
+  .vocab-word{font-size:20px;}.vocab-meaning{font-size:18px;}.vocab-extra,.vd-example{font-size:16px;line-height:1.75;}
+  .vocab-tag{font-size:13px;}.srs-btn,.srs-badge{font-size:14px;}
+  .analysis-answer{font-size:17px;}.analysis-logic{font-size:17px;}.quiz-btn{font-size:17px;}
+  .tooltip{font-size:17px;line-height:1.55;}.tooltip .tip-phrase{font-size:19px;}
+}
+@media(max-width:600px){
+  .passage{padding:18px 14px;}.paragraph{font-size:16px;}
+  .panel-header,.analysis-item{padding-left:16px;padding-right:16px;}.panel-body{padding:12px 16px;}
+}
+</style>
+</head>
+<body class="mode-quiz">
+<div class="header">
+  <div class="container">
+    <h1>2026北京卷完形填空 · Jealousy Between Friends</h1>
+    <div class="header-controls">
+      <span class="header-sub">Q1–10</span>
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="quiz" onclick="setMode('quiz')">① 做题</button>
+        <button class="mode-step" data-mode="analysis" onclick="setMode('analysis')">② 解析</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+<div class="container">
+<div class="passage">
+  <div class="passage-title">完形填空（共10题，每题1.5分）</div>
+  <div class="passage-subtitle">阅读下面短文，从短文后各题所给的四个选项（A、B、C和D）中，选出可以填入空白处的最佳选项。</div>
+
+  <div class="paragraph">Ivy and Mia were best friends. But as they grew older, there was a <span class="tip" data-tip="shift|转变，变化｜这里指友谊关系发生了微妙的变化。there was a shift = 出现了转变｜搭配：shift in attitude 态度转变">shift</span>.</div>
+
+  <div class="paragraph">Mia shone easily in after-school activities. She was a talented singer and won the
+    <span class="blank-num">(1)</span><span class="blank-quiz"><select class="cloze-select" id="b1"><option value="">— 选 —</option><option value="A">A. credibility</option><option value="B">B. admiration</option><option value="C">C. sympathy</option><option value="D">D. confidence</option></select></span><span class="blank-ans"><span class="cloze-answer"><span class="tip" data-tip="admiration|钦佩，赞赏｜admire v. 钦佩 → admiration n. won the admiration of all = 赢得所有人的赞赏｜搭配：express admiration 表达钦佩">admiration</span></span></span>
+    of all. The teachers praised her, and friends gathered around her, requesting her to sing. Ivy felt
+    <span class="blank-num">(2)</span><span class="blank-quiz"><select class="cloze-select" id="b2"><option value="">— 选 —</option><option value="A">A. taken in</option><option value="B">B. picked on</option><option value="C">C. left out</option><option value="D">D. turned down</option></select></span><span class="blank-ans"><span class="cloze-answer">left out</span></span>.
+    Mia, however, didn't know it and went her way as usual.</div>
+
+  <div class="paragraph">Ivy recognised a(n)
+    <span class="blank-num">(3)</span><span class="blank-quiz"><select class="cloze-select" id="b3"><option value="">— 选 —</option><option value="A">A. contented</option><option value="B">B. refreshing</option><option value="C">C. unsettled</option><option value="D">D. inclusive</option></select></span><span class="blank-ans"><span class="cloze-answer">unsettled</span></span>
+    feeling when Mia was <span class="tip" data-tip="applauded|鼓掌，喝彩｜applaud = 为...鼓掌/喝彩。was applauded = 受到喝彩｜近义：cheered, praised">applauded</span>, and an ache in the heart when she compared herself with Mia. <span class="tip" data-tip="Jealousy|嫉妒｜jealous adj. 嫉妒的 → jealousy n. 嫉妒心。grew silently like a shadow = 像阴影一样悄悄生长｜区分：envy 羡慕（想拥有），jealousy 嫉妒（怕失去/不平）">Jealousy</span> (嫉妒) grew silently in her heart, like a shadow.</div>
+
+  <div class="paragraph">One day, Mia came to Ivy and told her excitedly, "I've been selected for the inter-school competition!" Ivy
+    <span class="blank-num">(4)</span><span class="blank-quiz"><select class="cloze-select" id="b4"><option value="">— 选 —</option><option value="A">A. radiated</option><option value="B">B. forced</option><option value="C">C. expected</option><option value="D">D. witnessed</option></select></span><span class="blank-ans"><span class="cloze-answer">forced</span></span>
+    a smile. "That's great" was all she said. That evening, she sat in her room, <span class="tip" data-tip="staring into space|发呆，目光呆滞地望着｜stare = 凝视，into space = 望向虚空。staring into space = 发呆/出神，表示Ivy心事重重｜近义：lost in thought">staring into space</span>. Why her? Why not me? Such thoughts filled her mind.</div>
+
+  <div class="paragraph">She started
+    <span class="blank-num">(5)</span><span class="blank-quiz"><select class="cloze-select" id="b5"><option value="">— 选 —</option><option value="A">A. avoiding</option><option value="B">B. accepting</option><option value="C">C. forgiving</option><option value="D">D. frightening</option></select></span><span class="blank-ans"><span class="cloze-answer">avoiding</span></span>
+    Mia. Their conversations became short. Having noticed this, Mia asked Ivy, "Did I hurt you? You seem to be
+    <span class="blank-num">(6)</span><span class="blank-quiz"><select class="cloze-select" id="b6"><option value="">— 选 —</option><option value="A">A. guilty</option><option value="B">B. shocked</option><option value="C">C. distant</option><option value="D">D. confused</option></select></span><span class="blank-ans"><span class="cloze-answer">distant</span></span>."
+    Ivy <span class="tip" data-tip="hesitated|犹豫了一下｜hesitate = 犹豫/迟疑。Ivy hesitated = Ivy犹豫了。她在考虑要不要说实话｜名词：hesitation 犹豫">hesitated</span>, and then admitted how she felt. Mia was surprised but smiled gently. "Do you know?" she said, "I've always <span class="tip" data-tip="admired|钦佩，欣赏｜admire = 钦佩/欣赏。I've always admired you = 我一直很欣赏你｜注意：admire ≠ 爱慕（中文容易理解偏）">admired</span> you. I might be able to get attention
+    <span class="blank-num">(7)</span><span class="blank-quiz"><select class="cloze-select" id="b7"><option value="">— 选 —</option><option value="A">A. fearlessly</option><option value="B">B. desperately</option><option value="C">C. hesitantly</option><option value="D">D. effortlessly</option></select></span><span class="blank-ans"><span class="cloze-answer">effortlessly</span></span>,
+    but you have the strength for <span class="tip" data-tip="steady|稳定的，持续的｜steady growth = 稳步成长/持续进步。与effortlessly对比：Mia靠天赋，Ivy靠坚持｜搭配：steady progress 稳步进展">steady</span> growth. We're not competing. We're just different."</div>
+
+  <div class="paragraph">Over time, the
+    <span class="blank-num">(8)</span><span class="blank-quiz"><select class="cloze-select" id="b8"><option value="">— 选 —</option><option value="A">A. hope</option><option value="B">B. shadow</option><option value="C">C. bond</option><option value="D">D. light</option></select></span><span class="blank-ans"><span class="cloze-answer">shadow</span></span>
+    <span class="tip" data-tip="faded|消退，褪色｜fade = 逐渐消失。the shadow faded = 那道阴影消退了——嫉妒消失了｜搭配：fade away 渐渐消失">faded</span> (消退). Ivy finally realised: Jealousy doesn't come from the success of others—it comes when we forget our own
+    <span class="blank-num">(9)</span><span class="blank-quiz"><select class="cloze-select" id="b9"><option value="">— 选 —</option><option value="A">A. worth</option><option value="B">B. limit</option><option value="C">C. past</option><option value="D">D. fault</option></select></span><span class="blank-ans"><span class="cloze-answer">worth</span></span>.
+    And once that <span class="tip" data-tip="takes root|扎根，根植于心｜take root = 生根/扎根（比喻：某种认识深入内心）。once that takes root = 一旦（对自身价值的认识）扎了根｜近义：become established">takes root</span>, there's no need to
+    <span class="blank-num">(10)</span><span class="blank-quiz"><select class="cloze-select" id="b10"><option value="">— 选 —</option><option value="A">A. control</option><option value="B">B. comment</option><option value="C">C. confirm</option><option value="D">D. compare</option></select></span><span class="blank-ans"><span class="cloze-answer">compare</span></span>.</div>
+
+  <div class="quiz-actions">
+    <button class="quiz-btn" onclick="checkAnswers()">查看得分</button>
+  </div>
+  <div class="quiz-score" id="quizScore"></div>
+</div>
+
+<!-- Analysis panel -->
+<div class="panel analysis-panel" id="analysisPanel">
+  <div class="panel-header" onclick="togglePanel('analysisPanel')"><span>答案解析（1—10题）</span><span class="arrow">&#9660;</span></div>
+  <div class="panel-body">
+    <div class="analysis-item">
+      <div class="analysis-answer">1. B — admiration （钦佩，赞赏）</div>
+      <div class="analysis-logic">赢得所有人的钦佩/赞赏。<b>admiration</b> = 钦佩，与前文"talented singer"和"teachers praised her"呼应。credibility（可信度）/ sympathy（同情）/ confidence（自信）均不能表达"赢得众人的赞赏"。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">2. C — left out （被冷落）</div>
+      <div class="analysis-logic">感觉被冷落/被排斥在外。朋友都围着Mia转，Ivy感觉自己被遗忘了。<b>left out</b> = 被排除在外/被冷落。taken in（被欺骗）/ picked on（被欺负）/ turned down（被拒绝）均不符合"被忽视"的语境。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">3. C — unsettled （不安的）</div>
+      <div class="analysis-logic">不安的、心神不宁的。看到Mia被鼓掌时内心的不安感，与后面的 <b>jealousy</b> 呼应。contented（满足的）/ refreshing（令��耳目一新的）/ inclusive（包容的）均与嫉妒的情感发展不符。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">4. B — forced （勉强挤出）</div>
+      <div class="analysis-logic">勉强挤出一个微笑。Ivy内心嫉妒但表面装开心，<b>forced a smile</b> 是固定搭配，表示笑得很勉强。radiated（散发）/ expected（期望）/ witnessed（目睹）均不能与 a smile 构成"假装开心"的语义。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">5. A — avoiding （躲避）</div>
+      <div class="analysis-logic">开始躲避Mia。后文 <b>conversations became short</b> 说明Ivy在回避与Mia的交流。accepting（接受）/ forgiving（原谅）/ frightening（吓唬）均不能解释"对话变短"这一结果。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">6. C — distant （疏远的）</div>
+      <div class="analysis-logic">你好像变得疏远了。与前文 <b>"conversations became short"</b> 和 <b>avoiding</b> 呼应。guilty（内疚的）/ shocked（震惊的）/ confused（困惑的）均不能准确描述Mia观察到的Ivy的变化。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">7. D — effortlessly （毫不费力地）</div>
+      <div class="analysis-logic">我也许能毫不费力地获得关注。Mia承认自己的天赋让关注来得容易，但肯定Ivy有<b>稳步成长的力量</b>。fearlessly（无畏地）/ desperately（拼命地）/ hesitantly（犹豫地）均不能表达"天赋使然的轻松"。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">8. B — shadow （阴影）</div>
+      <div class="analysis-logic">那道阴影（嫉妒）消退了。与前文 <b>"Jealousy grew silently in her heart, like a shadow"</b> 前后呼应。hope（希望）/ bond（纽带）/ light（光）均不能与前文的比喻形成首尾呼应。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">9. A — worth （价值）</div>
+      <div class="analysis-logic">当我们忘记自己的价值时。嫉妒来自忘记自身价值，而非他人的成功。<b>forget our own worth</b> = 忘记了自己的价值。limit（极限）/ past（过去）/ fault（错误）均不能传达"认识自我价值"的主题。</div>
+    </div>
+    <div class="analysis-item">
+      <div class="analysis-answer">10. D — compare （比较）</div>
+      <div class="analysis-logic">一旦认识到自身价值，就不需要比较了。与全文嫉妒源于比较的主题呼应——Ivy一直在<b>compare herself with Mia</b>，领悟之后便不再需要比较。control（控制）/ comment（评论）/ confirm（确认）均不符合文章主旨。</div>
+    </div>
+  </div>
+</div>
+
+<!-- Vocab panel -->
+<div class="panel" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')"><span>重点词汇（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span><span class="arrow">&#9660;</span></div>
+  <div class="panel-body">
+    <div class="vocab-list">
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('shift')">shift</span>
+          <span class="vocab-meaning">转变，变化</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">
+          <div>shift n./v. 转变，变化，转移。这里指友谊关系发生了微妙的变化。</div>
+          <div class="vd-example">But as they grew older, there was a <em>shift</em>. （课文）</div>
+          <div class="vd-example">There has been a <em>shift</em> in public opinion. 公众舆论发生了转变。</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('admiration')">admiration</span>
+          <span class="vocab-meaning">钦佩，赞赏</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">
+          <div>admire v. 钦佩 → admiration n. 钦佩/赞赏。won the admiration of all = 赢得所有人的赞赏。</div>
+          <div class="vd-example">She won the <em>admiration</em> of all. （课文）</div>
+          <div class="vd-example">I have great <em>admiration</em> for her courage. 我非常钦佩她的勇气。</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('applauded')">applauded</span>
+          <span class="vocab-meaning">鼓掌，喝彩</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">
+          <div>applaud v. 鼓掌/喝彩/称赞。applause n. 掌声。was applauded = 受到喝彩。</div>
+          <div class="vd-example">Ivy recognised an unsettled feeling when Mia was <em>applauded</em>. （课文）</div>
+          <div class="vd-example">The audience <em>applauded</em> loudly after the performance. 演出结束后观众大声鼓掌。</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('jealousy')">jealousy</span>
+          <span class="vocab-meaning">嫉妒</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">
+          <div>jealous adj. 嫉妒的 → jealousy n. 嫉妒心。区分：envy 羡慕（想拥有），jealousy 嫉妒（怕失去/不平）。</div>
+          <div class="vd-example"><em>Jealousy</em> grew silently in her heart, like a shadow. （课文）</div>
+          <div class="vd-example">His success aroused <em>jealousy</em> among his colleagues. 他的成功引起了同事们的嫉妒。</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('staring into space')">staring into space</span>
+          <span class="vocab-meaning">发呆，出神</span>
+          <span class="vocab-tag">短语</span>
+        </div>
+        <div class="vocab-extra">
+          <div>stare v. 凝视，into space = 望向虚空。staring into space = 发呆/出神，表示心事重重。</div>
+          <div class="vd-example">She sat in her room, <em>staring into space</em>. （课文）</div>
+          <div class="vd-example">He was just sitting there, <em>staring into space</em>, lost in thought. 他就坐在那里发呆，陷入沉思。</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('hesitated')">hesitated</span>
+          <span class="vocab-meaning">犹豫</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">
+          <div>hesitate v. 犹豫/迟疑 → hesitation n. 犹豫。Ivy hesitated = Ivy犹豫了，在考虑要不要说实话。</div>
+          <div class="vd-example">Ivy <em>hesitated</em>, and then admitted how she felt. （课文）</div>
+          <div class="vd-example">Don't <em>hesitate</em> to ask if you need any help. 如果需要帮助，请不要犹豫。</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('admired')">admired</span>
+          <span class="vocab-meaning">钦佩，欣赏</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">
+          <div>admire v. 钦佩/欣赏。I've always admired you = 我一直很欣赏你。注意：admire ≠ 爱慕（中文容易理解偏）。</div>
+          <div class="vd-example">"I've always <em>admired</em> you." （课文）</div>
+          <div class="vd-example">I really <em>admire</em> your determination. 我真的很钦佩你的决心。</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('steady')">steady</span>
+          <span class="vocab-meaning">稳定的，持续的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">
+          <div>steady adj. 稳定的/持续的。steady growth = 稳步成长。与effortlessly对比：Mia靠天赋，Ivy靠坚持。</div>
+          <div class="vd-example">You have the strength for <em>steady</em> growth. （课文）</div>
+          <div class="vd-example">She has made <em>steady</em> progress in her studies. 她的学业取得了稳步进展。</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('faded')">faded</span>
+          <span class="vocab-meaning">消退，褪色</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">
+          <div>fade v. 逐渐消失/褪色。the shadow faded = 那道阴影消退了，即嫉妒消失了。fade away = 渐渐消失。</div>
+          <div class="vd-example">Over time, the shadow <em>faded</em>. （课文）</div>
+          <div class="vd-example">The memories slowly <em>faded</em> with time. 记忆随着时间慢慢消退了。</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="speakWord('takes root')">takes root</span>
+          <span class="vocab-meaning">扎根，根植于心</span>
+          <span class="vocab-tag">短语</span>
+        </div>
+        <div class="vocab-extra">
+          <div>take root = 生根/扎根（比喻：某种认识深入内心）。once that takes root = 一旦（对自身价值的认识）扎了根。</div>
+          <div class="vd-example">And once that <em>takes root</em>, there's no need to compare. （课文）</div>
+          <div class="vd-example">The idea of equality has <em>taken root</em> in modern society. 平等的观念已在现代社会扎根。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+const THEMES=['yellow','green'];
+const THEME_LABELS={yellow:'📄 书本黄',green:'🌿 护眼绿'};
+let themeIdx=parseInt(localStorage.getItem('theme')||'0');
+function applyTheme(){document.body.classList.remove('theme-yellow','theme-green');const t=THEMES[themeIdx%THEMES.length];document.body.classList.add('theme-'+t);const btn=document.getElementById('theme-btn');if(btn)btn.textContent=THEME_LABELS[t];}
+function cycleTheme(){themeIdx=(themeIdx+1)%THEMES.length;localStorage.setItem('theme',themeIdx);applyTheme();}
+applyTheme();
+const CLOZE_ANSWERS={b1:'B',b2:'C',b3:'C',b4:'B',b5:'A',b6:'C',b7:'D',b8:'B',b9:'A',b10:'D'};
+function checkAnswers(){
+  let correct=0,answered=0;
+  for(const[id,ans]of Object.entries(CLOZE_ANSWERS)){
+    const sel=document.getElementById(id);if(!sel)continue;
+    const val=sel.value;sel.classList.remove('sel-correct','sel-wrong');
+    if(!val)continue;answered++;
+    if(val===ans){sel.classList.add('sel-correct');correct++;}else sel.classList.add('sel-wrong');
+  }
+  const sc=document.getElementById('quizScore');
+  sc.textContent='得分：'+correct+' / 10'+(answered<10?' （还有'+(10-answered)+'题未作）':'');
+  sc.classList.add('show');
+}
+function setMode(mode){
+  document.body.classList.remove('mode-quiz','mode-analysis');
+  document.body.classList.add('mode-'+mode);
+  document.querySelectorAll('.mode-step').forEach(btn=>btn.classList.toggle('active',btn.dataset.mode===mode));
+  if(mode==='analysis'){document.getElementById('analysisPanel').classList.add('open');}
+  else{
+    for(const id of Object.keys(CLOZE_ANSWERS)){const s=document.getElementById(id);if(s){s.value='';s.classList.remove('sel-correct','sel-wrong');}}
+    document.getElementById('quizScore').classList.remove('show');
+  }
+}
+function togglePanel(id){document.getElementById(id).classList.toggle('open');}
+function speakWord(word){
+  const slug='en-word-'+word.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const src='audio/2026北京卷-完形/'+slug+'.mp3';
+  const a=new Audio(src);
+  a.onerror=function(){const u=new SpeechSynthesisUtterance(word);const vs=speechSynthesis.getVoices();u.voice=vs.find(v=>v.lang.startsWith('en'))||null;u.rate=0.8;speechSynthesis.speak(u);};
+  a.play();
+}
+function vocabClick(phrase){speakWord(phrase);}
+const SRS_PREFIX='srs_beijing_2026_cloze_';
+const SRS_INTERVALS=[1,3,7,14,30];
+function srsLoad(w){const r=localStorage.getItem(SRS_PREFIX+w);return r?JSON.parse(r):null;}
+function srsSave(w,knew){const s=srsLoad(w)||{streak:0};if(knew){s.streak=(s.streak||0)+1;s.interval=SRS_INTERVALS[Math.min(s.streak-1,SRS_INTERVALS.length-1)];}else{s.streak=0;s.interval=1;}s.nextReview=Date.now()+s.interval*86400000;localStorage.setItem(SRS_PREFIX+w,JSON.stringify(s));return s;}
+function srsIsDue(s){return!s||Date.now()>=s.nextReview;}
+function srsUpdateBadge(){const badge=document.getElementById('srs-badge');if(!badge)return;const cards=document.querySelectorAll('.vocab-card[data-srs-word]');let due=0;cards.forEach(c=>{if(srsIsDue(srsLoad(c.dataset.srsWord)))due++;});if(due===0){badge.textContent='全掌握 ✓';badge.className='srs-badge all-done';}else{badge.textContent=due+'个待复习';badge.className='srs-badge';}}
+function srsClick(word,knew,btn){srsSave(word,knew);const card=btn.closest('.vocab-card');const s=srsLoad(word);card.classList.remove('srs-due','srs-known');if(s)card.classList.add(srsIsDue(s)?'srs-due':'srs-known');srsUpdateBadge();btn.style.opacity='0.4';setTimeout(()=>btn.style.opacity='',600);}
+function srsInit(){document.querySelectorAll('.vocab-card').forEach(card=>{const wordEl=card.querySelector('.vocab-word');if(!wordEl)return;const word=wordEl.textContent.trim();card.dataset.srsWord=word;const btns=document.createElement('div');btns.className='srs-btns';const esc=word.replace(/'/g,"\\'");btns.innerHTML='<button class="srs-btn srs-btn-know" onclick="srsClick(\''+esc+'\',true,this)">认识 ✓</button>'+'<button class="srs-btn srs-btn-forget" onclick="srsClick(\''+esc+'\',false,this)">还不会 ✗</button>';card.querySelector('.vocab-card-head').appendChild(btns);const s=srsLoad(word);card.classList.remove('srs-due','srs-known');if(s)card.classList.add(srsIsDue(s)?'srs-due':'srs-known');});srsUpdateBadge();}
+srsInit();
+/* ── Tooltip ── */
+let tooltipEl=null;
+function showTooltip(tipEl){
+  hideTooltip();
+  const raw=tipEl.getAttribute('data-tip');
+  const[phrase,...rest]=raw.split('|');
+  const explain=rest.join('|');
+  const parts=explain.split('｜');
+  tooltipEl=document.createElement('div');
+  tooltipEl.className='tooltip';
+  let html='<div class="tip-phrase">'+phrase+' <span class="tip-speak" onclick="speakWord(\''+phrase.replace(/'/g,"\\'")+'\')">🔊</span></div>';
+  parts.forEach(p=>{html+='<div>'+p+'</div>';});
+  tooltipEl.innerHTML=html;
+  document.body.appendChild(tooltipEl);
+  speakWord(phrase);
+  const tr=tipEl.getBoundingClientRect();
+  const tt=tooltipEl.getBoundingClientRect();
+  let left=tr.left+tr.width/2-tt.width/2;
+  if(left<4)left=4;if(left+tt.width>window.innerWidth-4)left=window.innerWidth-4-tt.width;
+  let top=tr.top-tt.height-8;
+  if(top<4){top=tr.bottom+8;tooltipEl.classList.add('below');}
+  tooltipEl.style.left=left+'px';tooltipEl.style.top=top+'px';
+  const arrowLeft=tr.left+tr.width/2-left;
+  tooltipEl.style.setProperty('--arrow-left',arrowLeft+'px');
+}
+function hideTooltip(){if(tooltipEl){tooltipEl.remove();tooltipEl=null;}}
+document.addEventListener('click',function(e){
+  const tip=e.target.closest('.tip');
+  if(tip){e.stopPropagation();showTooltip(tip);return;}
+  hideTooltip();
+});
+</script>
+</body>
+</html>

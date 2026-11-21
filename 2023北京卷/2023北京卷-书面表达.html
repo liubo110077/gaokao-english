@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2023北京卷书面表达 · 阅读理解与写作</title>
+<style>
+:root{--bg:#fafaf8;--text:#1a1a1a;--text-secondary:#555;--text-muted:#888;--accent:#2563eb;--accent-light:#dbeafe;--border:#e2e2e0;--card-bg:#fff;--hover-bg:#f5f5f4;--shadow:0 1px 3px rgba(0,0,0,.08);--radius:6px;}
+.theme-yellow{--bg:#f5f0e8;--card-bg:#faf6ee;--border:#ddd5bf;--hover-bg:#ede7d8;--accent-light:#fde8b8;}
+.theme-green{--bg:#edecea;--card-bg:#f3f2f0;--border:#d6d5d0;--hover-bg:#e8e7e3;--accent-light:#dddcd6;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding-bottom:60px;}
+.container{max-width:1400px;width:100%;margin:0 auto;padding:0 max(12px,env(safe-area-inset-left)) 0 max(12px,env(safe-area-inset-right));}
+.header{background:var(--card-bg);border-bottom:1px solid var(--border);padding:16px 0;padding-top:calc(16px + env(safe-area-inset-top));position:sticky;top:0;z-index:100;}
+.header .container{display:flex;align-items:center;flex-wrap:wrap;gap:10px;}
+.header h1{font-size:16px;font-weight:600;flex:1;min-width:200px;}
+.header-sub{font-size:12px;color:var(--accent);font-weight:500;background:var(--accent-light);padding:2px 8px;border-radius:10px;}
+.header-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card-bg);color:var(--text);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.mode-steps{display:flex;gap:0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.mode-step{padding:6px 12px;border:none;background:var(--card-bg);color:var(--text-secondary);font-size:13px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.mode-step+.mode-step{border-left:1px solid var(--border);}
+.mode-step.active{background:var(--accent);color:#fff;}
+.mode-step:hover:not(.active){background:var(--accent-light);}
+.section{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:20px;padding:24px 32px;}
+.section-title{font-size:14px;font-weight:700;color:var(--accent);letter-spacing:.05em;margin-bottom:14px;text-transform:uppercase;font-family:-apple-system,sans-serif;}
+.section-desc{font-size:13px;color:var(--text-muted);margin-bottom:16px;}
+.reading-passage{background:#fafaf8;border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin-bottom:20px;}
+.reading-passage p{font-family:Georgia,serif;font-size:17px;line-height:1.9;margin-bottom:12px;text-indent:2em;}
+.reading-passage p:last-child{margin-bottom:0;}
+.q-item{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid #f0f0f0;}
+.q-item:last-child{border-bottom:none;margin-bottom:0;}
+.q-stem{font-size:15px;font-weight:600;margin-bottom:10px;line-height:1.6;}
+.q-score{font-size:12px;color:var(--accent);font-weight:600;background:var(--accent-light);padding:1px 8px;border-radius:10px;margin-left:8px;}
+.show-btn{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--accent);cursor:pointer;background:none;border:none;padding:4px 0;}
+.show-btn:hover{text-decoration:underline;}
+.answer-box{display:none;margin-top:10px;padding:12px 16px;background:#f8f9fa;border-left:3px solid #16a34a;border-radius:0 var(--radius) var(--radius) 0;font-size:14px;line-height:1.8;}
+.answer-box.open{display:block;}
+.answer-box .ans-label{font-weight:700;color:#16a34a;margin-bottom:6px;font-size:14px;}
+.answer-box .ans-text{font-family:Georgia,serif;font-size:16px;line-height:1.8;}
+.answer-box .ans-note{font-size:13px;color:var(--text-secondary);margin-top:8px;line-height:1.75;}
+.underline-key{text-decoration:underline;text-decoration-color:#dc2626;text-decoration-thickness:2px;font-weight:700;color:#dc2626;}
+.letter-section{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:20px;padding:24px 32px;}
+.letter-task{background:#fef9c3;border:1px solid #fde68a;border-radius:var(--radius);padding:16px 20px;margin-bottom:20px;font-size:14px;line-height:1.8;color:#78350f;}
+.letter-task b{color:#92400e;}
+.model-letter{display:none;background:#f8f9fa;border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;font-family:Georgia,serif;font-size:17px;line-height:1.9;}
+.model-letter.open{display:block;}
+body.mode-answer .model-letter{display:block;}
+body.mode-task .model-letter{display:none!important;}
+.letter-anno{border-bottom:2px solid var(--accent);cursor:default;position:relative;}
+.letter-anno:hover::after{content:attr(data-note);position:absolute;bottom:calc(100% + 6px);left:0;background:#1a1a1a;color:#fff;font-family:-apple-system,sans-serif;font-size:12px;padding:4px 10px;border-radius:6px;white-space:nowrap;z-index:10;pointer-events:none;}
+.letter-p{margin-bottom:12px;text-indent:0;}
+.letter-p.indent{text-indent:2em;}
+.show-model-btn{display:block;width:100%;padding:11px;border-radius:var(--radius);border:none;font-size:15px;font-weight:600;cursor:pointer;text-align:center;background:var(--accent);color:#fff;margin-top:16px;transition:opacity .15s;}
+.show-model-btn:hover{opacity:.9;}
+body.mode-answer .show-btn-wrap{display:none;}
+.scoring-guide{margin-top:16px;padding:14px 18px;background:#f0f6fc;border-radius:var(--radius);font-size:13px;line-height:1.8;color:var(--text-secondary);}
+.scoring-guide b{color:var(--text);}
+@media(min-width:700px){
+  .header h1{font-size:19px;}.reading-passage p{font-size:21px;line-height:1.9;}
+  .q-stem{font-size:19px;}.answer-box{font-size:17px;}.answer-box .ans-text{font-size:20px;}
+  .answer-box .ans-note{font-size:16px;}.model-letter{font-size:21px;}.letter-task{font-size:16px;}
+  .show-model-btn{font-size:17px;}.scoring-guide{font-size:15px;}.show-btn{font-size:15px;}
+}
+@media(max-width:600px){
+  .section,.letter-section{padding:18px 14px;}.reading-passage{padding:14px 16px;}
+  .reading-passage p{font-size:15px;}.q-stem{font-size:14px;}
+}
+.vocab-card{border-bottom:1px solid #f0f0f0;padding:12px 0;}
+.vocab-card:last-child{border-bottom:none;}
+.vocab-card-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 12px;}
+.vocab-word{font-family:Georgia,serif;font-weight:600;color:var(--accent);cursor:pointer;font-size:15px;}
+.vocab-word:hover{text-decoration:underline;}
+.vocab-meaning{font-size:14px;color:var(--text);}
+.vocab-extra{font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.75;}
+.vocab-tag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:3px;background:#fef3c7;color:#92400e;vertical-align:middle;}
+.vocab-tag.tag-core{background:#dcfce7;color:#166534;}
+.vocab-tag.tag-exam{background:#dbeafe;color:#1e40af;}
+.vocab-tag.tag-extend{background:#ffedd5;color:#c2410c;}
+.tip{border-bottom:1.5px dashed var(--accent);cursor:pointer;position:relative;transition:background .15s;}
+.tip:hover{background:var(--accent-light);}
+.tooltip{position:fixed;z-index:200;background:var(--text);color:#fff;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;line-height:1.5;padding:8px 14px;border-radius:8px;max-width:min(520px,calc(100vw - 16px));width:max-content;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:auto;animation:tipIn .15s ease-out;}
+.tooltip::after{content:'';position:absolute;bottom:-6px;left:var(--arrow-left,50%);transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text);}
+.tooltip.below::after{bottom:auto;top:-6px;border-top:none;border-bottom:6px solid var(--text);}
+.tooltip .tip-phrase{font-family:Georgia,serif;font-weight:600;color:#93c5fd;margin-bottom:2px;}
+.tooltip .tip-speak{display:inline-block;cursor:pointer;margin-left:6px;font-size:12px;opacity:.7;vertical-align:middle;}
+.tooltip .tip-speak:hover{opacity:1;}
+@keyframes tipIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+body.mode-task .tip{border-bottom:none;cursor:default;pointer-events:none;}
+body.mode-task .tip:hover{background:none;}
+.srs-btns{display:flex;gap:5px;margin-left:auto;}
+.srs-btn{font-size:11px;padding:2px 7px;border-radius:10px;border:1.5px solid;cursor:pointer;transition:all .15s;background:none;white-space:nowrap;}
+.srs-btn-know{border-color:#16a34a;color:#16a34a;}
+.srs-btn-know:hover{background:#dcfce7;}
+.srs-btn-forget{border-color:#dc2626;color:#dc2626;}
+.srs-btn-forget:hover{background:#fee2e2;}
+.vocab-card.srs-due .vocab-word::after{content:' 📌';font-size:10px;}
+.vocab-card.srs-known .vocab-word::after{content:' ✓';font-size:11px;color:#16a34a;}
+.srs-badge{font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;background:#fef2f2;color:#dc2626;}
+.srs-badge.all-done{background:#dcfce7;color:#16a34a;}
+@media(min-width:700px){
+  .vocab-word{font-size:20px;}.vocab-meaning{font-size:18px;}.vocab-extra{font-size:16.5px;line-height:1.75;}
+  .vocab-tag{font-size:13px;}.srs-btn,.srs-badge{font-size:14px;}
+  .tooltip{font-size:17px;line-height:1.55;}.tooltip .tip-phrase{font-size:19px;}
+}
+</style>
+</head>
+<body class="mode-task">
+<div class="header">
+  <div class="container">
+    <h1>2023北京卷书面表达 · 阅读与写作</h1>
+    <div class="header-controls">
+      <span class="header-sub">Q40–44</span>
+      <div class="mode-steps">
+        <button class="mode-step active" data-mode="task" onclick="setMode('task')">① 题目</button>
+        <button class="mode-step" data-mode="answer" onclick="setMode('answer')">② 答案</button>
+      </div>
+      <button class="btn" id="theme-btn" onclick="cycleTheme()">⬜ 默认白</button>
+    </div>
+  </div>
+</div>
+<div class="container">
+
+<!-- Section I: Reading comprehension + response -->
+<div class="section">
+  <div class="section-title">第一节（共4题，满分12分）</div>
+  <div class="section-desc">阅读下面短文，根据题目要求用英文回答问题。</div>
+
+  <div class="reading-passage">
+    <p>What exactly is a habit? A habit is a behaviour that has become <span class="tip" data-tip="automatic|自动的，无意识的｜auto-（自己）+ -matic → 自动运行的｜has become automatic = 已经变成自动化的（不需要有意识思考）">automatic</span> through <span class="tip" data-tip="repetition|重复，反复｜repeat v. → repetition n.｜through learning and repetition = 通过学习和重复">repetition</span>. When we repeatedly perform an action in a consistent context, our brains gradually learn to <span class="tip" data-tip="trigger|触发，引发｜trigger that behaviour = 触发那个行为｜也可作名词：the trigger for = …的触发因素">trigger</span> that behaviour with less and less <span class="tip" data-tip="conscious|有意识的，刻意的｜con-（共同）+ sci（知道）= 知道的、有意识的｜less and less conscious effort = 越来越少的刻意努力">conscious</span> effort. In other words, habits are built through learning and repetition.</p>
+    <p>People often <span class="tip" data-tip="confuse|混淆，弄混｜confuse A with B = 把A和B搞混｜confused adj. 困惑的 · confusing adj. 令人困惑的">confuse</span> habits with <span class="tip" data-tip="routines|常规，日常程序｜routine = 需要有意识执行的重复行为模式（不同于 habit 的自动化）｜daily routine 日常作息">routines</span>. A routine is a repeated pattern of behaviour that you <span class="tip" data-tip="intentionally|有意地，故意地｜intend v. 打算 → intention n. 意图 → intentional adj. → intentionally adv.｜intentionally follow = 有意识地遵循">intentionally</span> follow — it requires effort and decision-making each time. A habit, by contrast, is a <span class="tip" data-tip="deep-rooted|根深蒂固的｜deep（深的）+ rooted（扎根的）= 深深扎根的、很难改变的｜a deep-rooted urge = 根深蒂固的冲动">deep-rooted</span> <span class="tip" data-tip="urge|冲动，强烈欲望｜urge n. 冲动，v. 催促/敦促｜a deep-rooted urge that fires automatically = 自动触发的根深蒂固的冲动">urge</span> that fires automatically when triggered by a familiar <span class="tip" data-tip="cue|线索，提示信号｜triggered by a familiar cue = 被一个熟悉的提示信号触发｜take a cue from = 从…中获得启示">cue</span>. The key difference: a routine involves repeated behaviour while a habit is a deep-rooted urge.</p>
+    <p>A popular belief holds that it takes only 21 days to build a new habit. This <span class="tip" data-tip="figure|数字，数据；人物｜this figure = 这个数字（指21天）｜figure 还可以指"人物"或"身材"">figure</span> comes from a 1960s self-help book and has been widely repeated ever since. However, researchers at University College London found that people actually need a much longer time — <span class="tip" data-tip="on average|平均而言｜average n./adj. 平均的｜on average 66 days = 平均66天">on average</span> 66 days, and sometimes up to 254 days — before a new behaviour becomes truly automatic. Those who believe they can form a healthy habit in <span class="underline-key" id="underline-target">a shorter time</span> may give up too soon when they don't feel automatic after three weeks.</p>
+    <p>Understanding how habits work gives us a powerful tool. By identifying the cue that triggers an unwanted habit, we can <span class="tip" data-tip="substitute|替代，代替｜substitute a different routine = 用不同的惯例替代｜substitute A for B = 用A替代B">substitute</span> a different routine while keeping the same <span class="tip" data-tip="reward|奖励，回报｜keeping the same reward = 保持相同的奖励/满足感｜rewarding adj. 有收获的">reward</span>, gradually replacing bad habits with good ones. This knowledge can be <span class="tip" data-tip="applied to|应用于，适用于｜apply v. 应用 → be applied to = 被应用于…｜This knowledge can be applied to almost every area of life. 这些知识几乎可以应用于生活的每个领域">applied to</span> almost every area of life — from diet and exercise to study and sleep.</p>
+  </div>
+
+  <!-- Q40 -->
+  <div class="q-item">
+    <div class="q-stem">40. How are habits formed according to the text? <span class="q-score">2分</span></div>
+    <div class="show-btn-wrap">
+      <button class="show-btn" onclick="toggleAnswer('a40')">🔍 查看答案</button>
+    </div>
+    <div class="answer-box" id="a40">
+      <div class="ans-label">参考答案</div>
+      <div class="ans-text">Habits are built through learning and repetition.</div>
+      <div class="ans-note">定位第一段最后一句："habits are built through learning and repetition"。直接引用原文即可，注意句首大写和句末句号。</div>
+    </div>
+  </div>
+
+  <!-- Q41 -->
+  <div class="q-item">
+    <div class="q-stem">41. What is the difference between a routine and a habit? <span class="q-score">2分</span></div>
+    <div class="show-btn-wrap">
+      <button class="show-btn" onclick="toggleAnswer('a41')">🔍 查看答案</button>
+    </div>
+    <div class="answer-box" id="a41">
+      <div class="ans-label">参考答案</div>
+      <div class="ans-text">A routine involves repeated behaviour while a habit is a deep-rooted urge.</div>
+      <div class="ans-note">定位第二段最后一句。关键词：routine = 重复行为（需要有意识努力），habit = 深层冲动（自动触发）。用 while 连接两者的对比是高分表达。</div>
+    </div>
+  </div>
+
+  <!-- Q42 -->
+  <div class="q-item">
+    <div class="q-stem">42. There is a false statement in paragraph 3. Find it and underline it. <span class="q-score">3分</span></div>
+    <div class="show-btn-wrap">
+      <button class="show-btn" onclick="toggleAnswer('a42')">🔍 查看答案</button>
+    </div>
+    <div class="answer-box" id="a42">
+      <div class="ans-label">参考答案</div>
+      <div class="ans-text">下划线标注：<span style="text-decoration:underline;font-weight:700;color:#dc2626">a shorter time</span></div>
+      <div class="ans-note">根据第三段：研究发现人们需要平均 66 天，有时长达 254 天，才能真正形成习惯。而文中说"Those who believe they can form a healthy habit in <em>a shorter time</em>"暗示只需要较短时间（如21天），这与研究结论矛盾，是错误的说法。正确应该是"a much longer time"。</div>
+    </div>
+  </div>
+
+  <!-- Q43 -->
+  <div class="q-item">
+    <div class="q-stem">43. How can understanding habits benefit you personally? Please give an example. <span class="q-score">5分</span></div>
+    <div class="show-btn-wrap">
+      <button class="show-btn" onclick="toggleAnswer('a43')">🔍 查看答案</button>
+    </div>
+    <div class="answer-box" id="a43">
+      <div class="ans-label">参考答案（开放性，言之有理即可）</div>
+      <div class="ans-text">Understanding habits has greatly benefited my daily study routine. I used to struggle to get up early, but once I identified my "cue" — placing my alarm across the room — I gradually built the habit of rising at 6 a.m. After about two months, it became automatic. This helped me gain extra study time each morning and improved my focus throughout the day.</div>
+      <div class="ans-note">
+        <b>评分要点（5分）：</b><br>
+        ① 说明"了解习惯"如何带来好处（2分）<br>
+        ② 举具体例子（2分）<br>
+        ③ 语言表达准确流畅（1分）<br>
+        <b>写作建议：</b>用 cue / routine / reward 这三个文中核心词，有意识地回应原文，会让答案更有说服力。字数建议60-80词。
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section II: Letter writing -->
+<div class="letter-section">
+  <div class="section-title">第二节（满分20分）</div>
+
+  <div class="letter-task">
+    <b>写作任务：</b>你校英语俱乐部"绿色北京（Green Beijing）"计划邀请外籍学生 Jim 参加下周五下午的活动。请你根据以下要点，给 Jim 写一封邀请信。<br><br>
+    <b>活动内容包括：</b><br>
+    · 参观垃圾分类展览（garbage classification exhibition），了解北京垃圾分类政策<br>
+    · 在校园内植树（plant trees），美化校园环境<br>
+    · 宣传共享经济（sharing economy），比如共享单车如何减少碳排放<br><br>
+    <b>要求：</b>词数80词左右；开头和结尾已给出，不计入词数。
+  </div>
+
+  <div class="show-btn-wrap" style="margin-bottom:4px;">
+    <button class="show-model-btn" onclick="toggleModel()">查看范文</button>
+  </div>
+
+  <div class="model-letter" id="modelLetter">
+    <div class="letter-p">Dear Jim,</div>
+    <div class="letter-p indent">I am writing to <span class="letter-anno" data-note="邀请信开头：写信目的">invite you to join our Green Beijing Club activity</span> next Friday afternoon. We have planned a series of <span class="letter-anno" data-note="interactive/experiential = 互动体验式，比 interesting 高级"><span class="tip" data-tip="interactive|互动的，双向交流的｜interact v. 互动 → interactive adj.｜比 interesting 更高级的写作用词">interactive</span> and meaningful</span> activities, and I believe you will find them <span class="tip" data-tip="rewarding|有价值的，令人满足的｜reward n./v. → rewarding adj.｜you will find them rewarding = 你会觉得这些活动很有意义">rewarding</span>.</div>
+    <div class="letter-p indent">First, we will visit a <span class="letter-anno" data-note="展览 exhibition，比 show 更正式">garbage classification exhibition</span> to learn about Beijing's latest waste sorting policies. Then, we will <span class="letter-anno" data-note="植树美化环境，说出目的更完整">plant trees around the campus to green our school environment</span>. Finally, we will give a short <span class="tip" data-tip="presentation|演示，展示｜present v. 展示 → presentation n.｜give a short presentation = 做一个简短的演示">presentation</span> to <span class="letter-anno" data-note="publicize = 宣传，比 introduce 更有力">publicise the sharing economy</span> — for example, how <span class="letter-anno" data-note="举具体例子说明共享经济的好处">shared bikes help reduce <span class="tip" data-tip="carbon emissions|碳排放｜carbon 碳 + emission 排放 → 碳排放量｜reduce carbon emissions = 减少碳排放">carbon emissions</span></span> in our city.</div>
+    <div class="letter-p indent">These activities are not only fun but also <span class="letter-anno" data-note="not only … but also 递进句式，高分结构"><span class="tip" data-tip="environmentally|在环境方面｜environment n. → environmental adj. → environmentally adv.｜environmentally significant = 对环境有重要意义的">environmentally</span> significant</span>. I do hope you can make it!</div>
+    <div class="letter-p" style="margin-top:8px;">Yours,<br>Li Hua</div>
+  </div>
+
+  <div class="scoring-guide">
+    <b>评分要点（20分）：</b><br>
+    <b>内容（8分）：</b>三个活动点全部涵盖（各约2-3分），开头说明写信目的（1分），结尾表达期待（1分）。<br>
+    <b>语言（8分）：</b>时态（将来时为主：will do / is going to do）、词汇多样（interactive / publicise / carbon emissions）、句式多样（not only...but also / for example 举例）。<br>
+    <b>格式（4分）：</b>Dear Jim 开头，署名 Li Hua，段落清晰，词数80词左右。
+  </div>
+</div>
+
+<!-- Vocab panel -->
+<div class="panel" id="vocabPanel">
+  <div class="panel-header" onclick="togglePanel('vocabPanel')">
+    <span>重点词汇（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="vocab-list">
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('automatic')">automatic</span>
+          <span class="vocab-meaning">自动的，无意识的</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">a habit is a behaviour that has become <em>automatic</em> = 习惯是一种已经变得自动化的行为，不需要有意识地思考。<br><em>automatic</em> response 自动反应 &nbsp;·&nbsp; on <em>automatic</em> pilot 自动驾驶（比喻无意识地做某事）</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('repetition')">repetition</span>
+          <span class="vocab-meaning">重复，反复</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">repeat v. → repetition n.。habits are built through learning and <em>repetition</em> = 习惯通过学习和重复建立。<br>through <em>repetition</em> 通过反复练习 &nbsp;·&nbsp; <em>repetition</em> is the mother of learning. 重复是学习之母</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('trigger')">trigger</span>
+          <span class="vocab-meaning">触发，引发（动词/名词）</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">a cue that <em>triggers</em> an unwanted habit = 触发不良习惯的线索（提示信号）。作名词：the <em>trigger</em> for = ...的触发因素。<br>pull the <em>trigger</em> 扣动扳机（字面义）&nbsp;·&nbsp; <em>trigger</em> a reaction 引发反应</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('routine')">routine</span>
+          <span class="vocab-meaning">常规，日常程序；习以为常的</span>
+          <span class="vocab-tag tag-core">高频</span>
+        </div>
+        <div class="vocab-extra">a <em>routine</em> is a repeated pattern of behaviour = 惯例是重复的行为模式（需要有意识执行，不同于 habit 自动化）。<br>daily <em>routine</em> 日常程序 &nbsp;·&nbsp; break a <em>routine</em> 打破常规 &nbsp;·&nbsp; <em>routine</em> check 例行检查</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('substitute')">substitute</span>
+          <span class="vocab-meaning">替代，代替（动词/名词）</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra"><em>substitute</em> a different routine while keeping the same reward = 在保持相同奖励的同时，用不同的习惯替代原有的。<br><em>substitute</em> A for B 用A替代B &nbsp;·&nbsp; a sugar <em>substitute</em> 糖的替代品</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('publicise')">publicise</span>
+          <span class="vocab-meaning">宣传，公开推广</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">public → publicise v.（英式）/ publicize（美式）= 宣传，使众所周知。<br>give a short presentation to <em>publicise</em> the sharing economy = 做一个短演讲来宣传共享经济 &nbsp;·&nbsp; well-<em>publicised</em> 广为人知的</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('carbon emissions')">carbon emissions</span>
+          <span class="vocab-meaning">碳排放</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+        </div>
+        <div class="vocab-extra">carbon = 碳，emit v. 排放 → emissions n. 排放量。<br>shared bikes help reduce <em>carbon emissions</em> = 共享单车有助于减少碳排放 &nbsp;·&nbsp; zero-<em>carbon</em> 零碳 &nbsp;·&nbsp; <em>carbon</em> footprint 碳足迹（写作文好用）</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('rewarding')">rewarding</span>
+          <span class="vocab-meaning">有价值的，令人满足的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">reward n./v. → rewarding adj. = 值得做的，给人带来满足感的。<br>I believe you will find them <em>rewarding</em>. = 我相信你会发现这些活动很有意义（范文用词）&nbsp;·&nbsp; a <em>rewarding</em> experience 有收获的经历</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('interactive')">interactive</span>
+          <span class="vocab-meaning">互动的，双向交流的</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">interact v. 互动 → interactive adj.。比 interesting 更高级的写作用词。<br><em>interactive</em> and meaningful activities = 互动而有意义的活动（范文高分词）&nbsp;·&nbsp; an <em>interactive</em> display 互动展示</div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('classification')">classification</span>
+          <span class="vocab-meaning">分类，归类</span>
+          <span class="vocab-tag tag-exam">考纲内</span>
+        </div>
+        <div class="vocab-extra">classify v. → classification n.。<br>garbage <em>classification</em> exhibition = 垃圾分类展览 &nbsp;·&nbsp; <em>classification</em> system 分类系统 &nbsp;·&nbsp; waste <em>classification</em> 废物分类（政策相关词）</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+const THEMES=['yellow','green'];
+const THEME_LABELS={yellow:'📄 书本黄',green:'🌿 护眼绿'};
+let themeIdx=parseInt(localStorage.getItem('theme')||'0');
+function applyTheme(){document.body.classList.remove('theme-yellow','theme-green');const t=THEMES[themeIdx%THEMES.length];document.body.classList.add('theme-'+t);const btn=document.getElementById('theme-btn');if(btn)btn.textContent=THEME_LABELS[t];}
+function cycleTheme(){themeIdx=(themeIdx+1)%THEMES.length;localStorage.setItem('theme',themeIdx);applyTheme();}
+applyTheme();
+
+function setMode(mode){
+  document.body.classList.remove('mode-task','mode-answer');
+  document.body.classList.add('mode-'+mode);
+  document.querySelectorAll('.mode-step').forEach(btn=>btn.classList.toggle('active',btn.dataset.mode===mode));
+  if(mode==='answer'){
+    document.querySelectorAll('.answer-box').forEach(b=>b.classList.add('open'));
+    document.getElementById('modelLetter').classList.add('open');
+  }else{
+    document.querySelectorAll('.answer-box').forEach(b=>b.classList.remove('open'));
+    document.getElementById('modelLetter').classList.remove('open');
+  }
+}
+
+function toggleAnswer(id){document.getElementById(id).classList.toggle('open');const btn=event.target;btn.textContent=document.getElementById(id).classList.contains('open')?'收起答案':'🔍 查看答案';}
+
+let modelOpen=false;
+function toggleModel(){
+  modelOpen=!modelOpen;
+  const el=document.getElementById('modelLetter');
+  if(modelOpen){el.classList.add('open');event.target.textContent='收起范文';}
+  else{el.classList.remove('open');event.target.textContent='查看范文';}
+}
+function togglePanel(id){document.getElementById(id).classList.toggle('open');}
+let enPlayer=null;
+function speakWord(word){
+  if(enPlayer){enPlayer.pause();enPlayer=null;}
+  const slug='en-word-'+word.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const src='audio/2023北京卷-书面表达/'+slug+'.mp3';
+  enPlayer=new Audio(src);
+  enPlayer.onerror=function(){const u=new SpeechSynthesisUtterance(word);const vs=speechSynthesis.getVoices();u.voice=vs.find(v=>v.lang==='en-GB')||vs.find(v=>v.lang.startsWith('en'))||vs[0];u.rate=0.8;speechSynthesis.speak(u);};
+  enPlayer.play();
+}
+function vocabClick(phrase){speakWord(phrase);}
+const SRS_PREFIX='srs_beijing_2023_writing_';
+const SRS_INTERVALS=[1,3,7,14,30];
+function srsLoad(w){const r=localStorage.getItem(SRS_PREFIX+w);return r?JSON.parse(r):null;}
+function srsSave(w,knew){const s=srsLoad(w)||{streak:0};if(knew){s.streak=(s.streak||0)+1;s.interval=SRS_INTERVALS[Math.min(s.streak-1,SRS_INTERVALS.length-1)];}else{s.streak=0;s.interval=1;}s.nextReview=Date.now()+s.interval*86400000;localStorage.setItem(SRS_PREFIX+w,JSON.stringify(s));return s;}
+function srsIsDue(s){return!s||Date.now()>=s.nextReview;}
+function srsUpdateCard(card){const s=srsLoad(card.dataset.srsWord);card.classList.remove('srs-due','srs-known');if(!s)return;card.classList.add(srsIsDue(s)?'srs-due':'srs-known');}
+function srsUpdateBadge(){const badge=document.getElementById('srs-badge');if(!badge)return;const cards=document.querySelectorAll('.vocab-card[data-srs-word]');let due=0;cards.forEach(c=>{if(srsIsDue(srsLoad(c.dataset.srsWord)))due++;});if(due===0){badge.textContent='全掌握 ✓';badge.className='srs-badge all-done';}else{badge.textContent=due+'个待复习';badge.className='srs-badge';}}
+function srsClick(word,knew,btn){srsSave(word,knew);const card=btn.closest('.vocab-card');srsUpdateCard(card);srsUpdateBadge();btn.style.opacity='0.4';setTimeout(()=>btn.style.opacity='',600);}
+function srsInit(){document.querySelectorAll('.vocab-card').forEach(card=>{const wordEl=card.querySelector('.vocab-word');if(!wordEl)return;const word=wordEl.textContent.trim();card.dataset.srsWord=word;const btns=document.createElement('div');btns.className='srs-btns';const esc=word.replace(/\\/g,'\\\\').replace(/'/g,"\\'");btns.innerHTML='<button class="srs-btn srs-btn-know" onclick="srsClick(\''+esc+'\',true,this)">认识 ✓</button>'+'<button class="srs-btn srs-btn-forget" onclick="srsClick(\''+esc+'\',false,this)">还不会 ✗</button>';card.querySelector('.vocab-card-head').appendChild(btns);srsUpdateCard(card);});srsUpdateBadge();}
+srsInit();
+/* ── Tooltip ── */
+let tooltipEl=null;
+function showTooltip(tipEl){
+  hideTooltip();
+  const raw=tipEl.getAttribute('data-tip');
+  const[phrase,...rest]=raw.split('|');
+  const explain=rest.join('|');
+  const parts=explain.split('｜');
+  tooltipEl=document.createElement('div');
+  tooltipEl.className='tooltip';
+  let html='<div class="tip-phrase">'+phrase+' <span class="tip-speak" onclick="speakWord(\''+phrase.replace(/'/g,"\\'")+'\')">🔊</span></div>';
+  parts.forEach(p=>{html+='<div>'+p+'</div>';});
+  tooltipEl.innerHTML=html;
+  document.body.appendChild(tooltipEl);
+  speakWord(phrase);
+  const tr=tipEl.getBoundingClientRect();
+  const tt=tooltipEl.getBoundingClientRect();
+  let left=tr.left+tr.width/2-tt.width/2;
+  if(left<4)left=4;if(left+tt.width>window.innerWidth-4)left=window.innerWidth-4-tt.width;
+  let top=tr.top-tt.height-8;
+  if(top<4){top=tr.bottom+8;tooltipEl.classList.add('below');}
+  tooltipEl.style.left=left+'px';tooltipEl.style.top=top+'px';
+  const arrowLeft=tr.left+tr.width/2-left;
+  tooltipEl.style.setProperty('--arrow-left',arrowLeft+'px');
+}
+function hideTooltip(){if(tooltipEl){tooltipEl.remove();tooltipEl=null;}}
+document.addEventListener('click',function(e){
+  const tip=e.target.closest('.tip');
+  if(tip){e.stopPropagation();showTooltip(tip);return;}
+  hideTooltip();
+});
+</script>
+</body>
+</html>
