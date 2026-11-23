@@ -27,7 +27,7 @@ body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;backgr
 .passage-title{text-align:center;font-family:Georgia,serif;font-size:15px;font-weight:700;letter-spacing:.5px;margin-bottom:4px;color:var(--text-secondary);}
 .passage-subtitle{text-align:center;font-size:13px;margin-bottom:20px;color:var(--text-muted);}
 .paragraph{margin-bottom:14px;font-family:Georgia,serif;font-size:18px;line-height:1.9;text-indent:2em;}
-.cloze-select{font-family:Georgia,serif;font-size:15px;border:2px solid var(--accent);border-radius:4px;padding:2px 4px;background:var(--accent-light);color:var(--accent);cursor:pointer;min-width:110px;vertical-align:middle;}
+.cloze-select{font-family:Georgia,serif;font-size:15px;border:2px solid var(--accent);border-radius:4px;padding:2px 4px;background:var(--accent-light);color:var(--accent);cursor:pointer;min-width:180px;vertical-align:middle;}
 .cloze-select.sel-correct{border-color:#16a34a;background:#dcfce7;color:#15803d;}
 .cloze-select.sel-wrong{border-color:#dc2626;background:#fee2e2;color:#b91c1c;}
 .cloze-answer{font-family:Georgia,serif;font-weight:700;color:#16a34a;background:#dcfce7;padding:1px 10px;border-radius:4px;border:1.5px solid #16a34a;}
@@ -59,6 +59,15 @@ body.mode-analysis .quiz-actions{display:none;}
 .vocab-tag.tag-core{background:#dcfce7;color:#166534;}
 .vocab-tag.tag-exam{background:#dbeafe;color:#1e40af;}
 .vocab-tag.tag-extend{background:#ffedd5;color:#c2410c;}
+.vocab-tag.tag-beyond{background:#fef3c7;color:#92400e;}
+.vocab-detail{display:none;margin-top:8px;padding:10px 14px;background:#f8f9fa;border-radius:var(--radius);font-size:13.5px;line-height:1.7;}
+.vocab-detail.open{display:block;}
+.vocab-detail .vd-section{margin-bottom:6px;}
+.vocab-detail .vd-label{font-weight:600;color:var(--accent);margin-right:4px;}
+.vocab-detail .vd-example{color:var(--text-secondary);padding-left:16px;}
+.vocab-detail .vd-example em{color:var(--text);font-style:normal;font-weight:600;}
+.vocab-expand{font-size:12px;color:var(--accent);cursor:pointer;border:none;background:none;padding:0;margin-left:8px;}
+.vocab-expand:hover{text-decoration:underline;}
 .vocab-extra{font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.75;}
 .vocab-extra .vd-example{color:var(--text-secondary);padding-left:16px;}
 .vocab-extra .vd-example em{color:var(--text);font-style:normal;font-weight:600;}
@@ -67,6 +76,8 @@ body.mode-analysis .quiz-actions{display:none;}
 body.mode-quiz #vocabPanel{display:none!important;}
 .tip{border-bottom:1.5px dashed var(--accent);cursor:pointer;position:relative;transition:background .15s;}
 .tip:hover{background:var(--accent-light);}
+.tip.tip-flash{outline:2px solid var(--accent);border-radius:2px;animation:tipFlash 1.6s ease-out forwards;}
+@keyframes tipFlash{0%{background:var(--accent);color:#fff;}40%{background:var(--accent-light);color:inherit;}100%{background:transparent;}}
 .tooltip{position:fixed;z-index:200;background:var(--text);color:#fff;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;line-height:1.5;padding:8px 14px;border-radius:8px;max-width:min(520px,calc(100vw - 16px));width:max-content;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:auto;animation:tipIn .15s ease-out;}
 .tooltip::after{content:'';position:absolute;bottom:-6px;left:var(--arrow-left,50%);transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text);}
 .tooltip.below::after{bottom:auto;top:-6px;border-top:none;border-bottom:6px solid var(--text);}
@@ -92,9 +103,12 @@ body.mode-quiz .tip:hover{background:none;}
 body.mode-quiz .analysis-panel{display:none!important;}
 @media(min-width:700px){
   .header h1{font-size:19px;}.paragraph{font-size:23px;line-height:1.9;}
-  .cloze-select{font-size:18px;min-width:140px;}.panel-header{font-size:18px;}
+  .cloze-select{font-size:18px;min-width:220px;}.panel-header{font-size:18px;}
   .vocab-word{font-size:20px;}.vocab-meaning{font-size:18px;}.vocab-extra,.vd-example{font-size:16px;line-height:1.75;}
-  .vocab-tag{font-size:13px;}.srs-btn,.srs-badge{font-size:14px;}
+  .vocab-tag{font-size:13px;}
+.vocab-detail,.vd-example{font-size:16px;}
+.vocab-expand{font-size:14px;}
+.srs-btn,.srs-badge{font-size:14px;}
   .analysis-answer{font-size:17px;}.analysis-logic{font-size:17px;}.quiz-btn{font-size:17px;}
   .tooltip{font-size:17px;line-height:1.55;}.tooltip .tip-phrase{font-size:19px;}
 }
@@ -123,36 +137,36 @@ body.mode-quiz .analysis-panel{display:none!important;}
   <div class="passage-title">完形填空（共10题，每题1.5分）</div>
   <div class="passage-subtitle">阅读下面短文，从短文后各题所给的四个选项（A、B、C和D）中，选出可以填入空白处的最佳选项。</div>
 
-  <div class="paragraph">Ivy and Mia were best friends. But as they grew older, there was a <span class="tip" data-tip="shift|转变，变化｜这里指友谊关系发生了微妙的变化。there was a shift = 出现了转变｜搭配：shift in attitude 态度转变">shift</span>.</div>
+  <div class="paragraph">Ivy and Mia were best friends. But as they grew older, there was a <span class="tip" data-tip="shift|转变，变化｜这里指友谊关系发生了微妙的变化。there was a shift = 出现了转变｜搭配：shift in attitude 态度转变" data-level="拓展">shift</span>.</div>
 
-  <div class="paragraph">Mia shone easily in after-school activities. She was a talented singer and won the
-    <span class="blank-num">(1)</span><span class="blank-quiz"><select class="cloze-select" id="b1"><option value="">— 选 —</option><option value="A">A. credibility</option><option value="B">B. admiration</option><option value="C">C. sympathy</option><option value="D">D. confidence</option></select></span><span class="blank-ans"><span class="cloze-answer"><span class="tip" data-tip="admiration|钦佩，赞赏｜admire v. 钦佩 → admiration n. won the admiration of all = 赢得所有人的赞赏｜搭配：express admiration 表达钦佩">admiration</span></span></span>
-    of all. The teachers praised her, and friends gathered around her, requesting her to sing. Ivy felt
-    <span class="blank-num">(2)</span><span class="blank-quiz"><select class="cloze-select" id="b2"><option value="">— 选 —</option><option value="A">A. taken in</option><option value="B">B. picked on</option><option value="C">C. left out</option><option value="D">D. turned down</option></select></span><span class="blank-ans"><span class="cloze-answer">left out</span></span>.
+  <div class="paragraph">Mia <span class="tip" data-tip="shone|发光，出众｜shine的过去式。shone easily = 轻松地大放异彩，表示Mia很突出｜搭配：shine/shone in 在…方面出色">shone</span> easily in after-school activities. She was a <span class="tip" data-tip="talented|有天赋的｜talent n. 天赋 → talented adj. 有才能的。a talented singer = 一个有天赋的歌手｜搭配：talented in/at 在…方面有天赋" data-level="选必">talented</span> singer and won the
+    <span class="blank-num">(1)</span><span class="blank-quiz"><select class="cloze-select" id="b1"><option value="">— 选 —</option><option value="A">A. credibility 可信度</option><option value="B">B. admiration 钦佩</option><option value="C">C. sympathy 同情心</option><option value="D">D. confidence 信心</option></select></span><span class="blank-ans"><span class="cloze-answer"><span class="tip" data-tip="admiration|钦佩，赞赏｜admire v. 钦佩 → admiration n. won the admiration of all = 赢得所有人的赞赏｜搭配：express admiration 表达钦佩" data-level="选必">admiration</span></span></span>
+    of all. The teachers <span class="tip" data-tip="praised|表扬，赞扬｜praise v./n. 表扬。The teachers praised her = 老师们表扬了她｜搭配：praise sb for sth 因某事表扬某人">praised</span> her, and friends <span class="tip" data-tip="gathered|聚集｜gather v. 聚集/聚拢。friends gathered around her = 朋友们围到她身边｜搭配：gather around 围在…周围" data-level="选必">gathered</span> around her, <span class="tip" data-tip="requesting|请求｜request v./n. 请求/要求。requesting her to sing = 请求她唱歌｜搭配：request sb to do sth 请求某人做某事" data-level="选必">requesting</span> her to sing. Ivy felt
+    <span class="blank-num">(2)</span><span class="blank-quiz"><select class="cloze-select" id="b2"><option value="">— 选 —</option><option value="A">A. taken in 被欺骗</option><option value="B">B. picked on 被欺负</option><option value="C">C. left out 被冷落</option><option value="D">D. turned down 被拒绝</option></select></span><span class="blank-ans"><span class="cloze-answer"><span class="tip" data-tip="left out|被冷落，被排除在外｜leave out = 遗漏/不包括。feel left out = 感觉被冷落/被排斥在外｜搭配：be left out of 被排除在…之外" data-level="超纲">left out</span></span></span>.
     Mia, however, didn't know it and went her way as usual.</div>
 
-  <div class="paragraph">Ivy recognised a(n)
-    <span class="blank-num">(3)</span><span class="blank-quiz"><select class="cloze-select" id="b3"><option value="">— 选 —</option><option value="A">A. contented</option><option value="B">B. refreshing</option><option value="C">C. unsettled</option><option value="D">D. inclusive</option></select></span><span class="blank-ans"><span class="cloze-answer">unsettled</span></span>
-    feeling when Mia was <span class="tip" data-tip="applauded|鼓掌，喝彩｜applaud = 为...鼓掌/喝彩。was applauded = 受到喝彩｜近义：cheered, praised">applauded</span>, and an ache in the heart when she compared herself with Mia. <span class="tip" data-tip="Jealousy|嫉妒｜jealous adj. 嫉妒的 → jealousy n. 嫉妒心。grew silently like a shadow = 像阴影一样悄悄生长｜区分：envy 羡慕（想拥有），jealousy 嫉妒（怕失去/不平）">Jealousy</span> (嫉妒) grew silently in her heart, like a shadow.</div>
+  <div class="paragraph">Ivy <span class="tip" data-tip="recognised|认出，意识到｜recognise = 认出/识别/意识到。Ivy recognised a feeling = Ivy意识到了一种感觉｜搭配：recognise that... 意识到…" data-level="选必">recognised</span> a(n)
+    <span class="blank-num">(3)</span><span class="blank-quiz"><select class="cloze-select" id="b3"><option value="">— 选 —</option><option value="A">A. contented 满足的</option><option value="B">B. refreshing 清新的</option><option value="C">C. unsettled 不安的</option><option value="D">D. inclusive 包容的</option></select></span><span class="blank-ans"><span class="cloze-answer"><span class="tip" data-tip="unsettled|不安的，心神不宁的｜un- 否定 + settled 安定的 = 不安定的/心神不宁的。an unsettled feeling = 一种不安的感觉｜近义：uneasy, disturbed" data-level="超纲">unsettled</span></span></span>
+    feeling when Mia was <span class="tip" data-tip="applauded|鼓掌，喝彩｜applaud = 为...鼓掌/喝彩。was applauded = 受到喝彩｜近义：cheered, praised" data-level="拓展">applauded</span>, and an <span class="tip" data-tip="ache|疼痛，隐痛｜ache = 持续的隐隐作痛。an ache in the heart = 心里隐隐作痛（心理上的痛苦）｜搭配：headache 头痛；heartache 心痛" data-level="选必">ache</span> in the heart when she <span class="tip" data-tip="compared|比较｜compare v. 比较/对比。compared herself with Mia = 拿自己和Mia比较｜搭配：compare A with B 把A和B比较">compared</span> herself with Mia. <span class="tip" data-tip="Jealousy|嫉妒｜jealous adj. 嫉妒的 → jealousy n. 嫉妒心。grew silently like a shadow = 像阴影一样悄悄生长｜区分：envy 羡慕（想拥有），jealousy 嫉妒（怕失去/不平）" data-level="超纲">Jealousy</span> (嫉妒) grew <span class="tip" data-tip="silently|安静地，默默地｜silent adj. 安静的 → silently adv. 悄无声息地。grew silently = 悄悄地生长｜搭配：remain silent 保持沉默">silently</span> in her heart, like a <span class="tip" data-tip="shadow|影子，阴影｜shadow = 影子/阴影。like a shadow = 像阴影一样（比喻嫉妒悄悄笼罩内心）｜搭配：in the shadow of 在…的阴影下" data-level="拓展">shadow</span>.</div>
 
-  <div class="paragraph">One day, Mia came to Ivy and told her excitedly, "I've been selected for the inter-school competition!" Ivy
-    <span class="blank-num">(4)</span><span class="blank-quiz"><select class="cloze-select" id="b4"><option value="">— 选 —</option><option value="A">A. radiated</option><option value="B">B. forced</option><option value="C">C. expected</option><option value="D">D. witnessed</option></select></span><span class="blank-ans"><span class="cloze-answer">forced</span></span>
-    a smile. "That's great" was all she said. That evening, she sat in her room, <span class="tip" data-tip="staring into space|发呆，目光呆滞地望着｜stare = 凝视，into space = 望向虚空。staring into space = 发呆/出神，表示Ivy心事重重｜近义：lost in thought">staring into space</span>. Why her? Why not me? Such thoughts filled her mind.</div>
+  <div class="paragraph">One day, Mia came to Ivy and told her <span class="tip" data-tip="excitedly|兴奋地｜excited adj. 兴奋的 → excitedly adv. 兴奋地。told her excitedly = 兴奋地告诉她｜搭配：speak excitedly 兴奋地说">excitedly</span>, "I've been <span class="tip" data-tip="selected|被选中｜select v. 挑选/选拔。I've been selected = 我被选中了（被动语态）｜搭配：be selected for 被选中参加" data-level="选必">selected</span> for the inter-school <span class="tip" data-tip="competition|比赛，竞赛｜compete v. 竞争 → competition n. 比赛/竞赛。inter-school competition = 校际比赛｜搭配：enter/win a competition 参加/赢得比赛">competition</span>!" Ivy
+    <span class="blank-num">(4)</span><span class="blank-quiz"><select class="cloze-select" id="b4"><option value="">— 选 —</option><option value="A">A. radiated 散发</option><option value="B">B. forced 勉强挤出</option><option value="C">C. expected 期望</option><option value="D">D. witnessed 目睹</option></select></span><span class="blank-ans"><span class="cloze-answer"><span class="tip" data-tip="forced|勉强挤出｜force v. 强迫/勉强。forced a smile = 勉强挤出一个微笑（固定搭配，表示不是真心笑）｜搭配：force a smile/laugh 强颜欢笑">forced</span></span></span>
+    a smile. "That's great" was all she said. That evening, she sat in her room, <span class="tip" data-tip="staring into space|发呆，目光呆滞地望着｜stare = 凝视，into space = 望向虚空。staring into space = 发呆/出神，表示Ivy心事重重｜近义：lost in thought" data-level="拓展">staring into space</span>. Why her? Why not me? Such <span class="tip" data-tip="thoughts|想法，念头｜thought n. 想法/思想（think的名词形式）。Such thoughts filled her mind = 这样的想法充满了她的脑海｜搭配：deep in thought 陷入沉思">thoughts</span> <span class="tip" data-tip="filled|充满，填满｜fill v. 充满/填满。filled her mind = 充满了她的脑海，说明嫉妒占据了全部思绪｜搭配：be filled with 充满了…">filled</span> her mind.</div>
 
   <div class="paragraph">She started
-    <span class="blank-num">(5)</span><span class="blank-quiz"><select class="cloze-select" id="b5"><option value="">— 选 —</option><option value="A">A. avoiding</option><option value="B">B. accepting</option><option value="C">C. forgiving</option><option value="D">D. frightening</option></select></span><span class="blank-ans"><span class="cloze-answer">avoiding</span></span>
-    Mia. Their conversations became short. Having noticed this, Mia asked Ivy, "Did I hurt you? You seem to be
-    <span class="blank-num">(6)</span><span class="blank-quiz"><select class="cloze-select" id="b6"><option value="">— 选 —</option><option value="A">A. guilty</option><option value="B">B. shocked</option><option value="C">C. distant</option><option value="D">D. confused</option></select></span><span class="blank-ans"><span class="cloze-answer">distant</span></span>."
-    Ivy <span class="tip" data-tip="hesitated|犹豫了一下｜hesitate = 犹豫/迟疑。Ivy hesitated = Ivy犹豫了。她在考虑要不要说实话｜名词：hesitation 犹豫">hesitated</span>, and then admitted how she felt. Mia was surprised but smiled gently. "Do you know?" she said, "I've always <span class="tip" data-tip="admired|钦佩，欣赏｜admire = 钦佩/欣赏。I've always admired you = 我一直很欣赏你｜注意：admire ≠ 爱慕（中文容易理解偏）">admired</span> you. I might be able to get attention
-    <span class="blank-num">(7)</span><span class="blank-quiz"><select class="cloze-select" id="b7"><option value="">— 选 —</option><option value="A">A. fearlessly</option><option value="B">B. desperately</option><option value="C">C. hesitantly</option><option value="D">D. effortlessly</option></select></span><span class="blank-ans"><span class="cloze-answer">effortlessly</span></span>,
-    but you have the strength for <span class="tip" data-tip="steady|稳定的，持续的｜steady growth = 稳步成长/持续进步。与effortlessly对比：Mia靠天赋，Ivy靠坚持｜搭配：steady progress 稳步进展">steady</span> growth. We're not competing. We're just different."</div>
+    <span class="blank-num">(5)</span><span class="blank-quiz"><select class="cloze-select" id="b5"><option value="">— 选 —</option><option value="A">A. avoiding 躲避</option><option value="B">B. accepting 接受</option><option value="C">C. forgiving 原谅</option><option value="D">D. frightening 吓唬</option></select></span><span class="blank-ans"><span class="cloze-answer"><span class="tip" data-tip="avoiding|躲避，回避｜avoid v. 避免/回避。avoiding Mia = 躲着Mia不见面｜搭配：avoid doing sth 避免做某事">avoiding</span></span></span>
+    Mia. Their <span class="tip" data-tip="conversations|对话，谈话｜conversation n. 交谈/对话。conversations became short = 她们的对话变得简短了｜搭配：have a conversation with 和…交谈">conversations</span> became short. Having <span class="tip" data-tip="noticed|注意到｜notice v. 注意到/察觉到。Having noticed this = 注意到了这一点（现在分词完成式作状语）｜搭配：notice that... 注意到…">noticed</span> this, Mia asked Ivy, "Did I hurt you? You seem to be
+    <span class="blank-num">(6)</span><span class="blank-quiz"><select class="cloze-select" id="b6"><option value="">— 选 —</option><option value="A">A. guilty 内疚的</option><option value="B">B. shocked 震惊的</option><option value="C">C. distant 疏远的</option><option value="D">D. confused 困惑的</option></select></span><span class="blank-ans"><span class="cloze-answer"><span class="tip" data-tip="distant|疏远的，冷淡的｜distant adj. 遥远的/疏远的。You seem to be distant = 你好像变得疏远了｜搭配：feel distant 感到疏远；distant memory 遥远的记忆" data-level="拓展">distant</span></span></span>."
+    Ivy <span class="tip" data-tip="hesitated|犹豫了一下｜hesitate = 犹豫/迟疑。Ivy hesitated = Ivy犹豫了。她在考虑要不要说实话｜名词：hesitation 犹豫" data-level="选必">hesitated</span>, and then <span class="tip" data-tip="admitted|承认｜admit v. 承认（不好的事）。admitted how she felt = 承认了她的感受（嫉妒）｜搭配：admit to doing sth 承认做了某事" data-level="选必">admitted</span> how she felt. Mia was surprised but smiled <span class="tip" data-tip="gently|温柔地，轻柔地｜gentle adj. 温柔的 → gently adv. 温柔地。smiled gently = 温和地微笑｜搭配：speak gently 温和地说" data-level="拓展">gently</span>. "Do you know?" she said, "I've always <span class="tip" data-tip="admired|钦佩，欣赏｜admire = 钦佩/欣赏。I've always admired you = 我一直很欣赏你｜注意：admire ≠ 爱慕（中文容易理解偏）" data-level="选必">admired</span> you. I might be able to get attention
+    <span class="blank-num">(7)</span><span class="blank-quiz"><select class="cloze-select" id="b7"><option value="">— 选 —</option><option value="A">A. fearlessly 无畏地</option><option value="B">B. desperately 拼命地</option><option value="C">C. hesitantly 犹豫地</option><option value="D">D. effortlessly 毫不费力地</option></select></span><span class="blank-ans"><span class="cloze-answer"><span class="tip" data-tip="effortlessly|毫不费力地｜effort n. 努力 + -less 无 + -ly → 毫不费力地。get attention effortlessly = 毫不费力地获得关注（天赋使然）｜反义：with great effort 费了很大劲" data-level="选必">effortlessly</span></span></span>,
+    but you have the <span class="tip" data-tip="strength|力量，优势｜strong adj. 强壮的 → strength n. 力量/优势。you have the strength = 你有这个能力/优势｜搭配：strengths and weaknesses 优缺点" data-level="选必">strength</span> for <span class="tip" data-tip="steady|稳定的，持续的｜steady growth = 稳步成长/持续进步。与effortlessly对比：Mia靠天赋，Ivy靠坚持｜搭配：steady progress 稳步进展" data-level="超纲">steady</span> growth. We're not <span class="tip" data-tip="competing|竞争｜compete v. 竞争/比赛。We're not competing = 我们不是在竞争（Mia安慰Ivy）｜搭配：compete with/against 与…竞争" data-level="拓展">competing</span>. We're just different."</div>
 
   <div class="paragraph">Over time, the
-    <span class="blank-num">(8)</span><span class="blank-quiz"><select class="cloze-select" id="b8"><option value="">— 选 —</option><option value="A">A. hope</option><option value="B">B. shadow</option><option value="C">C. bond</option><option value="D">D. light</option></select></span><span class="blank-ans"><span class="cloze-answer">shadow</span></span>
-    <span class="tip" data-tip="faded|消退，褪色｜fade = 逐渐消失。the shadow faded = 那道阴影消退了——嫉妒消失了｜搭配：fade away 渐渐消失">faded</span> (消退). Ivy finally realised: Jealousy doesn't come from the success of others—it comes when we forget our own
-    <span class="blank-num">(9)</span><span class="blank-quiz"><select class="cloze-select" id="b9"><option value="">— 选 —</option><option value="A">A. worth</option><option value="B">B. limit</option><option value="C">C. past</option><option value="D">D. fault</option></select></span><span class="blank-ans"><span class="cloze-answer">worth</span></span>.
-    And once that <span class="tip" data-tip="takes root|扎根，根植于心｜take root = 生根/扎根（比喻：某种认识深入内心）。once that takes root = 一旦（对自身价值的认识）扎了根｜近义：become established">takes root</span>, there's no need to
-    <span class="blank-num">(10)</span><span class="blank-quiz"><select class="cloze-select" id="b10"><option value="">— 选 —</option><option value="A">A. control</option><option value="B">B. comment</option><option value="C">C. confirm</option><option value="D">D. compare</option></select></span><span class="blank-ans"><span class="cloze-answer">compare</span></span>.</div>
+    <span class="blank-num">(8)</span><span class="blank-quiz"><select class="cloze-select" id="b8"><option value="">— 选 —</option><option value="A">A. hope 希望</option><option value="B">B. shadow 阴影</option><option value="C">C. bond 纽带</option><option value="D">D. light 光</option></select></span><span class="blank-ans"><span class="cloze-answer"><span class="tip" data-tip="shadow|阴影｜shadow = 影子/阴影。这里the shadow = 嫉妒的阴影，呼应前文like a shadow｜搭配：cast a shadow 投下阴影" data-level="拓展">shadow</span></span></span>
+    <span class="tip" data-tip="faded|消退，褪色｜fade = 逐渐消失。the shadow faded = 那道阴影消退了——嫉妒消失了｜搭配：fade away 渐渐消失" data-level="超纲">faded</span> (消退). Ivy finally <span class="tip" data-tip="realised|意识到，认识到｜realise/realize = 意识到/领悟到。Ivy finally realised = Ivy终于明白了｜搭配：realise that... 意识到…">realised</span>: Jealousy doesn't come from the success of others—it comes when we forget our own
+    <span class="blank-num">(9)</span><span class="blank-quiz"><select class="cloze-select" id="b9"><option value="">— 选 —</option><option value="A">A. worth 价值</option><option value="B">B. limit 极限</option><option value="C">C. past 过去</option><option value="D">D. fault 错误</option></select></span><span class="blank-ans"><span class="cloze-answer"><span class="tip" data-tip="worth|价值｜worth n./adj. 价值/值得。our own worth = 我们自身的价值。forget our own worth = 忘记了自己的价值｜搭配：be worth doing 值得做">worth</span></span></span>.
+    And once that <span class="tip" data-tip="takes root|扎根，根植于心｜take root = 生根/扎根（比喻：某种认识深入内心）。once that takes root = 一旦（对自身价值的认识）扎了根｜近义：become established" data-level="拓展">takes root</span>, there's no need to
+    <span class="blank-num">(10)</span><span class="blank-quiz"><select class="cloze-select" id="b10"><option value="">— 选 —</option><option value="A">A. control 控制</option><option value="B">B. comment 评论</option><option value="C">C. confirm 确认</option><option value="D">D. compare 比较</option></select></span><span class="blank-ans"><span class="cloze-answer"><span class="tip" data-tip="compare|比较｜compare v. 比较/对比。no need to compare = 不需要比较了。呼应前文compared herself with Mia｜搭配：compare A with/to B 把A与B比较">compare</span></span></span>.</div>
 
   <div class="quiz-actions">
     <button class="quiz-btn" onclick="checkAnswers()">查看得分</button>
@@ -214,122 +228,132 @@ body.mode-quiz .analysis-panel{display:none!important;}
     <div class="vocab-list">
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('shift')">shift</span>
-          <span class="vocab-meaning">转变，变化</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
-        </div>
-        <div class="vocab-extra">
-          <div>shift n./v. 转变，变化，转移。这里指友谊关系发生了微妙的变化。</div>
-          <div class="vd-example">But as they grew older, there was a <em>shift</em>. （课文）</div>
-          <div class="vd-example">There has been a <em>shift</em> in public opinion. 公众舆论发生了转变。</div>
-        </div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('admiration')">admiration</span>
+          <span class="vocab-word" onclick="vocabClick('admiration')">admiration</span>
           <span class="vocab-meaning">钦佩，赞赏</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
+          <span class="vocab-tag tag-exam">选必</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
         </div>
-        <div class="vocab-extra">
-          <div>admire v. 钦佩 → admiration n. 钦佩/赞赏。won the admiration of all = 赢得所有人的赞赏。</div>
-          <div class="vd-example">She won the <em>admiration</em> of all. （课文）</div>
-          <div class="vd-example">I have great <em>admiration</em> for her courage. 我非常钦佩她的勇气。</div>
-        </div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('applauded')">applauded</span>
-          <span class="vocab-meaning">鼓掌，喝彩</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
-        </div>
-        <div class="vocab-extra">
-          <div>applaud v. 鼓掌/喝彩/称赞。applause n. 掌声。was applauded = 受到喝彩。</div>
-          <div class="vd-example">Ivy recognised an unsettled feeling when Mia was <em>applauded</em>. （课文）</div>
-          <div class="vd-example">The audience <em>applauded</em> loudly after the performance. 演出结束后观众大声鼓掌。</div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">构词：</span>admire v. 钦佩 → admiration n. 钦佩/赞赏</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">She won the <em>admiration</em> of all.</span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>express admiration 表达钦佩 · have great admiration for 非常钦佩</div>
         </div>
       </div>
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('jealousy')">jealousy</span>
-          <span class="vocab-meaning">嫉妒</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
-        </div>
-        <div class="vocab-extra">
-          <div>jealous adj. 嫉妒的 → jealousy n. 嫉妒心。区分：envy 羡慕（想拥有），jealousy 嫉妒（怕失去/不平）。</div>
-          <div class="vd-example"><em>Jealousy</em> grew silently in her heart, like a shadow. （课文）</div>
-          <div class="vd-example">His success aroused <em>jealousy</em> among his colleagues. 他的成功引起了同事们的嫉妒。</div>
-        </div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('staring into space')">staring into space</span>
-          <span class="vocab-meaning">发呆，出神</span>
-          <span class="vocab-tag">短语</span>
-        </div>
-        <div class="vocab-extra">
-          <div>stare v. 凝视，into space = 望向虚空。staring into space = 发呆/出神，表示心事重重。</div>
-          <div class="vd-example">She sat in her room, <em>staring into space</em>. （课文）</div>
-          <div class="vd-example">He was just sitting there, <em>staring into space</em>, lost in thought. 他就坐在那里发呆，陷入沉思。</div>
-        </div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('hesitated')">hesitated</span>
-          <span class="vocab-meaning">犹豫</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
-        </div>
-        <div class="vocab-extra">
-          <div>hesitate v. 犹豫/迟疑 → hesitation n. 犹豫。Ivy hesitated = Ivy犹豫了，在考虑要不要说实话。</div>
-          <div class="vd-example">Ivy <em>hesitated</em>, and then admitted how she felt. （课文）</div>
-          <div class="vd-example">Don't <em>hesitate</em> to ask if you need any help. 如果需要帮助，请不要犹豫。</div>
-        </div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('admired')">admired</span>
+          <span class="vocab-word" onclick="vocabClick('admired')">admire</span>
           <span class="vocab-meaning">钦佩，欣赏</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
+          <span class="vocab-tag tag-exam">选必</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
         </div>
-        <div class="vocab-extra">
-          <div>admire v. 钦佩/欣赏。I've always admired you = 我一直很欣赏你。注意：admire ≠ 爱慕（中文容易理解偏）。</div>
-          <div class="vd-example">"I've always <em>admired</em> you." （课文）</div>
-          <div class="vd-example">I really <em>admire</em> your determination. 我真的很钦佩你的决心。</div>
-        </div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('steady')">steady</span>
-          <span class="vocab-meaning">稳定的，持续的</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
-        </div>
-        <div class="vocab-extra">
-          <div>steady adj. 稳定的/持续的。steady growth = 稳步成长。与effortlessly对比：Mia靠天赋，Ivy靠坚持。</div>
-          <div class="vd-example">You have the strength for <em>steady</em> growth. （课文）</div>
-          <div class="vd-example">She has made <em>steady</em> progress in her studies. 她的学业取得了稳步进展。</div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">释义：</span>admire v. 钦佩/欣赏。注意：admire ≠ 爱慕（中文容易理解偏）</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">"I've always <em>admired</em> you."</span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>admire sb for sth 因某事钦佩某人 · I really admire your determination.</div>
         </div>
       </div>
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('faded')">faded</span>
-          <span class="vocab-meaning">消退，褪色</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
+          <span class="vocab-word" onclick="vocabClick('hesitated')">hesitate</span>
+          <span class="vocab-meaning">犹豫</span>
+          <span class="vocab-tag tag-exam">选必</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
         </div>
-        <div class="vocab-extra">
-          <div>fade v. 逐渐消失/褪色。the shadow faded = 那道阴影消退了，即嫉妒消失了。fade away = 渐渐消失。</div>
-          <div class="vd-example">Over time, the shadow <em>faded</em>. （课文）</div>
-          <div class="vd-example">The memories slowly <em>faded</em> with time. 记忆随着时间慢慢消退了。</div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">构词：</span>hesitate v. 犹豫/迟疑 → hesitation n. 犹豫</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">Ivy <em>hesitated</em>, and then admitted how she felt.</span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>hesitate to do sth 犹豫做某事 · without hesitation 毫不犹豫</div>
         </div>
       </div>
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="speakWord('takes root')">takes root</span>
+          <span class="vocab-word" onclick="vocabClick('shift')">shift</span>
+          <span class="vocab-meaning">转变，变化</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">释义：</span>shift n./v. 转变，变化，转移</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">But as they grew older, there was a <em>shift</em>.</span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>shift in attitude 态度转变 · shift in public opinion 舆论转变</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('applauded')">applaud</span>
+          <span class="vocab-meaning">鼓掌，喝彩</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">构词：</span>applaud v. 鼓掌/喝彩/称赞 → applause n. 掌声（超纲词）</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">an unsettled feeling when Mia was <em>applauded</em></span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>applaud loudly 大声鼓掌 · applaud sb's courage 称赞某人的勇气</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('staring into space')">stare into space</span>
+          <span class="vocab-meaning">发呆，出神</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">构词：</span>stare v. 凝视（拓展词）+ into space = 望向虚空 → 发呆/出神</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">she sat in her room, <em>staring into space</em></span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>stare at 盯着看 · lost in thought 陷入沉思</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('takes root')">take root</span>
           <span class="vocab-meaning">扎根，根植于心</span>
-          <span class="vocab-tag">短语</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
         </div>
-        <div class="vocab-extra">
-          <div>take root = 生根/扎根（比喻：某种认识深入内心）。once that takes root = 一旦（对自身价值的认识）扎了根。</div>
-          <div class="vd-example">And once that <em>takes root</em>, there's no need to compare. （课文）</div>
-          <div class="vd-example">The idea of equality has <em>taken root</em> in modern society. 平等的观念已在现代社会扎根。</div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">释义：</span>take root = 生根/扎根（比喻：某种认识深入内心）。root n. 根（拓展词）</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">once that <em>takes root</em>, there's no need to compare</span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>the idea has taken root 观念已扎根 · put down roots 扎根</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('jealousy')">jealousy</span>
+          <span class="vocab-meaning">嫉妒</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">构词：</span>jealous adj. 嫉妒的 → jealousy n. 嫉妒心。区分：envy 羡慕（想拥有），jealousy 嫉妒（怕失去/不平）</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example"><em>Jealousy</em> grew silently in her heart, like a shadow.</span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>feel jealousy 感到嫉妒 · arouse jealousy 引起嫉妒</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('steady')">steady</span>
+          <span class="vocab-meaning">稳定的，持续的</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">释义：</span>steady adj. 稳定的/持续的。与effortlessly对比：Mia靠天赋，Ivy靠坚持</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">you have the strength for <em>steady</em> growth</span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>steady progress 稳步进展 · steady income 稳定收入</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('faded')">fade</span>
+          <span class="vocab-meaning">消退，褪色</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">释义：</span>fade v. 逐渐消失/褪色 → fade away 渐渐消失</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">Over time, the shadow <em>faded</em>.</span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>fade away 渐渐消失 · memories faded 记忆消退</div>
         </div>
       </div>
     </div>
@@ -369,12 +393,19 @@ function setMode(mode){
 function togglePanel(id){document.getElementById(id).classList.toggle('open');}
 function speakWord(word){
   const slug='en-word-'+word.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-  const src='audio/2026北京卷-完形/'+slug+'.mp3';
+  const src='audio/en-words/'+slug+'.mp3';
   const a=new Audio(src);
   a.onerror=function(){const u=new SpeechSynthesisUtterance(word);const vs=speechSynthesis.getVoices();u.voice=vs.find(v=>v.lang.startsWith('en'))||null;u.rate=0.8;speechSynthesis.speak(u);};
   a.play();
 }
-function vocabClick(phrase){speakWord(phrase);}
+function vocabClick(phrase){speakWord(phrase);highlightWord(phrase);}
+function highlightWord(phrase){
+  var tips=document.querySelectorAll('.tip');var matches=[];var lc=phrase.toLowerCase();
+  tips.forEach(function(el){var tp=(el.dataset.tip||'').split('|')[0].toLowerCase();if(tp===lc)matches.push(el);});
+  if(!matches.length)return;
+  matches.forEach(function(el){el.classList.remove('tip-flash');void el.offsetWidth;el.classList.add('tip-flash');setTimeout(function(){el.classList.remove('tip-flash');},1700);});
+  matches[0].scrollIntoView({behavior:'smooth',block:'center'});
+}
 const SRS_PREFIX='srs_beijing_2026_cloze_';
 const SRS_INTERVALS=[1,3,7,14,30];
 function srsLoad(w){const r=localStorage.getItem(SRS_PREFIX+w);return r?JSON.parse(r):null;}

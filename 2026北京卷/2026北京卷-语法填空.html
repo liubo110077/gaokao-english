@@ -79,8 +79,19 @@ body.mode-quiz .analysis-panel{display:none!important;}
 .vocab-tag.tag-core{background:#dcfce7;color:#166534;}
 .vocab-tag.tag-exam{background:#dbeafe;color:#1e40af;}
 .vocab-tag.tag-extend{background:#ffedd5;color:#c2410c;}
+.vocab-tag.tag-beyond{background:#fef3c7;color:#92400e;}
+.vocab-detail{display:none;margin-top:8px;padding:10px 14px;background:#f8f9fa;border-radius:var(--radius);font-size:13.5px;line-height:1.7;}
+.vocab-detail.open{display:block;}
+.vocab-detail .vd-section{margin-bottom:6px;}
+.vocab-detail .vd-label{font-weight:600;color:var(--accent);margin-right:4px;}
+.vocab-detail .vd-example{color:var(--text-secondary);padding-left:16px;}
+.vocab-detail .vd-example em{color:var(--text);font-style:normal;font-weight:600;}
+.vocab-expand{font-size:12px;color:var(--accent);cursor:pointer;border:none;background:none;padding:0;margin-left:8px;}
+.vocab-expand:hover{text-decoration:underline;}
 .tip{border-bottom:1.5px dashed var(--accent);cursor:pointer;position:relative;transition:background .15s;}
 .tip:hover{background:var(--accent-light);}
+.tip.tip-flash{outline:2px solid var(--accent);border-radius:2px;animation:tipFlash 1.6s ease-out forwards;}
+@keyframes tipFlash{0%{background:var(--accent);color:#fff;}40%{background:var(--accent-light);color:inherit;}100%{background:transparent;}}
 .tooltip{position:fixed;z-index:200;background:var(--text);color:#fff;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;line-height:1.5;padding:8px 14px;border-radius:8px;max-width:min(520px,calc(100vw - 16px));width:max-content;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:auto;animation:tipIn .15s ease-out;}
 .tooltip::after{content:'';position:absolute;bottom:-6px;left:var(--arrow-left,50%);transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text);}
 .tooltip.below::after{bottom:auto;top:-6px;border-top:none;border-bottom:6px solid var(--text);}
@@ -103,7 +114,10 @@ body.mode-quiz .tip:hover{background:none;}
 body.mode-quiz #vocabPanel{display:none!important;}
 @media(min-width:700px){
   .vocab-word{font-size:20px;}.vocab-meaning{font-size:18px;}.vocab-extra{font-size:16.5px;line-height:1.75;}
-  .vocab-tag{font-size:13px;}.srs-btn,.srs-badge{font-size:14px;}
+  .vocab-tag{font-size:13px;}
+.vocab-detail,.vd-example{font-size:16px;}
+.vocab-expand{font-size:14px;}
+.srs-btn,.srs-badge{font-size:14px;}
   .tooltip{font-size:17px;line-height:1.55;}.tooltip .tip-phrase{font-size:19px;}
 }
 </style>
@@ -128,27 +142,27 @@ body.mode-quiz #vocabPanel{display:none!important;}
 <div class="section">
   <div class="section-title">语法填空（共10题，每题1.5分）</div>
   <div class="passage-label">A篇（第11—14题）· Grocery Store Kindness</div>
-  <div class="paragraph">My dad and I were at a grocery store last evening. When the <span class="tip" data-tip="cashier|收银员｜cashier n. 收银员，出纳员｜发音 /kæˈʃɪr/｜at the cashier = 在收银台｜近义词：checkout clerk">cashier</span> rang everything up, my dad reached for his wallet and <span class="tip" data-tip="froze|僵住了｜freeze v. 冻结/僵住 → froze（过去式）→ frozen（过去分词）｜He froze. = 他僵住了。｜freeze with fear 吓得僵住">froze</span>. He
+  <div class="paragraph">My dad and I were at a <span class="tip" data-tip="grocery store|杂货店｜grocery n. 杂货店 /ˈɡroʊsəri/｜grocery store = 杂货店，超市｜go to the grocery store 去超市" data-level="拓展">grocery store</span> last evening. When the <span class="tip" data-tip="cashier|收银员｜cashier n. 收银员，出纳员｜发音 /kæˈʃɪr/｜at the cashier = 在收银台｜近义词：checkout clerk" data-level="超纲">cashier</span> <span class="tip" data-tip="rang everything up|把所有东西扫码结账了｜ring up 把…扫码结账 → rang up（过去式）｜ring → rang → rung｜The cashier rang everything up. = 收银员把所有东西都扫码结算了。">rang everything up</span>, my dad <span class="tip" data-tip="reached for|伸手去拿｜reach for 伸手去拿/够｜He reached for his wallet. = 他伸手去拿钱包。｜reach v. 到达；够到">reached for</span> his <span class="tip" data-tip="wallet|钱包｜wallet n. 钱包 /ˈwɒlɪt/｜He reached for his wallet. = 他伸手去拿钱包。｜in my wallet 在我的钱包里">wallet</span> and <span class="tip" data-tip="froze|僵住了｜freeze v. 冻结/僵住 → froze（过去式）→ frozen（过去分词）｜He froze. = 他僵住了。｜freeze with fear 吓得僵住" data-level="拓展">froze</span>. He
     <span class="blank-wrap"><span class="blank-num">(11)</span><span class="blank-quiz"><input class="gram-input" id="g11" placeholder="forget的正确形式" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">had forgotten</span></span></span>
     to take it. I remember the
     <span class="blank-wrap"><span class="blank-num">(12)</span><span class="blank-quiz"><input class="gram-input" id="g12" placeholder="embarrass的正确形式" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">embarrassment</span></span></span>
-    on his face. The cashier had scanned all the items and there were a couple of people
+    on his face. The cashier had <span class="tip" data-tip="scanned|扫描了｜scan v. 扫描，浏览 → scanned（过去式/过去分词）｜scan the items = 扫描商品条码｜scan a QR code 扫描二维码" data-level="超纲">scanned</span> all the <span class="tip" data-tip="items|商品，物品｜item n. 物品，条目 → items（复数）｜all the items = 所有商品｜a list of items 一份清单" data-level="拓展">items</span> and there were a <span class="tip" data-tip="couple|一对，几个｜couple n. 一对，几个｜a couple of people = 几个人｜a couple of days 几天｜married couple 一对夫妇">couple</span> of people
     <span class="blank-wrap"><span class="blank-num">(13)</span><span class="blank-quiz"><input class="gram-input" id="g13" placeholder="wait的正确形式" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">waiting</span></span></span>
     behind us. <span class="tip" data-tip="Unexpectedly|出乎意料地｜unexpected adj. 意外的 → unexpectedly adv.｜Unexpectedly, a man stepped forward. = 出乎意料地，一个人站了出来。｜反义词：expectedly">Unexpectedly</span>, a man
     <span class="blank-wrap"><span class="blank-num">(14)</span><span class="blank-quiz"><input class="gram-input" id="g14" placeholder="step的正确形式" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">stepped</span></span></span>
-    forward, handed his card to the cashier and said, "Let me help."</div>
+    <span class="tip" data-tip="forward|向前｜forward adv. 向前，前方｜step forward = 站出来，向前迈步｜look forward to 盼望｜move forward 前进" data-level="选必">forward</span>, <span class="tip" data-tip="handed|递给｜hand v. 递给，交给 → handed（过去式）｜handed his card = 把他的卡递过去｜hand in 上交｜hand out 分发">handed</span> his card to the cashier and said, "Let me help."</div>
 </div>
 
 <!-- Passage B -->
 <div class="section">
   <div class="passage-label">B篇（第15—17题）· Kama Muta</div>
-  <div class="paragraph">A family member is returning from a year-long trip, and you are meeting her at the airport. When you see her walking towards you, you feel a deep sense of connection well up
+  <div class="paragraph">A family member is returning from a year-long trip, and you are meeting her at the <span class="tip" data-tip="airport|机场｜airport n. 机场｜at the airport = 在机场｜airport security 机场安检">airport</span>. When you see her walking towards you, you feel a <span class="tip" data-tip="deep|深深的｜deep adj./adv. 深的，深深地｜a deep sense of connection = 深深的连接感｜deep breath 深呼吸｜deeply adv. 深深地">deep</span> <span class="tip" data-tip="sense|感觉，意识｜sense n. 感觉，意识；v. 感知｜a sense of connection = 一种联系感｜make sense 有道理｜common sense 常识">sense</span> of <span class="tip" data-tip="connection|联系，连接｜connect v. 连接 → connection n. 联系｜a deep sense of connection = 深深的联系感｜in connection with 与…有关">connection</span> <span class="tip" data-tip="well up|涌上来｜well up（情感）涌上来，涌起｜Tears welled up in her eyes. = 泪水涌上她的眼眶。｜well up within you = 在你心中涌起" data-level="超纲">well up</span>
     <span class="blank-wrap"><span class="blank-num">(15)</span><span class="blank-quiz"><input class="gram-input" id="g15" placeholder="填介词" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">within</span></span></span>
-    you. Sound familiar? You may not know the term, but that feeling is "<span class="tip" data-tip="kama muta|卡玛穆塔情感｜kama muta 源自梵语，意为"被爱感动"｜a recently named emotion = 一种最近被命名的情感｜心理学术语，指因深层情感联结而涌起的温暖感动">kama muta</span>", a recently
+    you. Sound <span class="tip" data-tip="familiar|熟悉的｜familiar adj. 熟悉的 /fəˈmɪliər/｜Sound familiar? = 听起来熟悉吗？｜be familiar with 对…熟悉｜反义词：unfamiliar" data-level="选必">familiar</span>? You may not know the <span class="tip" data-tip="term|术语，词语｜term n. 术语；学期；条款｜know the term = 知道这个术语｜in terms of 在…方面｜long-term 长期的">term</span>, but that feeling is "<span class="tip" data-tip="kama muta|卡玛穆塔情感｜kama muta 源自梵语，意为"被爱感动"｜a recently named emotion = 一种最近被命名的情感｜心理学术语，指因深层情感联结而涌起的温暖感动" data-level="超纲">kama muta</span>", a <span class="tip" data-tip="recently|最近，近来｜recent adj. 最近的 → recently adv. 最近｜a recently named emotion = 一种最近被命名的情感｜recently = not long ago">recently</span>
     <span class="blank-wrap"><span class="blank-num">(16)</span><span class="blank-quiz"><input class="gram-input" id="g16" placeholder="name的正确形式" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">named</span></span></span>
-    emotion that marks some of the most important moments in our life. By <span class="tip" data-tip="mindfully|用心地｜mindful adj. 留心的 → mindfully adv. 用心地｜mindfully seeking out = 用心地寻找｜mindfulness n. 正念（冥想概念）">mindfully</span> seeking out opportunities
+    <span class="tip" data-tip="emotion|情感，情绪｜emotion n. 情感，情绪 /ɪˈmoʊʃən/｜a recently named emotion = 一种最近命名的情感｜emotional adj. 情绪化的｜mixed emotions 复杂的情感" data-level="拓展">emotion</span> that <span class="tip" data-tip="marks|标志着｜mark v. 标志，标记 → marks（第三人称单数）｜marks some of the most important moments = 标志着一些最重要的时刻｜mark n. 标记；分数">marks</span> some of the most important <span class="tip" data-tip="moments|时刻，瞬间｜moment n. 时刻，瞬间 → moments（复数）｜the most important moments = 最重要的时刻｜at the moment 此刻" data-level="选必">moments</span> in our life. By <span class="tip" data-tip="mindfully|用心地｜mindful adj. 留心的 → mindfully adv. 用心地｜mindfully seeking out = 用心地寻找｜mindfulness n. 正念（冥想概念）">mindfully</span> <span class="tip" data-tip="seeking out|寻找，搜寻｜seek v. 寻找 → seeking（现在分词）｜seek out = 特意寻找，搜寻到｜seek → sought → sought" data-level="选必">seeking out</span> <span class="tip" data-tip="opportunities|机会｜opportunity n. 机会 → opportunities（复数）｜seek out opportunities = 寻找机会｜take/seize the opportunity 抓住机会" data-level="选必">opportunities</span>
     <span class="blank-wrap"><span class="blank-num">(17)</span><span class="blank-quiz"><input class="gram-input" id="g17" placeholder="stimulate的正确形式" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">to stimulate</span></span></span>
-    this feeling, you could fill your life with greater meaning.</div>
+    this feeling, you could <span class="tip" data-tip="fill|充满，填满｜fill v. 填满，充满｜fill your life with meaning = 让你的生活充满意义｜fill in 填写｜be filled with 充满">fill</span> your life with greater <span class="tip" data-tip="meaning|意义｜meaning n. 意义，含义｜greater meaning = 更大的意义｜the meaning of life 生命的意义｜meaningful adj. 有意义的">meaning</span>.</div>
 </div>
 
 <!-- Passage C -->
@@ -156,11 +170,11 @@ body.mode-quiz #vocabPanel{display:none!important;}
   <div class="passage-label">C篇（第18—20题）· University Model</div>
   <div class="paragraph">Universities
     <span class="blank-wrap"><span class="blank-num">(18)</span><span class="blank-quiz"><input class="gram-input" id="g18" placeholder="design的正确形式" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">are designed</span></span></span>
-    along the three unities of French classical tragedy (悲剧): time, action, and place. Students meet at the university campus <em>(unity of place)</em> for classes <em>(unity of action)</em> during their 20s <em>(unity of time)</em>. So far, this model
+    <span class="tip" data-tip="along|沿着，依照｜along prep./adv. 沿着，依照｜designed along the three unities = 依照三一律设计｜along the way 沿途｜come along 一起来">along</span> the three <span class="tip" data-tip="unities|统一体，一致（复数）｜unity n. 统一，一致 → unities（复数）｜the three unities = 三一律（戏剧术语）｜national unity 国家统一" data-level="超纲">unities</span> of French <span class="tip" data-tip="classical|古典的，经典的｜classical adj. 古典的，经典的｜French classical tragedy = 法国古典悲剧｜classical music 古典音乐｜classic adj./n. 经典的" data-level="拓展">classical</span> <span class="tip" data-tip="tragedy|悲剧｜tragedy n. 悲剧 /ˈtrædʒədi/｜French classical tragedy = 法国古典悲剧｜tragic adj. 悲惨的｜反义词：comedy 喜剧" data-level="超纲">tragedy</span> (悲剧): time, action, and place. Students meet at the university <span class="tip" data-tip="campus|校园｜campus n. 校园 /ˈkæmpəs/｜university campus = 大学校园｜on campus 在校园里｜campus life 校园生活" data-level="选必">campus</span> <em>(<span class="tip" data-tip="unity|统一，一致｜unity n. 统一，一致 /ˈjuːnəti/｜unity of place = 地点的统一｜national unity 民族团结" data-level="超纲">unity</span> of place)</em> for classes <em>(unity of action)</em> during their 20s <em>(unity of time)</em>. So far, this <span class="tip" data-tip="model|模式，模型｜model n. 模式，模型，榜样｜this model = 这种模式｜role model 榜样｜a model student 模范学生">model</span>
     <span class="blank-wrap"><span class="blank-num">(19)</span><span class="blank-quiz"><input class="gram-input" id="g19" placeholder="produce的正确形式" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">has produced</span></span></span>
-    well-known universities, but it is now <span class="tip" data-tip="challenged|受到挑战｜challenge v./n. 挑战 → challenged（过去分词）｜is challenged by = 受到…的挑战｜face a challenge 面对挑战｜challenging adj. 有挑战性的">challenged</span> by the <span class="tip" data-tip="digitalisation|数字化｜digital adj. 数字的 → digitalise v. 数字化 → digitalisation n. 数字化（英式拼写）｜the digitalisation of society = 社会的数字化｜美式拼写：digitalization">digitalisation</span> of society, which allows everybody
+    <span class="tip" data-tip="well-known|著名的，出名的｜well-known adj. 著名的｜well-known universities = 知名大学｜同义词：famous, renowned｜be well-known for 因…而闻名" data-level="超纲">well-known</span> universities, but it is now <span class="tip" data-tip="challenged|受到挑战｜challenge v./n. 挑战 → challenged（过去分词）｜is challenged by = 受到…的挑战｜face a challenge 面对挑战｜challenging adj. 有挑战性的" data-level="选必">challenged</span> by the <span class="tip" data-tip="digitalisation|数字化｜digital adj. 数字的 → digitalise v. 数字化 → digitalisation n. 数字化（英式拼写）｜the digitalisation of society = 社会的数字化｜美式拼写：digitalization" data-level="超纲">digitalisation</span> of <span class="tip" data-tip="society|社会｜society n. 社会 /səˈsaɪəti/｜the digitalisation of society = 社会的数字化｜modern society 现代社会｜social adj. 社会的">society</span>, which <span class="tip" data-tip="allows|允许｜allow v. 允许 → allows（第三人称单数）｜allow sb to do sth 允许某人做某事｜which allows everybody to access = 使每个人都能获取">allows</span> everybody
     <span class="blank-wrap"><span class="blank-num">(20)</span><span class="blank-quiz"><input class="gram-input" id="g20" placeholder="填关系词" autocomplete="off"></span><span class="blank-ans"><span class="gram-answer">who</span></span></span>
-    is connected to the Internet to <span class="tip" data-tip="access|获取，使用｜access v./n. 获取，进入｜access learning resources = 获取学习资源｜have access to 有权使用…｜accessible adj. 可获取的">access</span> learning resources.</div>
+    is <span class="tip" data-tip="connected|连接的｜connect v. 连接 → connected adj. 连接的｜connected to the Internet = 连接到互联网｜be connected with 与…有联系">connected</span> to the Internet to <span class="tip" data-tip="access|获取，使用｜access v./n. 获取，进入｜access learning resources = 获取学习资源｜have access to 有权使用…｜accessible adj. 可获取的" data-level="拓展">access</span> learning <span class="tip" data-tip="resources|资源｜resource n. 资源 → resources（复数）｜learning resources = 学习资源｜natural resources 自然资源｜human resources 人力资源" data-level="选必">resources</span>.</div>
 
   <div class="quiz-actions">
     <button class="quiz-btn" onclick="checkAnswers()">查看得分</button>
@@ -290,83 +304,133 @@ body.mode-quiz #vocabPanel{display:none!important;}
     <div class="vocab-list">
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="vocabClick('cashier')">cashier</span>
-          <span class="vocab-meaning">收银员，出纳员</span>
-          <span class="vocab-tag tag-core">高频</span>
-        </div>
-        <div class="vocab-extra">cashier n. 收银员，出纳员。发音 /kæˈʃɪr/。the <em>cashier</em> rang everything up = 收银员扫了所有东西。<br>at the <em>cashier</em> 在收银台 &nbsp;·&nbsp; bank <em>cashier</em> 银行出纳 &nbsp;·&nbsp; 近义词：checkout clerk</div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="vocabClick('froze')">froze</span>
-          <span class="vocab-meaning">僵住了（freeze的过去式）</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
-        </div>
-        <div class="vocab-extra">freeze v. 冻结/僵住 → <em>froze</em>（过去式）→ frozen（过去分词）。He <em>froze</em>. = 他僵住了。<br>freeze with fear 吓得僵住 &nbsp;·&nbsp; freezing cold 冰冷的 &nbsp;·&nbsp; frozen food 冷冻食品</div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="vocabClick('embarrassment')">embarrassment</span>
-          <span class="vocab-meaning">尴尬，窘迫</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
-        </div>
-        <div class="vocab-extra">embarrass v. 使尴尬 → <em>embarrassment</em> n. 尴尬。the <em>embarrassment</em> on his face = 他脸上的尴尬。<br>to one's <em>embarrassment</em> 令某人尴尬的是 &nbsp;·&nbsp; embarrassing adj. 令人尴尬的 &nbsp;·&nbsp; embarrassed adj. 感到尴尬的</div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
           <span class="vocab-word" onclick="vocabClick('unexpectedly')">unexpectedly</span>
           <span class="vocab-meaning">出乎意料地</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
+          <span class="vocab-tag tag-core">考纲基础</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
         </div>
-        <div class="vocab-extra">un- 否定 + expected 预期的 + -ly → <em>unexpectedly</em> 出乎意料地。<em>Unexpectedly</em>, a man stepped forward. = 出乎意料地，一个人站了出来。<br>unexpected adj. 意外的 &nbsp;·&nbsp; expect v. 期待 &nbsp;·&nbsp; 近义词：surprisingly</div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="vocabClick('kama muta')">kama muta</span>
-          <span class="vocab-meaning">卡玛穆塔（一种被爱感动的情感）</span>
-          <span class="vocab-tag tag-extend">拓展</span>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">构词：</span>un- 否定 + expected 预期的 + -ly → unexpectedly 出乎意料地</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example"><em>Unexpectedly</em>, a man stepped forward.</span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>unexpected adj. 意外的 · expect v. 期待 · 近义词：surprisingly</div>
         </div>
-        <div class="vocab-extra">源自梵语，意为"被爱感动"。a recently named emotion = 一种最近被命名的情感。<br>心理学术语，指因深层情感联结而涌起的温暖感动 &nbsp;·&nbsp; 常见于重逢、感恩等场景 &nbsp;·&nbsp; marks important moments in our life 标记生命中重要时刻</div>
       </div>
       <div class="vocab-card">
         <div class="vocab-card-head">
           <span class="vocab-word" onclick="vocabClick('mindfully')">mindfully</span>
           <span class="vocab-meaning">用心地，专注地</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
+          <span class="vocab-tag tag-core">考纲基础</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
         </div>
-        <div class="vocab-extra">mindful adj. 留心的 → <em>mindfully</em> adv. 用心地。<em>mindfully</em> seeking out = 用心地寻找。<br>mindfulness n. 正念（冥想概念） &nbsp;·&nbsp; be mindful of 留心… &nbsp;·&nbsp; 反义：mindlessly 不经思考地</div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">构词：</span>mindful adj. 留心的 → mindfully adv. 用心地</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example"><em>mindfully</em> seeking out opportunities</span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>mindfulness n. 正念 · be mindful of 留心… · 反义：mindlessly</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('challenged')">challenge</span>
+          <span class="vocab-meaning">挑战</span>
+          <span class="vocab-tag tag-exam">选必</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">释义：</span>challenge v./n. 挑战 → challenging adj. 有挑战性的</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">it is now <em>challenged</em> by the digitalisation of society</span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>face a challenge 面对挑战 · a major challenge 重大挑战</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('froze')">freeze</span>
+          <span class="vocab-meaning">僵住；冻结</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">变形：</span>freeze → froze（过去式）→ frozen（过去分词）</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">my dad reached for his wallet and <em>froze</em></span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>freeze with fear 吓得僵住 · freezing cold 冰冷的 · frozen food 冷冻食品</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('embarrassment')">embarrassment</span>
+          <span class="vocab-meaning">尴尬，窘迫</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">构词：</span>embarrass v. 使尴尬 → embarrassment n. 尴尬</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">the <em>embarrassment</em> on his face</span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>to one's embarrassment 令某人尴尬的是 · embarrassing adj. 令人尴尬的 · embarrassed adj. 感到尴尬的</div>
+        </div>
       </div>
       <div class="vocab-card">
         <div class="vocab-card-head">
           <span class="vocab-word" onclick="vocabClick('stimulate')">stimulate</span>
           <span class="vocab-meaning">激发，刺激</span>
-          <span class="vocab-tag tag-core">高频</span>
-        </div>
-        <div class="vocab-extra">stimulate v. 激发，刺激。opportunities to <em>stimulate</em> this feeling = 激发这种感觉的机会。<br><em>stimulate</em> growth 刺激增长 &nbsp;·&nbsp; stimulating adj. 有启发性的 &nbsp;·&nbsp; stimulus n. 刺激物（复数：stimuli）</div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="vocabClick('digitalisation')">digitalisation</span>
-          <span class="vocab-meaning">数字化</span>
           <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
         </div>
-        <div class="vocab-extra">digital adj. 数字的 → digitalise v. 数字化 → <em>digitalisation</em> n. 数字化（英式拼写）。the <em>digitalisation</em> of society = 社会的数字化。<br>美式拼写：digitalization &nbsp;·&nbsp; digital age 数字时代 &nbsp;·&nbsp; digital transformation 数字化转型</div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="vocabClick('challenged')">challenged</span>
-          <span class="vocab-meaning">受到挑战的</span>
-          <span class="vocab-tag tag-core">高频</span>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">释义：</span>stimulate v. 激发，刺激</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">opportunities to <em>stimulate</em> this feeling</span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>stimulate growth 刺激增长 · stimulating adj. 有启发性的 · stimulus n. 刺激物</div>
         </div>
-        <div class="vocab-extra">challenge v./n. 挑战 → <em>challenged</em>（过去分词作谓语）。is <em>challenged</em> by = 受到…的挑战。<br>face a challenge 面对挑战 &nbsp;·&nbsp; challenging adj. 有挑战性的 &nbsp;·&nbsp; a major challenge 重大挑战</div>
       </div>
       <div class="vocab-card">
         <div class="vocab-card-head">
           <span class="vocab-word" onclick="vocabClick('access')">access</span>
           <span class="vocab-meaning">获取，使用；通道</span>
-          <span class="vocab-tag tag-core">高频</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
         </div>
-        <div class="vocab-extra">access v./n. 获取，进入。<em>access</em> learning resources = 获取学习资源。<br>have <em>access</em> to 有权使用… &nbsp;·&nbsp; <em>access</em> to education 受教育的机会 &nbsp;·&nbsp; accessible adj. 可获取的 &nbsp;·&nbsp; 反义：inaccessible</div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">释义：</span>access v./n. 获取，进入 → accessible adj. 可获取的</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example"><em>access</em> learning resources</span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>have access to 有权使用… · access to education 受教育的机会</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('cashier')">cashier</span>
+          <span class="vocab-meaning">收银员，出纳员</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">释义：</span>cashier n. 收银员，出纳员。发音 /kæˈʃɪr/</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">the <em>cashier</em> rang everything up</span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>at the cashier 在收银台 · bank cashier 银行出纳 · 近义：checkout clerk</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('kama muta')">kama muta</span>
+          <span class="vocab-meaning">卡玛穆塔（被爱感动的情感）</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">释义：</span>源自梵语，意为"被爱感动"。心理学术语</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">that feeling is "<em>kama muta</em>", a recently named emotion</span></div>
+          <div class="vd-section"><span class="vd-label">场景：</span>常见于重逢、感恩等场景，指因深层情感联结而涌起的温暖感动</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('digitalisation')">digitalisation</span>
+          <span class="vocab-meaning">数字化</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">构词：</span>digital adj. 数字的（选必词）→ digitalise v. → digitalisation n. 数字化（英式拼写）</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">the <em>digitalisation</em> of society</span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>美式拼写：digitalization · digital age 数字时代 · digital transformation 数字化转型</div>
+        </div>
       </div>
     </div>
   </div>
@@ -423,12 +487,19 @@ let enPlayer=null;
 function speakWord(word){
   if(enPlayer){enPlayer.pause();enPlayer=null;}
   const slug='en-word-'+word.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-  const src='audio/2026北京卷-语法填空/'+slug+'.mp3';
+  const src='audio/en-words/'+slug+'.mp3';
   enPlayer=new Audio(src);
   enPlayer.onerror=function(){const u=new SpeechSynthesisUtterance(word);const vs=speechSynthesis.getVoices();u.voice=vs.find(v=>v.lang==='en-GB')||vs.find(v=>v.lang.startsWith('en'))||vs[0];u.rate=0.8;speechSynthesis.speak(u);};
   enPlayer.play();
 }
-function vocabClick(phrase){speakWord(phrase);}
+function vocabClick(phrase){speakWord(phrase);highlightWord(phrase);}
+function highlightWord(phrase){
+  var tips=document.querySelectorAll('.tip');var matches=[];var lc=phrase.toLowerCase();
+  tips.forEach(function(el){var tp=(el.dataset.tip||'').split('|')[0].toLowerCase();if(tp===lc)matches.push(el);});
+  if(!matches.length)return;
+  matches.forEach(function(el){el.classList.remove('tip-flash');void el.offsetWidth;el.classList.add('tip-flash');setTimeout(function(){el.classList.remove('tip-flash');},1700);});
+  matches[0].scrollIntoView({behavior:'smooth',block:'center'});
+}
 const SRS_PREFIX='srs_beijing_2026_gram_';
 const SRS_INTERVALS=[1,3,7,14,30];
 function srsLoad(w){const r=localStorage.getItem(SRS_PREFIX+w);return r?JSON.parse(r):null;}

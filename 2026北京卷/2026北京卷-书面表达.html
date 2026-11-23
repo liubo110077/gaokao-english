@@ -78,8 +78,19 @@ body.mode-answer .show-btn-wrap{display:none;}
 .vocab-tag.tag-core{background:#dcfce7;color:#166534;}
 .vocab-tag.tag-exam{background:#dbeafe;color:#1e40af;}
 .vocab-tag.tag-extend{background:#ffedd5;color:#c2410c;}
+.vocab-tag.tag-beyond{background:#fef3c7;color:#92400e;}
+.vocab-detail{display:none;margin-top:8px;padding:10px 14px;background:#f8f9fa;border-radius:var(--radius);font-size:13.5px;line-height:1.7;}
+.vocab-detail.open{display:block;}
+.vocab-detail .vd-section{margin-bottom:6px;}
+.vocab-detail .vd-label{font-weight:600;color:var(--accent);margin-right:4px;}
+.vocab-detail .vd-example{color:var(--text-secondary);padding-left:16px;}
+.vocab-detail .vd-example em{color:var(--text);font-style:normal;font-weight:600;}
+.vocab-expand{font-size:12px;color:var(--accent);cursor:pointer;border:none;background:none;padding:0;margin-left:8px;}
+.vocab-expand:hover{text-decoration:underline;}
 .tip{border-bottom:1.5px dashed var(--accent);cursor:pointer;position:relative;transition:background .15s;}
 .tip:hover{background:var(--accent-light);}
+.tip.tip-flash{outline:2px solid var(--accent);border-radius:2px;animation:tipFlash 1.6s ease-out forwards;}
+@keyframes tipFlash{0%{background:var(--accent);color:#fff;}40%{background:var(--accent-light);color:inherit;}100%{background:transparent;}}
 .tooltip{position:fixed;z-index:200;background:var(--text);color:#fff;font-family:-apple-system,"PingFang SC",sans-serif;font-size:14px;line-height:1.5;padding:8px 14px;border-radius:8px;max-width:min(520px,calc(100vw - 16px));width:max-content;box-shadow:0 4px 20px rgba(0,0,0,.25);pointer-events:auto;animation:tipIn .15s ease-out;}
 .tooltip::after{content:'';position:absolute;bottom:-6px;left:var(--arrow-left,50%);transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid var(--text);}
 .tooltip.below::after{bottom:auto;top:-6px;border-top:none;border-bottom:6px solid var(--text);}
@@ -101,9 +112,29 @@ body.mode-task .tip:hover{background:none;}
 .srs-badge.all-done{background:#dcfce7;color:#16a34a;}
 @media(min-width:700px){
   .vocab-word{font-size:20px;}.vocab-meaning{font-size:18px;}.vocab-extra{font-size:16.5px;line-height:1.75;}
-  .vocab-tag{font-size:13px;}.srs-btn,.srs-badge{font-size:14px;}
+  .vocab-tag{font-size:13px;}
+.vocab-detail,.vd-example{font-size:16px;}
+.vocab-expand{font-size:14px;}
+.srs-btn,.srs-badge{font-size:14px;}
   .tooltip{font-size:17px;line-height:1.55;}.tooltip .tip-phrase{font-size:19px;}
+  .walk-label{font-size:17px;}.walk-quote,.walk-clue,.walk-verify{font-size:17px;}
+  .tip-step-title{font-size:17px;}.tip-step-body{font-size:16px;}.tip-box{font-size:16px;}
 }
+.tip-box{background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);margin-top:16px;padding:20px 24px;font-size:14px;line-height:1.9;color:var(--text-secondary);}
+.tip-box h3{font-size:15px;font-weight:700;color:var(--text);margin-bottom:10px;}
+.tip-box p{margin-bottom:10px;}
+.tip-box b{color:var(--text);}
+.walk-step{margin:12px 0;}
+.walk-label{font-weight:700;color:var(--accent);font-size:14px;margin-bottom:4px;}
+.walk-quote{background:#f8f9fa;padding:10px 14px;border-radius:4px;margin:6px 0;font-size:14px;line-height:1.85;border-left:3px solid var(--border);}
+.walk-quote b{color:var(--accent);}
+.walk-clue{font-size:14px;line-height:1.85;color:var(--text-secondary);margin:4px 0;}
+.walk-clue b{color:var(--text);}
+.walk-verify{background:#f0fdf4;padding:10px 14px;border-radius:4px;margin:6px 0;font-size:14px;line-height:1.85;border-left:3px solid #16a34a;color:#166534;}
+.tip-step{border-left:3px solid var(--accent);padding:10px 0 10px 16px;margin-bottom:16px;}
+.tip-step:last-child{margin-bottom:0;}
+.tip-step-title{font-weight:700;font-size:14px;color:var(--text);margin-bottom:4px;}
+.tip-step-body{font-size:14px;color:var(--text-secondary);line-height:1.75;}
 </style>
 </head>
 <body class="mode-task">
@@ -128,24 +159,35 @@ body.mode-task .tip:hover{background:none;}
   <div class="section-desc">阅读下面短文，根据题目要求用英文回答问题。</div>
 
   <div class="reading-passage">
-    <p>"Winners never quit and quitters never win." It's a great expression of our admiration of courage and <span class="tip" data-tip="persistence|坚持｜persist v. 坚持 → persistence n. 坚持/毅力｜a great expression of our admiration of courage and persistence = 对勇气和坚持的赞美的极好表达">persistence</span> (坚持). But as Aristotle observed over 2,000 years ago, actions pushed to their <span class="tip" data-tip="extreme|极端｜extreme adj./n. 极端的/极端｜pushed to their extreme = 被推向极端">extreme</span> turn into <span class="tip" data-tip="disasters|灾难｜disaster n. 灾难 → disasters 复数｜actions pushed to their extreme turn into disasters = 行为被推向极端就会变成灾难">disasters</span>.</p>
-    <p>There is a famous story about the Scottish king Robert the Bruce. Robert hid in a cave after his sixth defeat by the English, and there he watched a spider (蜘蛛) try to <span class="tip" data-tip="secure|固定/使安全｜secure v. 固定，使安全；adj. 安全的｜tried to secure its web to the cave wall = 试图将网固定在洞壁上">secure</span> its web to the cave wall. The spider tried and failed six times before finally succeeding. Robert then decided to return to the fight, winning independence for the Scots — on the seventh attempt.</p>
-    <p>King Robert's story offers a deep well of <span class="tip" data-tip="inspiration|灵感/鼓舞｜inspire v. 激励 → inspiration n. 灵感/鼓舞｜a deep well of inspiration = 深深的灵感之泉">inspiration</span> for those who most need it. But lately I've been thinking about a possibility the story ignores. What if the spider had been climbing the wrong corner of the cave?</p>
-    <p>There's a <span class="tip" data-tip="crucial|关键的｜crucial adj. 关键的，至关重要的｜a crucial difference = 一个关键的区别">crucial</span> difference between failing at the right thing and <span class="tip" data-tip="persist|坚持｜persist v. 坚持，持续 → persisting 现在分词｜persisting at the wrong one = 在错误的事情上坚持">persist</span>ing at the wrong one. When we fail at the right thing, persistence makes sense. We learn, <span class="tip" data-tip="adjust|调整｜adjust v. 调整，适应 → adjustment n. 调整｜We learn, adjust, and try again. = 我们学习、调整，然后再试一次。">adjust</span>, and try again. But when we persist with the wrong thing, every bit of effort takes us further from where we are meant to be.</p>
-    <p>Quitting is in fact necessary for growth. By ending something, we create space for something new to grow. We need to <span class="tip" data-tip="exit|退出/离开｜exit v./n. 退出，离开｜exit the things that don't work anymore = 退出那些不再有效的事情">exit</span> the things that don't work anymore to be able to enter the ones that make sense for who we are today.</p>
-    <p>We can imagine a different version of King Robert's story. In this story, the spider falls a seventh time. It stops on the stone floor — and then turns, moving slowly towards a different corner of the cave, where the wind is calmer and the flies more <span class="tip" data-tip="plentiful|丰富的｜plentiful adj. 丰富的，大量的｜the flies more plentiful = 苍蝇更多/食物更丰富">plentiful</span>.</p>
+    <p>"<span class="tip" data-tip="winner|赢家｜win v. 赢 → winner n. 赢家｜Winners never quit = 赢家从不放弃">Winners</span> never <span class="tip" data-tip="quit|放弃/退出｜quit v. 放弃，停止，退出｜Winners never quit = 赢家从不放弃" data-level="选必">quit</span> and <span class="tip" data-tip="quitter|轻易放弃的人｜quit v. 放弃 → quitter n. 轻易放弃的人｜quitters never win = 放弃的人永远赢不了" data-level="超纲">quitters</span> never win." It's a great <span class="tip" data-tip="expression|表达｜express v. 表达 → expression n. 表达/说法｜a great expression = 一个很好的表达/说法">expression</span> of our <span class="tip" data-tip="admiration|钦佩/赞美｜admire v. 钦佩 → admiration n. 钦佩/赞美｜admiration of courage = 对勇气的赞美" data-level="选必">admiration</span> of <span class="tip" data-tip="courage|勇气｜courage n. 勇气｜admiration of courage and persistence = 对勇气和坚持的赞美">courage</span> and <span class="tip" data-tip="persistence|坚持｜persist v. 坚持 → persistence n. 坚持/毅力｜a great expression of our admiration of courage and persistence = 对勇气和坚持的赞美的极好表达" data-level="超纲">persistence</span> (坚持). But as Aristotle <span class="tip" data-tip="observe|观察/指出｜observe v. 观察；注意到；指出｜Aristotle observed = 亚里士多德指出" data-level="选必">observed</span> over 2,000 years ago, actions pushed to their <span class="tip" data-tip="extreme|极端｜extreme adj./n. 极端的/极端｜pushed to their extreme = 被推向极端" data-level="选必">extreme</span> turn into <span class="tip" data-tip="disasters|灾难｜disaster n. 灾难 → disasters 复数｜actions pushed to their extreme turn into disasters = 行为被推向极端就会变成灾难">disasters</span>.</p>
+    <p>There is a famous story about the <span class="tip" data-tip="Scottish|苏格兰的｜Scotland n. 苏格兰 → Scottish adj. 苏格兰的｜the Scottish king = 苏格兰国王" data-level="超纲">Scottish</span> king Robert the Bruce. Robert <span class="tip" data-tip="hid|躲藏（hide的过去式）｜hide-hid-hidden 躲藏/隐藏｜hid in a cave = 躲在洞穴里">hid</span> in a <span class="tip" data-tip="cave|洞穴｜cave n. 洞穴，山洞｜hid in a cave = 躲在一个洞穴里" data-level="拓展">cave</span> after his sixth <span class="tip" data-tip="defeat|失败/击败｜defeat n. 失败；v. 击败｜his sixth defeat = 他的第六次失败" data-level="拓展">defeat</span> by the English, and there he watched a spider (蜘蛛) try to <span class="tip" data-tip="secure|固定/使安全｜secure v. 固定，使安全；adj. 安全的｜tried to secure its web to the cave wall = 试图将网固定在洞壁上" data-level="拓展">secure</span> its <span class="tip" data-tip="web|网｜web n. 蜘蛛网；网络（the Web = 万维网）｜secure its web = 固定它的网" data-level="超纲">web</span> to the <span class="tip" data-tip="cave|洞穴｜cave n. 洞穴，山洞｜the cave wall = 洞壁" data-level="拓展">cave</span> wall. The spider tried and failed six times before finally <span class="tip" data-tip="succeed|成功｜succeed v. 成功 → succeeding 现在分词｜before finally succeeding = 最终成功之前">succeeding</span>. Robert then decided to return to the fight, winning <span class="tip" data-tip="independence|独立｜independent adj. 独立的 → independence n. 独立｜winning independence = 赢得了独立">independence</span> for the Scots — on the seventh <span class="tip" data-tip="attempt|尝试｜attempt n./v. 尝试，企图｜on the seventh attempt = 在第七次尝试中" data-level="选必">attempt</span>.</p>
+    <p>King Robert's story <span class="tip" data-tip="offer|提供｜offer v. 提供；n. 提议｜offers a deep well of inspiration = 提供了深深的灵感之泉">offers</span> a deep <span class="tip" data-tip="well|源泉，井｜注意：这里 well 不是"好"，是名词"井/源泉"｜a deep well of inspiration = 深深的灵感源泉" data-level="拓展">well</span> of <span class="tip" data-tip="inspiration|灵感/鼓舞｜inspire v. 激励 → inspiration n. 灵感/鼓舞｜a deep well of inspiration = 深深的灵感之泉" data-level="超纲">inspiration</span> for those who most need it. But <span class="tip" data-tip="lately|最近｜lately adv. 最近，近来（= recently）｜lately I've been thinking = 最近我一直在想">lately</span> I've been thinking about a <span class="tip" data-tip="possibility|可能性｜possible adj. 可能的 → possibility n. 可能性｜a possibility the story ignores = 故事忽略的一种可能性">possibility</span> the story <span class="tip" data-tip="ignore|忽视｜ignore v. 忽视，不理会｜the story ignores = 这个故事忽略了" data-level="选必">ignores</span>. What if the spider had been <span class="tip" data-tip="climb|爬｜climb v. 攀爬 → climbing 现在分词｜had been climbing the wrong corner = 一直在爬错误的角落">climbing</span> the wrong <span class="tip" data-tip="corner|角落｜corner n. 角落，拐角｜the wrong corner of the cave = 洞穴的错误角落">corner</span> of the cave?</p>
+    <p>There's a <span class="tip" data-tip="crucial|关键的｜crucial adj. 关键的，至关重要的｜a crucial difference = 一个关键的区别" data-level="拓展">crucial</span> <span class="tip" data-tip="difference|区别/不同｜different adj. 不同的 → difference n. 区别，不同｜a crucial difference = 一个关键的区别">difference</span> between failing at the right thing and <span class="tip" data-tip="persist|坚持｜persist v. 坚持，持续 → persisting 现在分词｜persisting at the wrong one = 在错误的事情上坚持" data-level="超纲">persist</span>ing at the wrong one. When we fail at the right thing, persistence makes sense. We learn, <span class="tip" data-tip="adjust|调整｜adjust v. 调整，适应 → adjustment n. 调整｜We learn, adjust, and try again. = 我们学习、调整，然后再试一次。" data-level="拓展">adjust</span>, and try again. But when we persist with the wrong thing, every bit of <span class="tip" data-tip="effort|努力｜effort n. 努力，费力｜every bit of effort = 每一点努力" data-level="选必">effort</span> takes us further from where we are <span class="tip" data-tip="meant|注定/意味｜mean v. 意味着 → meant 过去分词｜where we are meant to be = 我们注定应该在的地方">meant</span> to be.</p>
+    <p>Quitting is in fact <span class="tip" data-tip="necessary|必要的｜necessary adj. 必要的，必需的｜necessary for growth = 对成长是必要的">necessary</span> for <span class="tip" data-tip="growth|成长/增长｜grow v. 成长 → growth n. 成长，增长｜necessary for growth = 对成长是必要的">growth</span>. By ending something, we <span class="tip" data-tip="create|创造｜create v. 创造，创建｜create space = 创造空间">create</span> <span class="tip" data-tip="space|空间｜space n. 空间；太空｜create space for something new = 为新事物创造空间">space</span> for something new to grow. We need to <span class="tip" data-tip="exit|退出/离开｜exit v./n. 退出，离开｜exit the things that don't work anymore = 退出那些不再有效的事情" data-level="选必">exit</span> the things that don't work anymore to be able to <span class="tip" data-tip="enter|进入｜enter v. 进入｜enter the ones that make sense = 进入那些有意义的事情">enter</span> the ones that make sense for who we are today.</p>
+    <p>We can <span class="tip" data-tip="imagine|想象｜imagine v. 想象｜imagine a different version = 想象一个不同的版本">imagine</span> a different <span class="tip" data-tip="version|版本｜version n. 版本，说法｜a different version of the story = 这个故事的另一个版本" data-level="拓展">version</span> of King Robert's story. In this story, the spider falls a seventh time. It stops on the <span class="tip" data-tip="stone|石头｜stone n. 石头，石块｜the stone floor = 石地面">stone</span> floor — and then turns, moving slowly towards a different <span class="tip" data-tip="corner|角落｜corner n. 角落，拐角｜a different corner of the cave = 洞穴的另一个角落">corner</span> of the cave, where the wind is <span class="tip" data-tip="calm|平静的｜calm adj. 平静的 → calmer 比较级｜the wind is calmer = 风更平静" data-level="选必">calmer</span> and the <span class="tip" data-tip="flies|苍蝇（复数）｜注意：这里不是"飞"，是名词 fly（苍蝇）的复数｜苍蝇 = 蜘蛛的食物">flies</span> more <span class="tip" data-tip="plentiful|丰富的｜plentiful adj. 丰富的，大量的｜the flies more plentiful = 苍蝇更多/食物更丰富" data-level="超纲">plentiful</span>.</p>
   </div>
 
   <!-- Q40 -->
   <div class="q-item">
-    <div class="q-stem">40. What is Aristotle's observation according to this passage? <span class="q-score">2分</span></div>
+    <div class="q-stem">40. What is Aristotle's <span class="tip" data-tip="observation|观察/看法｜observe v. 观察 → observation n. 观察，看法｜Aristotle's observation = 亚里士多德的观点" data-level="超纲">observation</span> <span class="tip" data-tip="according|依照｜according to 根据，依照｜according to this passage = 根据这篇文章" data-level="超纲">according</span> to this passage? <span class="q-score">2分</span></div>
     <div class="show-btn-wrap">
       <button class="show-btn" onclick="toggleAnswer('a40')">🔍 查看答案</button>
     </div>
     <div class="answer-box" id="a40">
       <div class="ans-label">参考答案</div>
       <div class="ans-text">Actions pushed to their extreme turn into disasters.</div>
-      <div class="ans-note">定位第一段最后一句："But as Aristotle observed over 2,000 years ago, actions pushed to their extreme turn into disasters." 直接引用原文关键信息即可。</div>
+      <div class="walk-step">
+        <div class="walk-label">第一步：画关键词</div>
+        <div class="walk-clue">题目问 "What is <b>Aristotle's observation</b>"（亚里士多德的看法是什么）<br>关键词：<b>Aristotle</b></div>
+      </div>
+      <div class="walk-step">
+        <div class="walk-label">第二步：回原文找</div>
+        <div class="walk-quote">第一段最后一句：But as <b>Aristotle</b> observed over 2,000 years ago, <b>actions pushed to their extreme turn into disasters</b>.<br>（亚里士多德2000多年前指出：行为被推向极端就会变成灾难。）</div>
+      </div>
+      <div class="walk-step">
+        <div class="walk-label">第三步：写答案</div>
+        <div class="walk-verify">2分题，直接用原文的话：<b>Actions pushed to their extreme turn into disasters.</b><br>✓ 不需要改写，把 Aristotle observed 后面的内容抄下来就行。</div>
+      </div>
     </div>
   </div>
 
@@ -157,43 +199,94 @@ body.mode-task .tip:hover{background:none;}
     </div>
     <div class="answer-box" id="a41">
       <div class="ans-label">参考答案</div>
-      <div class="ans-text">Because quitting creates space for something new to grow and allows us to focus on what suits us now.</div>
-      <div class="ans-note">定位第五段："By ending something, we create space for something new to grow. We need to exit the things that don't work anymore to be able to enter the ones that make sense for who we are today." 需要综合两句话回答。</div>
+      <div class="ans-text">Because quitting creates space for something new to grow and <span class="tip" data-tip="allow|允许/使能够｜allow v. 允许，使能够｜allows us to focus on = 使我们能够专注于">allows</span> us to <span class="tip" data-tip="focus|集中/专注｜focus v. 集中，专注；n. 焦点｜focus on = 专注于" data-level="选必">focus</span> on what <span class="tip" data-tip="suit|适合｜suit v. 适合；n. 套装｜what suits us = 适合我们的东西" data-level="拓展">suits</span> us now.</div>
+      <div class="walk-step">
+        <div class="walk-label">第一步：画关键词</div>
+        <div class="walk-clue">题目问 "<b>Why</b> is <b>quitting necessary for growth</b>"（为什么放弃对成长是必要的）<br>关键词：<b>quitting</b> + <b>growth</b></div>
+      </div>
+      <div class="walk-step">
+        <div class="walk-label">第二步：回原文找</div>
+        <div class="walk-quote">第五段：Quitting is in fact necessary for <b>growth</b>. By ending something, we <b>create space for something new to grow</b>. We need to exit the things that don't work anymore to be able to <b>enter the ones that make sense</b> for who we are today.<br>（放弃实际上对成长是必要的。通过结束某件事，我们为新事物创造空间。我们需要退出不再有效的事物，才能进入对今天的我们有意义的事物。）</div>
+      </div>
+      <div class="walk-step">
+        <div class="walk-label">第三步：写答案</div>
+        <div class="walk-verify">问 Why，回答用 <b>Because</b> 开头，把原文两句话合并：<br><b>Because quitting creates space for something new to grow and allows us to focus on what suits us now.</b><br>✓ 综合了"创造空间"和"进入有意义的事物"两层意思。</div>
+      </div>
     </div>
   </div>
 
   <!-- Q42 -->
   <div class="q-item">
-    <div class="q-stem">42. Please decide which part is false in the following statement, then underline it and explain why. <span class="q-score">3分</span></div>
-    <div class="q-stem" style="font-weight:400;font-style:italic;color:var(--text-secondary);margin-top:4px;">"Failing at the right thing takes us further from where we are meant to be."</div>
+    <div class="q-stem">42. Please decide which part is <span class="tip" data-tip="false|错误的｜false adj. 错误的，虚假的（反义：true 正确的）｜which part is false = 哪个部分是错误的" data-level="拓展">false</span> in the following <span class="tip" data-tip="statement|陈述/声明｜state v. 陈述 → statement n. 陈述，声明｜the following statement = 下面的陈述">statement</span>, then <span class="tip" data-tip="underline|在…下面划线｜underline v. 在…下面划线；强调｜underline it = 在下面划线标出" data-level="超纲">underline</span> it and explain why. <span class="q-score">3分</span></div>
+    <div class="q-stem" style="font-weight:400;font-style:italic;color:var(--text-secondary);margin-top:4px;">"Failing at the right thing takes us further from where we are <span class="tip" data-tip="meant|注定/意味｜mean v. 意味着 → meant 过去分词｜are meant to be = 注定应该在的地方">meant</span> to be."</div>
     <div class="show-btn-wrap">
       <button class="show-btn" onclick="toggleAnswer('a42')">🔍 查看答案</button>
     </div>
     <div class="answer-box" id="a42">
       <div class="ans-label">参考答案</div>
       <div class="ans-text">下划线标注：<span class="underline-key">Failing at the right thing</span></div>
-      <div class="ans-note">原文说"when we persist with the wrong thing, every bit of effort takes us further from where we are meant to be"。是"persisting with the wrong thing（在错误的事情上坚持）"而非"failing at the right thing（在正确的事情上失败）"会让我们偏离正轨。因此"Failing at the right thing"是错误的部分。</div>
+      <div class="walk-step">
+        <div class="walk-label">第一步：理解题目要求</div>
+        <div class="walk-clue">题目给了一句话：<i>"Failing at the right thing takes us further from where we are meant to be."</i><br>（在正确的事情上失败会让我们偏离方向。）<br>要你找出<b>哪个部分是错的</b>，划线并解释为什么错。</div>
+      </div>
+      <div class="walk-step">
+        <div class="walk-label">第二步：回原文对比</div>
+        <div class="walk-quote">第四段原文：when we <b>persist with the wrong thing</b>, every bit of effort takes us further from where we are meant to be.<br>（当我们在<b>错误的事情上坚持</b>时，每一点努力都让我们偏离方向。）</div>
+      </div>
+      <div class="walk-step">
+        <div class="walk-label">第三步：找出被篡改的部分</div>
+        <div class="walk-clue">原文说的是 <b>"persist with the wrong thing"</b>（在错误的事上坚持）<br>题目改成了 <b>"Failing at the right thing"</b>（在正确的事上失败）<br>→ 两处被换了：wrong → right，persist → failing</div>
+      </div>
+      <div class="walk-step">
+        <div class="walk-label">第四步：写答案</div>
+        <div class="walk-verify">划线标注 <b>"Failing at the right thing"</b>，然后解释：<br>原文说的是 "persisting with the wrong thing" 才会让我们偏离方向，而不是 "failing at the right thing"。<br>✓ 3分：1分划线正确 + 2分解释原因。</div>
+      </div>
     </div>
   </div>
 
   <!-- Q43 -->
   <div class="q-item">
-    <div class="q-stem">43. How can you apply the idea of "moving towards a different corner" to a real-life challenge? (In about 40 words) <span class="q-score">5分</span></div>
+    <div class="q-stem">43. How can you <span class="tip" data-tip="apply|应用/运用｜apply v. 应用；申请｜apply the idea to = 把这个想法应用到" data-level="选必">apply</span> the idea of "moving towards a different corner" to a real-life <span class="tip" data-tip="challenge|挑战｜challenge n./v. 挑战｜a real-life challenge = 现实生活中的挑战" data-level="选必">challenge</span>? (In about 40 words) <span class="q-score">5分</span></div>
     <div class="show-btn-wrap">
       <button class="show-btn" onclick="toggleAnswer('a43')">🔍 查看答案</button>
     </div>
     <div class="answer-box" id="a43">
       <div class="ans-label">参考答案（开放性，言之有理即可）</div>
-      <div class="ans-text">When I find myself stuck in a subject I've tried hard to improve but constantly fail, instead of pushing blindly, I will switch to a learning method that fits me better, or explore another field where my talents can truly shine.</div>
-      <div class="ans-note">
-        <b>评分要点（5分）：</b><br>
-        ① 理解"moving towards a different corner"的比喻意义——放弃无效的努力，转向更合适的方向（2分）<br>
-        ② 结合真实生活场景举例说明（2分）<br>
-        ③ 语言表达准确流畅（1分）<br>
-        <b>写作建议：</b>回应文中核心观点（适时放弃+转换方向），结合自身经历，约40词。
+      <div class="ans-text">When I find myself <span class="tip" data-tip="stuck|卡住的/困住的｜stick v. → stuck 过去分词/adj. 卡住的，困住的｜find myself stuck = 发现自己陷入困境">stuck</span> in a subject I've tried hard to <span class="tip" data-tip="improve|提高/改善｜improve v. 提高，改善｜tried hard to improve = 努力去提高" data-level="选必">improve</span> but <span class="tip" data-tip="constantly|不断地｜constant adj. 不断的 → constantly adv. 不断地" data-level="拓展">constantly</span> fail, instead of pushing <span class="tip" data-tip="blindly|盲目地｜blind adj. 盲的 → blindly adv. 盲目地｜pushing blindly = 盲目地努力">blindly</span>, I will <span class="tip" data-tip="switch|转换/切换｜switch v. 转换，切换；n. 开关｜switch to a learning method = 切换到一种学习方法" data-level="拓展">switch</span> to a learning <span class="tip" data-tip="method|方法｜method n. 方法，办法｜a learning method = 学习方法">method</span> that fits me better, or <span class="tip" data-tip="explore|探索｜explore v. 探索，探究｜explore another field = 探索另一个领域" data-level="选必">explore</span> another <span class="tip" data-tip="field|领域/田野｜field n. 领域；田野；场地｜another field = 另一个领域">field</span> where my <span class="tip" data-tip="talent|天赋/才能｜talent n. 天赋，才能｜my talents can truly shine = 我的才能可以真正发光" data-level="选必">talents</span> can truly <span class="tip" data-tip="shine|发光/出众｜shine v. 发光；表现出色｜talents can truly shine = 才能可以真正闪耀">shine</span>.</div>
+      <div class="walk-step">
+        <div class="walk-label">第一步：理解比喻</div>
+        <div class="walk-clue">"moving towards a different corner" = 蜘蛛换了一个角落织网<br>比喻意思：<b>放弃无效的努力，转向更合适的方向。</b></div>
+      </div>
+      <div class="walk-step">
+        <div class="walk-label">第二步：联系自己的经历</div>
+        <div class="walk-clue">想一个你"努力了但没效果，需要换方向"的例子：<br>· 某科一直学不好 → 换个学习方法<br>· 兴趣班坚持很久没进步 → 转去尝试别的<br>· 某段关系一直不顺 → 认识新朋友</div>
+      </div>
+      <div class="walk-step">
+        <div class="walk-label">第三步：套模板写（约40词）</div>
+        <div class="walk-verify">模板：When I find myself stuck in [困境], instead of [继续无效的做法], I will [新的方向/做法].<br><br>✓ 5分评分：理解比喻（2分）+ 举例说明（2分）+ 语言流畅（1分）</div>
       </div>
     </div>
   </div>
+<div class="tip-box">
+  <h3>简答题怎么答？</h3>
+  <p>核心原则：<b>先定位，再改写，不要自己编。</b></p>
+  <div class="tip-step">
+    <div class="tip-step-title">① 画关键词</div>
+    <div class="tip-step-body">读题时先画出关键词。Q40 关键词是 "Aristotle"，Q41 是 "quitting" + "growth"。带着关键词去原文找。</div>
+  </div>
+  <div class="tip-step">
+    <div class="tip-step-title">② 找到定位句就是答案</div>
+    <div class="tip-step-body">在原文搜关键词或同义词，找到的那句话就是答案来源。不要自己编，用原文的话。</div>
+  </div>
+  <div class="tip-step">
+    <div class="tip-step-title">③ 看分值决定写多少</div>
+    <div class="tip-step-body">2分 = 一句话，直接抄原文。3分 = 指出 + 解释（两句话）。5分 = 观点 + 例子 + 总结（三四句话，约40词）。</div>
+  </div>
+  <div class="tip-step">
+    <div class="tip-step-title">④ Why 题用 Because 开头</div>
+    <div class="tip-step-body">问 Why 就用 Because 回答，问 What 就直接说是什么。格式对了先拿一半分。</div>
+  </div>
+</div>
 </div>
 
 <!-- Section II: Letter writing -->
@@ -207,15 +300,35 @@ body.mode-task .tip:hover{background:none;}
     <b>要求：</b>词数100左右。
   </div>
 
+  <div class="tip-box">
+    <h3>书信写作模板（背下来直接用）</h3>
+    <div class="tip-step">
+      <div class="tip-step-title">第一段：回应来信 + 引出话题（1-2句）</div>
+      <div class="tip-step-body">I'm glad/thrilled to receive your email asking about...<br>I'm writing to tell you about...</div>
+    </div>
+    <div class="tip-step">
+      <div class="tip-step-title">第二段：活动内容 / 具体信息（3-4句）</div>
+      <div class="tip-step-body">写做了什么：We got... / We attended... / We visited...<br>写怎么样：It was + 形容词（interesting / eye-opening / meaningful）</div>
+    </div>
+    <div class="tip-step">
+      <div class="tip-step-title">第三段：感受 / 收获（2-3句）</div>
+      <div class="tip-step-body">For me, this activity... / Through this experience, I realized that...<br>万能句型：I used to think... but now I see/realize...</div>
+    </div>
+    <div class="tip-step">
+      <div class="tip-step-title">结尾：署名（别忘！）</div>
+      <div class="tip-step-body">Yours, / Best wishes,<br>Li Hua<br>（每年都有人忘署名丢分。）</div>
+    </div>
+  </div>
+
   <div class="show-btn-wrap" style="margin-bottom:4px;">
     <button class="show-model-btn" onclick="toggleModel()">查看范文</button>
   </div>
 
   <div class="model-letter" id="modelLetter">
     <div class="letter-p">Dear Jim,</div>
-    <div class="letter-p indent">I'm <span class="letter-anno" data-note="thrilled = 非常高兴，比 happy/glad 更高级">thrilled</span> to receive your email asking about our school's "When Sports Meet AI" event held last month. It was a truly <span class="letter-anno" data-note="eye-opening = 大开眼界的，令人耳目一新的">eye-opening</span> experience that showed me how technology is <span class="letter-anno" data-note="revolutionizing = 彻底改变，使发生革命性变化">revolutionizing</span> the world of sports.</div>
-    <div class="letter-p indent">We got <span class="letter-anno" data-note="hands-on experience = 亲身实践的体验">hands-on experience</span> with AI-powered fitness devices that analyzed our basketball shots in real time and gave <span class="letter-anno" data-note="personalized tips = 个性化建议">personalized tips</span> to improve our accuracy. We also attended an engaging lecture on how AI helps professional athletes <span class="letter-anno" data-note="optimize their training = 优化他们的训练">optimize their training</span> and avoid <span class="letter-anno" data-note="career-threatening injuries = 威胁职业生涯的伤病">career-threatening injuries</span>.</div>
-    <div class="letter-p indent">For me, this activity completely <span class="letter-anno" data-note="transformed my perception = 彻底改变了我的认知">transformed my perception</span> of artificial intelligence. I used to associate AI with science fiction, but now I see it as a practical tool that can <span class="letter-anno" data-note="enhance every aspect = 提升各个方面">enhance every aspect</span> of our daily lives, even something as simple as playing sports.</div>
+    <div class="letter-p indent">I'm <span class="tip" data-tip="thrilled|非常高兴｜比 happy/glad 更高级的写作词汇" data-level="超纲">thrilled</span> to receive your email asking about our school's "When Sports Meet AI" event held last month. It was a truly <span class="tip" data-tip="eye-opening|大开眼界的｜令人耳目一新的，写作加分词" data-level="超纲">eye-opening</span> experience that showed me how technology is <span class="tip" data-tip="revolutionizing|彻底改变｜revolution n. 革命 → revolutionize v. 彻底改变" data-level="超纲">revolutionizing</span> the world of sports.</div>
+    <div class="letter-p indent">We got <span class="tip" data-tip="hands-on experience|亲身实践的体验｜hands-on = 动手的/实操的" data-level="超纲">hands-on experience</span> with AI-powered fitness devices that analyzed our basketball shots in real time and gave <span class="tip" data-tip="personalized tips|个性化建议｜personal → personalize → personalized 个性化的" data-level="超纲">personalized tips</span> to improve our accuracy. We also attended an engaging lecture on how AI helps professional athletes <span class="tip" data-tip="optimize their training|优化他们的训练｜optimize v. 优化，使最优化" data-level="超纲">optimize their training</span> and avoid <span class="tip" data-tip="career-threatening injuries|威胁职业生涯的伤病｜career 职业 + threatening 威胁的 + injuries 伤病" data-level="超纲">career-threatening injuries</span>.</div>
+    <div class="letter-p indent">For me, this activity completely <span class="tip" data-tip="transformed my perception|彻底改变了我的认知｜transform v. 改变 · perception n. 认知/看法" data-level="超纲">transformed my perception</span> of artificial intelligence. I used to associate AI with science fiction, but now I see it as a practical tool that can <span class="tip" data-tip="enhance every aspect|提升各个方面｜enhance v. 提升/增强 · aspect n. 方面" data-level="超纲">enhance every aspect</span> of our daily lives, even something as simple as playing sports.</div>
     <div class="letter-p" style="margin-top:8px;">Yours,<br>Li Hua</div>
   </div>
 
@@ -237,83 +350,133 @@ body.mode-task .tip:hover{background:none;}
     <div class="vocab-list">
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="vocabClick('persistence')">persistence</span>
-          <span class="vocab-meaning">坚持，毅力</span>
-          <span class="vocab-tag tag-core">高频</span>
-        </div>
-        <div class="vocab-extra">persist v. 坚持 → persistence n. 坚持/毅力 → persistent adj. 持续的，坚持的。a great expression of our admiration of courage and <em>persistence</em> = 对勇气和坚持的赞美的极好表达。<br>show great <em>persistence</em> 表现出极大的毅力 &nbsp;·&nbsp; with <em>persistence</em> 坚持不懈地</div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
           <span class="vocab-word" onclick="vocabClick('extreme')">extreme</span>
           <span class="vocab-meaning">极端（的）</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
+          <span class="vocab-tag tag-exam">选必</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
         </div>
-        <div class="vocab-extra">extreme adj./n. 极端的/极端 → extremely adv. 极其。actions pushed to their <em>extreme</em> turn into disasters = 行为被推向极端就会变成灾难。<br>go to <em>extremes</em> 走极端 &nbsp;·&nbsp; <em>extreme</em> weather 极端天气 &nbsp;·&nbsp; in the <em>extreme</em> 极度地</div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="vocabClick('secure')">secure</span>
-          <span class="vocab-meaning">固定/使安全；安全的</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">构词：</span>extreme adj./n. 极端的/极端 → extremely adv. 极其</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">actions pushed to their <em>extreme</em> turn into disasters</span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>go to extremes 走极端 · extreme weather 极端天气 · in the extreme 极度地</div>
         </div>
-        <div class="vocab-extra">secure v. 固定，使安全；adj. 安全的 → security n. 安全。tried to <em>secure</em> its web to the cave wall = 试图将网固定在洞壁上。<br>feel <em>secure</em> 感到安全 &nbsp;·&nbsp; <em>secure</em> a job 获得一份工作 &nbsp;·&nbsp; national <em>security</em> 国家安全</div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="vocabClick('inspiration')">inspiration</span>
-          <span class="vocab-meaning">灵感，鼓舞</span>
-          <span class="vocab-tag tag-core">高频</span>
-        </div>
-        <div class="vocab-extra">inspire v. 激励 → inspiration n. 灵感/鼓舞 → inspiring adj. 鼓舞人心的。a deep well of <em>inspiration</em> = 深深的灵感之泉。<br>draw <em>inspiration</em> from 从…中汲取灵感 &nbsp;·&nbsp; a source of <em>inspiration</em> 灵感的源泉</div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="vocabClick('crucial')">crucial</span>
-          <span class="vocab-meaning">关键的，至关重要的</span>
-          <span class="vocab-tag tag-core">高频</span>
-        </div>
-        <div class="vocab-extra">crucial adj. 关键的，至关重要的。a <em>crucial</em> difference between failing at the right thing and persisting at the wrong one = 在正确的事情上失败与在错误的事情上坚持之间有一个关键的区别。<br>play a <em>crucial</em> role 起关键作用 &nbsp;·&nbsp; <em>crucial</em> to/for 对…至关重要</div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="vocabClick('persist')">persist</span>
-          <span class="vocab-meaning">坚持，持续</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
-        </div>
-        <div class="vocab-extra">persist v. 坚持，持续 → persistence n. 坚持 → persistent adj. 持续的。when we <em>persist</em> with the wrong thing = 当我们在错误的事情上坚持。<br><em>persist</em> in doing sth 坚持做某事 &nbsp;·&nbsp; <em>persist</em> with 继续坚持 &nbsp;·&nbsp; the problem <em>persists</em> 问题持续存在</div>
-      </div>
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="vocabClick('adjust')">adjust</span>
-          <span class="vocab-meaning">调整，适应</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
-        </div>
-        <div class="vocab-extra">adjust v. 调整，适应 → adjustment n. 调整 → adjustable adj. 可调节的。We learn, <em>adjust</em>, and try again. = 我们学习、调整，然后再试一次。<br><em>adjust</em> to 适应… &nbsp;·&nbsp; make an <em>adjustment</em> 做出调整 &nbsp;·&nbsp; <em>adjust</em> one's attitude 调整态度</div>
       </div>
       <div class="vocab-card">
         <div class="vocab-card-head">
           <span class="vocab-word" onclick="vocabClick('exit')">exit</span>
           <span class="vocab-meaning">退出，离开</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
+          <span class="vocab-tag tag-exam">选必</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
         </div>
-        <div class="vocab-extra">exit v./n. 退出，离开/出口。We need to <em>exit</em> the things that don't work anymore = 我们需要退出那些不再有效的事情。<br>emergency <em>exit</em> 紧急出口 &nbsp;·&nbsp; <em>exit</em> the stage 退场 &nbsp;·&nbsp; <em>exit</em> strategy 退出策略</div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">释义：</span>exit v./n. 退出，离开/出口</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">We need to <em>exit</em> the things that don't work anymore</span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>emergency exit 紧急出口 · exit strategy 退出策略</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('secure')">secure</span>
+          <span class="vocab-meaning">固定/使安全；安全的</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">释义：</span>secure v. 固定，使安全；adj. 安全的 → security n. 安全</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">tried to <em>secure</em> its web to the cave wall</span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>feel secure 感到安全 · secure a job 获得工作 · national security 国家安全</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('crucial')">crucial</span>
+          <span class="vocab-meaning">关键的，至关重要的</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">释义：</span>crucial adj. 关键的，至关重要的</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">a <em>crucial</em> difference between failing at the right thing and persisting at the wrong one</span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>play a crucial role 起关键作用 · crucial to/for 对…至关重要</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('adjust')">adjust</span>
+          <span class="vocab-meaning">调整，适应</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">构词：</span>adjust v. 调整，适应 → adjustment n. 调整 → adjustable adj. 可调节的</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">We learn, <em>adjust</em>, and try again.</span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>adjust to 适应… · make an adjustment 做出调整</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('persistence')">persistence</span>
+          <span class="vocab-meaning">坚持，毅力</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">构词：</span>persist v. 坚持 → persistence n. 坚持/毅力 → persistent adj. 持续的</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">a great expression of our admiration of courage and <em>persistence</em></span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>show great persistence 表现出极大的毅力 · with persistence 坚持不懈地</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('inspiration')">inspiration</span>
+          <span class="vocab-meaning">灵感，鼓舞</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">构词：</span>inspire v. 激励（选必词）→ inspiration n. 灵感/鼓舞 → inspiring adj. 鼓舞人心的</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">a deep well of <em>inspiration</em></span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>draw inspiration from 从…中汲取灵感 · a source of inspiration 灵感的源泉</div>
+        </div>
+      </div>
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('persist')">persist</span>
+          <span class="vocab-meaning">坚持，持续</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">释义：</span>persist v. 坚持，持续</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">when we <em>persist</em> with the wrong thing</span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>persist in doing sth 坚持做某事 · the problem persists 问题持续存在</div>
+        </div>
       </div>
       <div class="vocab-card">
         <div class="vocab-card-head">
           <span class="vocab-word" onclick="vocabClick('plentiful')">plentiful</span>
           <span class="vocab-meaning">丰富的，大量的</span>
-          <span class="vocab-tag tag-extend">拓展</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
         </div>
-        <div class="vocab-extra">plentiful adj. 丰富的，大量的 → plenty n. 大量。the flies more <em>plentiful</em> = 苍蝇更多/食物更丰富。<br>a <em>plentiful</em> supply of 充足的…供应 &nbsp;·&nbsp; <em>plenty</em> of 大量的 &nbsp;·&nbsp; food is <em>plentiful</em> 食物很充足</div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">构词：</span>plenty n. 大量（考纲基础词）→ plentiful adj. 丰富的</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">the flies more <em>plentiful</em></span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>a plentiful supply of 充足的…供应 · plenty of 大量的</div>
+        </div>
       </div>
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="vocabClick('revolutionizing')">revolutionizing</span>
+          <span class="vocab-word" onclick="vocabClick('revolutionizing')">revolutionize</span>
           <span class="vocab-meaning">彻底改变</span>
-          <span class="vocab-tag tag-extend">拓展</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
+          <button class="vocab-expand" onclick="this.closest('.vocab-card').querySelector('.vocab-detail').classList.toggle('open')">展开 ▾</button>
         </div>
-        <div class="vocab-extra">revolutionize v. 彻底改变 → revolutionizing 现在分词 → revolution n. 革命。technology is <em>revolutionizing</em> the world of sports = 技术正在彻底改变体育世界。<br><em>revolutionize</em> the industry 彻底改变行业 &nbsp;·&nbsp; industrial <em>revolution</em> 工业革命</div>
+        <div class="vocab-detail">
+          <div class="vd-section"><span class="vd-label">构词：</span>revolution n. 革命 → revolutionize v. 彻底改变</div>
+          <div class="vd-section"><span class="vd-label">原文：</span><span class="vd-example">technology is <em>revolutionizing</em> the world of sports</span></div>
+          <div class="vd-section"><span class="vd-label">搭配：</span>revolutionize the industry 彻底改变行业 · industrial revolution 工业革命</div>
+        </div>
       </div>
     </div>
   </div>
@@ -355,12 +518,19 @@ let enPlayer=null;
 function speakWord(word){
   if(enPlayer){enPlayer.pause();enPlayer=null;}
   const slug='en-word-'+word.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-  const src='audio/2026北京卷-书面表达/'+slug+'.mp3';
+  const src='audio/en-words/'+slug+'.mp3';
   enPlayer=new Audio(src);
   enPlayer.onerror=function(){const u=new SpeechSynthesisUtterance(word);const vs=speechSynthesis.getVoices();u.voice=vs.find(v=>v.lang==='en-GB')||vs.find(v=>v.lang.startsWith('en'))||vs[0];u.rate=0.8;speechSynthesis.speak(u);};
   enPlayer.play();
 }
-function vocabClick(phrase){speakWord(phrase);}
+function vocabClick(phrase){speakWord(phrase);highlightWord(phrase);}
+function highlightWord(phrase){
+  var tips=document.querySelectorAll('.tip');var matches=[];var lc=phrase.toLowerCase();
+  tips.forEach(function(el){var tp=(el.dataset.tip||'').split('|')[0].toLowerCase();if(tp===lc)matches.push(el);});
+  if(!matches.length)return;
+  matches.forEach(function(el){el.classList.remove('tip-flash');void el.offsetWidth;el.classList.add('tip-flash');setTimeout(function(){el.classList.remove('tip-flash');},1700);});
+  matches[0].scrollIntoView({behavior:'smooth',block:'center'});
+}
 const SRS_PREFIX='srs_beijing_2026_writing_';
 const SRS_INTERVALS=[1,3,7,14,30];
 function srsLoad(w){const r=localStorage.getItem(SRS_PREFIX+w);return r?JSON.parse(r):null;}

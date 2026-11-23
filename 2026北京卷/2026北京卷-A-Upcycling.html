@@ -91,10 +91,12 @@ body.compare-mode .translation-inline,body.mode-annotate .translation-inline{dis
 .srs-btn-forget:hover{background:#fee2e2;}
 .srs-badge{font-size:12px;font-weight:600;padding:1px 8px;border-radius:10px;background:#fef2f2;color:#dc2626;}
 .srs-badge.all-done{background:#dcfce7;color:#16a34a;}
+.vocab-card.srs-due .vocab-word::after{content:' 📌';font-size:10px;}
+.vocab-card.srs-known .vocab-word::after{content:' ✓';font-size:11px;color:#16a34a;}
 .question-item{padding:16px 24px;border-bottom:1px solid #f0f0f0;}
 .question-item:last-child{border-bottom:none;}
 .question-stem{font-weight:600;font-size:15px;margin-bottom:8px;}
-.question-options{display:grid;grid-template-columns:1fr;gap:4px;font-size:14px;margin-bottom:8px;}
+.question-options{display:grid;grid-template-columns:1fr 1fr;gap:4px 24px;font-size:14px;margin-bottom:8px;}
 .question-option{padding:2px 0;}
 .show-answer-btn{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--accent);cursor:pointer;background:none;border:none;padding:4px 0;}
 .show-answer-btn:hover{text-decoration:underline;}
@@ -214,8 +216,58 @@ body.mode-annotate .req-list{display:none;}
 }
 @media(max-width:600px){
   .passage{padding:18px 14px;}.sentence{font-size:16px;}
+  .question-options{grid-template-columns:1fr;}
   .panel-header,.question-item{padding-left:16px;padding-right:16px;}.panel-body{padding:12px 16px;}
   .schedule-table{font-size:13px;}.schedule-table td,.schedule-table th{padding:5px 8px;}
+}
+.review-section{padding:20px 24px;}
+.review-section h3{font-size:15px;margin-bottom:12px;}
+.review-checks{display:flex;flex-wrap:wrap;gap:12px;font-size:14px;}
+.review-checks label{display:flex;align-items:center;gap:6px;cursor:pointer;padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius);transition:all .15s;}
+.review-checks label:has(input:checked){background:var(--accent-light);border-color:var(--accent);}
+.review-checks input{accent-color:var(--accent);}
+.writing-block{margin-bottom:20px;}.writing-block:last-child{margin-bottom:0;}
+.writing-block-title{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px;border-bottom:1px solid var(--border);padding-bottom:6px;}
+.writing-phrase-list{display:flex;flex-direction:column;gap:0;}
+.writing-phrase{padding:10px 0;border-bottom:1px solid #f3f3f3;font-size:14px;}
+.writing-phrase:last-child{border-bottom:none;}
+.writing-phrase-en{font-family:Georgia,serif;font-weight:600;color:var(--text);font-size:15px;}
+.writing-phrase-cn{color:var(--text-secondary);font-size:13px;margin:2px 0;}
+.writing-phrase-src{font-size:12px;color:#aaa;font-style:italic;}
+.writing-phrase-src em{color:var(--accent);font-style:normal;}
+.writing-phrase-use{font-size:13px;color:#555;margin-top:4px;padding:5px 10px;background:var(--hover-bg);border-radius:4px;border-left:2px solid var(--accent);}
+.conn-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+@media(max-width:600px){.conn-grid{grid-template-columns:1fr;}}
+.conn-card{padding:10px 12px;border-radius:var(--radius);background:var(--hover-bg);font-size:13.5px;}
+.conn-card-title{font-weight:700;font-size:12px;letter-spacing:.04em;margin-bottom:6px;}
+.conn-card.c-add .conn-card-title{color:#0369a1;}
+.conn-card.c-contrast .conn-card-title{color:#b45309;}
+.conn-card.c-result .conn-card-title{color:#15803d;}
+.conn-card.c-example .conn-card-title{color:#7c3aed;}
+.conn-card.c-conclude .conn-card-title{color:#be185d;}
+.conn-item{display:inline-block;margin:2px 3px 2px 0;padding:2px 7px;border-radius:10px;font-size:12.5px;font-family:Georgia,serif;}
+.conn-card.c-add .conn-item{background:#e0f2fe;color:#0369a1;}
+.conn-card.c-contrast .conn-item{background:#fef3c7;color:#92400e;}
+.conn-card.c-result .conn-item{background:#dcfce7;color:#15803d;}
+.conn-card.c-example .conn-item{background:#ede9fe;color:#6d28d9;}
+.conn-card.c-conclude .conn-item{background:#fce7f3;color:#9d174d;}
+.conn-note{font-size:12px;color:#888;margin-top:5px;}
+@media print{
+  @page{size:A4;margin:14mm 12mm;}
+  html,body{background:#fff!important;}
+  body{padding:0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .header,#playbar,.panel,.tooltip{display:none!important;}
+  .passage{box-shadow:none!important;border:none!important;background:#fff!important;padding:0!important;margin:0!important;max-width:none!important;}
+  .sentence{font-size:15px!important;line-height:1.85!important;}
+  .translation-inline{font-size:12.5px!important;break-inside:avoid;}
+  body.mode-annotate .para-ann{grid-template-columns:1fr 1fr;gap:8px 10px;margin:8px 0 14px;}
+  .pan-row{box-shadow:none;padding:9px 12px 10px;break-inside:avoid;}
+  .pan-en{font-size:14px;}.pan-cn{font-size:12.5px;}
+  .pan-det{margin:6px 0 0 30px;font-size:11.5px;line-height:1.6;}.pan-det div+div{margin-top:3px;}
+  body.mode-annotate .sb-block{break-inside:avoid;padding:12px 14px;margin:4px 0 16px;}
+  .sb-sent{font-size:14px;line-height:2.1;padding:10px 12px;}
+  .sb-step{font-size:12.5px;line-height:1.6;}.sb-tip{font-size:12px;}
+  .passage-subtitle{break-after:avoid;}
 }
 </style>
 </head>
@@ -246,7 +298,7 @@ body.mode-annotate .req-list{display:none;}
     <ul>
       <li>Age 18–50</li>
       <li>Duration: 1–12 weeks</li>
-      <li>You'll get: airport pickup, accommodation with breakfast, free-time activities</li>
+      <li>You'll get: airport pickup, <span class="tip" 0>accommodation</span> with breakfast, free-time activities</li>
     </ul>
   </div>
 
@@ -260,7 +312,7 @@ body.mode-annotate .req-list{display:none;}
       <p><b>that 定语从句：</b>修饰 programme，说明项目目的——intends to reduce waste（旨在减少废物）。</p>
       <p><b>与21题的关系：</b>21题问项目的目标。答案 B（cut down on waste）直接来自这句话中的 "intends to reduce waste"。reduce = cut down on（同义替换）。</p>
     </div>
-    <span class="sentence complex" data-idx="1">By reimagining items that might otherwise end up in <span class="tip" data-tip="landfills|垃圾填埋场｜landfill = 垃圾填埋场（land = 土地，fill = 填满 → 用垃圾填满的土地）。文中括号已标注（垃圾场）。end up in landfills = 最终被扔进垃圾填埋场｜搭配：landfill site 垃圾填埋场，send to landfill 送往填埋场，reduce landfill waste 减少填埋垃圾" data-level="拓展">landfills</span> (垃圾场), UPCYCLING not only helps <span class="tip" data-tip="conserve|保护，节约，保存｜conserve = 保护/节约资源（con-（加强）+ serve（保存）→ 仔细保存 → 节约/保护）。conserve natural resources = 保护自然资源｜搭配：conserve energy 节约能源，conserve water 节约用水，conservation（n.）保护/保育" data-level="选必">conserve</span> natural resources but also encourages innovation and environmental awareness.</span>
+    <span class="sentence complex" data-idx="1">By <span class="tip" data-tip="reimagining|重新设想，重新构思｜re-（再次）+ imagine（想象）= reimagine（重新想象/设想）。reimagining items = 重新构思这些物品的用途，把原本要扔的东西想出新用法｜搭配：reimagine the future 重新设想未来，reimagine education 重新构思教育" data-level="超纲">reimagining</span> items that might <span class="tip" data-tip="otherwise|否则，要不然；在其他方面｜other + wise（方式）= 用另一种方式 → 否则/要不然。might otherwise end up in landfills = 要不然可能最终被扔进垃圾场。这里 otherwise 表示「如果不这样做的话」｜搭配：otherwise known as 又称为，think otherwise 持不同看法" data-level="选必">otherwise</span> end up in <span class="tip" data-tip="landfills|垃圾填埋场｜landfill = 垃圾填埋场（land = 土地，fill = 填满 → 用垃圾填满的土地）。文中括号已标注（垃圾场）。end up in landfills = 最终被扔进垃圾填埋场｜搭配：landfill site 垃圾填埋场，send to landfill 送往填埋场，reduce landfill waste 减少填埋垃圾" data-level="超纲">landfills</span> (垃圾场), UPCYCLING not only helps <span class="tip" data-tip="conserve|保护，节约，保存｜conserve = 保护/节约资源（con-（加强）+ serve（保存）→ 仔细保存 → 节约/保护）。conserve natural resources = 保护自然资源｜搭配：conserve energy 节约能源，conserve water 节约用水，conservation（n.）保护/保育" data-level="超纲">conserve</span> natural resources but also encourages <span class="tip" data-tip="innovation|创新，革新｜innovate = 创新（in-（进入）+ nov（新的）+ -ate → 引入新事物 → 创新）。innovation = 创新（名词）。encourages innovation = 鼓励创新｜搭配：technological innovation 技术创新，innovation in education 教育创新，innovative（adj.）创新的" data-level="拓展">innovation</span> and environmental <span class="tip" data-tip="awareness|意识，认识｜aware = 意识到的/知道的，awareness = 意识（名词）。environmental awareness = 环保意识｜搭配：raise awareness 提高意识，public awareness 公众意识，awareness of... 对...的意识。作文高频词！" data-level="选必">awareness</span>.</span>
     <div class="analysis" id="analysis-1">
       <p><b>句子结构：</b>主干是 <em>UPCYCLING not only helps conserve... but also encourages...</em>（UPCYCLING 不仅帮助保护...还鼓励...）。</p>
       <p><b>By reimagining... 方式状语：</b>通过重新设想那些可能被扔进垃圾填埋场的物品。</p>
@@ -283,7 +335,7 @@ body.mode-annotate .req-list{display:none;}
   </div>
 
   <div class="paragraph" id="para-2">
-    <span class="sentence" data-idx="2">We welcome volunteers to help transform <span class="tip" data-tip="reclaimed|回收再利用的｜reclaim = 回收利用（re-（再次）+ claim（要求/获取）→ 重新获取 → 回收利用）。reclaimed materials = 回收再利用的材料，指从废弃物中回收的材料｜搭配：reclaimed wood 回收木材，reclaimed land 填海造地/复垦土地，reclaim waste 回收废料" data-level="拓展">reclaimed</span> materials into objects with new and creative purposes.</span>
+    <span class="sentence" data-idx="2">We welcome volunteers to help <span class="tip" data-tip="transform|转变，改造｜trans-（跨越/转换）+ form（形态）= 从一种形态变成另一种。transform A into B = 把A改造成B。这里 transform reclaimed materials into objects = 把回收材料改造成新物品｜搭配：transform...into... 把...变成...，transformation（n.）转变，transformative 有变革意义的" data-level="拓展">transform</span> <span class="tip" data-tip="reclaimed|回收再利用的｜reclaim = 回收利用（re-（再次）+ claim（要求/获取）→ 重新获取 → 回收利用）。reclaimed materials = 回收再利用的材料，指从废弃物中回收的材料｜搭配：reclaimed wood 回收木材，reclaimed land 填海造地/复垦土地，reclaim waste 回收废料" data-level="超纲">reclaimed</span> materials into objects with new and creative purposes.</span>
     <div class="translation-inline">我们欢迎志愿者帮助将回收材料转化为具有新颖创意用途的物品。</div>
   </div>
 
@@ -292,10 +344,10 @@ body.mode-annotate .req-list{display:none;}
 
   <div class="paragraph" id="para-3" style="text-indent:0;">
     <ul class="req-list">
-      <li><span class="sentence" data-idx="3"><b>Furniture <span class="tip" data-tip="restoration|修复，恢复｜restore = 修复/恢复（re-（再次）+ store（存放）→ 恢复原状）。restoration = 修复（名词）。Furniture Restoration = 家具修复｜搭配：restoration work 修复工作，art restoration 艺术品修复，restore to its original condition 恢复原貌" data-level="选必">Restoration</span>:</b> take an active role in transforming reclaimed furniture and materials into useful items, giving them a new life;</span></li>
-      <li><span class="sentence" data-idx="4"><b>Creative Workshops:</b> learn basic repairs and artistic <span class="tip" data-tip="redesign|重新设计｜redesign = 重新设计（re-（再次）+ design（设计）→ 重新设计）。artistic redesign of old furniture = 对旧家具进行艺术性的重新设计｜搭配：redesign a website 重新设计网站，product redesign 产品重新设计" data-level="选必">redesign</span> of old furniture, while sharing knowledge and ideas with fellow volunteers.</span></li>
-      <li><span class="sentence" data-idx="5"><b>Social &amp; Environmental Action:</b> help address social and environmental challenges through creativity and <span class="tip" data-tip="cooperation|合作，协作｜cooperate = 合作（co-（共同）+ operate（操作/运作）→ 共同运作 → 合作）。cooperation = 合作（名词）。through creativity and cooperation = 通过创意和合作｜搭配：international cooperation 国际合作，in cooperation with 与...合作，cooperative（adj.）合作的" data-level="选必">cooperation</span>.</span></li>
-      <li><span class="sentence complex" data-idx="6"><b>Community Services:</b> support communities by providing upcycled goods to those in need and help promote projects through social platforms to widen <span class="tip" data-tip="outreach|推广，外展，拓展服务｜outreach = 延伸/推广（out（向外）+ reach（触及）→ 向外触及 → 推广/外展）。widen outreach = 扩大推广范围。这是22题的关键定位句｜搭配：community outreach 社区外展，outreach programme 外展项目，outreach effort 推广工作" data-level="拓展">outreach</span>.</span>
+      <li><span class="sentence" data-idx="3"><b>Furniture <span class="tip" data-tip="restoration|修复，恢复｜restore = 修复/恢复（re-（再次）+ store（存放）→ 恢复原状）。restoration = 修复（名词）。Furniture Restoration = 家具修复｜搭配：restoration work 修复工作，art restoration 艺术品修复，restore to its original condition 恢复原貌" data-level="拓展">Restoration</span>:</b> take an active role in transforming reclaimed furniture and materials into useful items, giving them a new life;</span></li>
+      <li><span class="sentence" data-idx="4"><b>Creative Workshops:</b> learn basic repairs and <span class="tip" data-tip="artistic|艺术性的，有艺术感的｜artist = 艺术家，artistic = 艺术性的（-ic 形容词后缀）。artistic redesign = 有艺术感的重新设计，不只是修好，还要好看｜搭配：artistic style 艺术风格，artistic talent 艺术天赋，artistic value 艺术价值">artistic</span> <span class="tip" data-tip="redesign|重新设计｜redesign = 重新设计（re-（再次）+ design（设计）→ 重新设计）。artistic redesign of old furniture = 对旧家具进行艺术性的重新设计｜搭配：redesign a website 重新设计网站，product redesign 产品重新设计" data-level="超纲">redesign</span> of old furniture, while sharing knowledge and ideas with <span class="tip" data-tip="fellow|同伴的，同行的；伙伴｜fellow 作形容词 = 同伴的/同行的。fellow volunteers = 一起做志愿的伙伴们。fellow students = 同学们｜搭配：fellow workers 同事，fellow citizens 同胞，a research fellow 研究员" data-level="拓展">fellow</span> volunteers.</span></li>
+      <li><span class="sentence" data-idx="5"><b>Social &amp; Environmental Action:</b> help <span class="tip" data-tip="address|应对，解决（动词）；地址（名词）｜一词多义陷阱！高考常考。address 当名词 = 地址/演讲，当动词 = 应对/解决/处理。address challenges = 应对挑战（不是「给挑战写地址」！）｜搭配：address the issue/problem 解决问题，address concerns 回应关切">address</span> social and environmental challenges through creativity and <span class="tip" data-tip="cooperation|合作，协作｜cooperate = 合作（co-（共同）+ operate（操作/运作）→ 共同运作 → 合作）。cooperation = 合作（名词）。through creativity and cooperation = 通过创意和合作｜搭配：international cooperation 国际合作，in cooperation with 与...合作，cooperative（adj.）合作的" data-level="选必">cooperation</span>.</span></li>
+      <li><span class="sentence complex" data-idx="6"><b>Community Services:</b> support communities by providing <span class="tip" data-tip="upcycled|升级改造的｜upcycle = 升级改造（up（向上/提升）+ cycle（循环利用）→ 把废旧物品改造成更高价值的产品）。upcycled goods = 升级改造后的物品。与 recycled（回收再利用的）不同，upcycled 强调价值提升｜搭配：upcycled furniture 升级改造的家具" data-level="超纲">upcycled</span> goods to those in need and help <span class="tip" data-tip="promote|推广，促进，宣传｜pro-（向前）+ mote（移动）= 向前推动 → 推广/促进。promote projects = 推广项目。也可指「晋升」：get promoted 被提拔｜搭配：promote awareness 提高意识，promote health 促进健康，promotion（n.）推广/晋升" data-level="拓展">promote</span> projects through social platforms to widen <span class="tip" data-tip="outreach|推广，外展，拓展服务｜outreach = 延伸/推广（out（向外）+ reach（触及）→ 向外触及 → 推广/外展）。widen outreach = 扩大推广范围。这是22题的关键定位句｜搭配：community outreach 社区外展，outreach programme 外展项目，outreach effort 推广工作" data-level="超纲">outreach</span>.</span>
         <div class="analysis" id="analysis-6">
           <p><b>句子结构：</b>主干是 <em>support communities... and help promote projects...</em>（支持社区...并帮助推广项目...）。</p>
           <p><b>by providing... 方式状语：</b>通过向有需要的人提供升级改造的物品。这是22题答案B的关键定位。</p>
@@ -356,31 +408,51 @@ body.mode-annotate .req-list{display:none;}
 <!-- ══════ Vocabulary ══════ -->
 <div class="panel" id="vocabPanel">
   <div class="panel-header" onclick="togglePanel('vocabPanel')">
-    <span>生词与短语（10个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
+    <span>生词与短语（21个）<span id="srs-badge" class="srs-badge" style="margin-left:8px"></span></span>
     <span class="arrow">&#9660;</span>
   </div>
   <div class="panel-body">
     <div class="vocab-list">
+      <!-- ── 考纲基础 ── -->
 
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="vocabClick('upcycling')">upcycling</span>
-          <span class="vocab-meaning">升级改造（将废弃物改造成更有价值的物品）</span>
-          <span class="vocab-tag tag-extend">拓展</span>
+          <span class="vocab-word" onclick="vocabClick('address')">address</span>
+          <span class="vocab-tag">一词多义</span>
+          <span class="vocab-meaning">应对/解决（动词）；地址（名词）</span>
+          <span class="vocab-tag tag-core">考纲基础</span>
           <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
         </div>
         <div class="vocab-detail">
-          <div>up（向上/提升）+ cycling（循环利用）= upcycling（升级改造）。与 recycling（回收再利用）不同，upcycling 强调把废旧物品改造成更高价值的新产品。</div>
-          <div class="vd-example"><em>UPCYCLING</em> is a programme that intends to reduce waste. （课文）</div>
-          <div class="vd-example">作文：<em>Upcycling</em> is a creative way to protect the environment. 升级改造是保护环境的一种创意方式。</div>
+          <div>高考常考一词多义陷阱！名词 = 地址/演讲，动词 = 应对/解决/处理。</div>
+          <div class="vd-example">① 应对/解决：help <em>address</em> social and environmental challenges （课文）</div>
+          <div class="vd-example">② 地址：What's your home <em>address</em>? 你家地址是什么？</div>
+          <div class="vd-example">③ 演讲：<em>address</em> the audience 向观众发表演讲</div>
+          <div class="vd-example">作文：We must <em>address</em> the issue of climate change. 我们必须应对气候变化问题。</div>
         </div>
       </div>
 
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="vocabClick('intends')">intends</span>
+          <span class="vocab-word" onclick="vocabClick('artistic')">artistic</span>
+          <span class="vocab-meaning">艺术性的，有艺术感的</span>
+          <span class="vocab-tag tag-core">考纲基础</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>artist = 艺术家，artistic = 艺术性的（-ic 形容词后缀）。artistic redesign = 有艺术感的重新设计。</div>
+          <div class="vd-example">learn basic repairs and <em>artistic</em> redesign of old furniture. （课文）</div>
+          <div class="vd-example"><em>artistic</em> style 艺术风格；<em>artistic</em> talent 艺术天赋；<em>artistic</em> value 艺术价值</div>
+        </div>
+      </div>
+
+      <!-- ── 选必 ── -->
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('intend')">intend</span>
           <span class="vocab-meaning">打算，意图，旨在</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
+          <span class="vocab-tag tag-exam">选必</span>
           <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
         </div>
         <div class="vocab-detail">
@@ -392,9 +464,167 @@ body.mode-annotate .req-list{display:none;}
 
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="vocabClick('landfills')">landfills</span>
-          <span class="vocab-meaning">垃圾填埋场</span>
+          <span class="vocab-word" onclick="vocabClick('otherwise')">otherwise</span>
+          <span class="vocab-meaning">否则，要不然；在其他方面</span>
+          <span class="vocab-tag tag-exam">选必</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>other + wise（方式）= 用另一种方式 → 否则/要不然。这里 might otherwise end up in landfills = 要不然可能最终被扔进垃圾场。</div>
+          <div class="vd-example">items that might <em>otherwise</em> end up in landfills （课文）</div>
+          <div class="vd-example"><em>otherwise</em> known as 又称为；think <em>otherwise</em> 持不同看法；Hurry up, <em>otherwise</em> we'll be late. 快点，否则我们要迟到了。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('cooperation')">cooperation</span>
+          <span class="vocab-meaning">合作，协作</span>
+          <span class="vocab-tag tag-exam">选必</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>cooperate（合作）→ cooperation（n.）。co-（共同）+ operate（操作/运作）→ 共同运作 → 合作。派生：cooperative（adj.）合作的。</div>
+          <div class="vd-example">through creativity and <em>cooperation</em>. （课文）</div>
+          <div class="vd-example">作文：<em>Cooperation</em> is the key to solving global challenges. 合作是解决全球挑战的关键。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('awareness')">awareness</span>
+          <span class="vocab-meaning">意识，认识</span>
+          <span class="vocab-tag tag-exam">选必</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>aware = 意识到的/知道的，awareness = 意识（名词）。environmental awareness = 环保意识。作文高频词！</div>
+          <div class="vd-example">encourages innovation and environmental <em>awareness</em>. （课文）</div>
+          <div class="vd-example">raise <em>awareness</em> 提高意识；public <em>awareness</em> 公众意识；作文：We should raise <em>awareness</em> of environmental protection. 我们应该提高环保意识。</div>
+        </div>
+      </div>
+
+      <!-- ── 拓展 ── -->
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('restoration')">restoration</span>
+          <span class="vocab-meaning">修复，恢复</span>
           <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>restore（修复/恢复）→ restoration（n.）。re-（再次）+ store（存放）→ 恢复原状。Furniture Restoration = 家具修复。</div>
+          <div class="vd-example">Furniture <em>Restoration</em>: take an active role in transforming reclaimed furniture... （课文）</div>
+          <div class="vd-example">art <em>restoration</em> 艺术品修复；<em>restoration</em> work 修复工作；<em>restore</em> to its original condition 恢复原貌</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('shift')">shift</span>
+          <span class="vocab-meaning">轮班，班次；转变</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>shift 原义为"移动/转换"，引申为工作时间的轮换（轮班）。morning shift = 早班，night shift = 夜班。也可指"转变"。</div>
+          <div class="vd-example">You will work on a morning, afternoon or evening <em>shift</em>. （课文）</div>
+          <div class="vd-example">night <em>shift</em> 夜班；work in <em>shifts</em> 轮班工作；a <em>shift</em> in attitude 态度的转变</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('accommodation')">accommodation</span>
+          <span class="vocab-meaning">住宿，膳宿</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>accommodate = 容纳/提供住宿（ac- + com- + mod（方式）→ 合适地安顿）。注意双写 cc 和 mm，高考拼写易错词！</div>
+          <div class="vd-example">You'll get: airport pickup, <em>accommodation</em> with breakfast... （课文）</div>
+          <div class="vd-example">hotel <em>accommodation</em> 酒店住宿；provide <em>accommodation</em> 提供住处；book <em>accommodation</em> 预订住宿</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('transform')">transform</span>
+          <span class="vocab-meaning">转变，改造</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>trans-（跨越/转换）+ form（形态）= 从一种形态变成另一种。transform A into B = 把A改造成B。</div>
+          <div class="vd-example">help <em>transform</em> reclaimed materials into objects with new purposes. （课文）</div>
+          <div class="vd-example"><em>transformation</em>（n.）转变；<em>transformative</em>（adj.）有变革意义的；作文：Technology has <em>transformed</em> the way we learn. 科技改变了我们的学习方式。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('innovation')">innovation</span>
+          <span class="vocab-meaning">创新，革新</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>innovate = 创新（in-（进入）+ nov（新的）+ -ate → 引入新事物 → 创新）。innovation（n.）创新，innovative（adj.）创新的。</div>
+          <div class="vd-example">encourages <em>innovation</em> and environmental awareness. （课文）</div>
+          <div class="vd-example">technological <em>innovation</em> 技术创新；作文：<em>Innovation</em> is the key to solving environmental problems. 创新是解决环境问题的关键。</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('fellow')">fellow</span>
+          <span class="vocab-meaning">同伴的，同行的；伙伴</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>fellow 作形容词 = 同伴的/同行的。fellow volunteers = 一起做志愿的伙伴们。</div>
+          <div class="vd-example">sharing knowledge and ideas with <em>fellow</em> volunteers. （课文）</div>
+          <div class="vd-example"><em>fellow</em> students 同学们；<em>fellow</em> workers 同事；<em>fellow</em> citizens 同胞</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('promote')">promote</span>
+          <span class="vocab-meaning">推广，促进，宣传</span>
+          <span class="vocab-tag tag-extend">拓展</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>pro-（向前）+ mote（移动）= 向前推动 → 推广/促进。也可指「晋升」：get promoted 被提拔。</div>
+          <div class="vd-example">help <em>promote</em> projects through social platforms. （课文）</div>
+          <div class="vd-example"><em>promote</em> awareness 提高意识；<em>promote</em> health 促进健康；<em>promotion</em>（n.）推广/晋升</div>
+        </div>
+      </div>
+
+      <!-- ── 超纲 ── -->
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('upcycle')">upcycle</span>
+          <span class="vocab-meaning">升级改造</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
+          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
+        </div>
+        <div class="vocab-detail">
+          <div>upcycle 的过去分词作形容词。up（向上/提升）+ cycle（循环利用）→ 把废旧物品改造成更高价值的产品。与 recycled（回收的）不同。</div>
+          <div class="vd-example">providing <em>upcycled</em> goods to those in need. （课文）</div>
+          <div class="vd-example"><em>upcycled</em> furniture 升级改造的家具；<em>upcycled</em> fashion 升级改造时装</div>
+        </div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-card-head">
+          <span class="vocab-word" onclick="vocabClick('landfill')">landfill</span>
+          <span class="vocab-meaning">垃圾填埋场</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
           <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
         </div>
         <div class="vocab-detail">
@@ -408,7 +638,7 @@ body.mode-annotate .req-list{display:none;}
         <div class="vocab-card-head">
           <span class="vocab-word" onclick="vocabClick('conserve')">conserve</span>
           <span class="vocab-meaning">保护，节约，保存</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
           <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
         </div>
         <div class="vocab-detail">
@@ -420,9 +650,9 @@ body.mode-annotate .req-list{display:none;}
 
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="vocabClick('reclaimed')">reclaimed</span>
-          <span class="vocab-meaning">回收再利用的</span>
-          <span class="vocab-tag tag-extend">拓展</span>
+          <span class="vocab-word" onclick="vocabClick('reclaim')">reclaim</span>
+          <span class="vocab-meaning">回收再利用</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
           <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
         </div>
         <div class="vocab-detail">
@@ -434,23 +664,9 @@ body.mode-annotate .req-list{display:none;}
 
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="vocabClick('restoration')">restoration</span>
-          <span class="vocab-meaning">修复，恢复</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
-          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
-        </div>
-        <div class="vocab-detail">
-          <div>restore（修复/恢复）→ restoration（n.）。re-（再次）+ store（存放）→ 恢复原状。Furniture Restoration = 家具修复。</div>
-          <div class="vd-example">Furniture <em>Restoration</em>: take an active role in transforming reclaimed furniture... （课文）</div>
-          <div class="vd-example">art <em>restoration</em> 艺术品修复；<em>restoration</em> work 修复工作；<em>restore</em> to its original condition 恢复原貌</div>
-        </div>
-      </div>
-
-      <div class="vocab-card">
-        <div class="vocab-card-head">
           <span class="vocab-word" onclick="vocabClick('redesign')">redesign</span>
           <span class="vocab-meaning">重新设计</span>
-          <span class="vocab-tag tag-exam">考纲内</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
           <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
         </div>
         <div class="vocab-detail">
@@ -462,15 +678,15 @@ body.mode-annotate .req-list{display:none;}
 
       <div class="vocab-card">
         <div class="vocab-card-head">
-          <span class="vocab-word" onclick="vocabClick('cooperation')">cooperation</span>
-          <span class="vocab-meaning">合作，协作</span>
-          <span class="vocab-tag tag-core">高频</span>
+          <span class="vocab-word" onclick="vocabClick('reimagine')">reimagine</span>
+          <span class="vocab-meaning">重新设想，重新构思</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
           <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
         </div>
         <div class="vocab-detail">
-          <div>cooperate（合作）→ cooperation（n.）。co-（共同）+ operate（操作/运作）→ 共同运作 → 合作。派生：cooperative（adj.）合作的。</div>
-          <div class="vd-example">through creativity and <em>cooperation</em>. （课文）</div>
-          <div class="vd-example">作文：<em>Cooperation</em> is the key to solving global challenges. 合作是解决全球挑战的关键。</div>
+          <div>re-（再次）+ imagine（想象）= reimagine（重新设想）。把原本要扔的东西想出新用法。</div>
+          <div class="vd-example">By <em>reimagining</em> items that might otherwise end up in landfills... （课文）</div>
+          <div class="vd-example">作文：We should <em>reimagine</em> how we use everyday materials. 我们应该重新设想如何使用日常材料。</div>
         </div>
       </div>
 
@@ -478,27 +694,13 @@ body.mode-annotate .req-list{display:none;}
         <div class="vocab-card-head">
           <span class="vocab-word" onclick="vocabClick('outreach')">outreach</span>
           <span class="vocab-meaning">推广，外展，拓展服务</span>
-          <span class="vocab-tag tag-extend">拓展</span>
+          <span class="vocab-tag tag-beyond">超纲</span>
           <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
         </div>
         <div class="vocab-detail">
           <div>out（向外）+ reach（触及）= outreach（延伸/推广/外展）。widen outreach = 扩大推广范围。</div>
           <div class="vd-example">help promote projects through social platforms to widen <em>outreach</em>. （课文）</div>
           <div class="vd-example">community <em>outreach</em> 社区外展；<em>outreach</em> programme 外展项目</div>
-        </div>
-      </div>
-
-      <div class="vocab-card">
-        <div class="vocab-card-head">
-          <span class="vocab-word" onclick="vocabClick('shift')">shift</span>
-          <span class="vocab-meaning">轮班，班次；转变</span>
-          <span class="vocab-tag tag-core">高频</span>
-          <button class="vocab-expand" onclick="this.parentElement.nextElementSibling.classList.toggle('open')">展开 ▾</button>
-        </div>
-        <div class="vocab-detail">
-          <div>shift 原义为"移动/转换"，引申为工作时间的轮换（轮班）。morning shift = 早班，night shift = 夜班。也可指"转变"。</div>
-          <div class="vd-example">You will work on a morning, afternoon or evening <em>shift</em>. （课文）</div>
-          <div class="vd-example">night <em>shift</em> 夜班；work in <em>shifts</em> 轮班工作；a <em>shift</em> in attitude 态度的转变</div>
         </div>
       </div>
 
@@ -516,11 +718,11 @@ body.mode-annotate .req-list{display:none;}
 
     <!-- Q21 -->
     <div class="question-item" data-answer="B">
-      <div class="question-stem">21. The programme aims to________.</div>
+      <div class="question-stem">21. The programme <span class="tip" data-tip="aims to|旨在，目标是｜aim = 目标/瞄准，aim to do = 旨在做某事，目标是做某事。与课文 intends to 同义｜搭配：aim at 瞄准/针对，aim for 争取">aims to</span>________.</div>
       <div class="question-options">
         <div class="question-option" data-key="A">A. create new materials</div>
-        <div class="question-option" data-key="B">B. cut down on waste</div>
-        <div class="question-option" data-key="C">C. set up social platforms</div>
+        <div class="question-option" data-key="B">B. <span class="tip" data-tip="cut down on|减少，削减｜cut down = 砍倒/减少，cut down on = 减少（某种消耗/用量）。cut down on waste = reduce waste（减少浪费），这是同义替换！｜搭配：cut down on sugar 减少糖的摄入，cut down on expenses 削减开支">cut down on</span> waste</div>
+        <div class="question-option" data-key="C">C. <span class="tip" data-tip="set up|建立，设立，创建｜set up = 建立/创建。set up social platforms = 建立社交平台。注意课文说的是「通过社交平台推广」，不是「建立平台」｜搭配：set up a company 创办公司，set up a system 建立系统">set up</span> social platforms</div>
         <div class="question-option" data-key="D">D. promote language learning</div>
       </div>
       <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
@@ -539,12 +741,12 @@ body.mode-annotate .req-list{display:none;}
 
     <!-- Q22 -->
     <div class="question-item" data-answer="B">
-      <div class="question-stem">22. The programme provides certain community members with________.</div>
+      <div class="question-stem">22. The programme provides <span class="tip" data-tip="certain|某些，特定的｜certain = 某些/特定的（不是全部）。certain community members = 某些社区成员（指 those in need，有需要的人）。也可指「确定的」：I'm certain = 我确定｜搭配：certain people 某些人，a certain amount 一定数量">certain</span> community members with________.</div>
       <div class="question-options">
         <div class="question-option" data-key="A">A. free-time activities</div>
         <div class="question-option" data-key="B">B. upcycled goods</div>
         <div class="question-option" data-key="C">C. hotel services</div>
-        <div class="question-option" data-key="D">D. airport pickups</div>
+        <div class="question-option" data-key="D">D. <span class="tip" data-tip="airport pickups|机场接机｜pickup = 接人/取货（pick up 的名词形式）。airport pickup = 机场接机服务｜搭配：arrange a pickup 安排接人">airport pickups</span></div>
       </div>
       <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
       <div class="question-analysis">
@@ -564,10 +766,10 @@ body.mode-annotate .req-list{display:none;}
     <div class="question-item" data-answer="D">
       <div class="question-stem">23. What can volunteers do?</div>
       <div class="question-options">
-        <div class="question-option" data-key="A">A. Schedule the projects</div>
-        <div class="question-option" data-key="B">B. Organise creative workshops</div>
+        <div class="question-option" data-key="A">A. <span class="tip" data-tip="Schedule|安排日程，排定时间｜schedule 名词 = 日程表/时间表，动词 = 安排时间。Schedule the projects = 安排项目日程（但课文没说志愿者能这么做）｜搭配：on schedule 按计划，behind schedule 落后于计划">Schedule</span> the projects</div>
+        <div class="question-option" data-key="B">B. <span class="tip" data-tip="Organise|组织，举办｜organise = organize 的英式拼法，意思完全相同。organise workshops = 组织工坊（注意：课文说志愿者是去「学习」，不是去「组织」）｜搭配：organise an event 组织活动，well-organised 有条理的">Organise</span> creative workshops</div>
         <div class="question-option" data-key="C">C. Design art classes</div>
-        <div class="question-option" data-key="D">D. Participate in water sports</div>
+        <div class="question-option" data-key="D">D. <span class="tip" data-tip="Participate in|参加，参与｜participate = 参加（parti-（部分）+ cip（取）+ -ate → 取一份 → 参与其中）。participate in water sports = 参加水上运动｜搭配：participate in activities 参加活动，participation（n.）参与，participant（n.）参与者">Participate in</span> water sports</div>
       </div>
       <button class="show-answer-btn" onclick="toggleQuestionAnalysis(this)">🔍 查看解析</button>
       <div class="question-analysis">
@@ -589,33 +791,25 @@ body.mode-annotate .req-list{display:none;}
 
 <!-- ══════ Review ══════ -->
 <div class="panel" id="reviewPanel">
-  <div class="panel-header" onclick="togglePanel('reviewPanel')">阅读原文<span class="arrow">&#9660;</span></div>
-  <div class="panel-body" style="font-family:Georgia,serif;font-size:16px;line-height:2;">
-    <div style="background:#f0f6fc;border:1px solid #e2e2e0;border-radius:6px;padding:10px 16px;margin-bottom:12px;">
-      <ul style="margin:0;padding:0 0 0 1.2em;">
-        <li>Age 18–50</li>
-        <li>Duration: 1–12 weeks</li>
-        <li>You'll get: airport pickup, accommodation with breakfast, free-time activities</li>
-      </ul>
+  <div class="panel-header" onclick="togglePanel('reviewPanel')">
+    本篇复盘
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body">
+    <div class="review-section">
+      <h3>我这篇的卡点：</h3>
+      <div class="review-checks">
+        <label><input type="checkbox" id="rev1"> 长难句看不懂</label>
+        <label><input type="checkbox" id="rev2"> 找不到原文证据</label>
+        <label><input type="checkbox" id="rev3"> 脑补推理</label>
+        <label><input type="checkbox" id="rev4"> 生词太多</label>
+      </div>
+      <h3 style="margin-top:16px">标记：</h3>
+      <div class="review-checks">
+        <label><input type="checkbox" id="rev5"> 待复习</label>
+        <label><input type="checkbox" id="rev6"> 已掌握</label>
+      </div>
     </div>
-    <p style="font-weight:700;margin:12px 0 4px 0;">About the Programme</p>
-    <p style="text-indent:2em">UPCYCLING is a programme that intends to reduce waste. By reimagining items that might otherwise end up in landfills (垃圾场), UPCYCLING not only helps conserve natural resources but also encourages innovation and environmental awareness.</p>
-    <p style="text-indent:2em">We welcome volunteers to help transform reclaimed materials into objects with new and creative purposes.</p>
-    <p style="font-weight:700;margin:12px 0 4px 0;">What to Expect</p>
-    <ul style="margin-left:1.5em;line-height:2;">
-      <li><b>Furniture Restoration:</b> take an active role in transforming reclaimed furniture and materials into useful items, giving them a new life;</li>
-      <li><b>Creative Workshops:</b> learn basic repairs and artistic redesign of old furniture, while sharing knowledge and ideas with fellow volunteers.</li>
-      <li><b>Social &amp; Environmental Action:</b> help address social and environmental challenges through creativity and cooperation.</li>
-      <li><b>Community Services:</b> support communities by providing upcycled goods to those in need and help promote projects through social platforms to widen outreach.</li>
-    </ul>
-    <p style="font-weight:700;margin:12px 0 4px 0;">A Typical Day</p>
-    <p style="text-indent:2em">You will work on a morning, afternoon or evening shift at your project site for 3 to 5 hours per day, Monday to Friday.</p>
-    <table style="width:100%;border-collapse:collapse;margin:8px 0;font-size:14px;">
-      <tr><td style="padding:3px 8px;white-space:nowrap;font-weight:600;">8:00–10:00 am</td><td style="padding:3px 8px;">Breakfast at the hotel</td></tr>
-      <tr><td style="padding:3px 8px;white-space:nowrap;font-weight:600;">10:00 am</td><td style="padding:3px 8px;">Work at the project sites, or enjoy your free time</td></tr>
-    </table>
-    <p style="font-weight:700;margin:12px 0 4px 0;">Free-time Activities</p>
-    <p style="text-indent:2em">In your free time, you can explore the city, have language classes, surf or choose your favourite from among the following: Riding, Hiking, Swimming, Water Sports, Concert, Museum.</p>
   </div>
 </div>
 
@@ -640,22 +834,119 @@ body.mode-annotate .req-list{display:none;}
 
 <!-- ══════ 作文拓展 ══════ -->
 <div class="panel" id="writingPanel">
-  <div class="panel-header" onclick="togglePanel('writingPanel')">作文拓展：好句式 &amp; 好短语<span class="arrow">&#9660;</span></div>
-  <div class="panel-body" style="font-size:15px;line-height:1.9;">
-    <p><b>可以直接用进作文的高频表达：</b></p>
-    <ul style="margin:8px 0 0 20px;">
-      <li><em>cut down on waste / reduce waste</em>（减少浪费）—— We should <em>cut down on waste</em> by recycling and upcycling.</li>
-      <li><em>conserve natural resources</em>（保护自然资源）—— It is our duty to <em>conserve natural resources</em> for future generations.</li>
-      <li><em>take an active role in</em>（积极参与）—— Students should <em>take an active role in</em> community service.</li>
-      <li><em>address challenges through cooperation</em>（通过合作应对挑战）—— We can <em>address environmental challenges through cooperation</em>.</li>
-      <li><em>widen outreach</em>（扩大影响/推广范围）—— Social media helps <em>widen the outreach</em> of volunteer projects.</li>
-    </ul>
-    <p style="margin-top:10px"><b>环保/志愿类写作结构（如果考作文也是此类话题）：</b></p>
-    <ul style="margin:8px 0 0 20px;">
-      <li>开头：介绍项目名称与目的（We are launching a programme that intends to... / Volunteers are wanted for...）</li>
-      <li>中间：分条说明活动内容/志愿者职责（Volunteers will be responsible for... / Activities include...）</li>
-      <li>结尾：号召参加（Join us and make a difference! / Your participation will contribute to a greener future!）</li>
-    </ul>
+  <div class="panel-header" onclick="togglePanel('writingPanel')">
+    作文拓展：好句式 &amp; 连接词速查
+    <span class="arrow">&#9660;</span>
+  </div>
+  <div class="panel-body" style="font-size:15px; line-height:1.8;">
+
+    <div class="writing-block">
+      <div class="writing-block-title">从文章偷来的好句式</div>
+      <div class="writing-phrase-list">
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">... is a programme that intends to ...</div>
+          <div class="writing-phrase-cn">...是一个旨在...的项目</div>
+          <div class="writing-phrase-src">原句：<em>UPCYCLING is a programme that intends to reduce waste.</em></div>
+          <div class="writing-phrase-use">作文套用：This <em>is a programme that intends to</em> promote cultural exchange. 写活动介绍/通知时直接搬。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">not only ... but also ...</div>
+          <div class="writing-phrase-cn">不仅...还...（高考写作必备句型）</div>
+          <div class="writing-phrase-src">原句：<em>UPCYCLING not only helps conserve natural resources but also encourages innovation.</em></div>
+          <div class="writing-phrase-use">作文套用：Volunteering <em>not only</em> broadens our horizons <em>but also</em> strengthens our sense of responsibility. 两个好处并列说时用。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">take an active role in ...</div>
+          <div class="writing-phrase-cn">积极参与...（比 participate in 更生动）</div>
+          <div class="writing-phrase-src">原句：<em>take an active role in transforming reclaimed furniture...</em></div>
+          <div class="writing-phrase-use">作文套用：Students should <em>take an active role in</em> community service. 比 "join" 和 "participate" 高级。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">address ... challenges through cooperation</div>
+          <div class="writing-phrase-cn">通过合作应对...挑战</div>
+          <div class="writing-phrase-src">原句：<em>help address social and environmental challenges through creativity and cooperation.</em></div>
+          <div class="writing-phrase-use">作文套用：We can <em>address environmental challenges through cooperation</em> and innovation. address = 应对/解决，比 solve 更正式。</div>
+        </div>
+
+        <div class="writing-phrase">
+          <div class="writing-phrase-en">conserve natural resources</div>
+          <div class="writing-phrase-cn">保护自然资源</div>
+          <div class="writing-phrase-src">原句：<em>helps conserve natural resources</em></div>
+          <div class="writing-phrase-use">作文套用：It is our duty to <em>conserve natural resources</em> for future generations. conserve 比 protect 更书面。</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="writing-block">
+      <div class="writing-block-title">连接词速查（按功能分）</div>
+      <div class="conn-grid">
+
+        <div class="conn-card c-add">
+          <div class="conn-card-title">递进 / 补充</div>
+          <span class="conn-item">furthermore</span>
+          <span class="conn-item">moreover</span>
+          <span class="conn-item">in addition</span>
+          <span class="conn-item">what's more</span>
+          <span class="conn-item">not only...but also</span>
+          <div class="conn-note">比 "also" 和 "and" 正式，议论文首选</div>
+        </div>
+
+        <div class="conn-card c-contrast">
+          <div class="conn-card-title">转折 / 对比</div>
+          <span class="conn-item">however</span>
+          <span class="conn-item">yet</span>
+          <span class="conn-item">while</span>
+          <span class="conn-item">in contrast</span>
+          <span class="conn-item">on the other hand</span>
+          <div class="conn-note">yet 用在句子中间（不另起段）；however 另起用</div>
+        </div>
+
+        <div class="conn-card c-result">
+          <div class="conn-card-title">结果 / 因此</div>
+          <span class="conn-item">as a result</span>
+          <span class="conn-item">therefore</span>
+          <span class="conn-item">consequently</span>
+          <span class="conn-item">thus</span>
+          <div class="conn-note">thus 最简洁，thus + 分词短语直接高分</div>
+        </div>
+
+        <div class="conn-card c-example">
+          <div class="conn-card-title">举例说明</div>
+          <span class="conn-item">for instance</span>
+          <span class="conn-item">for example</span>
+          <span class="conn-item">take...for example</span>
+          <span class="conn-item">such as</span>
+          <div class="conn-note">for instance 比 for example 更口语化一点点，两者都可用</div>
+        </div>
+
+        <div class="conn-card c-conclude">
+          <div class="conn-card-title">总结 / 结尾</div>
+          <span class="conn-item">in conclusion</span>
+          <span class="conn-item">to sum up</span>
+          <span class="conn-item">in short</span>
+          <span class="conn-item">overall</span>
+          <span class="conn-item">in a word</span>
+          <div class="conn-note">结尾段第一句用，考官扫一眼就知道你会写结论</div>
+        </div>
+
+        <div class="conn-card c-add">
+          <div class="conn-card-title">顺序 / 衔接</div>
+          <span class="conn-item">first of all</span>
+          <span class="conn-item">secondly</span>
+          <span class="conn-item">finally</span>
+          <span class="conn-item">meanwhile</span>
+          <span class="conn-item">at the same time</span>
+          <div class="conn-note">列举多个原因/步骤时用，让文章结构清晰</div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -774,7 +1065,7 @@ document.addEventListener('click',function(e){if(e.target.closest('.tip')||e.tar
 function speakWord(word){
   if(enPlayer){enPlayer.pause();enPlayer=null;}
   const slug='en-word-'+word.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-  const src='audio/2026北京卷-A/'+slug+'.mp3';
+  const src='audio/en-words/'+slug+'.mp3';
   enPlayer=new Audio(src);
   enPlayer.onerror=function(){const utter=new SpeechSynthesisUtterance(word);const voices=speechSynthesis.getVoices();utter.voice=voices.find(v=>v.lang==='en-GB')||voices.find(v=>v.lang.startsWith('en'))||voices[0];utter.rate=0.8;speechSynthesis.speak(utter);};
   enPlayer.play();
@@ -801,7 +1092,14 @@ function srsUpdateBadge(){const badge=document.getElementById('srs-badge');if(!b
 function srsClick(word,knew,btn){srsSave(word,knew);const card=btn.closest('.vocab-card');srsUpdateCard(card);srsUpdateBadge();btn.style.opacity='0.4';setTimeout(()=>btn.style.opacity='',600);}
 function srsInit(){document.querySelectorAll('.vocab-card').forEach(card=>{const wordEl=card.querySelector('.vocab-word');if(!wordEl)return;const word=wordEl.textContent.trim();card.dataset.srsWord=word;const btns=document.createElement('div');btns.className='srs-btns';const esc=word.replace(/\\/g,'\\\\').replace(/'/g,"\\'");btns.innerHTML=`<button class="srs-btn srs-btn-know" onclick="srsClick('${esc}',true,this)">认识 ✓</button>`+`<button class="srs-btn srs-btn-forget" onclick="srsClick('${esc}',false,this)">还不会 ✗</button>`;card.querySelector('.vocab-card-head').appendChild(btns);srsUpdateCard(card);});srsUpdateBadge();}
 
-function vocabClick(word){speakWord(word);}
+function vocabClick(word){speakWord(word);highlightWord(word);}
+function highlightWord(phrase){
+  const tips=document.querySelectorAll('.tip');const matches=[];const lc=phrase.toLowerCase();
+  tips.forEach(el=>{const tipPhrase=(el.dataset.tip||'').split('|')[0].toLowerCase();if(tipPhrase===lc)matches.push(el);});
+  if(!matches.length)return;
+  matches.forEach(el=>{el.classList.remove('tip-flash');void el.offsetWidth;el.classList.add('tip-flash');setTimeout(()=>el.classList.remove('tip-flash'),1700);});
+  matches[0].scrollIntoView({behavior:'smooth',block:'center'});
+}
 
 function initAnnotations(){
   document.querySelectorAll('sup.ann-sup,.para-ann').forEach(el=>el.remove());
@@ -813,6 +1111,10 @@ function initAnnotations(){
   });
 }
 
+function saveReview(){const state={};document.querySelectorAll('.review-checks input').forEach(cb=>{state[cb.id]=cb.checked;});localStorage.setItem('review-2026-a-passage',JSON.stringify(state));}
+function loadReview(){try{const state=JSON.parse(localStorage.getItem('review-2026-a-passage'));if(state)Object.keys(state).forEach(id=>{const cb=document.getElementById(id);if(cb)cb.checked=state[id];});}catch(e){}}
+document.querySelectorAll('.review-checks input').forEach(cb=>cb.addEventListener('change',saveReview));
+loadReview();
 pbUpdateUI();srsInit();
 document.addEventListener('DOMContentLoaded',initAnnotations);
 </script>
